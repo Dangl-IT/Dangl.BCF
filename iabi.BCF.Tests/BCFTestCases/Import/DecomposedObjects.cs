@@ -11,8 +11,9 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
     {
         public static BCFv2Container ReadContainer;
 
-                public static void Create()
+                public DecomposedObjects()
         {
+            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
         }
 
@@ -61,10 +62,12 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_01()
             {
+                if (ReadContainer == null)
                 ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "eb59ce15-5713-47ed-8505-ccccd91b4170");
+                if (ReadTopic == null)
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "eb59ce15-5713-47ed-8505-ccccd91b4170");
             }
 
             [Fact]
@@ -186,9 +189,11 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_02()
             {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
+                if (ReadContainer == null)
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
+                if (ReadTopic == null)
                 ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "24e5625c-8ff1-40f9-81f2-f31cfa48cf74");
             }
 
@@ -297,9 +302,11 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_03()
             {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
+                if (ReadContainer == null)
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
+                if (ReadTopic == null)
                 ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "6da43897-f4ff-4694-97dc-fc4a43770749");
             }
 

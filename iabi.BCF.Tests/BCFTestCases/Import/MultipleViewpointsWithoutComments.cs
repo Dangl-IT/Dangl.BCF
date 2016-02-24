@@ -11,8 +11,9 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
     {
         public static BCFv2Container ReadContainer;
 
-                public static void Create()
+                public MultipleViewpointsWithoutComments()
         {
+            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.MultipleViewpointsWithoutComments);
         }
 
@@ -45,10 +46,12 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_01()
             {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.MultipleViewpointsWithoutComments);
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "03d501f8-1025-462f-841b-35846cb36c31");
+                if (ReadContainer == null)
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.MultipleViewpointsWithoutComments);
+                if (ReadTopic == null)
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "03d501f8-1025-462f-841b-35846cb36c31");
             }
 
             [Fact]

@@ -10,8 +10,9 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
     {
         public static BCFv2Container ReadContainer;
 
-                public static void Create()
+        public SingleInvisibleWall()
         {
+            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SingleInvisibleWall);
         }
 
@@ -44,10 +45,12 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_01()
             {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SingleInvisibleWall);
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "0425bfd9-3982-471d-b963-abd07622b191");
+                if (ReadContainer == null)
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SingleInvisibleWall);
+                if (ReadTopic == null)
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "0425bfd9-3982-471d-b963-abd07622b191");
             }
 
             [Fact]

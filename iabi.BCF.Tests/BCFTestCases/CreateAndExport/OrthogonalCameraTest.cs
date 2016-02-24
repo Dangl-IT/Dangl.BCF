@@ -19,10 +19,12 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public static ZipArchive CreatedArchive;
 
-                public static void Create()
+                public OrthogonalCameraTest()
         {
+            if (CreatedContainer == null)
             CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.OrthogonalCamera);
 
+            if (CreatedArchive == null)
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.OrthogonalCamera_TestCaseName, BCFTestCaseData.OrthogonalCamera_Readme);
         }
 

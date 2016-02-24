@@ -10,9 +10,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
     {
         public static BCFv2Container ReadContainer;
 
-                public static void Create()
+                public RelatedTopicsWithBothTopicsInSameFile()
         {
-            ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+            if (ReadContainer == null)
+                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
         }
 
         [Fact]
@@ -52,10 +53,12 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_01()
             {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "3ebd3a2c-5bc8-4ff5-9e98-d5fa240719b6");
+                if (ReadContainer == null)
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+                if (ReadTopic == null)
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "3ebd3a2c-5bc8-4ff5-9e98-d5fa240719b6");
             }
 
             [Fact]
@@ -122,9 +125,11 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public static void Create()
+                        public Topic_02()
             {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+                if (ReadContainer == null)
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+                if (ReadTopic == null)
                 ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "d83f5842-19ea-4ca9-85bf-03d4b8f504b8");
             }
 

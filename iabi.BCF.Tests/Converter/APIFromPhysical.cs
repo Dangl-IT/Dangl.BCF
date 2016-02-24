@@ -16,11 +16,13 @@ namespace iabi.BCF.Tests.Converter
          
         public class TestCaxeMaximumInformation
         {
-                        public static void Create()
+                        public TestCaxeMaximumInformation()
             {
                 // Taking the container from the unit test
-                CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
-                CreatedAPIContainer = iabi.BCF.Converter.APIFromPhysical.Convert(CreatedContainer);
+                if (CreatedContainer == null)
+                    CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+                if (CreatedAPIContainer == null)
+                    CreatedAPIContainer = iabi.BCF.Converter.APIFromPhysical.Convert(CreatedContainer);
             }
 
             public static BCFv2Container CreatedContainer { get; set; }
@@ -503,7 +505,7 @@ namespace iabi.BCF.Tests.Converter
                             }
 
                             Assert.Equal(XmlComponent.AuthoringToolId, ApiComponent.authoring_tool_id);
-                            Assert.Equal(XmlComponent.Color.ToString(), ApiComponent.color);
+                            Assert.Equal(XmlComponent.Color?.ToString(), ApiComponent.color);
                             Assert.Equal(XmlComponent.IfcGuid, ApiComponent.ifc_guid);
                             Assert.Equal(XmlComponent.OriginatingSystem, ApiComponent.originating_system);
                         }

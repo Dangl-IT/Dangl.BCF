@@ -19,11 +19,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public static ZipArchive CreatedArchive;
 
-                public static void Create()
+        public ComponentSelectionTest()
         {
+            if(CreatedContainer == null)
             CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
 
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ComponentSelection_TestCaseName, BCFTestCaseData.ComponentSelection_Readme);
+            if(CreatedArchive == null)
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ComponentSelection_TestCaseName, BCFTestCaseData.ComponentSelection_Readme);
         }
 
         [Fact]

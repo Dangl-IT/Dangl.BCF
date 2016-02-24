@@ -16,9 +16,11 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         //public const string TopicGuid = "9898DE65-C0CE-414B-857E-1DF97FFAED8D";
 
-                public static void Create()
+                public MinimumInformationTest()
         {
-            CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
+            if (CreatedContainer == null)
+                CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
+            if (CreatedArchive == null)
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.MinimumInformation_TestCaseName, BCFTestCaseData.MinimumInformation_Readme);
         }
 

@@ -15,9 +15,11 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public static ZipArchive CreatedArchive;
 
-                public static void Create()
+                public PDFFileTest()
         {
+            if (CreatedContainer == null)
             CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.PDFFile);
+            if (CreatedArchive == null)
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.PDFFile_TestCaseName, BCFTestCaseData.PDFFile_Readme);
         }
 

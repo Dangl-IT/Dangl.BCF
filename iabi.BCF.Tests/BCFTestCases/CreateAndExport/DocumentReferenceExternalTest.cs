@@ -19,11 +19,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public static ZipArchive CreatedArchive;
 
-                public static void Create()
+                public DocumentReferenceExternalTest()
         {
+            if (CreatedContainer == null)
             CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.DocumentReferenceExternal);
 
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.DocumentReferenceExternal_TestCaseName, BCFTestCaseData.DocumentReferenceExternal_Readme);
+            if (CreatedArchive == null)
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.DocumentReferenceExternal_TestCaseName, BCFTestCaseData.DocumentReferenceExternal_Readme);
         }
 
         [Fact]

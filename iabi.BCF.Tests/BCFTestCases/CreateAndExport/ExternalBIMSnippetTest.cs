@@ -15,9 +15,11 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public static ZipArchive CreatedArchive;
 
-                public static void Create()
+                public ExternalBIMSnippetTest()
         {
-            CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExternalBIMSnippet);
+            if (CreatedContainer == null)
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExternalBIMSnippet);
+            if (CreatedArchive == null)
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ExternalBIMSnippet_TestCaseName, BCFTestCaseData.ExternalBIMSnippet_Readme);
         }
 

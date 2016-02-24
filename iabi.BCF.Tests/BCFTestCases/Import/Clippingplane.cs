@@ -10,9 +10,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
     {
         public static BCFv2Container ReadContainer;
 
-                public static void Create()
+                public Clippingplane()
         {
-            ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Clippingplane);
+            if (ReadContainer == null)
+                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Clippingplane);
         }
 
         [Fact]

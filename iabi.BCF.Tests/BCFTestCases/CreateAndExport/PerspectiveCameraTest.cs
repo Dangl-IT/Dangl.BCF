@@ -19,10 +19,11 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public static ZipArchive CreatedArchive;
 
-                public static void Create()
+                public PerspectiveCameraTest()
         {
-            CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.PerspectiveCamera);
-
+            if (CreatedContainer == null)
+                CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.PerspectiveCamera);
+            if (CreatedArchive == null)
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.PerspectiveCamera_TestCaseName, BCFTestCaseData.PerspectiveCamera_Readme);
         }
 
