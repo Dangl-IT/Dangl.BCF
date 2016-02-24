@@ -1,0 +1,5 @@
+c:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.csprojResolveAssemblyReference.cache
+c:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.BCFTestCases.CreateAndExport.BCFTestCaseData.resources
+c:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.BCFTestCases.Import.BCFTestCasesImportData.resources
+c:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.BCFv2.BCFv2TestResources.resources
+c:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.csproj.GenerateResource.Cache

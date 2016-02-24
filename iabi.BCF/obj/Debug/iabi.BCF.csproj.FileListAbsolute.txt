@@ -1,0 +1,7 @@
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\obj\Debug\iabi.BCF.csprojResolveAssemblyReference.cache
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug\iabi.BCF.dll
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug\iabi.BCF.pdb
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug\Newtonsoft.Json.dll
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug\Newtonsoft.Json.xml
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\obj\Debug\iabi.BCF.dll
+c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\obj\Debug\iabi.BCF.pdb

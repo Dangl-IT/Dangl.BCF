@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ExtensionSchema_TestCaseName" xml:space="preserve">
+    <value>ExtensionSchema</value>
+  </data>
+  <data name="ExtensionSchema_TopicGuid" xml:space="preserve">
+    <value>844496EA-0E0A-4071-A3EA-6EDF97458734</value>
+  </data>
+  <data name="ExternalBIMSnippet_TestCaseName" xml:space="preserve">
+    <value>ExternalBIMSnippet</value>
+  </data>
+  <data name="ExternalBIMSnippet_TopicGuid" xml:space="preserve">
+    <value>c26df753-b8af-42f2-b7cf-81a70b49f362</value>
+  </data>
+  <data name="InternalBIMSnippet_TestCaseName" xml:space="preserve">
+    <value>InternalBIMSnippet</value>
+  </data>
+  <data name="InternalBIMSnippet_TopicGuid" xml:space="preserve">
+    <value>84D4A28C-0638-4813-AA4B-BCD62FE5FC93</value>
+  </data>
+  <data name="MaximumInformation_ReferencedTopicGuid" xml:space="preserve">
+    <value>5019D939-62A4-45D9-B205-FAB602C98FE8</value>
+  </data>
+  <data name="MaximumInformation_TestCaseName" xml:space="preserve">
+    <value>MaximumInformation</value>
+  </data>
+  <data name="MaximumInformation_TopicGuid" xml:space="preserve">
+    <value>63E78882-7C6A-4BF7-8982-FC478AFB9C97</value>
+  </data>
+  <data name="MaximumInformation_ViewpointGuid_01" xml:space="preserve">
+    <value>8dc86298-9737-40b4-a448-98a9e953293a</value>
+  </data>
+  <data name="MaximumInformation_ViewpointGuid_02" xml:space="preserve">
+    <value>21dd4807-e9af-439e-a980-04d913a6b1ce</value>
+  </data>
+  <data name="MaximumInformation_ViewpointGuid_03" xml:space="preserve">
+    <value>81daa431-bf01-4a49-80a2-1ab07c177717</value>
+  </data>
+  <data name="MinimumInformation_TestCaseName" xml:space="preserve">
+    <value>MinimumInformation</value>
+  </data>
+  <data name="MinimumInformation_TopicGuid" xml:space="preserve">
+    <value>9898DE65-C0CE-414B-857E-1DF97FFAED8D</value>
+  </data>
+  <data name="PDFFile_TestCaseName" xml:space="preserve">
+    <value>PDFFile</value>
+  </data>
+  <data name="PDFFile_TopicGuid" xml:space="preserve">
+    <value>8e46d831-4603-4bd1-ae0c-d1817ca50bf0</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="IfcPile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\IfcPile._01ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\JsonElement.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupSchema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\markup.xsd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\Bitmap_d0d46591-4354-479b-bc75-8de93168ae5a.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\Bitmap_c698d881-5228-48f4-92d5-f534ed890464.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Requirements" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\Requirements.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PerspectiveCamera_TestCaseName" xml:space="preserve">
+    <value>PerspectiveCamera</value>
+  </data>
+  <data name="PerspectiveCamera_TopicGuid" xml:space="preserve">
+    <value>3153ceb9-0d9b-4f89-9670-dc95768836af</value>
+  </data>
+  <data name="ExtensionSchema_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\ExtensionSchema_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ExternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\ExternalBIMSnippet_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="InternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\InternalBIMSnippet_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\MaximumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\MinimumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PDFFile_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\PDFFile_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PerspectiveCamera_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\PerspectiveCamera_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Estructura" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\Estructura.ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PerspectiveCamera_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\PerspectiveCamera_Snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OrthogonalCamera_TestCaseName" xml:space="preserve">
+    <value>OrthogonalCamera</value>
+  </data>
+  <data name="OrthogonalCamera_TopicGuid" xml:space="preserve">
+    <value>97881cb2-6462-4161-8d57-3d179b280755</value>
+  </data>
+  <data name="OrthogonalCamera_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\OrthogonalCamera_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="DocumentReferenceExternal_TestCaseName" xml:space="preserve">
+    <value>Document Reference External</value>
+  </data>
+  <data name="DocumentReferenceExternal_TopicGuid" xml:space="preserve">
+    <value>1b66b5cb-18b4-4edd-a700-d02c3a673710</value>
+  </data>
+  <data name="DocumentReferenceExternal_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\DocumentReferenceExternal_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ComponentSelection_TestCaseName" xml:space="preserve">
+    <value>Component Selection</value>
+  </data>
+  <data name="ComponentSelection_TopicGuid" xml:space="preserve">
+    <value>42929e02-f00f-4db8-918e-0fbbc64a45d3</value>
+  </data>
+  <data name="ComponentCollection_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\ComponentCollection_Snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ComponentSelection_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\ComponentSelection_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+</root>
