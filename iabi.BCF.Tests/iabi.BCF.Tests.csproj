@@ -70,7 +70,11 @@
     <Compile Include="BCFTestCases\APIConversion\Converter.cs" />
     <Compile Include="BCFTestCases\APIConversion\TestCaseProvider.cs" />
     <Compile Include="BCFTestCases\CompareTool.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\BCFTestCaseData.Designer.cs" />
+    <Compile Include="BCFTestCases\CreateAndExport\BCFTestCaseData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BCFTestCaseData.resx</DependentUpon>
+    </Compile>
     <Compile Include="BCFTestCases\CreateAndExport\ComponentSelectionTest.cs" />
     <Compile Include="BCFTestCases\CreateAndExport\DocumentReferenceExternalTest.cs" />
     <Compile Include="BCFTestCases\CreateAndExport\ExtensionSchemaTest.cs" />
@@ -94,7 +98,11 @@
     <Compile Include="BCFTestCases\CreateAndExport\PerspectiveCameraTest.cs" />
     <Compile Include="BCFTestCases\CreateAndExport\ZipArchiveFactory.cs" />
     <Compile Include="BCFTestCases\Import\BCFFilesFactory.cs" />
-    <Compile Include="BCFTestCases\Import\BCFTestCasesImportData.Designer.cs" />
+    <Compile Include="BCFTestCases\Import\BCFTestCasesImportData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BCFTestCasesImportData.resx</DependentUpon>
+    </Compile>
     <Compile Include="BCFTestCases\Import\Bitmap.cs" />
     <Compile Include="BCFTestCases\Import\Clippingplane.cs" />
     <Compile Include="BCFTestCases\Import\CommentsWithoutViewpoints.cs" />
@@ -120,7 +128,11 @@
     <Compile Include="BCFTestCases\Import\VisibleSpaceAndRestOfModelVisible.cs" />
     <Compile Include="BCFv2\BCFTopicTest.cs" />
     <Compile Include="BCFv2\BCFv2Container_Test.cs" />
-    <Compile Include="BCFv2\BCFv2TestResources.Designer.cs" />
+    <Compile Include="BCFv2\BCFv2TestResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BCFv2TestResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Converter\APIFromPhysical.cs" />
     <Compile Include="Converter\PhysicalFromAPI.cs" />
     <Compile Include="Converter\ViewpointContainerTest.cs" />
@@ -129,7 +141,6 @@
     <Compile Include="XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Converter\UnitTest1.cs~RF50d921b2.TMP" />
     <None Include="packages.config" />
     <None Include="Resources\Bitmap.bcfzip" />
     <None Include="Resources\Clippingplane.bcfzip" />
@@ -198,9 +209,18 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BCFTestCases\CreateAndExport\BCFTestCaseData.resx" />
-    <EmbeddedResource Include="BCFTestCases\Import\BCFTestCasesImportData.resx" />
-    <EmbeddedResource Include="BCFv2\BCFv2TestResources.resx" />
+    <EmbeddedResource Include="BCFTestCases\CreateAndExport\BCFTestCaseData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BCFTestCaseData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BCFTestCases\Import\BCFTestCasesImportData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BCFTestCasesImportData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BCFv2\BCFv2TestResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BCFv2TestResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838.png" />

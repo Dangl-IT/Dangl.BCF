@@ -1,15 +1,12 @@
-﻿using iabi.BCF.BCFv2;
+﻿using System.IO;
+using System.IO.Compression;
+using iabi.BCF.BCFv2;
+using iabi.BCF.Test.BCFTestCases;
+using iabi.BCF.Test.BCFTestCases.CreateAndExport;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
 using Xunit;
-using System;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Xml.Linq;
 
-namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
+namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
     /*
      * Note: Here is "\n" used as line break instead of "\r\n" due to the
@@ -26,7 +23,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
                 public static void Create()
         {
-            CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
+            CreatedContainer = Test.BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
 
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ComponentSelection_TestCaseName, BCFTestCaseData.ComponentSelection_Readme);
         }

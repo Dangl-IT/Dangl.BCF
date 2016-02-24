@@ -7,7 +7,7 @@ namespace iabi.BCF.Test.BCFTestCases.APIConversion
      
     public class Converter
     {
-        [Fact]
+        [Theory]
         [MemberData(nameof(TestCasesContainer))]
         public void ConvertAllTestCases(ContainerAndName input)
         {
@@ -21,7 +21,7 @@ namespace iabi.BCF.Test.BCFTestCases.APIConversion
         }
 
         private static object[] _TestCasesContainer;
-        private static object[] TestCasesContainer
+        public static object[] TestCasesContainer
         {
             get { return _TestCasesContainer ?? (_TestCasesContainer = TestCaseProvider.GetAllContainersFromTestCases().Select(container => new[] {container}).ToArray()); }
         }
