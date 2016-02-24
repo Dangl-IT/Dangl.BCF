@@ -1,6 +1,6 @@
 ﻿using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -31,7 +31,7 @@ namespace iabi.BCF.Test
 
         //    var Comparison = Comparator.Compare(Expected, Actual);
 
-        //    Assert.IsTrue(Comparison.AreEqual, Comparison.DifferencesString);
+        //    Assert.True(Comparison.AreEqual, Comparison.DifferencesString);
         //}
 
         public static BimSnippet GetBimSnippetFromXml(XElement SnippetXml)

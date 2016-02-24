@@ -1,13 +1,13 @@
 ﻿using iabi.BCF.BCFv2;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 {
-    [TestClass]
+     
     public class MinimumInformationTest
     {
         public static BCFv2Container CreatedContainer;
@@ -16,26 +16,25 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
         //public const string TopicGuid = "9898DE65-C0CE-414B-857E-1DF97FFAED8D";
 
-        [ClassInitialize]
-        public static void Create(TestContext GivenContext)
+                public static void Create()
         {
             CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.MinimumInformation_TestCaseName, BCFTestCaseData.MinimumInformation_Readme);
         }
 
-        [TestMethod]
+        [Fact]
         public void ContainerPresent()
         {
-            Assert.IsNotNull(CreatedContainer);
+            Assert.NotNull(CreatedContainer);
         }
 
-        [TestMethod]
+        [Fact]
         public void ZipPresent()
         {
-            Assert.IsNotNull(CreatedArchive);
+            Assert.NotNull(CreatedArchive);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckIfFilesPresent()
         {
             var ExpectedFilesList = new string[] {
@@ -47,7 +46,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             {
                 if (!ExpectedFilesList.Contains(CurrentEntry.FullName))
                 {
-                    Assert.Fail("Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
                 }
             }
 
@@ -55,12 +54,12 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             {
                 if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
                 {
-                    Assert.Fail("Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void VersionTagCorrect()
         {
             var ExpectedVersionId = "2.0";
@@ -69,19 +68,19 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
             var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
 
-            Assert.IsTrue(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.AreEqual(ExpectedVersionId, ActualVersionId);
-            Assert.AreEqual(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(ExpectedVersionId, ActualVersionId);
+            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckMarkupOnlyHasTopicElement()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MinimumInformation_TopicGuid + "/markup.bcf");
-            Assert.IsTrue(MarkupXml.Nodes().Count() == 1 && MarkupXml.Nodes().OfType<XElement>().FirstOrDefault().Name.LocalName == "Topic");
+            Assert.True(MarkupXml.Nodes().Count() == 1 && MarkupXml.Nodes().OfType<XElement>().FirstOrDefault().Name.LocalName == "Topic");
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckTopicHasThreeSubElementsOfTypeXText()
         {
             var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
@@ -89,10 +88,10 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             var ChildNodesCount = TopicXml.Nodes().Count();
             var ChildrenWithOnlyText = TopicXml.Nodes().OfType<XElement>().Where(Curr => Curr.Nodes().Count() == 1 && Curr.Nodes().OfType<XText>().Any()).Count();
 
-            Assert.AreEqual(ChildNodesCount, ChildrenWithOnlyText);
+            Assert.Equal(ChildNodesCount, ChildrenWithOnlyText);
         }
 
-        [TestMethod]
+        [Fact]
         public void TitleSet()
         {
             var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
@@ -101,10 +100,10 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             var Expected = "Minimum information BCFZip topic.";
             var Actual = (TitleXml.FirstNode as XText).Value;
 
-            Assert.AreEqual(Expected, Actual);
+            Assert.Equal(Expected, Actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreationDateSet()
         {
             var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
@@ -113,10 +112,10 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             var Expected = "2015-07-15T13:12:42Z";
             var Actual = (CreationDateXml.FirstNode as XText).Value;
 
-            Assert.AreEqual(Expected, Actual);
+            Assert.Equal(Expected, Actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreationAuthorSet()
         {
             var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
@@ -125,7 +124,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             var Expected = "Developer@example.com";
             var Actual = (AuthorXml.FirstNode as XText).Value;
 
-            Assert.AreEqual(Expected, Actual);
+            Assert.Equal(Expected, Actual);
         }
     }
 }

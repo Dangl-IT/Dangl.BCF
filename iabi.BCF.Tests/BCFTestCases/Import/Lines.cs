@@ -1,185 +1,183 @@
 ﻿using iabi.BCF.BCFv2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.IO;
 using System.Linq;
 
 namespace iabi.BCF.Test.BCFTestCases.Import
 {
-    [TestClass]
+     
     public class Lines
     {
         public static BCFv2Container ReadContainer;
 
-        [ClassInitialize]
-        public static void Create(TestContext GivenContext)
+                public static void Create()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Lines);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
-            Assert.IsNotNull(ReadContainer);
+            Assert.NotNull(ReadContainer);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckTopicCount()
         {
             var Expected = 1;
             var Actual = ReadContainer.Topics.Count;
-            Assert.AreEqual(Expected, Actual);
+            Assert.Equal(Expected, Actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckTopicGuid_01()
         {
             var Expected = "64124059-3964-4c0b-9987-11036e9f0d54";
             var Actual = ReadContainer.Topics.Any(Curr => Curr.Markup.Topic.Guid == Expected);
-            Assert.IsTrue(Actual);
+            Assert.True(Actual);
         }
 
-        [TestClass]
+         
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-            [ClassInitialize]
-            public static void Create(TestContext GivenContext)
+                        public static void Create()
             {
                 ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Lines);
                 ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "64124059-3964-4c0b-9987-11036e9f0d54");
             }
 
-            [TestMethod]
+            [Fact]
             public void TopicPresent()
             {
-                Assert.IsNotNull(ReadTopic);
+                Assert.NotNull(ReadTopic);
             }
 
-            [TestMethod]
+            [Fact]
             public void CheckCommentCount()
             {
                 var Expected = 1;
                 var Actual = ReadTopic.Markup.Comment.Count;
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void CheckCommentGuid_01()
             {
                 var Expected = "ec54ee6d-3ed0-45d8-8c80-398f9f8d80da";
-                Assert.IsTrue(ReadTopic.Markup.Comment.Any(Curr => Curr.Guid == Expected));
+                Assert.True(ReadTopic.Markup.Comment.Any(Curr => Curr.Guid == Expected));
             }
 
-            [TestMethod]
+            [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.AreEqual(1, ReadTopic.Markup.Header.Count);
+                Assert.Equal(1, ReadTopic.Markup.Header.Count);
             }
 
-            [TestMethod]
+            [Fact]
             public void Markup_HeaderFileCorrect_01()
             {
                 var HeaderEntry = ReadTopic.Markup.Header.First();
 
-                Assert.AreEqual(new DateTime(2015, 06, 09, 06, 39, 06), HeaderEntry.Date.ToUniversalTime());
-                Assert.AreEqual("C:\\e.ifc", HeaderEntry.Filename);
-                Assert.AreEqual("2SugUv4EX5LAhcVpDp2dUH", HeaderEntry.IfcProject);
-                Assert.AreEqual(null, HeaderEntry.IfcSpatialStructureElement);
-                Assert.AreEqual(true, HeaderEntry.isExternal);
-                Assert.AreEqual(null, HeaderEntry.Reference);
-                Assert.AreEqual(true, HeaderEntry.ShouldSerializeDate());
-                Assert.AreEqual(true, HeaderEntry.ShouldSerializeFilename());
-                Assert.AreEqual(true, HeaderEntry.ShouldSerializeIfcProject());
-                Assert.AreEqual(false, HeaderEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), HeaderEntry.Date.ToUniversalTime());
+                Assert.Equal("C:\\e.ifc", HeaderEntry.Filename);
+                Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", HeaderEntry.IfcProject);
+                Assert.Equal(null, HeaderEntry.IfcSpatialStructureElement);
+                Assert.Equal(true, HeaderEntry.isExternal);
+                Assert.Equal(null, HeaderEntry.Reference);
+                Assert.Equal(true, HeaderEntry.ShouldSerializeDate());
+                Assert.Equal(true, HeaderEntry.ShouldSerializeFilename());
+                Assert.Equal(true, HeaderEntry.ShouldSerializeIfcProject());
+                Assert.Equal(false, HeaderEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
-            [TestMethod]
+            [Fact]
             public void CheckViewpointGuid_InMarkup()
             {
                 var Expected = "6e225887-aad7-42ec-a9f4-8f8c796832dd";
                 var Actual = ReadTopic.Markup.Viewpoints.First().Guid;
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void CheckViewpointCount_InMarkup()
             {
                 var Expected = 1;
                 var Actual = ReadTopic.Markup.Viewpoints.Count;
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void CheckViewpointCount()
             {
                 var Expected = 1;
                 var Actual = ReadTopic.Viewpoints.Count;
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void Viewpoint_CompareSnapshotBinary()
             {
                 var Expected = BCFTestCasesImportData.Lines.GetBinaryData("64124059-3964-4c0b-9987-11036e9f0d54/snapshot.png");
                 var Actual = ReadTopic.ViewpointSnapshots.First().Value;
-                Assert.IsTrue(Expected.SequenceEqual(Actual));
+                Assert.True(Expected.SequenceEqual(Actual));
             }
 
-            [TestMethod]
+            [Fact]
             public void Viewpoint_NoOrthogonalCamera()
             {
                 var Actual = ReadTopic.Viewpoints.First();
-                Assert.IsFalse(Actual.ShouldSerializeOrthogonalCamera());
+                Assert.False(Actual.ShouldSerializeOrthogonalCamera());
             }
 
-            [TestMethod]
+            [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.AreEqual(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
             }
 
-            [TestMethod]
+            [Fact]
             public void Viewpoint_DontSerializeComponents()
             {
-                Assert.IsFalse(ReadTopic.Viewpoints.First().ShouldSerializeComponents());
+                Assert.False(ReadTopic.Viewpoints.First().ShouldSerializeComponents());
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Viewpoint_LinesCountCorrect()
         {
-            Assert.AreEqual(4, ReadContainer.Topics.First().Viewpoints.First().Lines.Count);
+            Assert.Equal(4, ReadContainer.Topics.First().Viewpoints.First().Lines.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Viewpoint_LinesCorrect_01()
         {
             var Actual = ReadContainer.Topics.First().Viewpoints.First().Lines.First();
-            Assert.IsNotNull(Actual);
+            Assert.NotNull(Actual);
 
-            Assert.AreEqual(14.081214128865833, Actual.StartPoint.X);
-            Assert.AreEqual(-15.361069061775849, Actual.StartPoint.Y);
-            Assert.AreEqual(8.124594766348617, Actual.StartPoint.Z);
-            Assert.AreEqual(14.069056488704259, Actual.EndPoint.X);
-            Assert.AreEqual(-15.546558805373634, Actual.EndPoint.Y);
-            Assert.AreEqual(12.340820025706794, Actual.EndPoint.Z);
+            Assert.Equal(14.081214128865833, Actual.StartPoint.X);
+            Assert.Equal(-15.361069061775849, Actual.StartPoint.Y);
+            Assert.Equal(8.124594766348617, Actual.StartPoint.Z);
+            Assert.Equal(14.069056488704259, Actual.EndPoint.X);
+            Assert.Equal(-15.546558805373634, Actual.EndPoint.Y);
+            Assert.Equal(12.340820025706794, Actual.EndPoint.Z);
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteOut()
         {
             var MemStream = new MemoryStream();
             ReadContainer.WriteStream(MemStream);
             var Data = MemStream.ToArray();
-            Assert.IsNotNull(Data);
-            Assert.IsTrue(Data.Length > 0);
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteAndCompare()
         {
             var MemStream = new MemoryStream();

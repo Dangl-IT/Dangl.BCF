@@ -1,6 +1,6 @@
 ﻿using iabi.BCF.BCFv2;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -8,30 +8,29 @@ using System.Xml.Linq;
 
 namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 {
-    [TestClass]
+     
     public class ExternalBIMSnippetTest
     {
         public static BCFv2Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-        [ClassInitialize]
-        public static void Create(TestContext GivenContext)
+                public static void Create()
         {
             CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExternalBIMSnippet);
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ExternalBIMSnippet_TestCaseName, BCFTestCaseData.ExternalBIMSnippet_Readme);
         }
 
-        [TestMethod]
+        [Fact]
         public void ContainerPresent()
         {
-            Assert.IsNotNull(CreatedContainer);
+            Assert.NotNull(CreatedContainer);
         }
 
-        [TestMethod]
+        [Fact]
         public void ZipPresent()
         {
-            Assert.IsNotNull(CreatedArchive);
+            Assert.NotNull(CreatedArchive);
         }
 
         public string[] ExpectedFiles
@@ -46,31 +45,31 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckIfFilesPresent()
         {
             foreach (var ExpectedFile in ExpectedFiles)
             {
                 if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
                 {
-                    Assert.Fail("Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckIfNoAdditionalFilesPresent()
         {
             foreach (var CurrentEntry in CreatedArchive.Entries)
             {
                 if (!ExpectedFiles.Contains(CurrentEntry.FullName))
                 {
-                    Assert.Fail("Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckIfFilesAreAllValidXml()
         {
             foreach (var CurrentEntry in CreatedArchive.Entries)
@@ -91,7 +90,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void VersionTagCorrect()
         {
             var ExpectedVersionId = "2.0";
@@ -100,40 +99,40 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
             var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
 
-            Assert.IsTrue(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.AreEqual(ExpectedVersionId, ActualVersionId);
-            Assert.AreEqual(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(ExpectedVersionId, ActualVersionId);
+            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
         }
 
-        [TestMethod]
+        [Fact]
         public void VerifySnippetPresent()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.ExternalBIMSnippet_TopicGuid + "/markup.bcf");
             var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
-            Assert.IsNotNull(SnippetXml);
+            Assert.NotNull(SnippetXml);
         }
 
-        [TestMethod]
+        [Fact]
         public void VerifySnippetReferenceCorrect()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.ExternalBIMSnippet_TopicGuid + "/markup.bcf");
             var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
             var Expected = CreatedContainer.Topics.First().Markup.Topic.BimSnippet.Reference;
             var Actual = SnippetXml.Descendants("Reference").First().Value;
-            Assert.AreEqual(Expected, Actual);
+            Assert.Equal(Expected, Actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void VerifySnippetIsExternal()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.ExternalBIMSnippet_TopicGuid + "/markup.bcf");
             var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
             var Expected = "true";
             var Actual = SnippetXml.Attribute("isExternal").Value;
-            Assert.AreEqual(Expected, Actual);
+            Assert.Equal(Expected, Actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteReadAgainAndCompare()
         {
             using (var MemStream = new MemoryStream())

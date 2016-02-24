@@ -1,20 +1,20 @@
 ﻿using iabi.BCF.APIObjects.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 
 namespace iabi.BCF.Test.APIObjects.Extensions
 {
-    [TestClass]
+     
     public class extensions_PATCHTest
     {
-        [TestClass]
+         
         public class IsEmpty
         {
-            [TestMethod]
+            [Fact]
             public void TrueForNewInstance()
             {
                 var Instance = new extensions_PATCH();
-                Assert.IsTrue(Instance.IsEmpty());
+                Assert.True(Instance.IsEmpty());
             }
         }
     }

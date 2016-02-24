@@ -5,7 +5,7 @@ using iabi.BCF.Test.BCFTestCases;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
 using iabi.BCF.Test.BCFv2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,84 +15,86 @@ using System.Linq;
 
 namespace iabi.Test.BCF_REST_API.BCFv2
 {
-    [TestClass]
+     
     public class BCFv2Container_Test
     {
-        [TestClass]
+         
         public class GetFilenameFromReference
         {
-            [TestMethod]
+            [Fact]
             public void EmptyOnNullInput()
             {
-                Assert.IsTrue(string.IsNullOrWhiteSpace(BCFv2Container.GetFilenameFromReference(null)));
+                Assert.True(string.IsNullOrWhiteSpace(BCFv2Container.GetFilenameFromReference(null)));
             }
 
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput()
             {
-                Assert.IsTrue(string.IsNullOrWhiteSpace(BCFv2Container.GetFilenameFromReference(string.Empty)));
+                Assert.True(string.IsNullOrWhiteSpace(BCFv2Container.GetFilenameFromReference(string.Empty)));
             }
 
-            [TestMethod]
+            [Fact]
             public void Check_01()
             {
                 var Input = "some.file";
                 var Expected = "some.file";
                 var Actual = BCFv2Container.GetFilenameFromReference(Input);
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void Check_02()
             {
                 var Input = "/some.file";
                 var Expected = "some.file";
                 var Actual = BCFv2Container.GetFilenameFromReference(Input);
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void Check_03()
             {
                 var Input = "../some.file";
                 var Expected = "some.file";
                 var Actual = BCFv2Container.GetFilenameFromReference(Input);
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void Check_04()
             {
                 var Input = "123/some.file";
                 var Expected = "some.file";
                 var Actual = BCFv2Container.GetFilenameFromReference(Input);
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
 
-            [TestMethod]
+            [Fact]
             public void Check_05()
             {
                 var Input = "../123hallo/some.file";
                 var Expected = "some.file";
                 var Actual = BCFv2Container.GetFilenameFromReference(Input);
-                Assert.AreEqual(Expected, Actual);
+                Assert.Equal(Expected, Actual);
             }
         }
 
-        [TestClass]
+         
         public class GetAttachmentForDocumentReference
         {
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentException))]
+            [Fact]
             public void ExceptionOnExternalReference()
             {
                 var Container = new BCFv2Container();
                 var DocRef = new TopicDocumentReferences();
                 DocRef.isExternal = true;
-                var Data = Container.GetAttachmentForDocumentReference(DocRef);
+                Assert.Throws(typeof (ArgumentException), () =>
+                {
+                    var Data = Container.GetAttachmentForDocumentReference(DocRef);
+                });
             }
 
-            [TestMethod]
+            [Fact]
             public void Check_01()
             {
                 var Container = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
@@ -102,267 +104,269 @@ namespace iabi.Test.BCF_REST_API.BCFv2
                 foreach (var CurrentDocument in References.Where(Curr => !Curr.isExternal))
                 {
                     var RetrievedFile = Container.GetAttachmentForDocumentReference(CurrentDocument);
-                    Assert.IsNotNull(RetrievedFile);
-                    Assert.IsTrue(RetrievedFile.SequenceEqual(Container.FileAttachments[BCFv2Container.GetFilenameFromReference(CurrentDocument.ReferencedDocument)]));
+                    Assert.NotNull(RetrievedFile);
+                    Assert.True(RetrievedFile.SequenceEqual(Container.FileAttachments[BCFv2Container.GetFilenameFromReference(CurrentDocument.ReferencedDocument)]));
                 }
             }
         }
 
-        [TestClass]
+         
         public class TransformToRelativePath
         {
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_01()
             {
                 var Created = BCFv2Container.TransformToRelativePath(null, null);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_02()
             {
                 var Created = BCFv2Container.TransformToRelativePath(string.Empty, null);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_03()
             {
                 var Created = BCFv2Container.TransformToRelativePath(null, string.Empty);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_04()
             {
                 var Created = BCFv2Container.TransformToRelativePath(string.Empty, string.Empty);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_01()
             {
                 var InputAbsolute = "none.jpg";
                 var InputCurrentLoc = string.Empty;
                 var Expected = "none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_01a()
             {
                 var InputAbsolute = "someFolder/none.jpg";
                 var InputCurrentLoc = string.Empty;
                 var Expected = "someFolder/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_02()
             {
                 var InputAbsolute = "none.jpg";
                 var InputCurrentLoc = "someFolder";
                 var Expected = "../none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_03()
             {
                 var InputAbsolute = "none.jpg";
                 var InputCurrentLoc = "someFolder/nested";
                 var Expected = "../../none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_04()
             {
                 var InputAbsolute = "different/none.jpg";
                 var InputCurrentLoc = "someFolder/nested";
                 var Expected = "../../different/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_05()
             {
                 var InputAbsolute = "someFolder/none.jpg";
                 var InputCurrentLoc = "someFolder";
                 var Expected = "none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_06()
             {
                 var InputAbsolute = "someFolder/nested/none.jpg";
                 var InputCurrentLoc = "someFolder/nested";
                 var Expected = "none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_07()
             {
                 var InputAbsolute = "totally/different/folder/none.jpg";
                 var InputCurrentLoc = "some/other/structure";
                 var Expected = "../../../totally/different/folder/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_08()
             {
                 var InputAbsolute = "first/topic/none.jpg";
                 var InputCurrentLoc = "second/topic";
                 var Expected = "../../first/topic/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_09()
             {
                 var InputAbsolute = "first/topic/none.jpg";
                 var InputCurrentLoc = string.Empty;
                 var Expected = "first/topic/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_10()
             {
                 var InputAbsolute = "first/topic/none.jpg";
                 string InputCurrentLoc = null;
                 var Expected = "first/topic/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Create_11()
             {
                 var InputAbsolute = "first/topic/none.jpg";
                 string InputCurrentLoc = "some/other/folder/dir/hello";
                 var Expected = "../../../../../first/topic/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
-                Assert.AreEqual(Expected, Created);
+                Assert.Equal(Expected, Created);
             }
         }
 
-        [TestClass]
+         
         public class GetAbsolutePath
         {
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_01()
             {
                 var Created = BCFv2Container.GetAbsolutePath(null, null);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_02()
             {
                 var Created = BCFv2Container.GetAbsolutePath(null, string.Empty);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void EmptyOnEmptyInput_03()
             {
                 var Created = BCFv2Container.GetAbsolutePath(string.Empty, null);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Created));
+                Assert.True(string.IsNullOrWhiteSpace(Created));
             }
 
-            [TestMethod]
+            [Fact]
             public void OnlyBasePath_01()
             {
                 var Created = BCFv2Container.GetAbsolutePath("SomePath", null);
-                Assert.AreEqual("SomePath", Created);
+                Assert.Equal("SomePath", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void OnlyBasePath_02()
             {
                 var Created = BCFv2Container.GetAbsolutePath("SomePath/SomeOther", null);
-                Assert.AreEqual("SomePath/SomeOther", Created);
+                Assert.Equal("SomePath/SomeOther", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_01()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456", "example.jpg");
-                Assert.AreEqual("123456/example.jpg", Created);
+                Assert.Equal("123456/example.jpg", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_02()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456", "../example.jpg");
-                Assert.AreEqual("example.jpg", Created);
+                Assert.Equal("example.jpg", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_03()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456/789", "example.jpg");
-                Assert.AreEqual("123456/789/example.jpg", Created);
+                Assert.Equal("123456/789/example.jpg", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_04()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456/789", "../example.jpg");
-                Assert.AreEqual("123456/example.jpg", Created);
+                Assert.Equal("123456/example.jpg", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_05()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456/789", "../../example.jpg");
-                Assert.AreEqual("example.jpg", Created);
+                Assert.Equal("example.jpg", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_05a()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456/789/abc/def", "../../../../example.jpg");
-                Assert.AreEqual("example.jpg", Created);
+                Assert.Equal("example.jpg", Created);
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_05b()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456/789/abc/def", "../../../example.jpg");
-                Assert.AreEqual("123456/example.jpg", Created);
+                Assert.Equal("123456/example.jpg", Created);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
+            [Fact]
             public void Combine_06()
             {
-                var Created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg");
+                Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
+                {
+                    var Created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg");
+                });
             }
 
-            [TestMethod]
+            [Fact]
             public void Combine_07()
             {
                 var Created = BCFv2Container.GetAbsolutePath("123456", "789/example.jpg");
-                Assert.AreEqual("123456/789/example.jpg", Created);
+                Assert.Equal("123456/789/example.jpg", Created);
             }
         }
 
-        [TestClass]
+         
         public class WriteStream
         {
             public BCFTopic MockBCFv2_WithValues()
@@ -514,7 +518,7 @@ namespace iabi.Test.BCF_REST_API.BCFv2
                 return ReturnObject;
             }
 
-            [TestMethod]
+            [Fact]
             public void Simple_WriteSingleTopic_Extensions()
             {
                 BCFv2Container TestContainerInstance = new BCFv2Container();
@@ -530,16 +534,16 @@ namespace iabi.Test.BCF_REST_API.BCFv2
                 using (var MemStream = new MemoryStream())
                 {
                     TestContainerInstance.WriteStream(MemStream);
-                    Assert.IsTrue(MemStream.Length > 0);
+                    Assert.True(MemStream.Length > 0);
 
                     MemStream.Position = 0;
                     var Archive = new ZipArchive(MemStream);
                     var ExtensionsEntry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == "extensions.xsd");
-                    Assert.IsNotNull(ExtensionsEntry);
+                    Assert.NotNull(ExtensionsEntry);
                 }
             }
 
-            [TestMethod]
+            [Fact]
             public void Simple_WriteSingleTopic()
             {
                 BCFv2Container TestContainerInstance = new BCFv2Container();
@@ -551,11 +555,11 @@ namespace iabi.Test.BCF_REST_API.BCFv2
                 using (var MemStream = new MemoryStream())
                 {
                     TestContainerInstance.WriteStream(MemStream);
-                    Assert.IsTrue(MemStream.Length > 0);
+                    Assert.True(MemStream.Length > 0);
                 }
             }
 
-            [TestMethod]
+            [Fact]
             public void AppendSnapshotInfoToMarkup()
             {
                 BCFv2Container Instance = new BCFv2Container();
@@ -568,44 +572,44 @@ namespace iabi.Test.BCF_REST_API.BCFv2
                     Instance.WriteStream(MemStream);
                     MemStream.Position = 0;
                     var ReadAgain = BCFv2Container.ReadStream(MemStream);
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(ReadAgain.Topics.First().Markup.Viewpoints.First().Viewpoint));
-                    Assert.IsNotNull(ReadAgain.Topics.First().ViewpointSnapshots.FirstOrDefault());
+                    Assert.False(string.IsNullOrWhiteSpace(ReadAgain.Topics.First().Markup.Viewpoints.First().Viewpoint));
+                    Assert.NotNull(ReadAgain.Topics.First().ViewpointSnapshots.FirstOrDefault());
                 }
             }
         }
 
-        [TestClass]
+         
         public class ProjectAndExtensions
         {
-            [TestMethod]
+            [Fact]
             public void SetPathToExtensionsWhenExtensionsSet()
             {
                 BCFv2Container Instance = new BCFv2Container();
                 Instance.ProjectExtensions = new Extensions_XSD();
-                Assert.AreEqual("extensions.xsd", Instance.BCFProject.ExtensionSchema);
+                Assert.Equal("extensions.xsd", Instance.BCFProject.ExtensionSchema);
             }
         }
 
         /// <summary>
         /// Not expecting an exception and the markup should then be automatically created (with the viewpoint data)
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AddViewpointWhenThereIsNoMarkupInstance()
         {
             BCFv2Container Instance = new BCFv2Container();
             Instance.Topics.Add(new BCFTopic());
 
             // Markup is empty
-            Assert.IsNull(Instance.Topics.First().Markup, "Markup is present but not yet expected");
+            Assert.Null(Instance.Topics.First().Markup);
 
             Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
 
             // Viewpoint defined
-            Assert.IsNotNull(Instance.Topics.First().Markup, "Markup was not automatically created");
-            Assert.AreEqual(Instance.Topics.First().Markup.Viewpoints.First().Guid, Instance.Topics.First().Viewpoints.First().GUID);
+            Assert.NotNull(Instance.Topics.First().Markup);
+            Assert.Equal(Instance.Topics.First().Markup.Viewpoints.First().Guid, Instance.Topics.First().Viewpoints.First().GUID);
         }
 
-        [TestMethod]
+        [Fact]
         public void AddviewpointSnapshotReferenceInMarkup()
         {
             BCFv2Container Instance = new BCFv2Container();
@@ -614,34 +618,34 @@ namespace iabi.Test.BCF_REST_API.BCFv2
 
             Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] { 10, 11, 12, 13, 14, 15 });
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(Instance.Topics.First().Markup.Viewpoints.FirstOrDefault().Snapshot), "Reference not created for viewpoint snapshot");
+            Assert.False(string.IsNullOrWhiteSpace(Instance.Topics.First().Markup.Viewpoints.FirstOrDefault().Snapshot), "Reference not created for viewpoint snapshot");
         }
 
-        [TestClass]
+         
         public class ReadStream
         {
-            [TestClass]
+             
             public class EmptyProject
             {
-                [TestMethod]
+                [Fact]
                 public void JustRead()
                 {
                     var Instance = TestDataFactory.GetContainerForTestCase(TestDataFactory.TestCase.EmptyProject);
-                    Assert.IsNotNull(Instance);
+                    Assert.NotNull(Instance);
                 }
 
-                [TestMethod]
+                [Fact]
                 public void DontReadEmptyProjectDefinitions()
                 {
                     var Instance = TestDataFactory.GetContainerForTestCase(TestDataFactory.TestCase.EmptyProject);
-                    Assert.IsNull(Instance.BCFProject);
+                    Assert.Null(Instance.BCFProject);
                 }
             }
 
-            [TestClass]
+             
             public class Extensions
             {
-                [TestMethod]
+                [Fact]
                 public void SimpleExtensions()
                 {
                     var OriginalContainer = new BCFv2Container();
@@ -651,9 +655,9 @@ namespace iabi.Test.BCF_REST_API.BCFv2
                     {
                         OriginalContainer.WriteStream(MemStream);
                         var ReadContainer = BCFv2Container.ReadStream(MemStream);
-                        Assert.IsNotNull(ReadContainer.ProjectExtensions);
-                        Assert.AreEqual("Some user", ReadContainer.ProjectExtensions.UserIdType.First());
-                        Assert.AreEqual("extensions.xsd", ReadContainer.BCFProject.ExtensionSchema);
+                        Assert.NotNull(ReadContainer.ProjectExtensions);
+                        Assert.Equal("Some user", ReadContainer.ProjectExtensions.UserIdType.First());
+                        Assert.Equal("extensions.xsd", ReadContainer.BCFProject.ExtensionSchema);
                     }
                 }
             }

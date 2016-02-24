@@ -1,6 +1,6 @@
 ﻿using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -75,12 +75,12 @@ namespace iabi.BCF.Test.BCFTestCases
             // Check that all expected values are present
             foreach (var CurrentValue in Expected)
             {
-                Assert.IsTrue(Actual.Contains(CurrentValue), "Value: " + CurrentValue + " is missing in actual list of name: " + ListName);
+                Assert.True(Actual.Contains(CurrentValue), "Value: " + CurrentValue + " is missing in actual list of name: " + ListName);
             }
             // Check that no additional values are present
             foreach (var CurrentValue in Actual)
             {
-                Assert.IsTrue(Expected.Contains(CurrentValue), "Value: " + CurrentValue + " is missing in expected list of name: " + ListName + " but present in actual list.");
+                Assert.True(Expected.Contains(CurrentValue), "Value: " + CurrentValue + " is missing in expected list of name: " + ListName + " but present in actual list.");
             }
         }
 
@@ -89,14 +89,14 @@ namespace iabi.BCF.Test.BCFTestCases
             // Check that all files from the expected container are present
             foreach (var CurrentFile in ExpectedContainer.FileAttachments)
             {
-                Assert.IsTrue(ActualContainer.FileAttachments.ContainsKey(CurrentFile.Key), "Missing file: " + CurrentFile.Key + " in actual container.");
-                Assert.IsTrue(ExpectedContainer.FileAttachments[CurrentFile.Key].SequenceEqual(ActualContainer.FileAttachments[CurrentFile.Key]), "File: " + CurrentFile.Key + " binary different in actual container");
+                Assert.True(ActualContainer.FileAttachments.ContainsKey(CurrentFile.Key), "Missing file: " + CurrentFile.Key + " in actual container.");
+                Assert.True(ExpectedContainer.FileAttachments[CurrentFile.Key].SequenceEqual(ActualContainer.FileAttachments[CurrentFile.Key]), "File: " + CurrentFile.Key + " binary different in actual container");
             }
 
             // Check that no file attachments were added
             foreach (var CurrentFile in ActualContainer.FileAttachments)
             {
-                Assert.IsTrue(ExpectedContainer.FileAttachments.ContainsKey(CurrentFile.Key));
+                Assert.True(ExpectedContainer.FileAttachments.ContainsKey(CurrentFile.Key));
             }
         }
 
@@ -112,10 +112,10 @@ namespace iabi.BCF.Test.BCFTestCases
             {
                 if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFProject.Project, ActualContainer.BCFProject.Project, "BCFProject.Project"))
                 {
-                    Assert.AreEqual(ExpectedContainer.BCFProject.Project.Name, ActualContainer.BCFProject.Project.Name, "Project Name doesnt match");
-                    Assert.AreEqual(ExpectedContainer.BCFProject.Project.ProjectId, ActualContainer.BCFProject.Project.ProjectId, "Project ProjectId doesnt match");
+                    Assert.Equal(ExpectedContainer.BCFProject.Project.Name, ActualContainer.BCFProject.Project.Name);
+                    Assert.Equal(ExpectedContainer.BCFProject.Project.ProjectId, ActualContainer.BCFProject.Project.ProjectId);
                 }
-                Assert.AreEqual(ExpectedContainer.BCFProject.ExtensionSchema, ActualContainer.BCFProject.ExtensionSchema);
+                Assert.Equal(ExpectedContainer.BCFProject.ExtensionSchema, ActualContainer.BCFProject.ExtensionSchema);
             }
 
             // Compare version
@@ -123,11 +123,11 @@ namespace iabi.BCF.Test.BCFTestCases
             {
                 if (ExpectedContainer.BCFVersionInfo.VersionId.Contains("2.0"))
                 {
-                    Assert.IsTrue(ActualContainer.BCFVersionInfo.VersionId.Contains("2.0"));
+                    Assert.True(ActualContainer.BCFVersionInfo.VersionId.Contains("2.0"));
                 }
                 else
                 {
-                    Assert.Fail("Unrecognized VersionId");
+                    Assert.True(false, "Unrecognized VersionId");
                 }
             }
         }
@@ -146,11 +146,11 @@ namespace iabi.BCF.Test.BCFTestCases
         {
             if (ExpectedObject == null && ActualObject != null)
             {
-                Assert.Fail("Parameter: " + ParameterName + "; Expected is null but actual is present.");
+                Assert.True(false, "Parameter: " + ParameterName + "; Expected is null but actual is present.");
             }
             else if (ExpectedObject != null && ActualObject == null)
             {
-                Assert.Fail("Parameter: " + ParameterName + "; Actual is null but Expected is present.");
+                Assert.True(false, "Parameter: " + ParameterName + "; Actual is null but Expected is present.");
             }
             return ExpectedObject != null;
         }
@@ -211,7 +211,7 @@ namespace iabi.BCF.Test.BCFTestCases
 
                 if (!FilePresent)
                 {
-                    Assert.Fail("File: \"" + CurrentExpectedFile.FullName + "\" not present in created archive.");
+                    Assert.True(false, "File: \"" + CurrentExpectedFile.FullName + "\" not present in created archive.");
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace iabi.BCF.Test.BCFTestCases
             foreach (var ExpectedTopic in ExpectedContainer.Topics)
             {
                 // Make sure topic is present only one
-                Assert.AreEqual(1, ActualContainer.Topics.Where(Curr => Curr.Markup.Topic.Guid == ExpectedTopic.Markup.Topic.Guid).Count());
+                Assert.Equal(1, ActualContainer.Topics.Where(Curr => Curr.Markup.Topic.Guid == ExpectedTopic.Markup.Topic.Guid).Count());
                 var ActualTopic = ActualContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == ExpectedTopic.Markup.Topic.Guid);
                 CompareSingleTopic(ExpectedTopic, ActualTopic, ExpectedArchive, ActualArchive, OriginatesFromAPIConversion);
             }
@@ -268,11 +268,11 @@ namespace iabi.BCF.Test.BCFTestCases
             // Compare SnippetData
             if (ExpectedTopic.SnippetData != null)
             {
-                Assert.IsTrue(ExpectedTopic.SnippetData.SequenceEqual(ActualTopic.SnippetData));
+                Assert.True(ExpectedTopic.SnippetData.SequenceEqual(ActualTopic.SnippetData));
             }
             else
             {
-                Assert.IsNull(ActualTopic.SnippetData);
+                Assert.Null(ActualTopic.SnippetData);
             }
 
             // Compare Viewpoints
@@ -304,11 +304,11 @@ namespace iabi.BCF.Test.BCFTestCases
                         .Where(Curr => Curr.Reference == CurrentHeaderEntry.Reference)
                         .Count() == 1;
 
-                    Assert.IsTrue(FoundExactlyOneMatchignEntryInActual, "Found not matching header entry in actual file.");
+                    Assert.True(FoundExactlyOneMatchignEntryInActual, "Found not matching header entry in actual file.");
                 }
 
                 // Check that the both sections contain the same number of entries
-                Assert.AreEqual(ExpectedMarkup.Header.Count, ActualMarkup.Header.Count);
+                Assert.Equal(ExpectedMarkup.Header.Count, ActualMarkup.Header.Count);
             }
 
             CompareComments(ExpectedMarkup.Comment, ActualMarkup.Comment);
@@ -327,13 +327,13 @@ namespace iabi.BCF.Test.BCFTestCases
         public static void CompareViewpoints(List<ViewPoint> ExpectedViewpoints, List<ViewPoint> ActualViewpoints, ZipArchive ExpectedArchive, ZipArchive ActualArchive, string TopicGuid)
         {
             // Count Matches
-            Assert.AreEqual(ExpectedViewpoints.Count, ActualViewpoints.Count);
+            Assert.Equal(ExpectedViewpoints.Count, ActualViewpoints.Count);
 
             foreach (var ExpectedViewpoint in ExpectedViewpoints)
             {
                 var ActualViewpoint = ActualViewpoints.FirstOrDefault(Curr => Curr.Guid == ExpectedViewpoint.Guid);
 
-                Assert.AreEqual(ExpectedViewpoint.Guid, ActualViewpoint.Guid);
+                Assert.Equal(ExpectedViewpoint.Guid, ActualViewpoint.Guid);
                 if (ExpectedViewpoint.Snapshot != ActualViewpoint.Snapshot)
                 {
                     // This means the file reference to the snapshot is different; need to check it then in binary format
@@ -341,30 +341,30 @@ namespace iabi.BCF.Test.BCFTestCases
                     ExpectedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == TopicGuid + "/" + ExpectedViewpoint.Snapshot).Open().CopyTo(ExpectedViewpointSnapshotStream);
                     var ExpectedViewpointSnapshotBinary = ExpectedViewpointSnapshotStream.ToArray();
 
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(ActualViewpoint.Snapshot), "Viewpoint has no reference");
+                    Assert.False(string.IsNullOrWhiteSpace(ActualViewpoint.Snapshot));
                     var ActualViewpointEntry = ActualArchive.Entries.FirstOrDefault(Curr => Curr.FullName == TopicGuid + "/" + ActualViewpoint.Snapshot);
-                    Assert.IsNotNull(ActualViewpointEntry, "Viewpoint entry not found");
+                    Assert.NotNull(ActualViewpointEntry);
                     var ActualViewpointSnapshotStream = new MemoryStream();
                     ActualViewpointEntry.Open().CopyTo(ActualViewpointSnapshotStream);
                     var ActualViewpointSnapshotBinary = ActualViewpointSnapshotStream.ToArray();
 
-                    Assert.IsTrue(ExpectedViewpointSnapshotBinary.SequenceEqual(ActualViewpointSnapshotBinary));
+                    Assert.True(ExpectedViewpointSnapshotBinary.SequenceEqual(ActualViewpointSnapshotBinary));
                 }
-                Assert.AreEqual(ExpectedViewpoint.Viewpoint, ActualViewpoint.Viewpoint);
+                Assert.Equal(ExpectedViewpoint.Viewpoint, ActualViewpoint.Viewpoint);
             }
         }
 
         public static void CompareBimSnippet(BimSnippet Expected, BimSnippet Actual)
         {
-            Assert.AreEqual(Expected.isExternal, Actual.isExternal, "isExternal doesnt match");
-            Assert.AreEqual(Expected.Reference, Actual.Reference, "reference doesnt match");
-            Assert.AreEqual(Expected.ReferenceSchema, Actual.ReferenceSchema, "schema doesnt match");
-            Assert.AreEqual(Expected.SnippetType, Actual.SnippetType, "type doesnt match");
+            Assert.Equal(Expected.isExternal, Actual.isExternal);
+            Assert.Equal(Expected.Reference, Actual.Reference);
+            Assert.Equal(Expected.ReferenceSchema, Actual.ReferenceSchema);
+            Assert.Equal(Expected.SnippetType, Actual.SnippetType);
         }
 
         public static void CompareTopic(Topic ExpectedTopic, Topic ActualTopic)
         {
-            Assert.AreEqual(ExpectedTopic.AssignedTo, ActualTopic.AssignedTo);
+            Assert.Equal(ExpectedTopic.AssignedTo, ActualTopic.AssignedTo);
 
             // Compare Snippet
             if (TestCompareUtilities.BothNotNull(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet, "Markup.BimSnippet"))
@@ -375,7 +375,7 @@ namespace iabi.BCF.Test.BCFTestCases
             // Compare document references
             if (TestCompareUtilities.BothNotNull(ExpectedTopic.DocumentReferences, ActualTopic.DocumentReferences, "Markup.DocumentReferences"))
             {
-                Assert.AreEqual(ExpectedTopic.DocumentReferences.Count, ActualTopic.DocumentReferences.Count);
+                Assert.Equal(ExpectedTopic.DocumentReferences.Count, ActualTopic.DocumentReferences.Count);
 
                 foreach (var ExpectedDocumentReference in ExpectedTopic.DocumentReferences)
                 {
@@ -386,79 +386,79 @@ namespace iabi.BCF.Test.BCFTestCases
                         .Where(Curr => Curr.isExternal == ExpectedDocumentReference.isExternal)
                         .Where(Curr => Curr.ReferencedDocument == ExpectedDocumentReference.ReferencedDocument)
                         .FirstOrDefault();
-                    Assert.IsNotNull(ActualDocumentReference, "Missing matching document reference");
+                    Assert.NotNull(ActualDocumentReference);
                 }
             }
 
             // Check labels
             if (TestCompareUtilities.BothNotNull(ExpectedTopic.Labels, ActualTopic.Labels, "Markup.Labels"))
             {
-                Assert.AreEqual(ExpectedTopic.Labels.Count, ActualTopic.Labels.Count);
+                Assert.Equal(ExpectedTopic.Labels.Count, ActualTopic.Labels.Count);
                 foreach (var ExpectedLabel in ExpectedTopic.Labels)
                 {
-                    Assert.IsTrue(ActualTopic.Labels.Contains(ExpectedLabel));
+                    Assert.True(ActualTopic.Labels.Contains(ExpectedLabel));
                 }
             }
 
             // Check related topics
             if (TestCompareUtilities.BothNotNull(ExpectedTopic.RelatedTopics, ActualTopic.RelatedTopics, "Markup.RelatedTopics"))
             {
-                Assert.AreEqual(ExpectedTopic.RelatedTopics.Count, ActualTopic.RelatedTopics.Count);
+                Assert.Equal(ExpectedTopic.RelatedTopics.Count, ActualTopic.RelatedTopics.Count);
                 foreach (var ExpectedRelatedTopic in ExpectedTopic.RelatedTopics)
                 {
                     var ActualRelatedTopic = ActualTopic.RelatedTopics
                         .Where(Curr => Curr.Guid == ExpectedRelatedTopic.Guid)
                         .FirstOrDefault();
-                    Assert.IsNotNull(ActualRelatedTopic);
+                    Assert.NotNull(ActualRelatedTopic);
                 }
             }
 
-            Assert.AreEqual(ExpectedTopic.CreationAuthor, ActualTopic.CreationAuthor);
-            Assert.AreEqual(0, (int)(ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds);
-            Assert.AreEqual(ExpectedTopic.CreationDateSpecified, ActualTopic.CreationDateSpecified);
+            Assert.Equal(ExpectedTopic.CreationAuthor, ActualTopic.CreationAuthor);
+            Assert.Equal(0, (int)(ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds);
+            Assert.Equal(ExpectedTopic.CreationDateSpecified, ActualTopic.CreationDateSpecified);
 
             if (!(string.IsNullOrWhiteSpace(ExpectedTopic.Description) && string.IsNullOrWhiteSpace(ActualTopic.Description)))
             {
-                Assert.AreEqual(ExpectedTopic.Description, ActualTopic.Description);
+                Assert.Equal(ExpectedTopic.Description, ActualTopic.Description);
             }
-            Assert.AreEqual(ExpectedTopic.Guid, ActualTopic.Guid);
+            Assert.Equal(ExpectedTopic.Guid, ActualTopic.Guid);
 
             if (ExpectedTopic.Index != ActualTopic.Index)
             {
                 if (!(ExpectedTopic.Index != null && ExpectedTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ActualTopic.Index)
                     || ActualTopic.Index != null && ActualTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ExpectedTopic.Index)))
                 {
-                    Assert.Fail("Index does not match");
+                    Assert.True(false, "Index does not match");
                 }
             }
 
-            Assert.AreEqual(ExpectedTopic.ModifiedAuthor, ActualTopic.ModifiedAuthor);
-            Assert.AreEqual(ExpectedTopic.ModifiedDate, ActualTopic.ModifiedDate);
-            Assert.AreEqual(ExpectedTopic.ModifiedDateSpecified, ActualTopic.ModifiedDateSpecified);
-            Assert.AreEqual(ExpectedTopic.Priority, ActualTopic.Priority);
-            Assert.AreEqual(ExpectedTopic.ReferenceLink, ActualTopic.ReferenceLink);
-            Assert.AreEqual(ExpectedTopic.Title, ActualTopic.Title);
-            Assert.AreEqual(ExpectedTopic.TopicStatus, ActualTopic.TopicStatus);
-            Assert.AreEqual(ExpectedTopic.TopicType, ActualTopic.TopicType);
+            Assert.Equal(ExpectedTopic.ModifiedAuthor, ActualTopic.ModifiedAuthor);
+            Assert.Equal(ExpectedTopic.ModifiedDate, ActualTopic.ModifiedDate);
+            Assert.Equal(ExpectedTopic.ModifiedDateSpecified, ActualTopic.ModifiedDateSpecified);
+            Assert.Equal(ExpectedTopic.Priority, ActualTopic.Priority);
+            Assert.Equal(ExpectedTopic.ReferenceLink, ActualTopic.ReferenceLink);
+            Assert.Equal(ExpectedTopic.Title, ActualTopic.Title);
+            Assert.Equal(ExpectedTopic.TopicStatus, ActualTopic.TopicStatus);
+            Assert.Equal(ExpectedTopic.TopicType, ActualTopic.TopicType);
         }
 
         public static void CompareComments(List<Comment> ExpectedComments, List<Comment> ActualComments)
         {
             // Compare count
-            Assert.AreEqual(ExpectedComments.Count, ActualComments.Count, "Comment count in markup differs.");
+            Assert.Equal(ExpectedComments.Count, ActualComments.Count);
 
             foreach (var ExpectedComment in ExpectedComments)
             {
                 // Get actual comment
                 var ActualComment = ActualComments.FirstOrDefault(Curr => Curr.Guid == ExpectedComment.Guid);
-                Assert.IsNotNull(ActualComment, "Did not find matching comment in actual file.");
+                Assert.NotNull(ActualComment);
                 CompareSingleComment(ExpectedComment, ActualComment);
             }
         }
 
         public static void CompareSingleComment(Comment ExpectedComment, Comment ActualComment)
         {
-            Assert.AreEqual(ExpectedComment.Author, ActualComment.Author, "No match in comment: Author");
+            Assert.Equal(ExpectedComment.Author, ActualComment.Author);
 
             var CommentTextMatches = ExpectedComment.Comment1 == ActualComment.Comment1;
             if (!CommentTextMatches)
@@ -466,35 +466,35 @@ namespace iabi.BCF.Test.BCFTestCases
                 // It's possible that there is no actual comment text but the XML file does have the <Comment> element with an empty value
                 CommentTextMatches = string.IsNullOrWhiteSpace(ExpectedComment.Comment1) && string.IsNullOrWhiteSpace(ActualComment.Comment1);
             }
-            Assert.IsTrue(CommentTextMatches, "No match in comment: Comment1");
+            Assert.True(CommentTextMatches, "No match in comment: Comment1");
 
-            Assert.AreEqual(ExpectedComment.Date, ActualComment.Date, "No match in comment: Date");
-            Assert.AreEqual(ExpectedComment.Guid, ActualComment.Guid, "No match in comment: Guid");
-            Assert.AreEqual(ExpectedComment.ModifiedAuthor, ActualComment.ModifiedAuthor, "No match in comment: ModifiedAuthor");
-            Assert.AreEqual(ExpectedComment.ModifiedDate, ActualComment.ModifiedDate, "No match in comment: ModifiedDate");
-            Assert.AreEqual(ExpectedComment.ModifiedDateSpecified, ActualComment.ModifiedDateSpecified, "No match in comment: ModifiedDateSpecified");
+            Assert.Equal(ExpectedComment.Date, ActualComment.Date);
+            Assert.Equal(ExpectedComment.Guid, ActualComment.Guid);
+            Assert.Equal(ExpectedComment.ModifiedAuthor, ActualComment.ModifiedAuthor);
+            Assert.Equal(ExpectedComment.ModifiedDate, ActualComment.ModifiedDate);
+            Assert.Equal(ExpectedComment.ModifiedDateSpecified, ActualComment.ModifiedDateSpecified);
 
             if (ExpectedComment.ShouldSerializeReplyToComment())
             {
-                Assert.IsTrue(ActualComment.ShouldSerializeReplyToComment());
-                Assert.AreEqual(ExpectedComment.ReplyToComment.Guid, ActualComment.ReplyToComment.Guid, "No match in comment: ReplyToComment");
+                Assert.True(ActualComment.ShouldSerializeReplyToComment());
+                Assert.Equal(ExpectedComment.ReplyToComment.Guid, ActualComment.ReplyToComment.Guid);
             }
             else
             {
-                Assert.IsFalse(ActualComment.ShouldSerializeReplyToComment());
+                Assert.False(ActualComment.ShouldSerializeReplyToComment());
             }
 
-            Assert.AreEqual(ExpectedComment.Status, ActualComment.Status, "No match in comment: Status");
-            Assert.AreEqual(ExpectedComment.VerbalStatus, ActualComment.VerbalStatus, "No match in comment: VerbalStatus");
+            Assert.Equal(ExpectedComment.Status, ActualComment.Status);
+            Assert.Equal(ExpectedComment.VerbalStatus, ActualComment.VerbalStatus);
 
             if (ExpectedComment.ShouldSerializeViewpoint())
             {
-                Assert.IsTrue(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
-                Assert.AreEqual(ExpectedComment.Viewpoint.Guid, ActualComment.Viewpoint.Guid, "No match in comment: Viewpoint");
+                Assert.True(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
+                Assert.Equal(ExpectedComment.Viewpoint.Guid, ActualComment.Viewpoint.Guid);
             }
             else
             {
-                Assert.IsFalse(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
+                Assert.False(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
             }
         }
 
@@ -509,7 +509,7 @@ namespace iabi.BCF.Test.BCFTestCases
             foreach (var ExpectedViewpoint in ExpectedViewpoints)
             {
                 var ActualViewpoint = ActualViewpoints.FirstOrDefault(Curr => Curr.GUID == ExpectedViewpoint.GUID);
-                Assert.IsNotNull(ActualViewpoint, "Found no matching viewpoint for expected viewpoint with guid " + ExpectedViewpoint.GUID);
+                Assert.NotNull(ActualViewpoint);
                 CompareSingleViewpoints(ExpectedViewpoint, ActualViewpoint, OriginatesFromAPIConversion);
             }
         }
@@ -522,12 +522,12 @@ namespace iabi.BCF.Test.BCFTestCases
         /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
         public static void CompareSingleViewpoints(VisualizationInfo ExpectedViewpoint, VisualizationInfo ActualViewpoint, bool OriginatesFromAPIConversion)
         {
-            Assert.AreEqual(ExpectedViewpoint.GUID, ActualViewpoint.GUID, "Viewpoint Guids dont match");
+            Assert.Equal(ExpectedViewpoint.GUID, ActualViewpoint.GUID);
 
             // Compare Bitmaps
             if (!OriginatesFromAPIConversion && TestCompareUtilities.BothNotNull(ExpectedViewpoint.Bitmaps, ActualViewpoint.Bitmaps, "Viewpoint.Bitmaps"))
             {
-                Assert.AreEqual(ExpectedViewpoint.Bitmaps.Count, ActualViewpoint.Bitmaps.Count, "Bitmaps count doesnt match");
+                Assert.Equal(ExpectedViewpoint.Bitmaps.Count, ActualViewpoint.Bitmaps.Count);
                 foreach (var ExpectedBitmap in ExpectedViewpoint.Bitmaps)
                 {
                     var ActualBitmap = ActualViewpoint.Bitmaps
@@ -544,7 +544,7 @@ namespace iabi.BCF.Test.BCFTestCases
                         .Where(Curr => Curr.Up.Y == ExpectedBitmap.Up.Y)
                         .Where(Curr => Curr.Up.Z == ExpectedBitmap.Up.Z)
                         .FirstOrDefault();
-                    Assert.IsNotNull(ActualViewpoint, "Did not find a matching bitmap");
+                    Assert.NotNull(ActualViewpoint);
                 }
             }
 
@@ -556,12 +556,12 @@ namespace iabi.BCF.Test.BCFTestCases
                     var ExpectedComponent = ExpectedViewpoint.Components.First();
                     var ActualComponent = ActualViewpoint.Components.First();
 
-                    Assert.AreEqual(ExpectedComponent.AuthoringToolId, ActualComponent.AuthoringToolId, "AuthoringToolId");
-                    Assert.IsTrue((ExpectedComponent.Color == null && ActualComponent.Color == null) || ExpectedComponent.Color.SequenceEqual(ActualComponent.Color), "Color");
-                    Assert.AreEqual(ExpectedComponent.IfcGuid, ActualComponent.IfcGuid, "IfcGuid");
-                    Assert.AreEqual(ExpectedComponent.OriginatingSystem, ActualComponent.OriginatingSystem, "OriginatingSystem");
-                    Assert.AreEqual(ExpectedComponent.Selected, ActualComponent.Selected, "Selected");
-                    Assert.AreEqual(ExpectedComponent.Visible, ActualComponent.Visible, "Visible");
+                    Assert.Equal(ExpectedComponent.AuthoringToolId, ActualComponent.AuthoringToolId);
+                    Assert.True((ExpectedComponent.Color == null && ActualComponent.Color == null) || ExpectedComponent.Color.SequenceEqual(ActualComponent.Color), "Color");
+                    Assert.Equal(ExpectedComponent.IfcGuid, ActualComponent.IfcGuid);
+                    Assert.Equal(ExpectedComponent.OriginatingSystem, ActualComponent.OriginatingSystem);
+                    Assert.Equal(ExpectedComponent.Selected, ActualComponent.Selected);
+                    Assert.Equal(ExpectedComponent.Visible, ActualComponent.Visible);
                 }
                 else
                 {
@@ -576,7 +576,7 @@ namespace iabi.BCF.Test.BCFTestCases
                             .Where(Curr => Curr.Visible == CurrentComponent.Visible)
                             .FirstOrDefault();
 
-                        Assert.IsNotNull(ActualComponent, "Did not find a matching component");
+                        Assert.NotNull(ActualComponent);
                     }
                 }
             }
@@ -594,7 +594,7 @@ namespace iabi.BCF.Test.BCFTestCases
                         .Where(Curr => Curr.StartPoint.Y == ExpectedLine.StartPoint.Y)
                         .Where(Curr => Curr.StartPoint.Z == ExpectedLine.StartPoint.Z)
                         .FirstOrDefault();
-                    Assert.IsNotNull(ActualLine, "Did not find a matching line");
+                    Assert.NotNull(ActualLine);
                 }
             }
 
@@ -611,7 +611,7 @@ namespace iabi.BCF.Test.BCFTestCases
                         .Where(Curr => Curr.Location.Y == ExpectedPlane.Location.Y)
                         .Where(Curr => Curr.Location.Z == ExpectedPlane.Location.Z)
                         .FirstOrDefault();
-                    Assert.IsNotNull(ActualPlane);
+                    Assert.NotNull(ActualPlane);
                 }
             }
 
@@ -629,30 +629,30 @@ namespace iabi.BCF.Test.BCFTestCases
 
         public static void CompareOrthogonalCameras(OrthogonalCamera Expected, OrthogonalCamera Actual)
         {
-            Assert.AreEqual(Expected.ViewToWorldScale, Actual.ViewToWorldScale, "ViewToWorldScale wrong");
-            Assert.AreEqual(Expected.CameraDirection.X, Actual.CameraDirection.X, "Dir x wrong");
-            Assert.AreEqual(Expected.CameraDirection.Y, Actual.CameraDirection.Y, "Dir y wrong");
-            Assert.AreEqual(Expected.CameraDirection.Z, Actual.CameraDirection.Z, "Dir z wrong");
-            Assert.AreEqual(Expected.CameraUpVector.X, Actual.CameraUpVector.X, "up x wrong");
-            Assert.AreEqual(Expected.CameraUpVector.Y, Actual.CameraUpVector.Y, "up y wrong");
-            Assert.AreEqual(Expected.CameraUpVector.Z, Actual.CameraUpVector.Z, "up z wrong");
-            Assert.AreEqual(Expected.CameraViewPoint.X, Actual.CameraViewPoint.X, "viewpoint x wrong");
-            Assert.AreEqual(Expected.CameraViewPoint.Y, Actual.CameraViewPoint.Y, "viewpoint y wrong");
-            Assert.AreEqual(Expected.CameraViewPoint.Z, Actual.CameraViewPoint.Z, "viewpoint z wrong");
+            Assert.Equal(Expected.ViewToWorldScale, Actual.ViewToWorldScale);
+            Assert.Equal(Expected.CameraDirection.X, Actual.CameraDirection.X);
+            Assert.Equal(Expected.CameraDirection.Y, Actual.CameraDirection.Y);
+            Assert.Equal(Expected.CameraDirection.Z, Actual.CameraDirection.Z);
+            Assert.Equal(Expected.CameraUpVector.X, Actual.CameraUpVector.X);
+            Assert.Equal(Expected.CameraUpVector.Y, Actual.CameraUpVector.Y);
+            Assert.Equal(Expected.CameraUpVector.Z, Actual.CameraUpVector.Z);
+            Assert.Equal(Expected.CameraViewPoint.X, Actual.CameraViewPoint.X);
+            Assert.Equal(Expected.CameraViewPoint.Y, Actual.CameraViewPoint.Y);
+            Assert.Equal(Expected.CameraViewPoint.Z, Actual.CameraViewPoint.Z);
         }
 
         public static void ComparePerspectiveCameras(PerspectiveCamera Expected, PerspectiveCamera Actual)
         {
-            Assert.AreEqual(Expected.FieldOfView, Actual.FieldOfView, "FoV wrong");
-            Assert.AreEqual(Expected.CameraDirection.X, Actual.CameraDirection.X, "Dir x wrong");
-            Assert.AreEqual(Expected.CameraDirection.Y, Actual.CameraDirection.Y, "Dir y wrong");
-            Assert.AreEqual(Expected.CameraDirection.Z, Actual.CameraDirection.Z, "Dir z wrong");
-            Assert.AreEqual(Expected.CameraUpVector.X, Actual.CameraUpVector.X, "up x wrong");
-            Assert.AreEqual(Expected.CameraUpVector.Y, Actual.CameraUpVector.Y, "up y wrong");
-            Assert.AreEqual(Expected.CameraUpVector.Z, Actual.CameraUpVector.Z, "up z wrong");
-            Assert.AreEqual(Expected.CameraViewPoint.X, Actual.CameraViewPoint.X, "viewpoint x wrong");
-            Assert.AreEqual(Expected.CameraViewPoint.Y, Actual.CameraViewPoint.Y, "viewpoint y wrong");
-            Assert.AreEqual(Expected.CameraViewPoint.Z, Actual.CameraViewPoint.Z, "viewpoint z wrong");
+            Assert.Equal(Expected.FieldOfView, Actual.FieldOfView);
+            Assert.Equal(Expected.CameraDirection.X, Actual.CameraDirection.X);
+            Assert.Equal(Expected.CameraDirection.Y, Actual.CameraDirection.Y);
+            Assert.Equal(Expected.CameraDirection.Z, Actual.CameraDirection.Z);
+            Assert.Equal(Expected.CameraUpVector.X, Actual.CameraUpVector.X);
+            Assert.Equal(Expected.CameraUpVector.Y, Actual.CameraUpVector.Y);
+            Assert.Equal(Expected.CameraUpVector.Z, Actual.CameraUpVector.Z);
+            Assert.Equal(Expected.CameraViewPoint.X, Actual.CameraViewPoint.X);
+            Assert.Equal(Expected.CameraViewPoint.Y, Actual.CameraViewPoint.Y);
+            Assert.Equal(Expected.CameraViewPoint.Z, Actual.CameraViewPoint.Z);
         }
 
         public static void CompareViewpointBitmaps(Dictionary<VisualizationInfo, List<byte[]>> ExpectedBitmaps, Dictionary<VisualizationInfo, List<byte[]>> ActualBitmaps)
@@ -662,7 +662,7 @@ namespace iabi.BCF.Test.BCFTestCases
                 var ActualBitmap = ActualBitmaps[ActualBitmaps.Keys.FirstOrDefault(Curr => Curr.GUID == ExpectedBitmap.Key.GUID)];
                 foreach (var ExpectedBitmapSingleByte in ExpectedBitmap.Value)
                 {
-                    Assert.IsTrue(ActualBitmap.Any(Curr => Curr.SequenceEqual(ExpectedBitmapSingleByte)), "Did not find matching bitmap binary data");
+                    Assert.True(ActualBitmap.Any(Curr => Curr.SequenceEqual(ExpectedBitmapSingleByte)), "Did not find matching bitmap binary data");
                 }
             }
         }
@@ -671,7 +671,7 @@ namespace iabi.BCF.Test.BCFTestCases
         {
             foreach (var ExpectedSnapshot in ExpectedSnapshots)
             {
-                Assert.IsTrue(ExpectedSnapshot.Value.SequenceEqual(ActualSnapshots[ExpectedSnapshot.Key]), "Did not find matching snapshot binary data");
+                Assert.True(ExpectedSnapshot.Value.SequenceEqual(ActualSnapshots[ExpectedSnapshot.Key]), "Did not find matching snapshot binary data");
             }
         }
     }

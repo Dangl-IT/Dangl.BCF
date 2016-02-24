@@ -3,19 +3,19 @@ using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Converter;
 using iabi.BCF.Test.BCFTestCases;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Linq;
 
 namespace iabi.Test.BCF_REST_API.Converter
 {
-    [TestClass]
+     
     public class PhysicalFromAPI
     {
-        [TestClass]
+         
         public class SnapshotConversion
         {
-            [TestMethod]
+            [Fact]
             public void ReadSnapshotInfo()
             {
                 var APIContainerInstance = new APIContainer();
@@ -28,47 +28,47 @@ namespace iabi.Test.BCF_REST_API.Converter
                 var ReadContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(APIContainerInstance);
 
                 // Viewpoint present
-                Assert.IsNotNull(ReadContainer.Topics.First().Viewpoints.First());
-                Assert.IsTrue(ReadContainer.Topics.First().ViewpointSnapshots.ContainsKey(ReadContainer.Topics.First().Viewpoints.First().GUID));
+                Assert.NotNull(ReadContainer.Topics.First().Viewpoints.First());
+                Assert.True(ReadContainer.Topics.First().ViewpointSnapshots.ContainsKey(ReadContainer.Topics.First().Viewpoints.First().GUID));
 
                 // Viewpoint set in markup
                 var MarkupEntry = ReadContainer.Topics.First().Markup.Viewpoints.FirstOrDefault();
-                Assert.IsNotNull(MarkupEntry);
-                Assert.AreEqual(ReadContainer.Topics.First().Viewpoints.First().GUID, MarkupEntry.Guid);
+                Assert.NotNull(MarkupEntry);
+                Assert.Equal(ReadContainer.Topics.First().Viewpoints.First().GUID, MarkupEntry.Guid);
             }
         }
 
-        [TestClass]
+         
         public class ExtensionsConversion
         {
-            [TestMethod]
+            [Fact]
             public void DontCreateExtensionsWhenNotPresent()
             {
                 APIContainer Instance = new APIContainer();
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
-                Assert.IsNull(BCFv2Instance.ProjectExtensions);
+                Assert.Null(BCFv2Instance.ProjectExtensions);
             }
 
-            [TestMethod]
+            [Fact]
             public void DontCreateExtensionsWhenPresent_ButEmpty()
             {
                 APIContainer Instance = new APIContainer();
                 Instance.Extensions = new BCF.APIObjects.Extensions.extensions_GET();
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
-                Assert.IsNull(BCFv2Instance.ProjectExtensions);
+                Assert.Null(BCFv2Instance.ProjectExtensions);
             }
 
-            [TestMethod]
+            [Fact]
             public void CreateExtensionsWhenPresent()
             {
                 APIContainer Instance = new APIContainer();
                 Instance.Extensions = new BCF.APIObjects.Extensions.extensions_GET();
                 Instance.Extensions.user_id_type.Add("Some value");
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
-                Assert.IsNotNull(BCFv2Instance.ProjectExtensions);
+                Assert.NotNull(BCFv2Instance.ProjectExtensions);
             }
 
-            [TestMethod]
+            [Fact]
             public void CreatedExtensionsMatch()
             {
                 APIContainer Instance = new APIContainer();
@@ -94,45 +94,45 @@ namespace iabi.Test.BCF_REST_API.Converter
 
             private void CompareExtensions(extensions_GET ExpectedExtensions, Extensions_XSD ActualExtensions)
             {
-                Assert.IsTrue(ExpectedExtensions.priority.SequenceEqual(ActualExtensions.Priority));
-                Assert.IsTrue(ExpectedExtensions.snippet_type.SequenceEqual(ActualExtensions.SnippetType));
-                Assert.IsTrue(ExpectedExtensions.topic_label.SequenceEqual(ActualExtensions.TopicLabel));
-                Assert.IsTrue(ExpectedExtensions.topic_status.SequenceEqual(ActualExtensions.TopicStatus));
-                Assert.IsTrue(ExpectedExtensions.topic_type.SequenceEqual(ActualExtensions.TopicType));
-                Assert.IsTrue(ExpectedExtensions.user_id_type.SequenceEqual(ActualExtensions.UserIdType));
+                Assert.True(ExpectedExtensions.priority.SequenceEqual(ActualExtensions.Priority));
+                Assert.True(ExpectedExtensions.snippet_type.SequenceEqual(ActualExtensions.SnippetType));
+                Assert.True(ExpectedExtensions.topic_label.SequenceEqual(ActualExtensions.TopicLabel));
+                Assert.True(ExpectedExtensions.topic_status.SequenceEqual(ActualExtensions.TopicStatus));
+                Assert.True(ExpectedExtensions.topic_type.SequenceEqual(ActualExtensions.TopicType));
+                Assert.True(ExpectedExtensions.user_id_type.SequenceEqual(ActualExtensions.UserIdType));
             }
         }
 
-        [TestClass]
+         
         public class GeneralTests
         {
-            [TestMethod]
+            [Fact]
             public void ConvertEmptyContainer()
             {
                 var APIContainerInstance = new APIContainer();
                 var ReadContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(APIContainerInstance);
                 //var ReadContainer = new iabi.BCF.Converter.PhysicalFromAPI(APIContainerInstance).BCFv2;
-                Assert.IsNotNull(ReadContainer);
+                Assert.NotNull(ReadContainer);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentNullException))]
+            [Fact]
             public void ConvertContainerWithEmptyViewpoint()
             {
                 var APIContainerInstance = new APIContainer();
                 APIContainerInstance.Topics.Add(new TopicContainer());
                 APIContainerInstance.Topics.First().Viewpoints.Add(new ViewpointContainer());
 
-                var ReadContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(APIContainerInstance);
-                //var ReadContainer = new iabi.BCF.Converter.PhysicalFromAPI(APIContainerInstance).BCFv2;
-                Assert.IsNotNull(ReadContainer);
+                Assert.Throws(typeof (ArgumentNullException), () =>
+                {
+                    var ReadContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(APIContainerInstance);
+                });
             }
         }
 
-        [TestClass]
+         
         public class TopicInformation
         {
-            [TestMethod]
+            [Fact]
             public void NoModifiedInfoWhenNotPresent()
             {
                 APIContainer Instance = new APIContainer();
@@ -140,11 +140,11 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Topic = new BCF.APIObjects.Topic.topic_GET();
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.IsTrue(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor));
-                Assert.IsFalse(BCFv2Instance.Topics.First().Markup.Topic.ModifiedDateSpecified);
+                Assert.True(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor));
+                Assert.False(BCFv2Instance.Topics.First().Markup.Topic.ModifiedDateSpecified);
             }
 
-            [TestMethod]
+            [Fact]
             public void ModifiedInfoWhenSpecified_01()
             {
                 APIContainer Instance = new APIContainer();
@@ -154,11 +154,11 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Topic.modified_date = new DateTime(2015, 06, 06, 15, 47, 18);
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.AreEqual("Georg", BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor);
-                Assert.AreEqual(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Topic.ModifiedDate);
+                Assert.Equal("Georg", BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor);
+                Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Topic.ModifiedDate);
             }
 
-            [TestMethod]
+            [Fact]
             public void ModifiedInfoWhenSpecified_02()
             {
                 APIContainer Instance = new APIContainer();
@@ -167,11 +167,11 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Topic.modified_date = new DateTime(2015, 06, 06, 15, 47, 18);
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.IsTrue(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor));
-                Assert.AreEqual(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Topic.ModifiedDate);
+                Assert.True(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor));
+                Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Topic.ModifiedDate);
             }
 
-            [TestMethod]
+            [Fact]
             public void ModifiedInfoWhenSpecified_03()
             {
                 APIContainer Instance = new APIContainer();
@@ -180,15 +180,15 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Topic.modified_author = "Georg";
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.AreEqual("Georg", BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor);
-                Assert.IsFalse(BCFv2Instance.Topics.First().Markup.Topic.ModifiedDateSpecified);
+                Assert.Equal("Georg", BCFv2Instance.Topics.First().Markup.Topic.ModifiedAuthor);
+                Assert.False(BCFv2Instance.Topics.First().Markup.Topic.ModifiedDateSpecified);
             }
         }
 
-        [TestClass]
+         
         public class CommentInformation
         {
-            [TestMethod]
+            [Fact]
             public void NoModifiedInfoWhenNotPresent()
             {
                 APIContainer Instance = new APIContainer();
@@ -197,11 +197,11 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Comments.Add(new BCF.APIObjects.Comment.comment_GET());
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.IsTrue(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor));
-                Assert.IsFalse(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDateSpecified);
+                Assert.True(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor));
+                Assert.False(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDateSpecified);
             }
 
-            [TestMethod]
+            [Fact]
             public void ModifiedInfoWhenSpecified_01()
             {
                 APIContainer Instance = new APIContainer();
@@ -212,11 +212,11 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Comments.First().modified_date = new DateTime(2015, 06, 06, 15, 47, 18);
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.AreEqual("Georg", BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor);
-                Assert.AreEqual(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDate);
+                Assert.Equal("Georg", BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor);
+                Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDate);
             }
 
-            [TestMethod]
+            [Fact]
             public void ModifiedInfoWhenSpecified_02()
             {
                 APIContainer Instance = new APIContainer();
@@ -226,11 +226,11 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Comments.First().modified_date = new DateTime(2015, 06, 06, 15, 47, 18);
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.IsTrue(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor));
-                Assert.AreEqual(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDate);
+                Assert.True(string.IsNullOrWhiteSpace(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor));
+                Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDate);
             }
 
-            [TestMethod]
+            [Fact]
             public void ModifiedInfoWhenSpecified_03()
             {
                 APIContainer Instance = new APIContainer();
@@ -240,8 +240,8 @@ namespace iabi.Test.BCF_REST_API.Converter
                 Instance.Topics.First().Comments.First().modified_author = "Georg";
                 var BCFv2Instance = iabi.BCF.Converter.PhysicalFromAPI.Convert(Instance);
                 //var BCFv2Instance = new iabi.BCF.Converter.PhysicalFromAPI(Instance).BCFv2;
-                Assert.AreEqual("Georg", BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor);
-                Assert.IsFalse(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDateSpecified);
+                Assert.Equal("Georg", BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedAuthor);
+                Assert.False(BCFv2Instance.Topics.First().Markup.Comment.First().ModifiedDateSpecified);
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using iabi.BCF.BCFv2;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -8,33 +8,32 @@ using System.Xml.Linq;
 
 namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 {
-    [TestClass]
+     
     public class ExtensionSchemaTest
     {
         public static BCFv2Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-        [ClassInitialize]
-        public static void Create(TestContext GivenContext)
+                public static void Create()
         {
             CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExtensionSchema);
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ExtensionSchema_TestCaseName, BCFTestCaseData.ExtensionSchema_Readme);
         }
 
-        [TestMethod]
+        [Fact]
         public void ContainerPresent()
         {
-            Assert.IsNotNull(CreatedContainer);
+            Assert.NotNull(CreatedContainer);
         }
 
-        [TestMethod]
+        [Fact]
         public void ZipPresent()
         {
-            Assert.IsNotNull(CreatedArchive);
+            Assert.NotNull(CreatedArchive);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckIfFilesPresent()
         {
             var ExpectedFilesList = new string[] {
@@ -48,7 +47,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             {
                 if (!ExpectedFilesList.Contains(CurrentEntry.FullName))
                 {
-                    Assert.Fail("Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
                 }
             }
 
@@ -56,30 +55,30 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
             {
                 if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
                 {
-                    Assert.Fail("Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckThatNoProjectWasWritten()
         {
             var ProjectEntry = CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "project.bcfp");
-            Assert.IsFalse(XmlUtilities.ElementNameInXml(ProjectEntry.Open(), "Project"));
+            Assert.False(XmlUtilities.ElementNameInXml(ProjectEntry.Open(), "Project"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckThatExtensionsIsReferenced()
         {
             var ProjectXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "project.bcfp");
-            Assert.IsTrue(ProjectXml.DescendantNodes().OfType<XElement>().Any(Curr =>
+            Assert.True(ProjectXml.DescendantNodes().OfType<XElement>().Any(Curr =>
                 Curr.Name.LocalName == "ExtensionSchema" &&
                 Curr.DescendantNodes().Count() == 1
                 && Curr.DescendantNodes().First().NodeType == System.Xml.XmlNodeType.Text
                 && ((XText)Curr.DescendantNodes().First()).Value == "extensions.xsd"));
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckTopicTypes()
         {
             var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
@@ -96,11 +95,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
             var AllTypesPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
             var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.IsTrue(AllTypesPresent);
-            Assert.IsTrue(NothingSuperfluousPresent);
+            Assert.True(AllTypesPresent);
+            Assert.True(NothingSuperfluousPresent);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckTopicStati()
         {
             var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
@@ -116,11 +115,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
             var AllPresent = Values.All(Curr => TopicStati.Contains(Curr));
             var NothingSuperfluousPresent = TopicStati.All(Curr => Values.Contains(Curr));
-            Assert.IsTrue(AllPresent);
-            Assert.IsTrue(NothingSuperfluousPresent);
+            Assert.True(AllPresent);
+            Assert.True(NothingSuperfluousPresent);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckTopicLabels()
         {
             var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
@@ -136,11 +135,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
             var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
             var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.IsTrue(AllPresent);
-            Assert.IsTrue(NothingSuperfluousPresent);
+            Assert.True(AllPresent);
+            Assert.True(NothingSuperfluousPresent);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckSnippetTypes()
         {
             var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
@@ -156,11 +155,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
             var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
             var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.IsTrue(AllPresent);
-            Assert.IsTrue(NothingSuperfluousPresent);
+            Assert.True(AllPresent);
+            Assert.True(NothingSuperfluousPresent);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckPriority()
         {
             var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
@@ -176,11 +175,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
             var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
             var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.IsTrue(AllPresent);
-            Assert.IsTrue(NothingSuperfluousPresent);
+            Assert.True(AllPresent);
+            Assert.True(NothingSuperfluousPresent);
         }
 
-        [TestMethod]
+        [Fact]
         public void CheckUserIdType()
         {
             var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
@@ -196,11 +195,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
             var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
             var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.IsTrue(AllPresent);
-            Assert.IsTrue(NothingSuperfluousPresent);
+            Assert.True(AllPresent);
+            Assert.True(NothingSuperfluousPresent);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadExtensionSchema()
         {
             using (var MemStream = new MemoryStream())
@@ -210,11 +209,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
 
                 var ReadContainer = BCFv2Container.ReadStream(MemStream);
 
-                Assert.IsNotNull(ReadContainer.ProjectExtensions);
+                Assert.NotNull(ReadContainer.ProjectExtensions);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadWriteAndCompare()
         {
             using (var MemStream = new MemoryStream())

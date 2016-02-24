@@ -1,28 +1,29 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using System;
 using System.Linq;
 
 namespace iabi.BCF.Test.BCFTestCases.APIConversion
 {
-    [TestClass]
+     
     public class Converter
     {
-        [TestMethod]
-        public void ConvertAllTestCases()
+        [Fact]
+        [MemberData(nameof(TestCasesContainer))]
+        public void ConvertAllTestCases(ContainerAndName input)
         {
+            // TODO MAKE THIS WITH A MEMBERYDATA
             foreach (var CurrentContainer in TestCaseProvider.GetAllContainersFromTestCases())
             {
-                try
-                {
                     var ConvertedToApi = iabi.BCF.Converter.APIFromPhysical.Convert(CurrentContainer.Container);
                     var ConvertedBackToPhysical = iabi.BCF.Converter.PhysicalFromAPI.Convert(ConvertedToApi);
                     CompareTool.CompareContainers(CurrentContainer.Container, ConvertedBackToPhysical, null, null, true);
-                }
-                catch (AssertFailedException FailedAssertException)
-                {
-                    throw new AssertFailedException("Failed in test case: " + CurrentContainer.TestName + Environment.NewLine + FailedAssertException.Message, FailedAssertException);
-                }
             }
+        }
+
+        private static object[] _TestCasesContainer;
+        private static object[] TestCasesContainer
+        {
+            get { return _TestCasesContainer ?? (_TestCasesContainer = TestCaseProvider.GetAllContainersFromTestCases().Select(container => new[] {container}).ToArray()); }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using iabi.BCF.BCFv2;
 using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -17,31 +17,30 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
      *
      */
 
-    [TestClass]
+     
     public class OrthogonalCameraTest
     {
         public static BCFv2Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-        [ClassInitialize]
-        public static void Create(TestContext GivenContext)
+                public static void Create()
         {
             CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.OrthogonalCamera);
 
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.OrthogonalCamera_TestCaseName, BCFTestCaseData.OrthogonalCamera_Readme);
         }
 
-        [TestMethod]
+        [Fact]
         public void ContainerPresent()
         {
-            Assert.IsNotNull(CreatedContainer);
+            Assert.NotNull(CreatedContainer);
         }
 
-        [TestMethod]
+        [Fact]
         public void ZipPresent()
         {
-            Assert.IsNotNull(CreatedArchive);
+            Assert.NotNull(CreatedArchive);
         }
 
         // TODO IMPLEMENT TESTS
@@ -70,31 +69,31 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFilesPresent()
         //{
         //    foreach (var ExpectedFile in ExpectedFiles)
         //    {
         //        if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
         //        {
-        //            Assert.Fail("Did not find expected file in archive: " + ExpectedFile);
+        //            Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
         //        }
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfNoAdditionalFilesPresent()
         //{
         //    foreach (var CurrentEntry in CreatedArchive.Entries)
         //    {
         //        if (!ExpectedFiles.Contains(CurrentEntry.FullName))
         //        {
-        //            Assert.Fail("Zip Archive should not contain entry " + CurrentEntry.FullName);
+        //            Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
         //        }
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFilesAreAllValidXml()
         //{
         //    foreach (var CurrentEntry in CreatedArchive.Entries)
@@ -115,7 +114,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileDataIsEqual_JsonElement()
         //{
         //    var DataExpected = BCFTestCaseData.JsonElement;
@@ -123,11 +122,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    {
         //        CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.PerspectiveCamera_TopicGuid + "/JsonElement.json").Open().CopyTo(MemStream);
         //        var DataActual = MemStream.ToArray();
-        //        Assert.IsTrue(DataExpected.SequenceEqual(DataActual));
+        //        Assert.True(DataExpected.SequenceEqual(DataActual));
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileDataIsEqual_IfcPile()
         //{
         //    var DataExpected = BCFTestCaseData.IfcPile;
@@ -135,11 +134,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    {
         //        CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "IfcPile_01.ifc").Open().CopyTo(MemStream);
         //        var DataActual = MemStream.ToArray();
-        //        Assert.IsTrue(DataExpected.SequenceEqual(DataActual));
+        //        Assert.True(DataExpected.SequenceEqual(DataActual));
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileDataIsEqual_MarkupSchema()
         //{
         //    var DataExpected = BCFTestCaseData.MarkupSchema;
@@ -147,11 +146,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    {
         //        CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "markup.xsd").Open().CopyTo(MemStream);
         //        var DataActual = MemStream.ToArray();
-        //        Assert.IsTrue(DataExpected.SequenceEqual(DataActual));
+        //        Assert.True(DataExpected.SequenceEqual(DataActual));
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileDataIsEqual_Snapshot01()
         //{
         //    var ImageConverter = new ImageConverter();
@@ -160,11 +159,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    {
         //        CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".png").Open().CopyTo(MemStream);
         //        var DataActual = MemStream.ToArray();
-        //        Assert.IsTrue(DataExpected.SequenceEqual(DataActual));
+        //        Assert.True(DataExpected.SequenceEqual(DataActual));
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileDataIsEqual_Snapshot02()
         //{
         //    var ImageConverter = new ImageConverter();
@@ -173,11 +172,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    {
         //        CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".png").Open().CopyTo(MemStream);
         //        var DataActual = MemStream.ToArray();
-        //        Assert.IsTrue(DataExpected.SequenceEqual(DataActual));
+        //        Assert.True(DataExpected.SequenceEqual(DataActual));
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileDataIsEqual_Snapshot03()
         //{
         //    var ImageConverter = new ImageConverter();
@@ -186,11 +185,11 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    {
         //        CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".png").Open().CopyTo(MemStream);
         //        var DataActual = MemStream.ToArray();
-        //        Assert.IsTrue(DataExpected.SequenceEqual(DataActual));
+        //        Assert.True(DataExpected.SequenceEqual(DataActual));
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VersionTagCorrect()
         //{
         //    var ExpectedVersionId = "2.0";
@@ -199,114 +198,114 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    var ActualVersionId = VersionXml.Attribute("VersionId").Value;
         //    var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
 
-        //    Assert.IsTrue(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-        //    Assert.AreEqual(ExpectedVersionId, ActualVersionId);
-        //    Assert.AreEqual(ExpectedDetailedVersion, ActualDetailedVersion);
+        //    Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
+        //    Assert.Equal(ExpectedVersionId, ActualVersionId);
+        //    Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_InMarkupSet()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
 
         //    var ViewpointElement = MarkupXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Viewpoints" && Curr.Attribute("Guid").Value == BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01);
 
-        //    Assert.IsNotNull(ViewpointElement);
+        //    Assert.NotNull(ViewpointElement);
 
-        //    Assert.AreEqual(2, ViewpointElement.DescendantNodes().OfType<XElement>().Count());
-        //    Assert.AreEqual(2, ViewpointElement.DescendantNodes().OfType<XText>().Count());
+        //    Assert.Equal(2, ViewpointElement.DescendantNodes().OfType<XElement>().Count());
+        //    Assert.Equal(2, ViewpointElement.DescendantNodes().OfType<XText>().Count());
 
         //    var ViewpointReferenceElement = ViewpointElement.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Viewpoint");
-        //    Assert.AreEqual("Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv", ViewpointReferenceElement.DescendantNodes().OfType<XText>().First().Value);
+        //    Assert.Equal("Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv", ViewpointReferenceElement.DescendantNodes().OfType<XText>().First().Value);
 
         //    var SnapshotReferenceElement = ViewpointElement.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Snapshot");
-        //    Assert.AreEqual("Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".png", SnapshotReferenceElement.DescendantNodes().OfType<XText>().First().Value);
+        //    Assert.Equal("Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".png", SnapshotReferenceElement.DescendantNodes().OfType<XText>().First().Value);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_02_InMarkupSet()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
 
         //    var ViewpointElement = MarkupXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Viewpoints" && Curr.Attribute("Guid").Value == BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02);
 
-        //    Assert.IsNotNull(ViewpointElement);
+        //    Assert.NotNull(ViewpointElement);
 
-        //    Assert.AreEqual(2, ViewpointElement.DescendantNodes().OfType<XElement>().Count());
-        //    Assert.AreEqual(2, ViewpointElement.DescendantNodes().OfType<XText>().Count());
+        //    Assert.Equal(2, ViewpointElement.DescendantNodes().OfType<XElement>().Count());
+        //    Assert.Equal(2, ViewpointElement.DescendantNodes().OfType<XText>().Count());
 
         //    var ViewpointReferenceElement = ViewpointElement.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Viewpoint");
-        //    Assert.AreEqual("Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".bcfv", ViewpointReferenceElement.DescendantNodes().OfType<XText>().First().Value);
+        //    Assert.Equal("Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".bcfv", ViewpointReferenceElement.DescendantNodes().OfType<XText>().First().Value);
 
         //    var SnapshotReferenceElement = ViewpointElement.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Snapshot");
-        //    Assert.AreEqual("Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".png", SnapshotReferenceElement.DescendantNodes().OfType<XText>().First().Value);
+        //    Assert.Equal("Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".png", SnapshotReferenceElement.DescendantNodes().OfType<XText>().First().Value);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_03_InMarkupSet()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
 
         //    var ViewpointElement = MarkupXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Viewpoints" && Curr.Attribute("Guid").Value == BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03);
 
-        //    Assert.IsNotNull(ViewpointElement);
+        //    Assert.NotNull(ViewpointElement);
 
-        //    Assert.AreEqual(2, ViewpointElement.DescendantNodes().OfType<XElement>().Count());
-        //    Assert.AreEqual(2, ViewpointElement.DescendantNodes().OfType<XText>().Count());
+        //    Assert.Equal(2, ViewpointElement.DescendantNodes().OfType<XElement>().Count());
+        //    Assert.Equal(2, ViewpointElement.DescendantNodes().OfType<XText>().Count());
 
         //    var ViewpointReferenceElement = ViewpointElement.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Viewpoint");
-        //    Assert.AreEqual("Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".bcfv", ViewpointReferenceElement.DescendantNodes().OfType<XText>().First().Value);
+        //    Assert.Equal("Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".bcfv", ViewpointReferenceElement.DescendantNodes().OfType<XText>().First().Value);
 
         //    var SnapshotReferenceElement = ViewpointElement.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Snapshot");
-        //    Assert.AreEqual("Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".png", SnapshotReferenceElement.DescendantNodes().OfType<XText>().First().Value);
+        //    Assert.Equal("Snapshot_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".png", SnapshotReferenceElement.DescendantNodes().OfType<XText>().First().Value);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_NoOrthogonalCameraSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv");
-        //    Assert.IsFalse(ViewpointXml.DescendantNodes().OfType<XElement>().Any(Curr => Curr.Name.LocalName == "OrthogonalCamera"));
+        //    Assert.False(ViewpointXml.DescendantNodes().OfType<XElement>().Any(Curr => Curr.Name.LocalName == "OrthogonalCamera"));
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_02_NoOrthogonalCameraSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".bcfv");
-        //    Assert.IsFalse(ViewpointXml.DescendantNodes().OfType<XElement>().Any(Curr => Curr.Name.LocalName == "OrthogonalCamera"));
+        //    Assert.False(ViewpointXml.DescendantNodes().OfType<XElement>().Any(Curr => Curr.Name.LocalName == "OrthogonalCamera"));
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_03_NoOrthogonalCameraSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".bcfv");
-        //    Assert.IsFalse(ViewpointXml.DescendantNodes().OfType<XElement>().Any(Curr => Curr.Name.LocalName == "OrthogonalCamera"));
+        //    Assert.False(ViewpointXml.DescendantNodes().OfType<XElement>().Any(Curr => Curr.Name.LocalName == "OrthogonalCamera"));
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_PerspectiveCameraSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv");
         //    var CameraXml = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "PerspectiveCamera");
-        //    Assert.IsNotNull(CameraXml);
+        //    Assert.NotNull(CameraXml);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_02_PerspectiveCameraSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".bcfv");
         //    var CameraXml = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "PerspectiveCamera");
-        //    Assert.IsNotNull(CameraXml);
+        //    Assert.NotNull(CameraXml);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_03_PerspectiveCameraSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".bcfv");
         //    var CameraXml = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "PerspectiveCamera");
-        //    Assert.IsNotNull(CameraXml);
+        //    Assert.NotNull(CameraXml);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_ClippingPlanesSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv");
@@ -329,23 +328,23 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    var ExpectedPlanes = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetPlanes().ToList();
         //    var ActualPlanes = Planes.ToList();
 
-        //    Assert.AreEqual(ExpectedPlanes.Count, ActualPlanes.Count);
+        //    Assert.Equal(ExpectedPlanes.Count, ActualPlanes.Count);
 
         //    for (int i = 0; i < ExpectedPlanes.Count; i++)
         //    {
         //        // location
-        //        Assert.AreEqual(ExpectedPlanes[i].Location.X, ActualPlanes[i].Location.x);
-        //        Assert.AreEqual(ExpectedPlanes[i].Location.Y, ActualPlanes[i].Location.y);
-        //        Assert.AreEqual(ExpectedPlanes[i].Location.Z, ActualPlanes[i].Location.z);
+        //        Assert.Equal(ExpectedPlanes[i].Location.X, ActualPlanes[i].Location.x);
+        //        Assert.Equal(ExpectedPlanes[i].Location.Y, ActualPlanes[i].Location.y);
+        //        Assert.Equal(ExpectedPlanes[i].Location.Z, ActualPlanes[i].Location.z);
 
         //        //direction
-        //        Assert.AreEqual(ExpectedPlanes[i].Direction.X, ActualPlanes[i].Direction.x);
-        //        Assert.AreEqual(ExpectedPlanes[i].Direction.Y, ActualPlanes[i].Direction.y);
-        //        Assert.AreEqual(ExpectedPlanes[i].Direction.Z, ActualPlanes[i].Direction.z);
+        //        Assert.Equal(ExpectedPlanes[i].Direction.X, ActualPlanes[i].Direction.x);
+        //        Assert.Equal(ExpectedPlanes[i].Direction.Y, ActualPlanes[i].Direction.y);
+        //        Assert.Equal(ExpectedPlanes[i].Direction.Z, ActualPlanes[i].Direction.z);
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_LinesSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv");
@@ -369,23 +368,23 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    var ExpectedLines = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetLines().ToList();
         //    var ActualLines = Lines.ToList();
 
-        //    Assert.AreEqual(ExpectedLines.Count, ActualLines.Count);
+        //    Assert.Equal(ExpectedLines.Count, ActualLines.Count);
 
         //    for (int i = 0; i < ExpectedLines.Count; i++)
         //    {
         //        // start
-        //        Assert.AreEqual(ExpectedLines[i].StartPoint.X, ActualLines[i].StartPoint.x);
-        //        Assert.AreEqual(ExpectedLines[i].StartPoint.Y, ActualLines[i].StartPoint.y);
-        //        Assert.AreEqual(ExpectedLines[i].StartPoint.Z, ActualLines[i].StartPoint.z);
+        //        Assert.Equal(ExpectedLines[i].StartPoint.X, ActualLines[i].StartPoint.x);
+        //        Assert.Equal(ExpectedLines[i].StartPoint.Y, ActualLines[i].StartPoint.y);
+        //        Assert.Equal(ExpectedLines[i].StartPoint.Z, ActualLines[i].StartPoint.z);
 
         //        //end
-        //        Assert.AreEqual(ExpectedLines[i].EndPoint.X, ActualLines[i].EndPoint.x);
-        //        Assert.AreEqual(ExpectedLines[i].EndPoint.Y, ActualLines[i].EndPoint.y);
-        //        Assert.AreEqual(ExpectedLines[i].EndPoint.Z, ActualLines[i].EndPoint.z);
+        //        Assert.Equal(ExpectedLines[i].EndPoint.X, ActualLines[i].EndPoint.x);
+        //        Assert.Equal(ExpectedLines[i].EndPoint.Y, ActualLines[i].EndPoint.y);
+        //        Assert.Equal(ExpectedLines[i].EndPoint.Z, ActualLines[i].EndPoint.z);
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_ComponentsSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv");
@@ -400,38 +399,38 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //        }).ToList();
 
         //    // Count of components
-        //    Assert.AreEqual(7, Components.Count);
+        //    Assert.Equal(7, Components.Count);
 
         //    // #1
-        //    Assert.AreEqual("0Gl71cVurFn8bxAOox6M4X", Components[0].IfcGuid);
-        //    Assert.AreEqual(true, Components[0].Selected);
+        //    Assert.Equal("0Gl71cVurFn8bxAOox6M4X", Components[0].IfcGuid);
+        //    Assert.Equal(true, Components[0].Selected);
 
         //    // #2
-        //    Assert.AreEqual("23Zwlpd71EyvHlH6OZ77nK", Components[1].IfcGuid);
-        //    Assert.AreEqual(true, Components[1].Selected);
+        //    Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", Components[1].IfcGuid);
+        //    Assert.Equal(true, Components[1].Selected);
 
         //    // #3
-        //    Assert.AreEqual("3DvyPxGIn8qR0KDwbL_9r1", Components[2].IfcGuid);
-        //    Assert.AreEqual(true, Components[2].Selected);
+        //    Assert.Equal("3DvyPxGIn8qR0KDwbL_9r1", Components[2].IfcGuid);
+        //    Assert.Equal(true, Components[2].Selected);
 
         //    // #4
-        //    Assert.AreEqual("0fdpeZZEX3FwJ7x0ox5kzF", Components[3].IfcGuid);
-        //    Assert.AreEqual(true, Components[3].Selected);
+        //    Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", Components[3].IfcGuid);
+        //    Assert.Equal(true, Components[3].Selected);
 
         //    // #5
-        //    Assert.AreEqual("1OpjQ1Nlv4sQuTxfUC_8zS", Components[4].IfcGuid);
-        //    Assert.AreEqual(true, Components[3].Selected);
+        //    Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", Components[4].IfcGuid);
+        //    Assert.Equal(true, Components[3].Selected);
 
         //    // #6
-        //    Assert.AreEqual("0cSRUx$EX1NRjqiKcYQ$a0", Components[5].IfcGuid);
-        //    Assert.AreEqual(true, Components[3].Selected);
+        //    Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", Components[5].IfcGuid);
+        //    Assert.Equal(true, Components[3].Selected);
 
         //    // #7
-        //    Assert.AreEqual("1jQQiGIAnFzxOUzrdmJYDS", Components[6].IfcGuid);
-        //    Assert.AreEqual(true, Components[3].Selected);
+        //    Assert.Equal("1jQQiGIAnFzxOUzrdmJYDS", Components[6].IfcGuid);
+        //    Assert.Equal(true, Components[3].Selected);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_02_ComponentsSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".bcfv");
@@ -446,26 +445,26 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //        }).ToList();
 
         //    // Count of components
-        //    Assert.AreEqual(4, Components.Count);
+        //    Assert.Equal(4, Components.Count);
 
         //    // #1
-        //    Assert.AreEqual("0fdpeZZEX3FwJ7x0ox5kzF", Components[0].IfcGuid);
-        //    Assert.AreEqual(true, Components[0].Selected);
+        //    Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", Components[0].IfcGuid);
+        //    Assert.Equal(true, Components[0].Selected);
 
         //    // #2
-        //    Assert.AreEqual("23Zwlpd71EyvHlH6OZ77nK", Components[1].IfcGuid);
-        //    Assert.AreEqual(true, Components[1].Selected);
+        //    Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", Components[1].IfcGuid);
+        //    Assert.Equal(true, Components[1].Selected);
 
         //    // #3
-        //    Assert.AreEqual("1OpjQ1Nlv4sQuTxfUC_8zS", Components[2].IfcGuid);
-        //    Assert.AreEqual(true, Components[2].Selected);
+        //    Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", Components[2].IfcGuid);
+        //    Assert.Equal(true, Components[2].Selected);
 
         //    // #4
-        //    Assert.AreEqual("0cSRUx$EX1NRjqiKcYQ$a0", Components[3].IfcGuid);
-        //    Assert.AreEqual(true, Components[3].Selected);
+        //    Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", Components[3].IfcGuid);
+        //    Assert.Equal(true, Components[3].Selected);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_03_ComponentsSet()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".bcfv");
@@ -480,26 +479,26 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //        }).ToList();
 
         //    // Count of components
-        //    Assert.AreEqual(4, Components.Count);
+        //    Assert.Equal(4, Components.Count);
 
         //    // #1
-        //    Assert.AreEqual("0fdpeZZEX3FwJ7x0ox5kzF", Components[0].IfcGuid);
-        //    Assert.AreEqual(false, Components[0].Visible);
+        //    Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", Components[0].IfcGuid);
+        //    Assert.Equal(false, Components[0].Visible);
 
         //    // #2
-        //    Assert.AreEqual("23Zwlpd71EyvHlH6OZ77nK", Components[1].IfcGuid);
-        //    Assert.AreEqual(false, Components[1].Visible);
+        //    Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", Components[1].IfcGuid);
+        //    Assert.Equal(false, Components[1].Visible);
 
         //    // #3
-        //    Assert.AreEqual("1OpjQ1Nlv4sQuTxfUC_8zS", Components[2].IfcGuid);
-        //    Assert.AreEqual(false, Components[2].Visible);
+        //    Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", Components[2].IfcGuid);
+        //    Assert.Equal(false, Components[2].Visible);
 
         //    // #4
-        //    Assert.AreEqual("0cSRUx$EX1NRjqiKcYQ$a0", Components[3].IfcGuid);
-        //    Assert.AreEqual(false, Components[3].Visible);
+        //    Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", Components[3].IfcGuid);
+        //    Assert.Equal(false, Components[3].Visible);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_01_PerspectiveCameraCorrect()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_01 + ".bcfv");
@@ -509,7 +508,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.ComparePerspectiveCameras(CameraExpected, CameraActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_02_PerspectiveCameraCorrect()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_02 + ".bcfv");
@@ -519,7 +518,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.ComparePerspectiveCameras(CameraExpected, CameraActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void Viewpoint_03_PerspectiveCameraCorrect()
         //{
         //    var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/Viewpoint_" + BCFTestCaseData.PerspectiveCamera_ViewpointGuid_03 + ".bcfv");
@@ -529,14 +528,14 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.ComparePerspectiveCameras(CameraExpected, CameraActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifyCountOfComments()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
-        //    Assert.AreEqual(4, MarkupXml.Descendants("Comment").Where(Curr => Curr.Parent.Name.LocalName != "Comment").Count());
+        //    Assert.Equal(4, MarkupXml.Descendants("Comment").Where(Curr => Curr.Parent.Name.LocalName != "Comment").Count());
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifyCommentCorrect_01()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
@@ -545,7 +544,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifyCommentCorrect_02()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
@@ -554,7 +553,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifyCommentCorrect_03()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
@@ -563,7 +562,7 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifyCommentCorrect_04()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
@@ -572,42 +571,42 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifySnippetPresent()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
         //    var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
-        //    Assert.IsNotNull(SnippetXml);
+        //    Assert.NotNull(SnippetXml);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifySnippetDataPresent()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
         //    var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
 
-        //    Assert.IsNotNull(SnippetXml.Descendants("Reference"), "Missing Reference");
-        //    Assert.IsNotNull(SnippetXml.Descendants("ReferenceSchema"), "Missing Schema");
-        //    Assert.IsNotNull(SnippetXml.Attribute("SnippetType"), "Missing Type");
+        //    Assert.NotNull(SnippetXml.Descendants("Reference"), "Missing Reference");
+        //    Assert.NotNull(SnippetXml.Descendants("ReferenceSchema"), "Missing Schema");
+        //    Assert.NotNull(SnippetXml.Attribute("SnippetType"), "Missing Type");
 
         //    // isExternal is false by default, so if the actual element points to an external snippet
         //    // the XML attribute may be omitted
         //    if (BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet.isExternal)
         //    {
-        //        Assert.IsNotNull(SnippetXml.Attribute("isExternal"), "Missing external indicator");
-        //        Assert.AreEqual("true", SnippetXml.Attribute("isExternal").Value);
+        //        Assert.NotNull(SnippetXml.Attribute("isExternal"), "Missing external indicator");
+        //        Assert.Equal("true", SnippetXml.Attribute("isExternal").Value);
         //    }
         //    else
         //    {
         //        // But if it is false AND the attribute is present, it must be set to false
         //        if (SnippetXml.Attribute("isExternal") != null)
         //        {
-        //            Assert.AreEqual("false", SnippetXml.Attribute("isExternal").Value);
+        //            Assert.Equal("false", SnippetXml.Attribute("isExternal").Value);
         //        }
         //    }
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void VerifySnippetDataCorrect()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
@@ -619,22 +618,22 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    TopicsCompareTool.CompareBimSnippet(SnippetExpected, SnippetActual);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void CheckIfFileInHeaderSetCorrectly()
         //{
         //    var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PerspectiveCamera_TopicGuid + "/markup.bcf");
 
         //    // Only one header element
-        //    Assert.IsTrue(MarkupXml.Descendants("Header").Count() == 1);
+        //    Assert.True(MarkupXml.Descendants("Header").Count() == 1);
 
         //    var FileXml = MarkupXml.Descendants("File").FirstOrDefault();
 
         //    // Only one file element and no other elements
-        //    Assert.IsTrue(MarkupXml.Descendants("File").Count() == 1);
-        //    Assert.IsTrue(MarkupXml.Descendants("Header").FirstOrDefault().Nodes().Count() == 1);
+        //    Assert.True(MarkupXml.Descendants("File").Count() == 1);
+        //    Assert.True(MarkupXml.Descendants("Header").FirstOrDefault().Nodes().Count() == 1);
 
         //    // File has exactly three descendants
-        //    Assert.IsTrue(MarkupXml.Descendants("File").Descendants().Count() == 3);
+        //    Assert.True(MarkupXml.Descendants("File").Descendants().Count() == 3);
 
         //    var IfcProjectExpected = "0M6o7Znnv7hxsbWgeu7oQq";
         //    var IfcSpatialStructElementExpected = "23B$bNeGHFQuMYJzvUX0FD";
@@ -652,15 +651,15 @@ namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
         //    var DateActual = HeaderXml.Descendants("Date").OfType<XElement>().FirstOrDefault().Value; ;
         //    var ReferenceActual = HeaderXml.Descendants("Reference").OfType<XElement>().FirstOrDefault().Value; ;
 
-        //    Assert.AreEqual(IfcProjectExpected, IfcProjectActual);
-        //    Assert.AreEqual(IfcSpatialStructElementExpected, IfcSpatialStructElementActual);
-        //    Assert.AreEqual(IsExternalExpected, IsExternalActual);
-        //    Assert.AreEqual(FilenameExpected, FilenameActual);
-        //    Assert.AreEqual(DateExpected, DateActual);
-        //    Assert.AreEqual(ReferenceExpected, ReferenceActual);
+        //    Assert.Equal(IfcProjectExpected, IfcProjectActual);
+        //    Assert.Equal(IfcSpatialStructElementExpected, IfcSpatialStructElementActual);
+        //    Assert.Equal(IsExternalExpected, IsExternalActual);
+        //    Assert.Equal(FilenameExpected, FilenameActual);
+        //    Assert.Equal(DateExpected, DateActual);
+        //    Assert.Equal(ReferenceExpected, ReferenceActual);
         //}
 
-        [TestMethod]
+        [Fact]
         public void WriteReadAgainAndCompare()
         {
             using (var MemStream = new MemoryStream())
