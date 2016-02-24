@@ -1,8 +1,7 @@
-﻿using Xunit;
-using System;
-using System.Linq;
+﻿using System.Linq;
+using Xunit;
 
-namespace iabi.BCF.Test.BCFTestCases.APIConversion
+namespace iabi.BCF.Tests.BCFTestCases.APIConversion
 {
      
     public class Converter

@@ -1,18 +1,9 @@
-﻿using iabi.BCF.BCFv2;
+﻿using System.Linq;
+using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
-using iabi.BCF.Test;
-using iabi.BCF.Test.BCFTestCases;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using iabi.BCF.Test.BCFv2;
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 
-namespace iabi.Test.BCF_REST_API.BCFv2
+namespace iabi.BCF.Tests.BCFv2
 {
      
     public class BCFTopicTest

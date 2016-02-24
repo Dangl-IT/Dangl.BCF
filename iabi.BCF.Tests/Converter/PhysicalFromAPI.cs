@@ -1,13 +1,11 @@
-﻿using iabi.BCF.APIObjects.Extensions;
-using iabi.BCF.BCFv2;
+﻿using System;
+using System.Linq;
+using iabi.BCF.APIObjects.Extensions;
 using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Converter;
-using iabi.BCF.Test.BCFTestCases;
 using Xunit;
-using System;
-using System.Linq;
 
-namespace iabi.Test.BCF_REST_API.Converter
+namespace iabi.BCF.Tests.Converter
 {
      
     public class PhysicalFromAPI

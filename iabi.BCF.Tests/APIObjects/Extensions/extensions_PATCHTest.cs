@@ -1,8 +1,7 @@
 ﻿using iabi.BCF.APIObjects.Extensions;
 using Xunit;
-using System;
 
-namespace iabi.BCF.Test.APIObjects.Extensions
+namespace iabi.BCF.Tests.APIObjects.Extensions
 {
      
     public class extensions_PATCHTest

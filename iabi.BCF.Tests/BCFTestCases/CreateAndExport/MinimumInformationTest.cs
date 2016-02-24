@@ -1,11 +1,11 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using Xunit;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Linq;
 using System.Xml.Linq;
+using iabi.BCF.BCFv2;
+using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
+using Xunit;
 
-namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
+namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
      
     public class MinimumInformationTest

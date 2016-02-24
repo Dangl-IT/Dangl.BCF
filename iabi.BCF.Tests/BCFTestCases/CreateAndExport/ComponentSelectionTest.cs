@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 using iabi.BCF.BCFv2;
-using iabi.BCF.Test.BCFTestCases;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
+using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
 using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
@@ -23,7 +21,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
                 public static void Create()
         {
-            CreatedContainer = Test.BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
+            CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
 
             CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ComponentSelection_TestCaseName, BCFTestCaseData.ComponentSelection_Readme);
         }

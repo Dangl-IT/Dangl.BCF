@@ -1,11 +1,11 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using iabi.BCF.BCFv2;
+using iabi.BCF.BCFv2.Schemas;
 
-namespace iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory
+namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
     public static class ComponentSelectionTestCase
     {

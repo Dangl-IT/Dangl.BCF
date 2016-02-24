@@ -1,17 +1,13 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using Xunit;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using iabi.BCF.BCFv2;
+using iabi.BCF.BCFv2.Schemas;
+using Xunit;
 
-namespace iabi.BCF.Test.BCFTestCases
+namespace iabi.BCF.Tests.BCFTestCases
 {
     public static class CompareTool
     {

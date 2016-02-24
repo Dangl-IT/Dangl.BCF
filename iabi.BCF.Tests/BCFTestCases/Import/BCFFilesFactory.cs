@@ -1,12 +1,9 @@
-﻿using iabi.BCF.BCFv2;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using iabi.BCF.BCFv2;
 
-namespace iabi.BCF.Test.BCFTestCases.Import
+namespace iabi.BCF.Tests.BCFTestCases.Import
 {
     public static class BCFFilesFactory
     {

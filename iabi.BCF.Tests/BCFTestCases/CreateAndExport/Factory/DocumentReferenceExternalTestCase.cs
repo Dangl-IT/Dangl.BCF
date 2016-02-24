@@ -1,9 +1,9 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using iabi.BCF.BCFv2;
+using iabi.BCF.BCFv2.Schemas;
 
-namespace iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory
+namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
     public static class DocumentReferenceExternalTestCase
     {

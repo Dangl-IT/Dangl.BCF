@@ -1,19 +1,14 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using iabi.BCF.Test;
-using iabi.BCF.Test.BCFTestCases;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using iabi.BCF.Test.BCFv2;
-using Xunit;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using iabi.BCF.BCFv2;
+using iabi.BCF.BCFv2.Schemas;
+using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
+using Xunit;
 
-namespace iabi.Test.BCF_REST_API.BCFv2
+namespace iabi.BCF.Tests.BCFv2
 {
      
     public class BCFv2Container_Test

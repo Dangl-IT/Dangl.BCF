@@ -1,8 +1,8 @@
-﻿using iabi.BCF.BCFv2;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
+using iabi.BCF.BCFv2;
 
-namespace iabi.BCF.Test.BCFTestCases.CreateAndExport
+namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
     public static class ZipArchiveFactory
     {

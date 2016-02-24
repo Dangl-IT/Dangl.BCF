@@ -1,7 +1,7 @@
-﻿using iabi.BCF.BCFv2;
-using System;
+﻿using System;
+using iabi.BCF.BCFv2;
 
-namespace iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory
+namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
     public static class BCFTestCaseFactory
     {

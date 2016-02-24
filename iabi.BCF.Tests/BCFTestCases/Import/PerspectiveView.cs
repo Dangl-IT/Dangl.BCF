@@ -1,11 +1,10 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using Xunit;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
+using iabi.BCF.BCFv2;
+using Xunit;
 
-namespace iabi.BCF.Test.BCFTestCases.Import
+namespace iabi.BCF.Tests.BCFTestCases.Import
 {
      
     public class PerspectiveView

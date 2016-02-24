@@ -1,13 +1,10 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
-using iabi.BCF.Test.BCFTestCases.Import;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using iabi.BCF.BCFv2;
+using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
+using iabi.BCF.Tests.BCFTestCases.Import;
 
-namespace iabi.BCF.Test.BCFTestCases.APIConversion
+namespace iabi.BCF.Tests.BCFTestCases.APIConversion
 {
     public static class TestCaseProvider
     {

@@ -1,16 +1,14 @@
-﻿using iabi.BCF.APIObjects.Extensions;
+﻿using System;
+using System.Linq;
+using iabi.BCF.APIObjects.Extensions;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Converter;
-using iabi.BCF.Test.BCFTestCases;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport;
-using iabi.BCF.Test.BCFTestCases.CreateAndExport.Factory;
+using iabi.BCF.Tests.BCFTestCases;
+using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
 using Xunit;
-using System;
-using System.IO;
-using System.Linq;
 
-namespace iabi.BCF.Test.Converter
+namespace iabi.BCF.Tests.Converter
 {
      
     public class APIFromPhysical

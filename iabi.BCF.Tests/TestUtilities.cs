@@ -1,19 +1,12 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using iabi.BCF.BCFv2.Schemas;
 
-namespace iabi.BCF.Test
+namespace iabi.BCF.Tests
 {
 
 

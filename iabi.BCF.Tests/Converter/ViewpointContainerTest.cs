@@ -1,11 +1,7 @@
-﻿using iabi.BCF.BCFv2;
-using iabi.BCF.Converter;
-using iabi.BCF.Test.BCFTestCases;
+﻿using iabi.BCF.Converter;
 using Xunit;
-using System;
-using System.Linq;
 
-namespace iabi.Test.BCF_REST_API.Converter
+namespace iabi.BCF.Tests.Converter
 {
      
     public class ViewpointContainerTest
