@@ -5,12 +5,11 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class DefaultComponentVisibility
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public DefaultComponentVisibility()
+        public DefaultComponentVisibility()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DefaultComponentVisibility);
         }
@@ -37,19 +36,43 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.default_component_visibility, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DefaultComponentVisibility);
+                {
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DefaultComponentVisibility);
+                }
                 if (ReadTopic == null)
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "8127b587-2b97-477e-8a82-fb5a2facd171");
+                {
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "8127b587-2b97-477e-8a82-fb5a2facd171");
+                }
             }
 
             [Fact]
@@ -162,28 +185,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.Equal(true, Component.Visible);
             }
         }
-
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.default_component_visibility, Data);
-            }
-        
     }
 }

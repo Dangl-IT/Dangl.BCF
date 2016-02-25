@@ -8,19 +8,35 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
-     
     public class InternalBIMSnippetTest
     {
         public static BCFv2Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-                public InternalBIMSnippetTest()
+        public InternalBIMSnippetTest()
         {
             if (CreatedContainer == null)
-            CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.InternalBIMSnippet);
+            {
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.InternalBIMSnippet);
+            }
             if (CreatedArchive == null)
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.InternalBIMSnippet_TestCaseName, BCFTestCaseData.InternalBIMSnippet_Readme);
+            {
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.InternalBIMSnippet_TestCaseName, BCFTestCaseData.InternalBIMSnippet_Readme);
+            }
+        }
+
+        public string[] ExpectedFiles
+        {
+            get
+            {
+                return new[]
+                {
+                    "bcf.version",
+                    BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf",
+                    BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/JsonElement.json" // Data element of the BIM Snippet
+                };
+            }
         }
 
         [Fact]
@@ -33,19 +49,6 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void ZipPresent()
         {
             Assert.NotNull(CreatedArchive);
-        }
-
-        public string[] ExpectedFiles
-        {
-            get
-            {
-                return new string[]
-                {
-                    "bcf.version",
-                    BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf",
-                    BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/JsonElement.json", // Data element of the BIM Snippet
-                };
-            }
         }
 
         [Fact]
@@ -83,7 +86,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
                     || CurrentEntry.FullName.Contains(".bcfv")
                     || CurrentEntry.FullName.Contains(".xsd"))
                 {
-                    using (StreamReader Rdr = new StreamReader(CurrentEntry.Open()))
+                    using (var Rdr = new StreamReader(CurrentEntry.Open()))
                     {
                         var Text = Rdr.ReadToEnd();
                         var Xml = XElement.Parse(Text);
@@ -97,7 +100,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_JsonElement()
         {
             var DataExpected = BCFTestCaseData.JsonElement;
-            using (MemoryStream MemStream = new MemoryStream())
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/JsonElement.json").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -112,9 +115,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var ExpectedDetailedVersion = "2.0";
             var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
+            var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement) VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
             Assert.Equal(ExpectedVersionId, ActualVersionId);
             Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
         }
@@ -123,7 +126,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifySnippetPresent()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
+            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
             Assert.NotNull(SnippetXml);
         }
 
@@ -131,7 +134,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifySnippetIsNotExternal()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
+            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
             // Null means false by default
             if (SnippetXml.Attribute("isExternal") != null)
             {

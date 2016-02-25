@@ -6,12 +6,11 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class SelectedComponent
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public SelectedComponent()
+        public SelectedComponent()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SelectedComponent);
         }
@@ -38,19 +37,43 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.Selected_component, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
+                {
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SelectedComponent);
+                }
                 if (ReadTopic == null)
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "9c137387-b581-4803-a85d-4931c3b42714");
+                {
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "9c137387-b581-4803-a85d-4931c3b42714");
+                }
             }
 
             [Fact]
@@ -129,27 +152,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.True(Expected.SequenceEqual(Actual));
             }
         }
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.Selected_component, Data);
-            }
-        }
     }
-
+}

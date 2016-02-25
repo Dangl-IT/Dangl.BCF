@@ -7,6 +7,13 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 {
     public static class BCFFilesFactory
     {
+        private static Dictionary<BCFImportTest, BCFv2Container> _Containers;
+
+        private static Dictionary<BCFImportTest, BCFv2Container> Containers
+        {
+            get { return _Containers ?? (_Containers = new Dictionary<BCFImportTest, BCFv2Container>()); }
+        }
+
         public static BCFv2Container GetContainerForTest(BCFImportTest DesiredTest)
         {
             BCFv2Container CreatedContainer;
@@ -113,16 +120,6 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
         private static BCFv2Container ReadFromBinary(byte[] InputData)
         {
             return BCFv2Container.ReadStream(new MemoryStream(InputData));
-        }
-
-        private static Dictionary<BCFImportTest, BCFv2Container> _Containers;
-
-        private static Dictionary<BCFImportTest, BCFv2Container> Containers
-        {
-            get
-            {
-                return _Containers ?? (_Containers = new Dictionary<BCFImportTest, BCFv2Container>());
-            }
         }
     }
 

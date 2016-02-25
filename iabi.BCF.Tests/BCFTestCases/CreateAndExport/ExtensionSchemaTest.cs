@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using iabi.BCF.BCFv2;
 using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
@@ -8,7 +9,6 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
-     
     public class ExtensionSchemaTest
     {
         public static BCFv2Container CreatedContainer;
@@ -18,9 +18,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public ExtensionSchemaTest()
         {
             if (CreatedContainer == null)
-            CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExtensionSchema);
+            {
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExtensionSchema);
+            }
             if (CreatedArchive == null)
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ExtensionSchema_TestCaseName, BCFTestCaseData.ExtensionSchema_Readme);
+            {
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ExtensionSchema_TestCaseName, BCFTestCaseData.ExtensionSchema_Readme);
+            }
         }
 
         [Fact]
@@ -38,8 +42,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         [Fact]
         public void CheckIfFilesPresent()
         {
-            var ExpectedFilesList = new string[] {
-                BCFTestCaseData.ExtensionSchema_TopicGuid+"/markup.bcf",
+            var ExpectedFilesList = new[]
+            {
+                BCFTestCaseData.ExtensionSchema_TopicGuid + "/markup.bcf",
                 "project.bcfp",
                 "extensions.xsd",
                 "bcf.version"
@@ -76,8 +81,8 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             Assert.True(ProjectXml.DescendantNodes().OfType<XElement>().Any(Curr =>
                 Curr.Name.LocalName == "ExtensionSchema" &&
                 Curr.DescendantNodes().Count() == 1
-                && Curr.DescendantNodes().First().NodeType == System.Xml.XmlNodeType.Text
-                && ((XText)Curr.DescendantNodes().First()).Value == "extensions.xsd"));
+                && Curr.DescendantNodes().First().NodeType == XmlNodeType.Text
+                && ((XText) Curr.DescendantNodes().First()).Value == "extensions.xsd"));
         }
 
         [Fact]
@@ -87,7 +92,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicType"));
             var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new string[]
+            var ExpectedValues = new[]
             {
                 "Information",
                 "Warning",
@@ -108,7 +113,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicStatus"));
             var TopicStati = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var Values = new string[]
+            var Values = new[]
             {
                 "Open",
                 "Closed",
@@ -128,7 +133,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicLabel"));
             var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new string[]
+            var ExpectedValues = new[]
             {
                 "Development",
                 "Architecture",
@@ -148,7 +153,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "SnippetType"));
             var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new string[]
+            var ExpectedValues = new[]
             {
                 "IFC2X3",
                 "IFC4",
@@ -168,7 +173,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "Priority"));
             var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new string[]
+            var ExpectedValues = new[]
             {
                 "Low",
                 "Medium",
@@ -188,7 +193,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "UserIdType"));
             var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new string[]
+            var ExpectedValues = new[]
             {
                 "Architect@example.com",
                 "MEPEngineer@example.com",

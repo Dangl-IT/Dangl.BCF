@@ -5,12 +5,11 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class MultipleFilesInHeader
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public MultipleFilesInHeader()
+        public MultipleFilesInHeader()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.MultipleFilesInHeader);
         }
@@ -37,19 +36,43 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.multiple_files_in_header, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
+                {
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.MultipleFilesInHeader);
+                }
                 if (ReadTopic == null)
+                {
                     ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "0656f0fb-d1d2-463d-bfb2-a31590c269fc");
+                }
             }
 
             [Fact]
@@ -178,27 +201,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.Equal(true, Component.Visible);
             }
         }
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.multiple_files_in_header, Data);
-            }
-        
     }
 }

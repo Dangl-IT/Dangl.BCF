@@ -10,19 +10,21 @@ using Xunit;
 
 namespace iabi.BCF.Tests.Converter
 {
-     
     public class APIFromPhysical
     {
-         
         public class TestCaxeMaximumInformation
         {
-                        public TestCaxeMaximumInformation()
+            public TestCaxeMaximumInformation()
             {
                 // Taking the container from the unit test
                 if (CreatedContainer == null)
-                    CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+                {
+                    CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+                }
                 if (CreatedAPIContainer == null)
-                    CreatedAPIContainer = iabi.BCF.Converter.APIFromPhysical.Convert(CreatedContainer);
+                {
+                    CreatedAPIContainer = BCF.Converter.APIFromPhysical.Convert(CreatedContainer);
+                }
             }
 
             public static BCFv2Container CreatedContainer { get; set; }
@@ -408,7 +410,7 @@ namespace iabi.BCF.Tests.Converter
                         Assert.Equal(CurrentViewpoint.Lines.Count, CurrentApiViewpoint.Viewpoint.lines.line.Count);
 
                         var ApiLines = CurrentApiViewpoint.Viewpoint.lines.line.ToList();
-                        for (int i = 0; i < CurrentViewpoint.Lines.Count; i++)
+                        for (var i = 0; i < CurrentViewpoint.Lines.Count; i++)
                         {
                             // start
                             Assert.Equal(CurrentViewpoint.Lines[i].StartPoint.X, ApiLines[i].start_point.x);
@@ -441,7 +443,7 @@ namespace iabi.BCF.Tests.Converter
                         Assert.Equal(CurrentViewpoint.ClippingPlanes.Count, CurrentApiViewpoint.Viewpoint.clipping_planes.clipping_plane.Count);
 
                         var ApiPlanes = CurrentApiViewpoint.Viewpoint.clipping_planes.clipping_plane.ToList();
-                        for (int i = 0; i < CurrentViewpoint.ClippingPlanes.Count; i++)
+                        for (var i = 0; i < CurrentViewpoint.ClippingPlanes.Count; i++)
                         {
                             // location
                             Assert.Equal(CurrentViewpoint.ClippingPlanes[i].Location.X, ApiPlanes[i].location.x);
@@ -464,8 +466,8 @@ namespace iabi.BCF.Tests.Converter
                     foreach (var CurrentViewpoint in CurrentTopic.Viewpoints)
                     {
                         var ApiComponents = CreatedAPIContainer.Topics.FirstOrDefault(Curr => Curr.Topic.guid == CurrentTopic.Markup.Topic.Guid)
-                    .Viewpoints.FirstOrDefault(Curr => Curr.Viewpoint.guid == CurrentViewpoint.GUID)
-                    .Components.ToList();
+                            .Viewpoints.FirstOrDefault(Curr => Curr.Viewpoint.guid == CurrentViewpoint.GUID)
+                            .Components.ToList();
 
                         Assert.Equal(CurrentViewpoint.Components.Count, ApiComponents.Count);
                     }
@@ -480,9 +482,9 @@ namespace iabi.BCF.Tests.Converter
                     foreach (var CurrentViewpoint in CurrentTopic.Viewpoints)
                     {
                         var ApiComponents = CreatedAPIContainer.Topics.FirstOrDefault(Curr => Curr.Topic.guid == CurrentTopic.Markup.Topic.Guid)
-                    .Viewpoints.FirstOrDefault(Curr => Curr.Viewpoint.guid == CurrentViewpoint.GUID)
-                    .Components.ToList();
-                        for (int i = 0; i < CurrentViewpoint.Components.Count; i++)
+                            .Viewpoints.FirstOrDefault(Curr => Curr.Viewpoint.guid == CurrentViewpoint.GUID)
+                            .Components.ToList();
+                        for (var i = 0; i < CurrentViewpoint.Components.Count; i++)
                         {
                             var ApiComponent = ApiComponents[i];
                             var XmlComponent = CurrentViewpoint.Components[i];
@@ -664,49 +666,49 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ConvertBackToPhysicalAndDontCrash()
             {
-                var PhysicalAgain = iabi.BCF.Converter.PhysicalFromAPI.Convert(CreatedAPIContainer);
+                var PhysicalAgain = BCF.Converter.PhysicalFromAPI.Convert(CreatedAPIContainer);
                 Assert.NotNull(PhysicalAgain);
             }
 
             [Fact]
             public void ConvertBackToPhysicalAndStillCorrect()
             {
-                var PhysicalAgain = iabi.BCF.Converter.PhysicalFromAPI.Convert(CreatedAPIContainer);
+                var PhysicalAgain = BCF.Converter.PhysicalFromAPI.Convert(CreatedAPIContainer);
                 CompareTool.CompareContainers(CreatedContainer, PhysicalAgain);
             }
         }
 
-         
+
         public class SnapshotConversion
         {
             [Fact]
             public void ReadSnapshotInfo()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
-                Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] { 15, 15, 15, 15, 15, 15 });
+                Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] {15, 15, 15, 15, 15, 15});
 
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
 
                 Assert.NotNull(ApiContainerInstance.Topics.First().Viewpoints.First().Snapshot);
 
-                var ReadBackContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
 
                 Assert.NotNull(ReadBackContainer.Topics.First().ViewpointSnapshots[Instance.Topics.First().Viewpoints.First().GUID]);
                 Assert.NotNull(ReadBackContainer.Topics.First().ViewpointSnapshots[Instance.Topics.First().Viewpoints.First().GUID]);
             }
         }
 
-         
+
         public class ExtensionsConversion
         {
             [Fact]
             public void DontCreateExtensionsWhenNotPresent()
             {
-                BCFv2Container Instance = new BCFv2Container();
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var Instance = new BCFv2Container();
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.Null(ApiContainerInstance.Extensions);
             }
@@ -714,9 +716,9 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void CreateExtensionsWhenPresent()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.ProjectExtensions = new Extensions_XSD();
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.NotNull(ApiContainerInstance.Extensions);
             }
@@ -724,7 +726,7 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void CreatedExtensionsMatch()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.ProjectExtensions = new Extensions_XSD();
 
                 Instance.ProjectExtensions.Priority.Add("Lorem");
@@ -740,7 +742,7 @@ namespace iabi.BCF.Tests.Converter
                 Instance.ProjectExtensions.UserIdType.Add("nonumy");
                 Instance.ProjectExtensions.UserIdType.Add("eirmod");
 
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
 
                 CompareExtensions(Instance.ProjectExtensions, ApiContainerInstance.Extensions);
@@ -757,14 +759,14 @@ namespace iabi.BCF.Tests.Converter
             }
         }
 
-         
+
         public class GeneralTests
         {
             [Fact]
             public void ReadEmptyContainer()
             {
-                BCFv2Container Instance = new BCFv2Container();
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var Instance = new BCFv2Container();
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.NotNull(ApiContainerInstance);
             }
@@ -772,10 +774,10 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ReadContainerWithEmptyViewpoint()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.NotNull(ApiContainerInstance);
             }
@@ -783,9 +785,9 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ReadContainerWithEmptyTopic()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.NotNull(ApiContainerInstance);
             }
@@ -793,47 +795,47 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ReadAndWriteEmptyContainer()
             {
-                BCFv2Container Instance = new BCFv2Container();
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var Instance = new BCFv2Container();
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
-                var ReadBackContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
                 Assert.NotNull(ReadBackContainer);
             }
 
             [Fact]
             public void ReadAndWriteContainerWithEmptyViewpoint()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
-                var ReadBackContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
                 Assert.NotNull(ReadBackContainer);
             }
 
             [Fact]
             public void ReadAndWriteContainerWithEmptyTopic()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
-                var ReadBackContainer = iabi.BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
                 Assert.NotNull(ReadBackContainer);
             }
         }
 
-         
+
         public class TopicInformation
         {
             [Fact]
             public void NoModifiedInfoWhenNotPresent()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.True(string.IsNullOrWhiteSpace(ApiContainerInstance.Topics.First().Topic.modified_author));
                 Assert.True(default(DateTime) == ApiContainerInstance.Topics.First().Topic.modified_date);
@@ -842,12 +844,12 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ModifiedInfoWhenSpecified_01()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Topic.ModifiedAuthor = "Georg";
                 Instance.Topics.First().Markup.Topic.ModifiedDate = new DateTime(2015, 06, 06, 15, 47, 18);
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.Equal("Georg", ApiContainerInstance.Topics.First().Topic.modified_author);
                 Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), ApiContainerInstance.Topics.First().Topic.modified_date);
@@ -856,11 +858,11 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ModifiedInfoWhenSpecified_02()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Topic.ModifiedDate = new DateTime(2015, 06, 06, 15, 47, 18);
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.True(string.IsNullOrWhiteSpace(ApiContainerInstance.Topics.First().Topic.modified_author));
                 Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), ApiContainerInstance.Topics.First().Topic.modified_date);
@@ -869,28 +871,28 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ModifiedInfoWhenSpecified_03()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Topic.ModifiedAuthor = "Georg";
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.Equal("Georg", ApiContainerInstance.Topics.First().Topic.modified_author);
                 Assert.True(default(DateTime) == ApiContainerInstance.Topics.First().Topic.modified_date);
             }
         }
 
-         
+
         public class CommentInformation
         {
             [Fact]
             public void NoModifiedInfoWhenNotPresent()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Comment.Add(new Comment());
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.True(string.IsNullOrWhiteSpace(ApiContainerInstance.Topics.First().Comments.First().modified_author));
                 Assert.True(default(DateTime) == ApiContainerInstance.Topics.First().Comments.First().modified_date);
@@ -899,13 +901,13 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ModifiedInfoWhenSpecified_01()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Comment.Add(new Comment());
                 Instance.Topics.First().Markup.Comment.First().ModifiedAuthor = "Georg";
                 Instance.Topics.First().Markup.Comment.First().ModifiedDate = new DateTime(2015, 06, 06, 15, 47, 18);
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.Equal("Georg", ApiContainerInstance.Topics.First().Comments.First().modified_author);
                 Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), ApiContainerInstance.Topics.First().Comments.First().modified_date);
@@ -914,12 +916,12 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ModifiedInfoWhenSpecified_02()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Comment.Add(new Comment());
                 Instance.Topics.First().Markup.Comment.First().ModifiedDate = new DateTime(2015, 06, 06, 15, 47, 18);
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.True(string.IsNullOrWhiteSpace(ApiContainerInstance.Topics.First().Comments.First().modified_author));
                 Assert.Equal(new DateTime(2015, 06, 06, 15, 47, 18), ApiContainerInstance.Topics.First().Comments.First().modified_date);
@@ -928,12 +930,12 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ModifiedInfoWhenSpecified_03()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Markup = new Markup();
                 Instance.Topics.First().Markup.Comment.Add(new Comment());
                 Instance.Topics.First().Markup.Comment.First().ModifiedAuthor = "Georg";
-                var ApiContainerInstance = iabi.BCF.Converter.APIFromPhysical.Convert(Instance);
+                var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.Equal("Georg", ApiContainerInstance.Topics.First().Comments.First().modified_author);
                 Assert.True(default(DateTime) == ApiContainerInstance.Topics.First().Comments.First().modified_date);

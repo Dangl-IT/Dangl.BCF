@@ -6,12 +6,11 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class DecomposedObjectsWithParentGuid
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public DecomposedObjectsWithParentGuid()
+        public DecomposedObjectsWithParentGuid()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjectsWithParentGuid);
         }
@@ -38,7 +37,27 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.Decomposed_object_with_parent_guid, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
@@ -48,9 +67,13 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             public Topic_01()
             {
                 if (ReadContainer == null)
+                {
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjectsWithParentGuid);
+                }
                 if (ReadTopic == null)
+                {
                     ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "a23e8824-137a-4bea-a1ad-541f87d274e7");
+                }
             }
 
             [Fact]
@@ -149,27 +172,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.Equal(true, Component.Visible);
             }
         }
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.Decomposed_object_with_parent_guid, Data);
-            }
-        
     }
 }

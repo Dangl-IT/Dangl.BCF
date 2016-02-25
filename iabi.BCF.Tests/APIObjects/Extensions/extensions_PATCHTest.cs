@@ -3,10 +3,8 @@ using Xunit;
 
 namespace iabi.BCF.Tests.APIObjects.Extensions
 {
-     
     public class extensions_PATCHTest
     {
-         
         public class IsEmpty
         {
             [Fact]

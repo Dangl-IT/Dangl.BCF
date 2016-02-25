@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
+using Point = iabi.BCF.BCFv2.Schemas.Point;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
@@ -24,7 +25,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             ReturnTopic.Viewpoints.Add(CreateViewpoiont());
             var ImageConverter = new ImageConverter();
             // Using the snapshot from the perspective camera since I can't create an orthogonal camera in the viewer=)
-            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, (byte[])ImageConverter.ConvertTo(BCFTestCaseData.PerspectiveCamera_Snapshot_01, typeof(byte[])));
+            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.PerspectiveCamera_Snapshot_01, typeof (byte[])));
             return ReturnTopic;
         }
 
@@ -40,9 +41,11 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 Index = "0",
                 Title = "Orthogonal Camera"
             };
-            Markup.Header = new List<HeaderFile>{
-                new HeaderFile{
-                    Date = new DateTime(2014,02,25,11,50,32),
+            Markup.Header = new List<HeaderFile>
+            {
+                new HeaderFile
+                {
+                    Date = new DateTime(2014, 02, 25, 11, 50, 32),
                     Filename = "Estructura.ifc",
                     IfcProject = "3LIQL2UvjC6xkGKOQxhhVW",
                     isExternal = false,
@@ -71,7 +74,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                         Y = 1,
                         Z = 0
                     },
-                    CameraViewPoint = new BCF.BCFv2.Schemas.Point
+                    CameraViewPoint = new Point
                     {
                         X = 0,
                         Y = 0,

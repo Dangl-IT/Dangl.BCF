@@ -12,7 +12,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
      *
      */
 
-     
+
     public class ComponentSelectionTest
     {
         public static BCFv2Container CreatedContainer;
@@ -21,11 +21,15 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         public ComponentSelectionTest()
         {
-            if(CreatedContainer == null)
-            CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
+            if (CreatedContainer == null)
+            {
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
+            }
 
-            if(CreatedArchive == null)
+            if (CreatedArchive == null)
+            {
                 CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.ComponentSelection_TestCaseName, BCFTestCaseData.ComponentSelection_Readme);
+            }
         }
 
         [Fact]

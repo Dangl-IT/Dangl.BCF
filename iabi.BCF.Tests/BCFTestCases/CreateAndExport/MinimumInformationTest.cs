@@ -7,7 +7,6 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
-     
     public class MinimumInformationTest
     {
         public static BCFv2Container CreatedContainer;
@@ -16,12 +15,16 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
         //public const string TopicGuid = "9898DE65-C0CE-414B-857E-1DF97FFAED8D";
 
-                public MinimumInformationTest()
+        public MinimumInformationTest()
         {
             if (CreatedContainer == null)
-                CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
+            {
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
+            }
             if (CreatedArchive == null)
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.MinimumInformation_TestCaseName, BCFTestCaseData.MinimumInformation_Readme);
+            {
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.MinimumInformation_TestCaseName, BCFTestCaseData.MinimumInformation_Readme);
+            }
         }
 
         [Fact]
@@ -39,7 +42,8 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         [Fact]
         public void CheckIfFilesPresent()
         {
-            var ExpectedFilesList = new string[] {
+            var ExpectedFilesList = new[]
+            {
                 BCFTestCaseData.MinimumInformation_TopicGuid + "/markup.bcf",
                 "bcf.version"
             };
@@ -68,9 +72,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var ExpectedDetailedVersion = "2.0";
             var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
+            var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement) VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
             Assert.Equal(ExpectedVersionId, ActualVersionId);
             Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
         }

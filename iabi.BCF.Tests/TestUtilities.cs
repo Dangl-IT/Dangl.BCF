@@ -8,10 +8,6 @@ using iabi.BCF.BCFv2.Schemas;
 
 namespace iabi.BCF.Tests
 {
-
-
-
-
     public static class TestUtilities
     {
         //public static void CompareBCFv2Container(BCFv2Container Expected, BCFv2Container Actual)
@@ -45,17 +41,17 @@ namespace iabi.BCF.Tests
 
             Comment.Author = CommentXml.Descendants("Author").FirstOrDefault().Value;
             Comment.Comment1 = CommentXml.Descendants("Comment").FirstOrDefault().Value;
-            Comment.Date = (DateTime)(CommentXml.Descendants("Date").FirstOrDefault() as XElement);
+            Comment.Date = (DateTime) CommentXml.Descendants("Date").FirstOrDefault();
             Comment.Guid = CommentXml.Attribute("Guid").Value;
             Comment.ModifiedAuthor = CommentXml.Descendants("ModifiedAuthor").Any() ? CommentXml.Descendants("ModifiedAuthor").FirstOrDefault().Value : null;
             if (CommentXml.Descendants("ModifiedDate").Any())
             {
-                Comment.ModifiedDate = (DateTime)(CommentXml.Descendants("ModifiedDate").FirstOrDefault() as XElement);
+                Comment.ModifiedDate = (DateTime) CommentXml.Descendants("ModifiedDate").FirstOrDefault();
             }
-            Comment.ReplyToComment = CommentXml.Descendants("ReplyToComment").Any() ? new CommentReplyToComment { Guid = CommentXml.Descendants("ReplyToComment").FirstOrDefault().Attribute("Guid").Value } : null;
+            Comment.ReplyToComment = CommentXml.Descendants("ReplyToComment").Any() ? new CommentReplyToComment {Guid = CommentXml.Descendants("ReplyToComment").FirstOrDefault().Attribute("Guid").Value} : null;
             Comment.Status = CommentXml.Descendants("Status").FirstOrDefault().Value;
             Comment.VerbalStatus = CommentXml.Descendants("VerbalStatus").FirstOrDefault().Value;
-            Comment.Viewpoint = CommentXml.Descendants("Viewpoint").Any() ? new CommentViewpoint { Guid = CommentXml.Descendants("Viewpoint").FirstOrDefault().Attribute("Guid").Value } : null;
+            Comment.Viewpoint = CommentXml.Descendants("Viewpoint").Any() ? new CommentViewpoint {Guid = CommentXml.Descendants("Viewpoint").FirstOrDefault().Attribute("Guid").Value} : null;
 
             return Comment;
         }
@@ -77,7 +73,7 @@ namespace iabi.BCF.Tests
                     Y = double.Parse(CameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
                     Z = double.Parse(CameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
                 },
-                CameraViewPoint = new iabi.BCF.BCFv2.Schemas.Point
+                CameraViewPoint = new Point
                 {
                     X = double.Parse(CameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
                     Y = double.Parse(CameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),

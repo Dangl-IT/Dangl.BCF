@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
+using Point = iabi.BCF.BCFv2.Schemas.Point;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
@@ -23,7 +24,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             ReturnTopic.Markup = CreateMarkup();
             ReturnTopic.Viewpoints.Add(CreateViewpoiont());
             var ImageConverter = new ImageConverter();
-            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, (byte[])ImageConverter.ConvertTo(BCFTestCaseData.ComponentCollection_Snapshot_01, typeof(byte[])));
+            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.ComponentCollection_Snapshot_01, typeof (byte[])));
             return ReturnTopic;
         }
 
@@ -39,9 +40,11 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 Index = "0",
                 Title = "Component Selection"
             };
-            Markup.Header = new List<HeaderFile>{
-                new HeaderFile{
-                    Date = new DateTime(2014,02,25,11,50,32),
+            Markup.Header = new List<HeaderFile>
+            {
+                new HeaderFile
+                {
+                    Date = new DateTime(2014, 02, 25, 11, 50, 32),
                     Filename = "Estructura.ifc",
                     IfcProject = "3LIQL2UvjC6xkGKOQxhhVW",
                     isExternal = false,
@@ -58,7 +61,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 PerspectiveCamera = new PerspectiveCamera
                 {
                     FieldOfView = 60,
-                    CameraViewPoint = new BCF.BCFv2.Schemas.Point
+                    CameraViewPoint = new Point
                     {
                         X = -16.4296623429377,
                         Y = -0.160221005721745,
@@ -81,18 +84,18 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 {
                     new Component
                     {
-                        IfcGuid="1GU8BMEqHBQxVAbwRD$4Jj",
-                        Selected=true
+                        IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj",
+                        Selected = true
                     },
                     new Component
                     {
-                        IfcGuid="0AQJSsoeDDvwVqSNcwjy55",
-                        Selected=true
+                        IfcGuid = "0AQJSsoeDDvwVqSNcwjy55",
+                        Selected = true
                     },
                     new Component
                     {
-                        IfcGuid="3DOu_tSXP6evQgY8Ml4CtC",
-                        Selected=true
+                        IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC",
+                        Selected = true
                     }
                 }
             };

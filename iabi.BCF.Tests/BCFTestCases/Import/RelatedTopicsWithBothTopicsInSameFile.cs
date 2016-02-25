@@ -5,14 +5,13 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class RelatedTopicsWithBothTopicsInSameFile
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public RelatedTopicsWithBothTopicsInSameFile()
+        public RelatedTopicsWithBothTopicsInSameFile()
         {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+            ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
         }
 
         [Fact]
@@ -45,19 +44,43 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.RelatedTopicsWithBothTopicsInSameFile, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
+                {
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+                }
                 if (ReadTopic == null)
+                {
                     ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "3ebd3a2c-5bc8-4ff5-9e98-d5fa240719b6");
+                }
             }
 
             [Fact]
@@ -117,19 +140,23 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             }
         }
 
-         
+
         public class Topic_02
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_02()
+            public Topic_02()
             {
                 if (ReadContainer == null)
+                {
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithBothTopicsInSameFile);
+                }
                 if (ReadTopic == null)
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "d83f5842-19ea-4ca9-85bf-03d4b8f504b8");
+                {
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "d83f5842-19ea-4ca9-85bf-03d4b8f504b8");
+                }
             }
 
             [Fact]
@@ -181,28 +208,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.Equal(Expected, Actual);
             }
         }
-
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.RelatedTopicsWithBothTopicsInSameFile, Data);
-            }
-        
     }
 }

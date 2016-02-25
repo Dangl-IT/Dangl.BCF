@@ -17,7 +17,10 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             MemStream.Position = 0;
             var CreatedArchive = new ZipArchive(MemStream, ZipArchiveMode.Read);
 
-            if (!CreatePhysicalFiles) return CreatedArchive;
+            if (!CreatePhysicalFiles)
+            {
+                return CreatedArchive;
+            }
 
             if (!Directory.Exists(FolderName + @"\" + TestCaseName))
             {

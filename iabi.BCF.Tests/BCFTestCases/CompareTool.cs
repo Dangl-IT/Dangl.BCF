@@ -21,7 +21,6 @@ namespace iabi.BCF.Tests.BCFTestCases
         }
 
         /// <summary>
-        ///
         /// </summary>
         /// <param name="ExpectedContainer"></param>
         /// <param name="ActualContainer"></param>
@@ -97,7 +96,7 @@ namespace iabi.BCF.Tests.BCFTestCases
         }
 
         /// <summary>
-        /// Will compare the project and version descriptions within the file
+        ///     Will compare the project and version descriptions within the file
         /// </summary>
         /// <param name="ExpectedContainer"></param>
         /// <param name="ActualContainer"></param>
@@ -132,7 +131,7 @@ namespace iabi.BCF.Tests.BCFTestCases
     public static class TestCompareUtilities
     {
         /// <summary>
-        /// Raises <see cref="Assert.Fail"/> if one is null and the other one is not
+        ///     Raises <see cref="Assert.Fail" /> if one is null and the other one is not
         /// </summary>
         /// <param name="ExpectedObject"></param>
         /// <param name="ActualObject"></param>
@@ -183,7 +182,7 @@ namespace iabi.BCF.Tests.BCFTestCases
                     var ActualMarkupXml = XmlUtilities.GetElementFromZipFile(ActualZipArchive, Folder + "markup.bcf");
                     var ActualViewpointReference = ActualMarkupXml.Descendants("Viewpoints").Where(Curr => Curr.Attributes().Where(Attr => Attr.Name == "Guid" && Attr.Value == ViewpointGuid).Any()).FirstOrDefault().Descendants("Viewpoint").FirstOrDefault().Value;
 
-                    FilePresent = ActualZipArchive.Entries.Any(Curr => Curr.FullName == (Folder + ActualViewpointReference));
+                    FilePresent = ActualZipArchive.Entries.Any(Curr => Curr.FullName == Folder + ActualViewpointReference);
                 }
                 if (!FilePresent && CurrentExpectedFile.FullName.ToUpperInvariant().EndsWith("project.bcfp".ToUpperInvariant()))
                 {
@@ -193,7 +192,7 @@ namespace iabi.BCF.Tests.BCFTestCases
                     var ProjectShouldBeTreatedAsEmpty =
                         (!ExpectedProjectXml.Descendants("ExtensionSchema").Any() || ExpectedProjectXml.Descendants("ExtensionSchema").All(Curr => string.IsNullOrWhiteSpace(Curr.Value))) // ExtensionSchema not present or empty
                         && (!ExpectedProjectXml.Descendants("Project").Any() || ExpectedProjectXml.Descendants("Project").All(Curr => Curr.Attribute("ProjectId") == null || string.IsNullOrWhiteSpace(Curr.Attribute("ProjectId").Value))) // Project Id not present or empty
-                        && ((!ExpectedProjectXml.Descendants("Name").Where(Curr => Curr.Parent.Name.LocalName == "Project").Any() || ExpectedProjectXml.Descendants("Name").Where(Curr => Curr.Parent.Name.LocalName == "Project").All(Curr => string.IsNullOrWhiteSpace(Curr.Value)))); // Project Name not present or empty
+                        && (!ExpectedProjectXml.Descendants("Name").Where(Curr => Curr.Parent.Name.LocalName == "Project").Any() || ExpectedProjectXml.Descendants("Name").Where(Curr => Curr.Parent.Name.LocalName == "Project").All(Curr => string.IsNullOrWhiteSpace(Curr.Value))); // Project Name not present or empty
                     if (ProjectShouldBeTreatedAsEmpty)
                     {
                         FilePresent = true;
@@ -230,7 +229,6 @@ namespace iabi.BCF.Tests.BCFTestCases
     public static class TopicsCompareTool
     {
         /// <summary>
-        ///
         /// </summary>
         /// <param name="ExpectedContainer"></param>
         /// <param name="ActualContainer"></param>
@@ -249,7 +247,6 @@ namespace iabi.BCF.Tests.BCFTestCases
         }
 
         /// <summary>
-        ///
         /// </summary>
         /// <param name="ExpectedTopic"></param>
         /// <param name="ActualTopic"></param>
@@ -410,7 +407,7 @@ namespace iabi.BCF.Tests.BCFTestCases
             }
 
             Assert.Equal(ExpectedTopic.CreationAuthor, ActualTopic.CreationAuthor);
-            Assert.True((int)(ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds < 5);
+            Assert.True((int) (ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds < 5);
             Assert.Equal(ExpectedTopic.CreationDateSpecified, ActualTopic.CreationDateSpecified);
 
             if (!(string.IsNullOrWhiteSpace(ExpectedTopic.Description) && string.IsNullOrWhiteSpace(ActualTopic.Description)))
@@ -422,7 +419,7 @@ namespace iabi.BCF.Tests.BCFTestCases
             if (ExpectedTopic.Index != ActualTopic.Index)
             {
                 if (!(ExpectedTopic.Index != null && ExpectedTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ActualTopic.Index)
-                    || ActualTopic.Index != null && ActualTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ExpectedTopic.Index)))
+                      || ActualTopic.Index != null && ActualTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ExpectedTopic.Index)))
                 {
                     Assert.True(false, "Index does not match");
                 }
@@ -495,7 +492,6 @@ namespace iabi.BCF.Tests.BCFTestCases
         }
 
         /// <summary>
-        ///
         /// </summary>
         /// <param name="ExpectedViewpoints"></param>
         /// <param name="ActualViewpoints"></param>
@@ -511,7 +507,6 @@ namespace iabi.BCF.Tests.BCFTestCases
         }
 
         /// <summary>
-        ///
         /// </summary>
         /// <param name="ExpectedViewpoint"></param>
         /// <param name="ActualViewpoint"></param>

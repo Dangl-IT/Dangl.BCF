@@ -5,14 +5,13 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class RelatedTopicWithOtherTopicMissing
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public RelatedTopicWithOtherTopicMissing()
+        public RelatedTopicWithOtherTopicMissing()
         {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithOtherTopicMissing);
+            ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithOtherTopicMissing);
         }
 
         [Fact]
@@ -37,19 +36,43 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.RelatedTopicsWithOtherTopicMissing, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
+                {
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.RelatedTopicsWithOtherTopicMissing);
+                }
                 if (ReadTopic == null)
+                {
                     ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "a2ade93c-7ee7-4d11-bb55-8292b4940fc3");
+                }
             }
 
             [Fact]
@@ -108,28 +131,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.Equal(Expected, Actual);
             }
         }
-
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.RelatedTopicsWithOtherTopicMissing, Data);
-            }
-        
     }
 }

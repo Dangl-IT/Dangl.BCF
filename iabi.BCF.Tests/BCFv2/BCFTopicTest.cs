@@ -5,16 +5,15 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFv2
 {
-     
     public class BCFTopicTest
     {
         /// <summary>
-        /// Not expecting an exception and the markup should then be automatically created (with the viewpoint data)
+        ///     Not expecting an exception and the markup should then be automatically created (with the viewpoint data)
         /// </summary>
         [Fact]
         public void AddViewpointWhenThereIsNoMarkupInstance()
         {
-            BCFTopic Instance = new BCFTopic();
+            var Instance = new BCFTopic();
 
             // Markup is empty
             Assert.Null(Instance.Markup);
@@ -29,10 +28,10 @@ namespace iabi.BCF.Tests.BCFv2
         [Fact]
         public void AddviewpointSnapshotReferenceInMarkup()
         {
-            BCFTopic Instance = new BCFTopic();
+            var Instance = new BCFTopic();
             Instance.Viewpoints.Add(new VisualizationInfo());
 
-            Instance.AddOrUpdateSnapshot(Instance.Viewpoints.First().GUID, new byte[] { 10, 11, 12, 13, 14, 15 });
+            Instance.AddOrUpdateSnapshot(Instance.Viewpoints.First().GUID, new byte[] {10, 11, 12, 13, 14, 15});
 
             //System.Threading.Thread.Sleep(100);
 

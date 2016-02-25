@@ -11,7 +11,7 @@ namespace iabi.BCF.Tests.BCFTestCases.APIConversion
         public static IEnumerable<ContainerAndName> GetAllContainersFromTestCases()
         {
             // First all created test cases
-            foreach (var CurrentEnum in (TestCaseEnum[])Enum.GetValues(typeof(TestCaseEnum)))
+            foreach (var CurrentEnum in (TestCaseEnum[]) Enum.GetValues(typeof (TestCaseEnum)))
             {
                 yield return new ContainerAndName
                 {
@@ -21,7 +21,7 @@ namespace iabi.BCF.Tests.BCFTestCases.APIConversion
             }
 
             // Then all imported test cases
-            foreach (var CurrentEnum in (BCFImportTest[])Enum.GetValues(typeof(BCFImportTest)))
+            foreach (var CurrentEnum in (BCFImportTest[]) Enum.GetValues(typeof (BCFImportTest)))
             {
                 yield return new ContainerAndName
                 {

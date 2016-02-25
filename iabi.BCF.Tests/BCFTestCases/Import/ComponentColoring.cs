@@ -5,12 +5,11 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class ComponentColoring
     {
-        public  BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
-                public ComponentColoring()
+        public ComponentColoring()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.ComponentColoring);
         }
@@ -110,7 +109,7 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
         {
             var Component = ReadContainer.Topics.First().Viewpoints.First().Components.First();
             Assert.False(Component.ShouldSerializeAuthoringToolId());
-            Assert.True(new byte[] { 255, 0, 255, 0 }.SequenceEqual(Component.Color));
+            Assert.True(new byte[] {255, 0, 255, 0}.SequenceEqual(Component.Color));
             Assert.Equal("1mrgg_O_bBBv_tvdtVwK59", Component.IfcGuid);
             Assert.Equal("Allplan", Component.OriginatingSystem);
             Assert.Equal(false, Component.Selected);
@@ -119,25 +118,23 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
         }
 
 
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
 
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.component_coloring, Data);
-            }
-        
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.component_coloring, Data);
+        }
     }
 }

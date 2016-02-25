@@ -10,10 +10,39 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFv2
 {
-     
     public class BCFv2Container_Test
     {
-         
+        /// <summary>
+        ///     Not expecting an exception and the markup should then be automatically created (with the viewpoint data)
+        /// </summary>
+        [Fact]
+        public void AddViewpointWhenThereIsNoMarkupInstance()
+        {
+            var Instance = new BCFv2Container();
+            Instance.Topics.Add(new BCFTopic());
+
+            // Markup is empty
+            Assert.Null(Instance.Topics.First().Markup);
+
+            Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
+
+            // Viewpoint defined
+            Assert.NotNull(Instance.Topics.First().Markup);
+            Assert.Equal(Instance.Topics.First().Markup.Viewpoints.First().Guid, Instance.Topics.First().Viewpoints.First().GUID);
+        }
+
+        [Fact]
+        public void AddviewpointSnapshotReferenceInMarkup()
+        {
+            var Instance = new BCFv2Container();
+            Instance.Topics.Add(new BCFTopic());
+            Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
+
+            Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] {10, 11, 12, 13, 14, 15});
+
+            Assert.False(string.IsNullOrWhiteSpace(Instance.Topics.First().Markup.Viewpoints.FirstOrDefault().Snapshot), "Reference not created for viewpoint snapshot");
+        }
+
         public class GetFilenameFromReference
         {
             [Fact]
@@ -74,7 +103,7 @@ namespace iabi.BCF.Tests.BCFv2
             }
         }
 
-         
+
         public class GetAttachmentForDocumentReference
         {
             [Fact]
@@ -83,10 +112,7 @@ namespace iabi.BCF.Tests.BCFv2
                 var Container = new BCFv2Container();
                 var DocRef = new TopicDocumentReferences();
                 DocRef.isExternal = true;
-                Assert.Throws(typeof (ArgumentException), () =>
-                {
-                    var Data = Container.GetAttachmentForDocumentReference(DocRef);
-                });
+                Assert.Throws(typeof (ArgumentException), () => { var Data = Container.GetAttachmentForDocumentReference(DocRef); });
             }
 
             [Fact]
@@ -105,7 +131,7 @@ namespace iabi.BCF.Tests.BCFv2
             }
         }
 
-         
+
         public class TransformToRelativePath
         {
             [Fact]
@@ -250,14 +276,14 @@ namespace iabi.BCF.Tests.BCFv2
             public void Create_11()
             {
                 var InputAbsolute = "first/topic/none.jpg";
-                string InputCurrentLoc = "some/other/folder/dir/hello";
+                var InputCurrentLoc = "some/other/folder/dir/hello";
                 var Expected = "../../../../../first/topic/none.jpg";
                 var Created = BCFv2Container.TransformToRelativePath(InputAbsolute, InputCurrentLoc);
                 Assert.Equal(Expected, Created);
             }
         }
 
-         
+
         public class GetAbsolutePath
         {
             [Fact]
@@ -347,10 +373,7 @@ namespace iabi.BCF.Tests.BCFv2
             [Fact]
             public void Combine_06()
             {
-                Assert.Throws(typeof(ArgumentOutOfRangeException), () =>
-                {
-                    var Created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg");
-                });
+                Assert.Throws(typeof (ArgumentOutOfRangeException), () => { var Created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg"); });
             }
 
             [Fact]
@@ -361,18 +384,18 @@ namespace iabi.BCF.Tests.BCFv2
             }
         }
 
-         
+
         public class WriteStream
         {
             public BCFTopic MockBCFv2_WithValues()
             {
-                BCFTopic ReturnObject = new BCFTopic();
+                var ReturnObject = new BCFTopic();
 
                 // Topic definition
                 ReturnObject.Markup = MockTopicMarkup();
 
                 // Append one comment
-                ReturnObject.Markup.Comment = new System.Collections.Generic.List<Comment>();
+                ReturnObject.Markup.Comment = new List<Comment>();
                 ReturnObject.Markup.Comment.Add(new Comment());
                 ReturnObject.Markup.Comment[0].Author = "dangl@iabi.eu";
                 ReturnObject.Markup.Comment[0].Comment1 = "I like the idea of collaboration!";
@@ -396,8 +419,8 @@ namespace iabi.BCF.Tests.BCFv2
                 ReturnObject.Topic.CreationAuthor = "dangl@iabi.eu";
                 ReturnObject.Topic.CreationDate = new DateTime(2015, 05, 20, 16, 11, 34);
                 ReturnObject.Topic.Description = "This is a topic that is just intended to test the functionality."
-                                                   + Environment.NewLine + "It even features linebreaks!";
-                ReturnObject.Topic.DocumentReferences = new System.Collections.Generic.List<TopicDocumentReferences>();
+                                                 + Environment.NewLine + "It even features linebreaks!";
+                ReturnObject.Topic.DocumentReferences = new List<TopicDocumentReferences>();
                 ReturnObject.Topic.DocumentReferences.Add(new TopicDocumentReferences());
                 ReturnObject.Topic.DocumentReferences[0].Description = "This is what a referenced document's description would look like.";
                 ReturnObject.Topic.DocumentReferences[0].Guid = "E181000F-959B-46E4-A37A-7C57704DAA2D";
@@ -405,7 +428,7 @@ namespace iabi.BCF.Tests.BCFv2
                 ReturnObject.Topic.DocumentReferences[0].ReferencedDocument = "https://bim--it-net/Expect404.pdf";
                 ReturnObject.Topic.Guid = "69434D23-0E03-4961-87C3-2DF7DEBCD316";
 
-                ReturnObject.Topic.Labels = new System.Collections.Generic.List<string>();
+                ReturnObject.Topic.Labels = new List<string>();
                 ReturnObject.Topic.Labels.Add("Architecture");
                 ReturnObject.Topic.Labels.Add("Unit Testing");
                 ReturnObject.Topic.Labels.Add("Development");
@@ -443,9 +466,9 @@ namespace iabi.BCF.Tests.BCFv2
                 return ReturnObject;
             }
 
-            public System.Collections.Generic.List<VisualizationInfo> MockViewpoints()
+            public List<VisualizationInfo> MockViewpoints()
             {
-                var ReturnObject = new System.Collections.Generic.List<VisualizationInfo>();
+                var ReturnObject = new List<VisualizationInfo>();
 
                 // Make a viewpoint with an orthogonal view
                 ReturnObject.Add(new VisualizationInfo());
@@ -458,7 +481,7 @@ namespace iabi.BCF.Tests.BCFv2
                 ReturnObject[0].OrthogonalCamera.CameraUpVector.X = 0;
                 ReturnObject[0].OrthogonalCamera.CameraUpVector.Y = 0;
                 ReturnObject[0].OrthogonalCamera.CameraUpVector.Z = 1;
-                ReturnObject[0].OrthogonalCamera.CameraViewPoint = new iabi.BCF.BCFv2.Schemas.Point();
+                ReturnObject[0].OrthogonalCamera.CameraViewPoint = new Point();
                 ReturnObject[0].OrthogonalCamera.CameraViewPoint.X = 42;
                 ReturnObject[0].OrthogonalCamera.CameraViewPoint.Y = 1337;
                 ReturnObject[0].OrthogonalCamera.CameraViewPoint.Z = 80085;
@@ -466,7 +489,7 @@ namespace iabi.BCF.Tests.BCFv2
 
                 // Make a viewpoint with a perspective view
                 ReturnObject.Add(new VisualizationInfo());
-                ReturnObject[1].PerspectiveCamera = new iabi.BCF.BCFv2.Schemas.PerspectiveCamera();
+                ReturnObject[1].PerspectiveCamera = new PerspectiveCamera();
                 ReturnObject[1].PerspectiveCamera.CameraDirection = new Direction();
                 ReturnObject[1].PerspectiveCamera.CameraDirection.X = 12.34;
                 ReturnObject[1].PerspectiveCamera.CameraDirection.Y = double.MaxValue;
@@ -475,7 +498,7 @@ namespace iabi.BCF.Tests.BCFv2
                 ReturnObject[1].PerspectiveCamera.CameraUpVector.X = 0;
                 ReturnObject[1].PerspectiveCamera.CameraUpVector.Y = 0;
                 ReturnObject[1].PerspectiveCamera.CameraUpVector.Z = 1;
-                ReturnObject[1].PerspectiveCamera.CameraViewPoint = new iabi.BCF.BCFv2.Schemas.Point();
+                ReturnObject[1].PerspectiveCamera.CameraViewPoint = new Point();
                 ReturnObject[1].PerspectiveCamera.CameraViewPoint.X = 42;
                 ReturnObject[1].PerspectiveCamera.CameraViewPoint.Y = 1337;
                 ReturnObject[1].PerspectiveCamera.CameraViewPoint.Z = 80085;
@@ -516,7 +539,7 @@ namespace iabi.BCF.Tests.BCFv2
             [Fact]
             public void Simple_WriteSingleTopic_Extensions()
             {
-                BCFv2Container TestContainerInstance = new BCFv2Container();
+                var TestContainerInstance = new BCFv2Container();
 
                 TestContainerInstance.ProjectExtensions = MockExtensions();
 
@@ -541,7 +564,7 @@ namespace iabi.BCF.Tests.BCFv2
             [Fact]
             public void Simple_WriteSingleTopic()
             {
-                BCFv2Container TestContainerInstance = new BCFv2Container();
+                var TestContainerInstance = new BCFv2Container();
 
                 TestContainerInstance.ProjectExtensions = MockExtensions();
 
@@ -557,10 +580,10 @@ namespace iabi.BCF.Tests.BCFv2
             [Fact]
             public void AppendSnapshotInfoToMarkup()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.Topics.Add(new BCFTopic());
                 Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
-                Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] { 15, 15, 15, 15, 15, 15 });
+                Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] {15, 15, 15, 15, 15, 15});
 
                 using (var MemStream = new MemoryStream())
                 {
@@ -573,53 +596,21 @@ namespace iabi.BCF.Tests.BCFv2
             }
         }
 
-         
+
         public class ProjectAndExtensions
         {
             [Fact]
             public void SetPathToExtensionsWhenExtensionsSet()
             {
-                BCFv2Container Instance = new BCFv2Container();
+                var Instance = new BCFv2Container();
                 Instance.ProjectExtensions = new Extensions_XSD();
                 Assert.Equal("extensions.xsd", Instance.BCFProject.ExtensionSchema);
             }
         }
 
-        /// <summary>
-        /// Not expecting an exception and the markup should then be automatically created (with the viewpoint data)
-        /// </summary>
-        [Fact]
-        public void AddViewpointWhenThereIsNoMarkupInstance()
-        {
-            BCFv2Container Instance = new BCFv2Container();
-            Instance.Topics.Add(new BCFTopic());
 
-            // Markup is empty
-            Assert.Null(Instance.Topics.First().Markup);
-
-            Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
-
-            // Viewpoint defined
-            Assert.NotNull(Instance.Topics.First().Markup);
-            Assert.Equal(Instance.Topics.First().Markup.Viewpoints.First().Guid, Instance.Topics.First().Viewpoints.First().GUID);
-        }
-
-        [Fact]
-        public void AddviewpointSnapshotReferenceInMarkup()
-        {
-            BCFv2Container Instance = new BCFv2Container();
-            Instance.Topics.Add(new BCFTopic());
-            Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
-
-            Instance.Topics.First().AddOrUpdateSnapshot(Instance.Topics.First().Viewpoints.First().GUID, new byte[] { 10, 11, 12, 13, 14, 15 });
-
-            Assert.False(string.IsNullOrWhiteSpace(Instance.Topics.First().Markup.Viewpoints.FirstOrDefault().Snapshot), "Reference not created for viewpoint snapshot");
-        }
-
-         
         public class ReadStream
         {
-             
             public class EmptyProject
             {
                 [Fact]
@@ -637,7 +628,7 @@ namespace iabi.BCF.Tests.BCFv2
                 }
             }
 
-             
+
             public class Extensions
             {
                 [Fact]
@@ -661,6 +652,18 @@ namespace iabi.BCF.Tests.BCFv2
 
     public static class TestDataFactory
     {
+        public enum TestCase
+        {
+            EmptyProject
+        }
+
+        private static Dictionary<TestCase, BCFv2Container> _Containers;
+
+        private static Dictionary<TestCase, BCFv2Container> Containers
+        {
+            get { return _Containers ?? (_Containers = new Dictionary<TestCase, BCFv2Container>()); }
+        }
+
         public static BCFv2Container GetContainerForTestCase(TestCase DesiredTestCase)
         {
             if (!Containers.ContainsKey(DesiredTestCase))
@@ -677,17 +680,5 @@ namespace iabi.BCF.Tests.BCFv2
             }
             return Containers[DesiredTestCase];
         }
-
-        private static Dictionary<TestCase, BCFv2Container> _Containers;
-
-        private static Dictionary<TestCase, BCFv2Container> Containers
-        {
-            get
-            {
-                return _Containers ?? (_Containers = new Dictionary<TestCase, BCFv2Container>());
-            }
-        }
-
-        public enum TestCase { EmptyProject }
     }
 }

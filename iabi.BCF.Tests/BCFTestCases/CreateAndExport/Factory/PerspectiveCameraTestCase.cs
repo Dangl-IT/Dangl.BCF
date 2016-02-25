@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
+using Point = iabi.BCF.BCFv2.Schemas.Point;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
@@ -23,7 +24,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             ReturnTopic.Markup = CreateMarkup();
             ReturnTopic.Viewpoints.Add(CreateViewpoiont());
             var ImageConverter = new ImageConverter();
-            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, (byte[])ImageConverter.ConvertTo(BCFTestCaseData.PerspectiveCamera_Snapshot_01, typeof(byte[])));
+            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.PerspectiveCamera_Snapshot_01, typeof (byte[])));
             return ReturnTopic;
         }
 
@@ -37,11 +38,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 Description = "This topic has a single viewpoint with a perspective camera.",
                 Guid = BCFTestCaseData.PerspectiveCamera_TopicGuid,
                 Index = "0",
-                Title = "Perspective Camera"                
+                Title = "Perspective Camera"
             };
-            Markup.Header = new List<HeaderFile>{
-                new HeaderFile{
-                    Date = new DateTime(2014,02,25,11,50,32),
+            Markup.Header = new List<HeaderFile>
+            {
+                new HeaderFile
+                {
+                    Date = new DateTime(2014, 02, 25, 11, 50, 32),
                     Filename = "Estructura.ifc",
                     IfcProject = "3LIQL2UvjC6xkGKOQxhhVW",
                     isExternal = false,
@@ -58,7 +61,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 PerspectiveCamera = new PerspectiveCamera
                 {
                     FieldOfView = 60,
-                    CameraViewPoint = new BCF.BCFv2.Schemas.Point
+                    CameraViewPoint = new Point
                     {
                         X = 19.1479514688529,
                         Y = -22.614447888675,

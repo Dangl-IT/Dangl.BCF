@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
+using Point = iabi.BCF.BCFv2.Schemas.Point;
 
 namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 {
@@ -74,9 +75,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             }
 
             var ImageConverter = new ImageConverter();
-            ReturnTopic.AddOrUpdateSnapshot(BCFTestCaseData.MaximumInformation_ViewpointGuid_01, (byte[])ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_01, typeof(byte[])));
-            ReturnTopic.AddOrUpdateSnapshot(BCFTestCaseData.MaximumInformation_ViewpointGuid_02, (byte[])ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_02, typeof(byte[])));
-            ReturnTopic.AddOrUpdateSnapshot(BCFTestCaseData.MaximumInformation_ViewpointGuid_03, (byte[])ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_03, typeof(byte[])));
+            ReturnTopic.AddOrUpdateSnapshot(BCFTestCaseData.MaximumInformation_ViewpointGuid_01, (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_01, typeof (byte[])));
+            ReturnTopic.AddOrUpdateSnapshot(BCFTestCaseData.MaximumInformation_ViewpointGuid_02, (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_02, typeof (byte[])));
+            ReturnTopic.AddOrUpdateSnapshot(BCFTestCaseData.MaximumInformation_ViewpointGuid_03, (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_03, typeof (byte[])));
 
             return ReturnTopic;
         }
@@ -122,7 +123,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
         {
             yield return new ClippingPlane
             {
-                Location = new iabi.BCF.BCFv2.Schemas.Point
+                Location = new Point
                 {
                     X = 0,
                     Y = 0,
@@ -137,7 +138,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             };
             yield return new ClippingPlane
             {
-                Location = new iabi.BCF.BCFv2.Schemas.Point
+                Location = new Point
                 {
                     X = 0,
                     Y = 0,
@@ -156,13 +157,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
         {
             yield return new Line
             {
-                StartPoint = new iabi.BCF.BCFv2.Schemas.Point
+                StartPoint = new Point
                 {
                     X = 0,
                     Y = 0,
                     Z = 0
                 },
-                EndPoint = new iabi.BCF.BCFv2.Schemas.Point
+                EndPoint = new Point
                 {
                     X = 0,
                     Y = 0,
@@ -171,13 +172,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             };
             yield return new Line
             {
-                StartPoint = new iabi.BCF.BCFv2.Schemas.Point
+                StartPoint = new Point
                 {
                     X = 0,
                     Y = 0,
                     Z = 1
                 },
-                EndPoint = new iabi.BCF.BCFv2.Schemas.Point
+                EndPoint = new Point
                 {
                     X = 0,
                     Y = 1,
@@ -186,13 +187,13 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             };
             yield return new Line
             {
-                StartPoint = new iabi.BCF.BCFv2.Schemas.Point
+                StartPoint = new Point
                 {
                     X = 0,
                     Y = 1,
                     Z = 1
                 },
-                EndPoint = new iabi.BCF.BCFv2.Schemas.Point
+                EndPoint = new Point
                 {
                     X = 1,
                     Y = 1,
@@ -203,85 +204,103 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 
         public static List<Component> GetList_01()
         {
-            return new List<Component>{
-                     new Component{
-                         IfcGuid = "0Gl71cVurFn8bxAOox6M4X",
-                         Selected = true
-                     },
-                        new Component{
-                         IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
-                         Selected = true
-                     },
-                                          new Component{
-                         IfcGuid = "3DvyPxGIn8qR0KDwbL_9r1",
-                         Selected = true
-                     },
-                                          new Component{
-                         IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
-                         Selected = true
-                     },
-                                          new Component{
-                         IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
-                         Selected = true
-                     },
-                                          new Component{
-                         IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
-                         Selected = true
-                     },
-                                          new Component{
-                         IfcGuid = "1jQQiGIAnFzxOUzrdmJYDS",
-                         Selected = true
-                     }
-                    };
+            return new List<Component>
+            {
+                new Component
+                {
+                    IfcGuid = "0Gl71cVurFn8bxAOox6M4X",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "3DvyPxGIn8qR0KDwbL_9r1",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "1jQQiGIAnFzxOUzrdmJYDS",
+                    Selected = true
+                }
+            };
         }
 
         public static List<Component> GetList_02()
         {
-            return new List<Component>{
-                        new Component{
-                            IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
-                            Selected = true
-                        },
-                                                new Component{
-                            IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
-                            Selected = true
-                        },
-                                                new Component{
-                            IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
-                            Selected = true
-                        },
-                                                new Component{
-                            IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
-                            Selected = true
-                        }
-                    };
+            return new List<Component>
+            {
+                new Component
+                {
+                    IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
+                    Selected = true
+                },
+                new Component
+                {
+                    IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
+                    Selected = true
+                }
+            };
         }
 
         public static List<Component> GetList_03()
         {
-            return new List<Component>{
-                        new Component{
-                            IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
-                            Visible = false
-                        },
-                                                new Component{
-                            IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
-                            Visible = false
-                        },
-                                                new Component{
-                            IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
-                            Visible = false
-                        },
-                                                new Component{
-                            IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
-                            Visible = false
-                        }
-                    };
+            return new List<Component>
+            {
+                new Component
+                {
+                    IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
+                    Visible = false
+                },
+                new Component
+                {
+                    IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
+                    Visible = false
+                },
+                new Component
+                {
+                    IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
+                    Visible = false
+                },
+                new Component
+                {
+                    IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
+                    Visible = false
+                }
+            };
         }
 
-        public static iabi.BCF.BCFv2.Schemas.PerspectiveCamera GetCamera_01()
+        public static PerspectiveCamera GetCamera_01()
         {
-            return new iabi.BCF.BCFv2.Schemas.PerspectiveCamera
+            return new PerspectiveCamera
             {
                 CameraDirection = new Direction
                 {
@@ -295,7 +314,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                     Y = 0.126656300502579,
                     Z = 0.990215996212637
                 },
-                CameraViewPoint = new iabi.BCF.BCFv2.Schemas.Point
+                CameraViewPoint = new Point
                 {
                     X = 12.2088897788292,
                     Y = 52.323145074034,
@@ -305,9 +324,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             };
         }
 
-        public static iabi.BCF.BCFv2.Schemas.PerspectiveCamera GetCamera_02()
+        public static PerspectiveCamera GetCamera_02()
         {
-            return new iabi.BCF.BCFv2.Schemas.PerspectiveCamera
+            return new PerspectiveCamera
             {
                 CameraDirection = new Direction
                 {
@@ -321,7 +340,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                     Y = -0.104477334449235,
                     Z = 0.973666395005375
                 },
-                CameraViewPoint = new iabi.BCF.BCFv2.Schemas.Point
+                CameraViewPoint = new Point
                 {
                     X = -37.3710937321924,
                     Y = -41.0844513828444,
@@ -331,9 +350,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
             };
         }
 
-        public static iabi.BCF.BCFv2.Schemas.PerspectiveCamera GetCamera_03()
+        public static PerspectiveCamera GetCamera_03()
         {
-            return new iabi.BCF.BCFv2.Schemas.PerspectiveCamera
+            return new PerspectiveCamera
             {
                 CameraDirection = new Direction
                 {
@@ -348,7 +367,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                     Y = -8.90132135110878E-09,
                     Z = 1
                 },
-                CameraViewPoint = new iabi.BCF.BCFv2.Schemas.Point
+                CameraViewPoint = new Point
                 {
                     X = -30.0807178226062,
                     Y = 17.1180195726065,
@@ -381,16 +400,18 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
 
             Markup.Comment = CreateComments().ToList();
 
-            Markup.Header = new List<HeaderFile> {
-                    new HeaderFile{
-                        Date = new DateTime(2014,10,27,16,27,27, DateTimeKind.Utc),
-                        Filename = "IfcPile_01.ifc",
-                        IfcProject = "0M6o7Znnv7hxsbWgeu7oQq",
-                        IfcSpatialStructureElement = "23B$bNeGHFQuMYJzvUX0FD",
-                        isExternal = false,
-                        Reference = "../IfcPile_01.ifc"
-                    }
-                };
+            Markup.Header = new List<HeaderFile>
+            {
+                new HeaderFile
+                {
+                    Date = new DateTime(2014, 10, 27, 16, 27, 27, DateTimeKind.Utc),
+                    Filename = "IfcPile_01.ifc",
+                    IfcProject = "0M6o7Znnv7hxsbWgeu7oQq",
+                    IfcSpatialStructureElement = "23B$bNeGHFQuMYJzvUX0FD",
+                    isExternal = false,
+                    Reference = "../IfcPile_01.ifc"
+                }
+            };
 
             Markup.Topic = new Topic
             {
@@ -405,47 +426,55 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory
                 CreationAuthor = "dangl@iabi.eu",
                 CreationDate = new DateTime(2015, 06, 21, 12, 00, 00, DateTimeKind.Utc),
                 Description = "This is a topic with all informations present.",
-                DocumentReferences = new List<TopicDocumentReferences>{
-                        new TopicDocumentReferences{
-                            Description = "GitHub BCF Specification",
-                            isExternal = true,
-                            ReferencedDocument = "https://github.com/BuildingSMART/BCF-XML"
-                        },
-                                                new TopicDocumentReferences{
-                            Description = "Markup.xsd Schema",
-                            isExternal = false,
-                            ReferencedDocument = "../markup.xsd"
-                        }
+                DocumentReferences = new List<TopicDocumentReferences>
+                {
+                    new TopicDocumentReferences
+                    {
+                        Description = "GitHub BCF Specification",
+                        isExternal = true,
+                        ReferencedDocument = "https://github.com/BuildingSMART/BCF-XML"
                     },
+                    new TopicDocumentReferences
+                    {
+                        Description = "Markup.xsd Schema",
+                        isExternal = false,
+                        ReferencedDocument = "../markup.xsd"
+                    }
+                },
                 Guid = BCFTestCaseData.MaximumInformation_TopicGuid,
                 Index = "0",
-                Labels = new List<string> { "Structural", "IT Development" },
+                Labels = new List<string> {"Structural", "IT Development"},
                 ModifiedAuthor = "dangl@iabi.eu",
                 ModifiedDate = new DateTime(2015, 06, 21, 14, 22, 47, DateTimeKind.Utc),
                 Priority = "High",
                 ReferenceLink = "https://bim--it.net",
-                RelatedTopics = new List<TopicRelatedTopics>{
-                        new TopicRelatedTopics
-                        {
-                            Guid = "5019D939-62A4-45D9-B205-FAB602C98FE8"
-                        }
-                    },
+                RelatedTopics = new List<TopicRelatedTopics>
+                {
+                    new TopicRelatedTopics
+                    {
+                        Guid = "5019D939-62A4-45D9-B205-FAB602C98FE8"
+                    }
+                },
                 Title = "Maximum Content",
                 TopicStatus = "Open",
                 TopicType = "Structural"
             };
 
-            Markup.Viewpoints = new List<ViewPoint>{
-                    new ViewPoint{
-                        Guid = BCFTestCaseData.MaximumInformation_ViewpointGuid_01
-                    },
-                    new ViewPoint{
-                        Guid = BCFTestCaseData.MaximumInformation_ViewpointGuid_02
-                    },
-                    new ViewPoint{
-                        Guid = BCFTestCaseData.MaximumInformation_ViewpointGuid_03
-                    }
-                };
+            Markup.Viewpoints = new List<ViewPoint>
+            {
+                new ViewPoint
+                {
+                    Guid = BCFTestCaseData.MaximumInformation_ViewpointGuid_01
+                },
+                new ViewPoint
+                {
+                    Guid = BCFTestCaseData.MaximumInformation_ViewpointGuid_02
+                },
+                new ViewPoint
+                {
+                    Guid = BCFTestCaseData.MaximumInformation_ViewpointGuid_03
+                }
+            };
 
             //Markup.Viewpoints = CreateViewpoints().ToList();
 

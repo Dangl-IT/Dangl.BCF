@@ -9,7 +9,7 @@ namespace iabi.BCF.Tests
     {
         public static bool ElementNameInXml(Stream XmlStream, string ElementName)
         {
-            using (StreamReader Rdr = new StreamReader(XmlStream))
+            using (var Rdr = new StreamReader(XmlStream))
             {
                 return ElementNameInXml(Rdr.ReadToEnd(), ElementName);
             }
@@ -30,7 +30,7 @@ namespace iabi.BCF.Tests
         public static XElement GetElementFromZipFile(ZipArchive Archive, string FullFileName)
         {
             var Entry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == FullFileName);
-            using (StreamReader Rdr = new StreamReader(Entry.Open()))
+            using (var Rdr = new StreamReader(Entry.Open()))
             {
                 return XElement.Parse(Rdr.ReadToEnd());
             }

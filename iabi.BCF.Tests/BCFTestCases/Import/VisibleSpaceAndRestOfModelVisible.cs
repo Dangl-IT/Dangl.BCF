@@ -6,12 +6,11 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class VisibleSpaceAndRestOfModelVisible
     {
         public BCFv2Container ReadContainer;
 
-                public VisibleSpaceAndRestOfModelVisible()
+        public VisibleSpaceAndRestOfModelVisible()
         {
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.VisibleSpaceAndRestOfModelVisible);
         }
@@ -38,19 +37,43 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.True(Actual);
         }
 
-         
+
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
+
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.visible_space_and_the_rest_of_the_model_visible, Data);
+        }
+
+
         public class Topic_01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.VisibleSpaceAndRestOfModelVisible);
+                {
+                    ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.VisibleSpaceAndRestOfModelVisible);
+                }
                 if (ReadTopic == null)
-                ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "79d7bbbc-3029-43bf-91fd-47ef0915e7ae");
+                {
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "79d7bbbc-3029-43bf-91fd-47ef0915e7ae");
+                }
             }
 
             [Fact]
@@ -125,27 +148,5 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 Assert.True(Expected.SequenceEqual(Actual));
             }
         }
-
-
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.visible_space_and_the_rest_of_the_model_visible, Data);
-            }
-        }
-    
+    }
 }

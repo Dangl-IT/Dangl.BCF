@@ -12,20 +12,24 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
      *
      */
 
-     
+
     public class OrthogonalCameraTest
     {
         public static BCFv2Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-                public OrthogonalCameraTest()
+        public OrthogonalCameraTest()
         {
             if (CreatedContainer == null)
-            CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.OrthogonalCamera);
+            {
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.OrthogonalCamera);
+            }
 
             if (CreatedArchive == null)
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.OrthogonalCamera_TestCaseName, BCFTestCaseData.OrthogonalCamera_Readme);
+            {
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.OrthogonalCamera_TestCaseName, BCFTestCaseData.OrthogonalCamera_Readme);
+            }
         }
 
         [Fact]

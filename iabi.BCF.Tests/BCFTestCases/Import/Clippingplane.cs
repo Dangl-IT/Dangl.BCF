@@ -5,14 +5,13 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.Import
 {
-     
     public class Clippingplane
     {
         public BCFv2Container ReadContainer;
 
-                public Clippingplane()
+        public Clippingplane()
         {
-                ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Clippingplane);
+            ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Clippingplane);
         }
 
         [Fact]
@@ -107,26 +106,23 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
         }
 
 
+        [Fact]
+        public void WriteOut()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            Assert.NotNull(Data);
+            Assert.True(Data.Length > 0);
+        }
 
-
-            [Fact]
-            public void WriteOut()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                Assert.NotNull(Data);
-                Assert.True(Data.Length > 0);
-            }
-
-            [Fact]
-            public void WriteAndCompare()
-            {
-                var MemStream = new MemoryStream();
-                ReadContainer.WriteStream(MemStream);
-                var Data = MemStream.ToArray();
-                CompareTool.CompareFiles(BCFTestCasesImportData.Clippingplane, Data);
-            }
-        
+        [Fact]
+        public void WriteAndCompare()
+        {
+            var MemStream = new MemoryStream();
+            ReadContainer.WriteStream(MemStream);
+            var Data = MemStream.ToArray();
+            CompareTool.CompareFiles(BCFTestCasesImportData.Clippingplane, Data);
+        }
     }
 }

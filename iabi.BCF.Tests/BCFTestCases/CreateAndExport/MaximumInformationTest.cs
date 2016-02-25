@@ -17,20 +17,48 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
      *
      */
 
-     
+
     public class MaximumInformationTest
     {
         public static BCFv2Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-                public MaximumInformationTest()
+        public MaximumInformationTest()
         {
             if (CreatedContainer == null)
-                CreatedContainer = BCFTestCases.CreateAndExport.Factory.BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+            {
+                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+            }
 
             if (CreatedArchive == null)
-            CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.MaximumInformation_TestCaseName, BCFTestCaseData.MaximumInformation_Readme);
+            {
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFTestCaseData.MaximumInformation_TestCaseName, BCFTestCaseData.MaximumInformation_Readme);
+            }
+        }
+
+        public string[] ExpectedFiles
+        {
+            get
+            {
+                return new[]
+                {
+                    "project.bcfp",
+                    "extensions.xsd",
+                    "bcf.version",
+                    "markup.xsd", // Schema for markup file, is referenced in a topic as document reference
+                    "IfcPile_01.ifc", // File attachment in the root folder
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_01 + ".bcfv",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_02 + ".bcfv",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_03 + ".bcfv",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_01 + ".png",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_02 + ".png",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_03 + ".png",
+                    BCFTestCaseData.MaximumInformation_TopicGuid + "/JsonElement.json", // Data element of the BIM Snippet
+                    BCFTestCaseData.MaximumInformation_ReferencedTopicGuid + "/markup.bcf" // Referenced topic
+                };
+            }
         }
 
         [Fact]
@@ -43,30 +71,6 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void ZipPresent()
         {
             Assert.NotNull(CreatedArchive);
-        }
-
-        public string[] ExpectedFiles
-        {
-            get
-            {
-                return new string[]
-                {
-                    "project.bcfp",
-                    "extensions.xsd",
-                    "bcf.version",
-                    "markup.xsd",       // Schema for markup file, is referenced in a topic as document reference
-                    "IfcPile_01.ifc",   // File attachment in the root folder
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_01 + ".bcfv",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_"+ BCFTestCaseData.MaximumInformation_ViewpointGuid_02+ ".bcfv",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_"+ BCFTestCaseData.MaximumInformation_ViewpointGuid_03+ ".bcfv",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_01+ ".png",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_"+ BCFTestCaseData.MaximumInformation_ViewpointGuid_02+ ".png",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_"+ BCFTestCaseData.MaximumInformation_ViewpointGuid_03+ ".png",
-                   BCFTestCaseData.MaximumInformation_TopicGuid + "/JsonElement.json", // Data element of the BIM Snippet
-                   BCFTestCaseData.MaximumInformation_ReferencedTopicGuid + "/markup.bcf", // Referenced topic
-                };
-            }
         }
 
         [Fact]
@@ -104,7 +108,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
                     || CurrentEntry.FullName.Contains(".bcfv")
                     || CurrentEntry.FullName.Contains(".xsd"))
                 {
-                    using (StreamReader Rdr = new StreamReader(CurrentEntry.Open()))
+                    using (var Rdr = new StreamReader(CurrentEntry.Open()))
                     {
                         var Text = Rdr.ReadToEnd();
                         var Xml = XElement.Parse(Text);
@@ -118,7 +122,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_JsonElement()
         {
             var DataExpected = BCFTestCaseData.JsonElement;
-            using (MemoryStream MemStream = new MemoryStream())
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.MaximumInformation_TopicGuid + "/JsonElement.json").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -130,7 +134,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_IfcPile()
         {
             var DataExpected = BCFTestCaseData.IfcPile;
-            using (MemoryStream MemStream = new MemoryStream())
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "IfcPile_01.ifc").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -142,7 +146,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_MarkupSchema()
         {
             var DataExpected = BCFTestCaseData.MarkupSchema;
-            using (MemoryStream MemStream = new MemoryStream())
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "markup.xsd").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -154,8 +158,8 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_Snapshot01()
         {
             var ImageConverter = new ImageConverter();
-            var DataExpected = (byte[])ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_01, typeof(byte[]));
-            using (MemoryStream MemStream = new MemoryStream())
+            var DataExpected = (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_01, typeof (byte[]));
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_01 + ".png").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -167,8 +171,8 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_Snapshot02()
         {
             var ImageConverter = new ImageConverter();
-            var DataExpected = (byte[])ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_02, typeof(byte[]));
-            using (MemoryStream MemStream = new MemoryStream())
+            var DataExpected = (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_02, typeof (byte[]));
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_02 + ".png").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -180,8 +184,8 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void CheckIfFileDataIsEqual_Snapshot03()
         {
             var ImageConverter = new ImageConverter();
-            var DataExpected = (byte[])ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_03, typeof(byte[]));
-            using (MemoryStream MemStream = new MemoryStream())
+            var DataExpected = (byte[]) ImageConverter.ConvertTo(BCFTestCaseData.MaximumInfo_Snapshot_03, typeof (byte[]));
+            using (var MemStream = new MemoryStream())
             {
                 CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFTestCaseData.MaximumInformation_TopicGuid + "/Snapshot_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_03 + ".png").Open().CopyTo(MemStream);
                 var DataActual = MemStream.ToArray();
@@ -196,9 +200,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var ExpectedDetailedVersion = "2.0";
             var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
+            var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement) VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
             Assert.Equal(ExpectedVersionId, ActualVersionId);
             Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
         }
@@ -325,12 +329,12 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
                 }
             });
 
-            var ExpectedPlanes = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetPlanes().ToList();
+            var ExpectedPlanes = MaximumInformationTestCase.GetPlanes().ToList();
             var ActualPlanes = Planes.ToList();
 
             Assert.Equal(ExpectedPlanes.Count, ActualPlanes.Count);
 
-            for (int i = 0; i < ExpectedPlanes.Count; i++)
+            for (var i = 0; i < ExpectedPlanes.Count; i++)
             {
                 // location
                 Assert.Equal(ExpectedPlanes[i].Location.X, ActualPlanes[i].Location.x);
@@ -365,12 +369,12 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
                 }
             });
 
-            var ExpectedLines = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetLines().ToList();
+            var ExpectedLines = MaximumInformationTestCase.GetLines().ToList();
             var ActualLines = Lines.ToList();
 
             Assert.Equal(ExpectedLines.Count, ActualLines.Count);
 
-            for (int i = 0; i < ExpectedLines.Count; i++)
+            for (var i = 0; i < ExpectedLines.Count; i++)
             {
                 // start
                 Assert.Equal(ExpectedLines[i].StartPoint.X, ActualLines[i].StartPoint.x);
@@ -504,7 +508,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_01 + ".bcfv");
             var CameraXml = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "PerspectiveCamera");
             var CameraActual = TestUtilities.GetPerspectiveCameraObjectFromXml(CameraXml);
-            var CameraExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetCamera_01();
+            var CameraExpected = MaximumInformationTestCase.GetCamera_01();
             TopicsCompareTool.ComparePerspectiveCameras(CameraExpected, CameraActual);
         }
 
@@ -514,7 +518,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_02 + ".bcfv");
             var CameraXml = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "PerspectiveCamera");
             var CameraActual = TestUtilities.GetPerspectiveCameraObjectFromXml(CameraXml);
-            var CameraExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetCamera_02();
+            var CameraExpected = MaximumInformationTestCase.GetCamera_02();
             TopicsCompareTool.ComparePerspectiveCameras(CameraExpected, CameraActual);
         }
 
@@ -524,7 +528,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/Viewpoint_" + BCFTestCaseData.MaximumInformation_ViewpointGuid_03 + ".bcfv");
             var CameraXml = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "PerspectiveCamera");
             var CameraActual = TestUtilities.GetPerspectiveCameraObjectFromXml(CameraXml);
-            var CameraExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.GetCamera_03();
+            var CameraExpected = MaximumInformationTestCase.GetCamera_03();
             TopicsCompareTool.ComparePerspectiveCameras(CameraExpected, CameraActual);
         }
 
@@ -539,7 +543,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifyCommentCorrect_01()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var CommentExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateComments().ToList()[0];
+            var CommentExpected = MaximumInformationTestCase.CreateComments().ToList()[0];
             var CommentActual = TestUtilities.GetCommentFromXml(MarkupXml.Descendants("Comment").Where(Curr => Curr.Parent.Name.LocalName != "Comment").ToList()[0]);
             TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         }
@@ -548,7 +552,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifyCommentCorrect_02()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var CommentExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateComments().ToList()[1];
+            var CommentExpected = MaximumInformationTestCase.CreateComments().ToList()[1];
             var CommentActual = TestUtilities.GetCommentFromXml(MarkupXml.Descendants("Comment").Where(Curr => Curr.Parent.Name.LocalName != "Comment").ToList()[1]);
             TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         }
@@ -557,7 +561,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifyCommentCorrect_03()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var CommentExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateComments().ToList()[2];
+            var CommentExpected = MaximumInformationTestCase.CreateComments().ToList()[2];
             var CommentActual = TestUtilities.GetCommentFromXml(MarkupXml.Descendants("Comment").Where(Curr => Curr.Parent.Name.LocalName != "Comment").ToList()[2]);
             TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         }
@@ -566,7 +570,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifyCommentCorrect_04()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var CommentExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateComments().ToList()[3];
+            var CommentExpected = MaximumInformationTestCase.CreateComments().ToList()[3];
             var CommentActual = TestUtilities.GetCommentFromXml(MarkupXml.Descendants("Comment").Where(Curr => Curr.Parent.Name.LocalName != "Comment").ToList()[3]);
             TopicsCompareTool.CompareSingleComment(CommentExpected, CommentActual);
         }
@@ -575,7 +579,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifySnippetPresent()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
+            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
             Assert.NotNull(SnippetXml);
         }
 
@@ -583,7 +587,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifySnippetDataPresent()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
+            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
 
             Assert.NotNull(SnippetXml.Descendants("Reference"));
             Assert.NotNull(SnippetXml.Descendants("ReferenceSchema"));
@@ -591,7 +595,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 
             // isExternal is false by default, so if the actual element points to an external snippet
             // the XML attribute may be omitted
-            if (BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet.isExternal)
+            if (MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet.isExternal)
             {
                 Assert.NotNull(SnippetXml.Attribute("isExternal"));
                 Assert.Equal("true", SnippetXml.Attribute("isExternal").Value);
@@ -610,9 +614,9 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
         public void VerifySnippetDataCorrect()
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault() as XElement;
+            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
 
-            var SnippetExpected = BCFTestCases.CreateAndExport.Factory.MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet;
+            var SnippetExpected = MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet;
 
             var SnippetActual = TestUtilities.GetBimSnippetFromXml(SnippetXml);
             TopicsCompareTool.CompareBimSnippet(SnippetExpected, SnippetActual);
@@ -647,9 +651,12 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             var IfcProjectActual = HeaderXml.Descendants("File").OfType<XElement>().FirstOrDefault().Attribute("IfcProject").Value;
             var IfcSpatialStructElementActual = HeaderXml.Descendants("File").OfType<XElement>().FirstOrDefault().Attribute("IfcSpatialStructureElement").Value;
             var IsExternalActual = bool.Parse(HeaderXml.Descendants("File").OfType<XElement>().FirstOrDefault().Attribute("isExternal").Value);
-            var FilenameActual = HeaderXml.Descendants("Filename").OfType<XElement>().FirstOrDefault().Value; ;
-            var DateActual = HeaderXml.Descendants("Date").OfType<XElement>().FirstOrDefault().Value; ;
-            var ReferenceActual = HeaderXml.Descendants("Reference").OfType<XElement>().FirstOrDefault().Value; ;
+            var FilenameActual = HeaderXml.Descendants("Filename").OfType<XElement>().FirstOrDefault().Value;
+            ;
+            var DateActual = HeaderXml.Descendants("Date").OfType<XElement>().FirstOrDefault().Value;
+            ;
+            var ReferenceActual = HeaderXml.Descendants("Reference").OfType<XElement>().FirstOrDefault().Value;
+            ;
 
             Assert.Equal(IfcProjectExpected, IfcProjectActual);
             Assert.Equal(IfcSpatialStructElementExpected, IfcSpatialStructElementActual);
