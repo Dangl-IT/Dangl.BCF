@@ -127,7 +127,7 @@ namespace iabi.BCF.Converter
             // Get Viewpoint snapshots
             foreach (var CurrentSnapshot in GivenPhysicalBCFv2.ViewpointSnapshots)
             {
-                ReturnObject.Viewpoints.FirstOrDefault(Curr => Curr.Viewpoint.guid == CurrentSnapshot.Key).Snapshot = CurrentSnapshot.Value;
+                ReturnObject.Viewpoints.First(Curr => Curr.Viewpoint.guid == CurrentSnapshot.Key).Snapshot = CurrentSnapshot.Value;
             }
             return ReturnObject;
         }

@@ -500,7 +500,7 @@ namespace iabi.BCF.BCFv2
                 {
                     using (var BytesMemoryStream = new MemoryStream())
                     {
-                        Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Snapshot)..Open().CopyTo(BytesMemoryStream);
+                        Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Snapshot).Open().CopyTo(BytesMemoryStream);
                         ReturnObject.AddOrUpdateSnapshot(ReturnObject.Viewpoints[i].GUID, BytesMemoryStream.ToArray());
                     }
                 }
