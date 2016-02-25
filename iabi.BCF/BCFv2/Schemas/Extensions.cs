@@ -182,17 +182,7 @@ namespace iabi.BCF.BCFv2.Schemas
             }
         }
 
-        private List<string> ReadRestrictions(XmlSchemaSimpleTypeRestriction GivenSchemaType)
-        {
-            var ListToReturn = new List<string>();
-            foreach (XmlSchemaEnumerationFacet CurrentEnum in GivenSchemaType.Facets)
-            {
-                ListToReturn.Add(CurrentEnum.Value);
-            }
-            return ListToReturn;
-        }
-
-        private XmlSchemaSimpleTypeRestriction EnumRestrictions(List<string> Values, XmlQualifiedName Name)
+        private static XmlSchemaSimpleTypeRestriction EnumRestrictions(IReadOnlyCollection<string> Values, XmlQualifiedName Name)
         {
             var RestrictionsRoReturn = new XmlSchemaSimpleTypeRestriction();
             RestrictionsRoReturn.BaseTypeName = Name;
@@ -200,9 +190,7 @@ namespace iabi.BCF.BCFv2.Schemas
             {
                 foreach (var GivenValue in Values)
                 {
-                    var CurrentEnumItem = new XmlSchemaEnumerationFacet();
-                    CurrentEnumItem.Value = GivenValue;
-                    RestrictionsRoReturn.Facets.Add(CurrentEnumItem);
+                    RestrictionsRoReturn.Facets.Add(new XmlSchemaEnumerationFacet { Value = GivenValue });
                 }
             }
             return RestrictionsRoReturn;
@@ -254,11 +242,6 @@ namespace iabi.BCF.BCFv2.Schemas
             UserIdTypeSchemaElement.Name = "UserIdType";
             UserIdTypeSchemaElement.Content = EnumRestrictions(UserIdType, UserIdTypeSchemaElement.QualifiedName);
             return UserIdTypeSchemaElement;
-        }
-
-        private static void ValidationCallback(object sender, ValidationEventArgs args)
-        {
-            // DO NOTHING; JUST A STUB
         }
 
         public bool IsEmpty()

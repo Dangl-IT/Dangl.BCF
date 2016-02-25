@@ -258,7 +258,7 @@ namespace iabi.BCF.BCFv2
             var ReturnObject = new BCFv2Container();
             var FileToOpen = new ZipArchive(ZIPFileStream, ZipArchiveMode.Read);
             // Check if version info is compliant with this implementation (2.0)
-            var VersionEntry = FileToOpen.Entries.FirstOrDefault(Entry => Entry.FullName.ToUpperInvariant() == "bcf.version".ToUpperInvariant());
+            var VersionEntry = FileToOpen.Entries.FirstOrDefault(Entry => string.Equals(Entry.FullName, "bcf.version", StringComparison.InvariantCultureIgnoreCase));
             if (VersionEntry != null)
             {
                 var ReadFileVersionInfo = Version.Deserialize(VersionEntry.Open());
@@ -268,15 +268,9 @@ namespace iabi.BCF.BCFv2
                 }
             }
             // Get project info if present
-            if (FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").Any())
+            if (FileToOpen.Entries.Any(Entry => Entry.FullName == "project.bcfp"))
             {
-                using (var Rdr = new StreamReader(FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").First().Open()))
-                {
-                    var GetMe = Rdr.ReadToEnd();
-                    GetMe.ToString();
-                }
-                var Test = FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").First().Open();
-                var DeserializedProject = ProjectExtension.Deserialize(FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").First().Open());
+                var DeserializedProject = ProjectExtension.Deserialize(FileToOpen.Entries.First(Entry => Entry.FullName == "project.bcfp").Open());
                 if (!(string.IsNullOrWhiteSpace(DeserializedProject.ExtensionSchema) && (DeserializedProject.Project == null || string.IsNullOrWhiteSpace(DeserializedProject.Project.Name) && string.IsNullOrWhiteSpace(DeserializedProject.Project.ProjectId))))
                 {
                     if (string.IsNullOrWhiteSpace(DeserializedProject.ExtensionSchema))
@@ -347,7 +341,6 @@ namespace iabi.BCF.BCFv2
                     FullPathSegments.RemoveAt(i - 1);
                     i = i - 2;
                 }
-                FullPathSegments.ToString();
             }
             return string.Join("/", FullPathSegments);
         }
@@ -371,7 +364,7 @@ namespace iabi.BCF.BCFv2
             }
             if (string.IsNullOrWhiteSpace(CurrentLocation))
             {
-                return AbsolutePath ?? string.Empty;
+                return AbsolutePath;
             }
             // Nested within the current location
             if (AbsolutePath.StartsWith(CurrentLocation))
@@ -405,7 +398,7 @@ namespace iabi.BCF.BCFv2
         {
             var ReturnObject = new BCFTopic();
             // Get the markup
-            ReturnObject.Markup = Markup.Deserialize(Archive.Entries.Where(Entry => Entry.FullName == TopicID + "/" + "markup.bcf").First().Open());
+            ReturnObject.Markup = Markup.Deserialize(Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + "markup.bcf").Open());
             // Check if any comments have a Viewpoint object without any value, then set it to null
             foreach (var CurrentComment in ReturnObject.Markup.Comment.Where(Curr => Curr.ShouldSerializeViewpoint() && string.IsNullOrWhiteSpace(Curr.Viewpoint.Guid)))
             {
@@ -468,7 +461,7 @@ namespace iabi.BCF.BCFv2
             // Get viewpoints
             for (var i = 0; i < ReturnObject.Markup.Viewpoints.Count; i++)
             {
-                var DeserializedViewpoint = VisualizationInfo.Deserialize(Archive.Entries.Where(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Viewpoint).First().Open());
+                var DeserializedViewpoint = VisualizationInfo.Deserialize(Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Viewpoint).Open());
                 DeserializedViewpoint.GUID = ReturnObject.Markup.Viewpoints[i].Guid;
                 ReturnObject.Viewpoints.Add(DeserializedViewpoint);
                 // Get viewpoint bitmaps if present
@@ -507,7 +500,7 @@ namespace iabi.BCF.BCFv2
                 {
                     using (var BytesMemoryStream = new MemoryStream())
                     {
-                        Archive.Entries.Where(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Snapshot).First().Open().CopyTo(BytesMemoryStream);
+                        Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Snapshot)..Open().CopyTo(BytesMemoryStream);
                         ReturnObject.AddOrUpdateSnapshot(ReturnObject.Viewpoints[i].GUID, BytesMemoryStream.ToArray());
                     }
                 }

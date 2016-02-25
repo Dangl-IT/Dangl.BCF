@@ -120,7 +120,7 @@ namespace iabi.BCF.BCFv2
                         ViewpointBitmaps.Remove((VisualizationInfo) RemovedViewpoint);
                     }
                     // Remove from markup
-                    Markup.Viewpoints.Remove(Markup.Viewpoints.Where(OldViewpoint => OldViewpoint.Guid == ((VisualizationInfo) RemovedViewpoint).GUID).First());
+                    Markup.Viewpoints.Remove(Markup.Viewpoints.First(OldViewpoint => OldViewpoint.Guid == ((VisualizationInfo) RemovedViewpoint).GUID));
                 }
             }
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -132,10 +132,10 @@ namespace iabi.BCF.BCFv2
                 foreach (var AddedViewpoint in e.NewItems)
                 {
                     // Add only if not already known (For example, when the viewpoint is already present in the markup but has not yet been physically loaded)
-                    if (Markup.Viewpoints.Where(KnownViewpoint => KnownViewpoint.Guid == ((VisualizationInfo) AddedViewpoint).GUID).Any())
+                    if (Markup.Viewpoints.Any(KnownViewpoint => KnownViewpoint.Guid == ((VisualizationInfo) AddedViewpoint).GUID))
                     {
                         // Already known, just make sure the viewpoint reference is set correctly.
-                        Markup.Viewpoints.Where(KnownViewpoint => KnownViewpoint.Guid == ((VisualizationInfo) AddedViewpoint).GUID).First().Viewpoint = "Viewpoint_" + ((VisualizationInfo) AddedViewpoint).GUID + ".bcfv";
+                        Markup.Viewpoints.First(KnownViewpoint => KnownViewpoint.Guid == ((VisualizationInfo) AddedViewpoint).GUID).Viewpoint = "Viewpoint_" + ((VisualizationInfo) AddedViewpoint).GUID + ".bcfv";
                     }
                     else
                     {
@@ -169,7 +169,7 @@ namespace iabi.BCF.BCFv2
             {
                 _ViewpointSnapshots.Add(ViewpointGuid, SnapshotData);
                 // Add in Markup
-                Markup.Viewpoints.FirstOrDefault(Curr => Curr.Guid == ViewpointGuid).Snapshot = "Snapshot_" + ViewpointGuid + ".png";
+                Markup.Viewpoints.First(Curr => Curr.Guid == ViewpointGuid).Snapshot = "Snapshot_" + ViewpointGuid + ".png";
             }
         }
 

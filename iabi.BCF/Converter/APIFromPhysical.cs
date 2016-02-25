@@ -52,7 +52,7 @@ namespace iabi.BCF.Converter
             ReturnObject.Topics = new List<TopicContainer>();
             for (var i = 0; i < Input.Topics.Count; i++)
             {
-                ReturnObject.Topics.Add(GetAPITopicFromPhysicalBCF(Input.Topics[i], i, Input));
+                ReturnObject.Topics.Add(GetAPITopicFromPhysicalBCF(Input.Topics[i]));
             }
             // Get file attachments
             foreach (var CurrentAttachment in Input.FileAttachments)
@@ -62,7 +62,7 @@ namespace iabi.BCF.Converter
             return ReturnObject;
         }
 
-        private static TopicContainer GetAPITopicFromPhysicalBCF(BCFTopic GivenPhysicalBCFv2, int TopicIndex, BCFv2Container Container)
+        private static TopicContainer GetAPITopicFromPhysicalBCF(BCFTopic GivenPhysicalBCFv2)
         {
             var ReturnObject = new TopicContainer();
             if (GivenPhysicalBCFv2.SnippetData != null)
@@ -116,12 +116,12 @@ namespace iabi.BCF.Converter
                 {
                     for (var i = 0; i < CurrentViewpoint.Bitmaps.Count; i++)
                     {
-                        ReturnObject.Viewpoints.Add(GetSingleViewpoint(CurrentViewpoint, i, TopicIndex, Container));
+                        ReturnObject.Viewpoints.Add(GetSingleViewpoint(CurrentViewpoint));
                     }
                 }
                 else
                 {
-                    ReturnObject.Viewpoints.Add(GetSingleViewpoint(CurrentViewpoint, TopicIndex, Container));
+                    ReturnObject.Viewpoints.Add(GetSingleViewpoint(CurrentViewpoint));
                 }
             }
             // Get Viewpoint snapshots
@@ -180,12 +180,7 @@ namespace iabi.BCF.Converter
             return ReturnObject;
         }
 
-        private static ViewpointContainer GetSingleViewpoint(VisualizationInfo GivenPhysicalViewpoint, int TopicIndex, BCFv2Container Container)
-        {
-            return GetSingleViewpoint(GivenPhysicalViewpoint, TopicIndex, -1, Container);
-        }
-
-        private static ViewpointContainer GetSingleViewpoint(VisualizationInfo GivenPhysicalViewpoint, int TopicIndex, int BitmapIndex, BCFv2Container Container)
+        private static ViewpointContainer GetSingleViewpoint(VisualizationInfo GivenPhysicalViewpoint)
         {
             var ReturnObject = new ViewpointContainer();
             ReturnObject.Viewpoint = new viewpoint_GET();
@@ -255,7 +250,7 @@ namespace iabi.BCF.Converter
             ReturnObject.color = GivenComponent.Color == null ? null : BitConverter.ToString(GivenComponent.Color).Replace("-", "");
             ReturnObject.ifc_guid = GivenComponent.IfcGuid;
             ReturnObject.originating_system = GivenComponent.OriginatingSystem;
-            ReturnObject.selected = GivenComponent.SelectedSpecified ? GivenComponent.Selected : false;
+            ReturnObject.selected = GivenComponent.SelectedSpecified && GivenComponent.Selected;
             ReturnObject.visible = GivenComponent.Visible;
             return ReturnObject;
         }
