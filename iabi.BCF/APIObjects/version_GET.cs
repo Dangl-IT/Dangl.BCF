@@ -12,15 +12,5 @@ namespace iabi.BCF.APIObjects
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "detailed_version")]
         public string detailed_version { get; set; }
-
-        public static version_GET CreateFromJSON(string JSON)
-        {
-            return (version_GET) JsonConvert.DeserializeObject(JSON, typeof (version_GET));
-        }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

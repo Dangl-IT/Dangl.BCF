@@ -43,6 +43,9 @@ namespace iabi.BCF.BCFv2
             set { SetProperty(ref _BCFProject, value); }
         }
 
+        /// <summary>
+        /// Contains allowed property values for this project, e.g. a list of which topic types are allowed
+        /// </summary>
         public Extensions_XSD ProjectExtensions
         {
             get { return _ProjectExtensions; }
@@ -85,6 +88,9 @@ namespace iabi.BCF.BCFv2
             }
         }
 
+        /// <summary>
+        /// Holds all raw byte arrays of the attachment files
+        /// </summary>
         public Dictionary<string, byte[]> FileAttachments
         {
             get
@@ -97,6 +103,11 @@ namespace iabi.BCF.BCFv2
             }
         }
 
+        /// <summary>
+        /// Returns the raw byte array of the attachment
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <returns></returns>
         public byte[] GetAttachmentForDocumentReference(TopicDocumentReferences Input)
         {
             if (Input.isExternal)
@@ -337,6 +348,11 @@ namespace iabi.BCF.BCFv2
             return string.Join("/", FullPathSegments);
         }
 
+        /// <summary>
+        /// Returns just the filename portion of a file reference, e.g. "picture.jpg" for "C:\Pictures\picuture.jpg"
+        /// </summary>
+        /// <param name="FileReference"></param>
+        /// <returns></returns>
         public static string GetFilenameFromReference(string FileReference)
         {
             return string.IsNullOrWhiteSpace(FileReference) ? string.Empty : FileReference.Split('/').Last();

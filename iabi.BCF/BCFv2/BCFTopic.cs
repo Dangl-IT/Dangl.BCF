@@ -35,6 +35,9 @@ namespace iabi.BCF.BCFv2
             Viewpoints.CollectionChanged += Viewpoints_CollectionChanged;
         }
 
+        /// <summary>
+        /// Might holf the raw binary data of a bim snippet attachment
+        /// </summary>
         public byte[] SnippetData { get; set; }
 
         /// <summary>
@@ -173,6 +176,10 @@ namespace iabi.BCF.BCFv2
             }
         }
 
+        /// <summary>
+        /// Removes a snapshot from this topic
+        /// </summary>
+        /// <param name="ViewpointGuid"></param>
         public void RemoveSnapshot(string ViewpointGuid)
         {
             if (ViewpointSnapshots.ContainsKey(ViewpointGuid))

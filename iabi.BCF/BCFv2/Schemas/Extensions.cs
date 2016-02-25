@@ -7,6 +7,9 @@ using System.Xml.Schema;
 
 namespace iabi.BCF.BCFv2.Schemas
 {
+    /// <summary>
+    /// Container for the project extensions schema. This schema is basically just having lists of allowed property values within a project
+    /// </summary>
     public class Extensions_XSD
     {
         private List<string> _Priority;

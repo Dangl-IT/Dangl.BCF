@@ -23,10 +23,5 @@ namespace iabi.BCF.APIObjects.Viewpoint
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "bitmaps")]
         public List<bitmap> bitmaps { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }
