@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace iabi.BCF.APIObjects.Extensions
 {
+    /// <summary>
+    ///     PATCH representation of the extensions object
+    /// </summary>
     [JsonObject(Title = "extensions")]
     public class extensions_PATCH : extensions_Base
     {
@@ -13,10 +16,14 @@ namespace iabi.BCF.APIObjects.Extensions
         private List<string> _topic_label;
 
         private List<string> _topic_status;
+
         private List<string> _topic_type;
 
         private List<string> _user_id_type;
 
+        /// <summary>
+        /// Allowed topic types in the project
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "topic_type")]
         public override List<string> topic_type
         {
@@ -24,6 +31,9 @@ namespace iabi.BCF.APIObjects.Extensions
             set { _topic_type = value; }
         }
 
+        /// <summary>
+        /// Allowed topic stati in the project
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "topic_status")]
         public override List<string> topic_status
         {
@@ -31,6 +41,9 @@ namespace iabi.BCF.APIObjects.Extensions
             set { _topic_status = value; }
         }
 
+        /// <summary>
+        /// Allowed topic labels in the project
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "topic_label")]
         public override List<string> topic_label
         {
@@ -38,6 +51,9 @@ namespace iabi.BCF.APIObjects.Extensions
             set { _topic_label = value; }
         }
 
+        /// <summary>
+        /// Allowed snippet types in the project
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "snippet_type")]
         public override List<string> snippet_type
         {
@@ -45,6 +61,9 @@ namespace iabi.BCF.APIObjects.Extensions
             set { _snippet_type = value; }
         }
 
+        /// <summary>
+        /// Allowed priorities in the project
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "priority")]
         public override List<string> priority
         {
@@ -52,6 +71,9 @@ namespace iabi.BCF.APIObjects.Extensions
             set { _priority = value; }
         }
 
+        /// <summary>
+        /// List of user emails in the project
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "user_id_type")]
         public override List<string> user_id_type
         {

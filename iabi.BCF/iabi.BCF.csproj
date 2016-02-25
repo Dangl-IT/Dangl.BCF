@@ -86,6 +86,7 @@
     <Compile Include="APIObjects\RelatedTopic\related_topic_GET.cs" />
     <Compile Include="APIObjects\RelatedTopic\related_topic_PATCH.cs" />
     <Compile Include="APIObjects\RelatedTopic\related_topic_PUT.cs" />
+    <Compile Include="APIObjects\Topic\bim_snippet.cs" />
     <Compile Include="APIObjects\Topic\topic_Base.cs" />
     <Compile Include="APIObjects\Topic\topic_GET.cs" />
     <Compile Include="APIObjects\Topic\topic_PATCH.cs" />
