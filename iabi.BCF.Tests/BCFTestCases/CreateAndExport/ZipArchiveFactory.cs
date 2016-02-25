@@ -6,9 +6,7 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
 {
     public static class ZipArchiveFactory
     {
-        public const bool CreatePhysicalFiles = false;
-
-        public const string FolderName = @"C:\Users\Dangl\Downloads\_BCFTestCases";
+        public const string FOLDERNAME = @"";
 
         public static ZipArchive ReturnAndWriteIfRequired(BCFv2Container Container, string TestCaseName, string ReadmeText)
         {
@@ -17,23 +15,23 @@ namespace iabi.BCF.Tests.BCFTestCases.CreateAndExport
             MemStream.Position = 0;
             var CreatedArchive = new ZipArchive(MemStream, ZipArchiveMode.Read);
 
-            if (!CreatePhysicalFiles)
+            if (string.IsNullOrWhiteSpace(FOLDERNAME))
             {
                 return CreatedArchive;
             }
 
-            if (!Directory.Exists(FolderName + @"\" + TestCaseName))
+            if (!Directory.Exists(FOLDERNAME + @"\" + TestCaseName))
             {
-                Directory.CreateDirectory(FolderName + @"\" + TestCaseName);
+                Directory.CreateDirectory(FOLDERNAME + @"\" + TestCaseName);
             }
 
-            var FilePath = FolderName + @"\" + TestCaseName + @"\" + TestCaseName + ".bcfzip";
+            var FilePath = FOLDERNAME + @"\" + TestCaseName + @"\" + TestCaseName + ".bcfzip";
             using (var FileStream = File.Create(FilePath))
             {
                 Container.WriteStream(FileStream);
             }
 
-            FilePath = FolderName + @"\" + TestCaseName + @"\Readme.md";
+            FilePath = FOLDERNAME + @"\" + TestCaseName + @"\Readme.md";
             using (var StreamWriter = new StreamWriter(File.Create(FilePath)))
             {
                 StreamWriter.Write(ReadmeText);

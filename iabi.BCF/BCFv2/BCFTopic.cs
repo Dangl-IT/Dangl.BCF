@@ -47,11 +47,11 @@ namespace iabi.BCF.BCFv2
             {
                 if (SetProperty(ref _Markup, value))
                 {
-                    if (_Markup != null && _Markup.Topic != null && string.IsNullOrWhiteSpace(_Markup.Topic.Guid))
+                    if (_Markup?.Topic != null && string.IsNullOrWhiteSpace(_Markup?.Topic?.Guid))
                     {
                         _Markup.Topic.Guid = Guid.NewGuid().ToString();
                     }
-                    if (_Markup != null && _Markup.Topic != null && (_Markup.Topic.CreationDateSpecified || _Markup.Topic.CreationDate == default(DateTime)))
+                    if (Markup?.Topic != null && (_Markup.Topic.CreationDateSpecified || _Markup.Topic.CreationDate == default(DateTime)))
                     {
                         _Markup.Topic.CreationDate = DateTime.UtcNow;
                     }

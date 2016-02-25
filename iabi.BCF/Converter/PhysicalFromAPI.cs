@@ -58,7 +58,7 @@ namespace iabi.BCF.Converter
         {
             if (GivenAPIContainer.Topic == null)
             {
-                throw new ArgumentNullException("Topic");
+                throw new ArgumentNullException(nameof(GivenAPIContainer.Topic));
             }
             var ReturnObject = new BCFTopic();
             ReturnObject.Markup = new Markup();

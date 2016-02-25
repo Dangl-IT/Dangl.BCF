@@ -27,20 +27,12 @@ namespace iabi.BCF.BCFv2
         /// <summary>
         ///     Version information for the BCFv2. Read-Only
         /// </summary>
-        public Version BCFVersionInfo
+        public Version BCFVersionInfo => _BCFVersionInfo ?? (_BCFVersionInfo = new Version
         {
-            get
-            {
-                if (_BCFVersionInfo == null)
-                {
-                    _BCFVersionInfo = new Version();
-                    // Trimming the "RC" (Release Candidate) from the documentation, this is final now=)
-                    _BCFVersionInfo.DetailedVersion = "2.0";
-                    _BCFVersionInfo.VersionId = "2.0";
-                }
-                return _BCFVersionInfo;
-            }
-        }
+            // Trimming the "RC" (Release Candidate) from the documentation, this is final now=)
+            DetailedVersion = "2.0",
+            VersionId = "2.0"
+        });
 
         /// <summary>
         ///     BCF Project and project extensions information
@@ -280,7 +272,7 @@ namespace iabi.BCF.BCFv2
                     ReturnObject.BCFProject = DeserializedProject;
                     if (!string.IsNullOrWhiteSpace(ReturnObject.BCFProject.ExtensionSchema) && FileToOpen.Entries.Any(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema))
                     {
-                        using (var Rdr = new StreamReader(FileToOpen.Entries.FirstOrDefault(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema).Open()))
+                        using (var Rdr = new StreamReader(FileToOpen.Entries.First(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema).Open()))
                         {
                             ReturnObject.ProjectExtensions = new Extensions_XSD(Rdr.ReadToEnd());
                         }
@@ -428,7 +420,7 @@ namespace iabi.BCF.BCFv2
                 foreach (var InternalFile in ReturnObject.Markup.Header.Where(Curr => !Curr.isExternal))
                 {
                     var FilePathInArchive = GetAbsolutePath(TopicID, InternalFile.Reference);
-                    var Entry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == FilePathInArchive);
+                    var Entry = Archive.Entries.First(Curr => Curr.FullName == FilePathInArchive);
                     // Only append if not known already
                     if (!Container.FileAttachments.ContainsKey(Entry.Name))
                     {
@@ -446,7 +438,7 @@ namespace iabi.BCF.BCFv2
                 foreach (var InternalDocument in ReturnObject.Markup.Topic.DocumentReferences.Where(Curr => !Curr.isExternal))
                 {
                     var FilePathInArchive = GetAbsolutePath(TopicID, InternalDocument.ReferencedDocument);
-                    var Entry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == FilePathInArchive);
+                    var Entry = Archive.Entries.First(Curr => Curr.FullName == FilePathInArchive);
                     // Only append if not known already
                     if (!Container.FileAttachments.ContainsKey(Entry.Name))
                     {
