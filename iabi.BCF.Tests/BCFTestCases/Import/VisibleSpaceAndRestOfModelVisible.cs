@@ -9,11 +9,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class VisibleSpaceAndRestOfModelVisible
     {
-        public static BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
                 public VisibleSpaceAndRestOfModelVisible()
         {
-            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.VisibleSpaceAndRestOfModelVisible);
         }
 
@@ -127,23 +126,26 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             }
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.visible_space_and_the_rest_of_the_model_visible, Data);
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.visible_space_and_the_rest_of_the_model_visible, Data);
+            }
         }
-    }
+    
 }

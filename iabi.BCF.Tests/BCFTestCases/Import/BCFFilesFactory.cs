@@ -9,8 +9,6 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
     {
         public static BCFv2Container GetContainerForTest(BCFImportTest DesiredTest)
         {
-            if (Containers.ContainsKey(DesiredTest)) return Containers[DesiredTest];
-
             BCFv2Container CreatedContainer;
             switch (DesiredTest)
             {
@@ -109,8 +107,7 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
                 default:
                     throw new NotImplementedException();
             }
-            Containers.Add(DesiredTest, CreatedContainer);
-            return Containers[DesiredTest];
+            return CreatedContainer;
         }
 
         private static BCFv2Container ReadFromBinary(byte[] InputData)

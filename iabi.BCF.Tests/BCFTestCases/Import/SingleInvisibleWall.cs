@@ -8,11 +8,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class SingleInvisibleWall
     {
-        public static BCFv2Container ReadContainer;
+        public  BCFv2Container ReadContainer;
 
         public SingleInvisibleWall()
         {
-            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SingleInvisibleWall);
         }
 
@@ -120,32 +119,37 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
         }
 
         [Fact]
-        public void NoDuplicatedViewpoints()
+        public void HasOneDuplicatedGuid_ViewpointAndComment()
         {
             var TopicGuids = ReadContainer.Topics.Select(Curr => Curr.Markup.Topic.Guid);
             var CommentGuids = ReadContainer.Topics.SelectMany(Curr => Curr.Markup.Comment).Select(Curr => Curr.Guid);
             var ViewpointGuids = ReadContainer.Topics.SelectMany(Curr => Curr.Viewpoints).Select(Curr => Curr.GUID);
             var AllGuids = CommentGuids.Concat(ViewpointGuids).Concat(TopicGuids);
-            Assert.Equal(AllGuids.Count(), AllGuids.Distinct().Count());
+            Assert.NotEqual(AllGuids.Count(), AllGuids.Distinct().Count());
+            Assert.Equal(CommentGuids.First(), ViewpointGuids.First());
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.SingleInvisibleWall, Data);
+
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.SingleInvisibleWall, Data);
+            }
         }
-    }
+    
 }

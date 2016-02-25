@@ -410,7 +410,7 @@ namespace iabi.BCF.Tests.BCFTestCases
             }
 
             Assert.Equal(ExpectedTopic.CreationAuthor, ActualTopic.CreationAuthor);
-            Assert.Equal(0, (int)(ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds);
+            Assert.True((int)(ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds < 5);
             Assert.Equal(ExpectedTopic.CreationDateSpecified, ActualTopic.CreationDateSpecified);
 
             if (!(string.IsNullOrWhiteSpace(ExpectedTopic.Description) && string.IsNullOrWhiteSpace(ActualTopic.Description)))

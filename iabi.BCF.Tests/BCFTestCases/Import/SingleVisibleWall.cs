@@ -8,11 +8,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class SingleVisibleWall
     {
-        public static BCFv2Container ReadContainer;
+        public  BCFv2Container ReadContainer;
 
                 public SingleVisibleWall()
         {
-            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SingleVisibleWall);
         }
 
@@ -106,23 +105,27 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             }
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.single_visible_wall, Data);
-        }
+
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.single_visible_wall, Data);
+            }
+        
     }
 }

@@ -8,11 +8,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class MultipleFilesInHeader
     {
-        public static BCFv2Container ReadContainer;
+        public  BCFv2Container ReadContainer;
 
                 public MultipleFilesInHeader()
         {
-            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.MultipleFilesInHeader);
         }
 
@@ -180,23 +179,26 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             }
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.multiple_files_in_header, Data);
-        }
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.multiple_files_in_header, Data);
+            }
+        
     }
 }

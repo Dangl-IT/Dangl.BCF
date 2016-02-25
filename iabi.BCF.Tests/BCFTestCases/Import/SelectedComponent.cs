@@ -9,11 +9,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class SelectedComponent
     {
-        public static BCFv2Container ReadContainer;
+        public  BCFv2Container ReadContainer;
 
                 public SelectedComponent()
         {
-            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.SelectedComponent);
         }
 
@@ -131,23 +130,26 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             }
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.Selected_component, Data);
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.Selected_component, Data);
+            }
         }
     }
-}
+

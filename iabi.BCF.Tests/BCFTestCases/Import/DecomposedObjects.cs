@@ -9,11 +9,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class DecomposedObjects
     {
-        public static BCFv2Container ReadContainer;
+        public  BCFv2Container ReadContainer;
 
                 public DecomposedObjects()
         {
-            if (ReadContainer == null)
             ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
         }
 
@@ -62,7 +61,7 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_01()
+            public Topic_01()
             {
                 if (ReadContainer == null)
                 ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
@@ -189,7 +188,7 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
 
             public static BCFTopic ReadTopic;
 
-                        public Topic_02()
+            public Topic_02()
             {
                 if (ReadContainer == null)
                     ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.DecomposedObjects);
@@ -401,23 +400,27 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             }
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.Decomposed_objects, Data);
-        }
+
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.Decomposed_objects, Data);
+            }
+        
     }
 }

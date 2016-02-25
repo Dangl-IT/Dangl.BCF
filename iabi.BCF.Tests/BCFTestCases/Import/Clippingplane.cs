@@ -8,11 +8,10 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
      
     public class Clippingplane
     {
-        public static BCFv2Container ReadContainer;
+        public BCFv2Container ReadContainer;
 
                 public Clippingplane()
         {
-            if (ReadContainer == null)
                 ReadContainer = BCFFilesFactory.GetContainerForTest(BCFImportTest.Clippingplane);
         }
 
@@ -107,23 +106,27 @@ namespace iabi.BCF.Tests.BCFTestCases.Import
             Assert.Equal(7.665119721718699, Actual.Location.Z);
         }
 
-        [Fact]
-        public void WriteOut()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
-        }
 
-        [Fact]
-        public void WriteAndCompare()
-        {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.Clippingplane, Data);
-        }
+
+
+            [Fact]
+            public void WriteOut()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                Assert.NotNull(Data);
+                Assert.True(Data.Length > 0);
+            }
+
+            [Fact]
+            public void WriteAndCompare()
+            {
+                var MemStream = new MemoryStream();
+                ReadContainer.WriteStream(MemStream);
+                var Data = MemStream.ToArray();
+                CompareTool.CompareFiles(BCFTestCasesImportData.Clippingplane, Data);
+            }
+        
     }
 }
