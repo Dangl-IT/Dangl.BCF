@@ -50,11 +50,6 @@ namespace iabi.BCF.APIObjects.Topic
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "bim_snippet")]
         public virtual bim_snippet bim_snippet { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 
     [JsonObject(Title = "bim_snippet")]

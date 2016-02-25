@@ -4,6 +4,9 @@ namespace iabi.BCF.APIObjects.DocumentReference
 {
     public abstract class document_reference_Base
     {
+        /// <summary>
+        /// Guid
+        /// </summary>
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "guid")]
         public virtual string guid { get; set; }
 
@@ -15,10 +18,5 @@ namespace iabi.BCF.APIObjects.DocumentReference
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "description")]
         public virtual string description { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

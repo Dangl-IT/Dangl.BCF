@@ -10,10 +10,5 @@ namespace iabi.BCF.APIObjects.Viewpoint
 
         [JsonProperty(Required = Required.Always)]
         public bool snapshot_available { get; set; }
-
-        public static viewpoint_GET CreateFromJSON(string JSON)
-        {
-            return (viewpoint_GET) JsonConvert.DeserializeObject(JSON, typeof (viewpoint_GET));
-        }
     }
 }

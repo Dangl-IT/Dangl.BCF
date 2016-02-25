@@ -17,10 +17,5 @@ namespace iabi.BCF.APIObjects.Topic
 
         [JsonProperty(Required = Required.Always, PropertyName = "creation_author")]
         public override string creation_author { get; set; }
-
-        public static topic_GET CreateFromJSON(string JSON)
-        {
-            return (topic_GET) JsonConvert.DeserializeObject(JSON, typeof (topic_GET));
-        }
     }
 }

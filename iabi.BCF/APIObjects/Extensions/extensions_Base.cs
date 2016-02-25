@@ -69,10 +69,5 @@ namespace iabi.BCF.APIObjects.Extensions
                      || priority.Any()
                      || user_id_type.Any());
         }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

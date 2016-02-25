@@ -7,10 +7,5 @@ namespace iabi.BCF.APIObjects.RelatedTopic
     {
         [JsonProperty(Required = Required.Default, PropertyName = "related_topic_guid")]
         public override string related_topic_guid { get; set; }
-
-        public static related_topic_PATCH CreateFromJSON(string JSON)
-        {
-            return (related_topic_PATCH) JsonConvert.DeserializeObject(JSON, typeof (related_topic_PATCH));
-        }
     }
 }

@@ -2,23 +2,22 @@
 
 namespace iabi.BCF.APIObjects.Document
 {
+    /// <summary>
+    /// HTTP GET representation for the document
+    /// </summary>
     [JsonObject(Title = "document")]
     public class document_GET
     {
+        /// <summary>
+        /// Guid
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "guid")]
         public string guid { get; set; }
 
+        /// <summary>
+        /// Filename
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "filename")]
         public string filename { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        public static document_GET CreateFromJSON(string JSON)
-        {
-            return (document_GET) JsonConvert.DeserializeObject(JSON, typeof (document_GET));
-        }
     }
 }

@@ -16,15 +16,5 @@ namespace iabi.BCF.APIObjects.Authentication
 
         [JsonProperty(Required = Required.Always, PropertyName = "redirect_url")]
         public string redirect_url { get; set; }
-
-        public static dynRegClient_POST CreateFromJSON(string JSON)
-        {
-            return (dynRegClient_POST) JsonConvert.DeserializeObject(JSON, typeof (dynRegClient_POST));
-        }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

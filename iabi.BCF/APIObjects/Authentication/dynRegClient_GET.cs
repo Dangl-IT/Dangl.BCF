@@ -10,15 +10,5 @@ namespace iabi.BCF.APIObjects.Authentication
 
         [JsonProperty(Required = Required.Always, PropertyName = "client_secret")]
         public string client_secret { get; set; }
-
-        public static dynRegClient_GET CreateFromJSON(string JSON)
-        {
-            return (dynRegClient_GET) JsonConvert.DeserializeObject(JSON, typeof (dynRegClient_GET));
-        }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

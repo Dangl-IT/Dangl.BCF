@@ -58,10 +58,5 @@ namespace iabi.BCF.APIObjects.Extensions
             get { return _user_id_type ?? (_user_id_type = new List<string>()); }
             set { _user_id_type = value; }
         }
-
-        public static extensions_PATCH CreateFromJSON(string JSON)
-        {
-            return (extensions_PATCH) JsonConvert.DeserializeObject(JSON, typeof (extensions_PATCH));
-        }
     }
 }

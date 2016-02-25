@@ -20,10 +20,5 @@ namespace iabi.BCF.APIObjects.File
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "reference")]
         public virtual string reference { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

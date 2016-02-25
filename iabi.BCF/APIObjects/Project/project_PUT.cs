@@ -7,10 +7,5 @@ namespace iabi.BCF.APIObjects.Project
     {
         [JsonProperty(Required = Required.Always, PropertyName = "name")]
         public override string name { get; set; }
-
-        public static project_PUT CreateFromJSON(string JSON)
-        {
-            return (project_PUT) JsonConvert.DeserializeObject(JSON, typeof (project_PUT));
-        }
     }
 }

@@ -16,15 +16,5 @@ namespace iabi.BCF.APIObjects.Authentication
 
         [JsonProperty(Required = Required.Always, PropertyName = "refresh_token")]
         public string refresh_token { get; set; }
-
-        public static token_GET CreateFromJSON(string JSON)
-        {
-            return (token_GET) JsonConvert.DeserializeObject(JSON, typeof (token_GET));
-        }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

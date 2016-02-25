@@ -7,10 +7,5 @@ namespace iabi.BCF.APIObjects.RelatedTopic
     {
         [JsonProperty(Required = Required.Always, PropertyName = "related_topic_guid")]
         public virtual string related_topic_guid { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

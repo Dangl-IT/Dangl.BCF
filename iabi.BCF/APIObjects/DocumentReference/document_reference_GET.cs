@@ -2,15 +2,16 @@
 
 namespace iabi.BCF.APIObjects.DocumentReference
 {
+    /// <summary>
+    /// HTTP GET representation of the document_reference
+    /// </summary>
     [JsonObject(Title = "document_reference")]
     public class document_reference_GET : document_reference_Base
     {
+        /// <summary>
+        /// Guid
+        /// </summary>
         [JsonProperty(Required = Required.Always, PropertyName = "guid")]
         public override string guid { get; set; }
-
-        public static document_reference_GET CreateFromJSON(string JSON)
-        {
-            return (document_reference_GET) JsonConvert.DeserializeObject(JSON, typeof (document_reference_GET));
-        }
     }
 }

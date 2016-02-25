@@ -9,10 +9,5 @@ namespace iabi.BCF.APIObjects.Project
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "project_id")]
         public virtual string project_id { get; set; }
-
-        public string CreateJSON()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }
