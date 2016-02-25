@@ -16,13 +16,18 @@ namespace iabi.BCF.BCFv2.Schemas
         private List<string> _TopicLabel;
 
         private List<string> _TopicStatus;
+
         private List<string> _TopicType;
 
         private List<string> _UserIdType;
 
-        public Extensions_XSD(string SchemaString)
+        /// <summary>
+        /// Wil initialize the object from the passed string parameter.
+        /// </summary>
+        /// <param name="schemaString"></param>
+        public Extensions_XSD(string schemaString)
         {
-            var SchemaXml = XElement.Parse(SchemaString);
+            var SchemaXml = XElement.Parse(schemaString);
 
             var RestrictionBaseElement = SchemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicType"));
             if (RestrictionBaseElement != null)
@@ -54,100 +59,73 @@ namespace iabi.BCF.BCFv2.Schemas
             {
                 UserIdType = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value).ToList();
             }
-
-            //try
-            //{
-            //    XmlSchema GivenSchema = new XmlSchema();
-            //    using (MemoryStream CurrentMemoryStream = new MemoryStream())
-            //    {
-            //        using (StreamWriter CurrentStreamWriter = new StreamWriter(CurrentMemoryStream))
-            //        {
-            //            CurrentStreamWriter.Write(SchemaString);
-            //            CurrentStreamWriter.Flush();
-            //            CurrentMemoryStream.Position = 0;
-            //            GivenSchema = XmlSchema.Read(CurrentMemoryStream, ValidationCallback);
-            //        }
-            //    }
-            //    // Extract the Values
-            //    foreach (XmlSchemaSimpleType CurrentType in GivenSchema.Items)
-            //    {
-            //        switch (CurrentType.Name)
-            //        {
-            //            case "TopicType":
-            //                TopicType = ReadRestrictions((XmlSchemaSimpleTypeRestriction)CurrentType.Content);
-            //                break;
-
-            //            case "TopicStatus":
-            //                TopicStatus = ReadRestrictions((XmlSchemaSimpleTypeRestriction)CurrentType.Content);
-            //                break;
-
-            //            case "TopicLabel":
-            //                TopicLabel = ReadRestrictions((XmlSchemaSimpleTypeRestriction)CurrentType.Content);
-            //                break;
-
-            //            case "SnippetType":
-            //                SnippetType = ReadRestrictions((XmlSchemaSimpleTypeRestriction)CurrentType.Content);
-            //                break;
-
-            //            case "Priority":
-            //                Priority = ReadRestrictions((XmlSchemaSimpleTypeRestriction)CurrentType.Content);
-            //                break;
-
-            //            case "UserIdType":
-            //                UserIdType = ReadRestrictions((XmlSchemaSimpleTypeRestriction)CurrentType.Content);
-            //                break;
-
-            //            default:
-            //                // TODO GIVE ERROR WHEN READING
-            //                break;
-            //        }
-            //    }
-            //}
-            //catch
-            //{
-            //}
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Extensions_XSD()
         {
         }
 
+        /// <summary>
+        /// List of allowed topic types within the project
+        /// </summary>
         public List<string> TopicType
         {
             get { return _TopicType ?? (_TopicType = new List<string>()); }
             internal set { _TopicType = value; }
         }
 
+        /// <summary>
+        /// List of allowed topic stati within the project
+        /// </summary>
         public List<string> TopicStatus
         {
             get { return _TopicStatus ?? (_TopicStatus = new List<string>()); }
             internal set { _TopicStatus = value; }
         }
 
+        /// <summary>
+        /// List of allowed topic labels within the project
+        /// </summary>
         public List<string> TopicLabel
         {
             get { return _TopicLabel ?? (_TopicLabel = new List<string>()); }
             internal set { _TopicLabel = value; }
         }
 
+        /// <summary>
+        /// List of allowed snippet types within the project
+        /// </summary>
         public List<string> SnippetType
         {
             get { return _SnippetType ?? (_SnippetType = new List<string>()); }
             internal set { _SnippetType = value; }
         }
 
+        /// <summary>
+        /// List of allowed priorities within the project
+        /// </summary>
         public List<string> Priority
         {
             get { return _Priority ?? (_Priority = new List<string>()); }
             internal set { _Priority = value; }
         }
 
+        /// <summary>
+        /// List of user emails within the project
+        /// </summary>
         public List<string> UserIdType
         {
             get { return _UserIdType ?? (_UserIdType = new List<string>()); }
             internal set { _UserIdType = value; }
         }
 
+        /// <summary>
+        /// Returns the string representation of the extension.xsd file
+        /// </summary>
+        /// <returns></returns>
         public string WriteExtension()
         {
             try
@@ -244,6 +222,10 @@ namespace iabi.BCF.BCFv2.Schemas
             return UserIdTypeSchemaElement;
         }
 
+        /// <summary>
+        /// Indicates true if all list properties are empty
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty()
         {
             return
