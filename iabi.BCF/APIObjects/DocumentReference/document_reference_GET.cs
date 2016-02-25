@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.DocumentReference
 {
@@ -11,7 +10,7 @@ namespace iabi.BCF.APIObjects.DocumentReference
 
         public static document_reference_GET CreateFromJSON(string JSON)
         {
-            return (document_reference_GET)JsonConvert.DeserializeObject(JSON, typeof(document_reference_GET));
+            return (document_reference_GET) JsonConvert.DeserializeObject(JSON, typeof (document_reference_GET));
         }
     }
 }

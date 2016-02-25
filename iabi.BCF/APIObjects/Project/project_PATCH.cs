@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.Project
     {
         public static project_PATCH CreateFromJSON(string JSON)
         {
-            return (project_PATCH)JsonConvert.DeserializeObject(JSON, typeof(project_PATCH));
+            return (project_PATCH) JsonConvert.DeserializeObject(JSON, typeof (project_PATCH));
         }
     }
 }

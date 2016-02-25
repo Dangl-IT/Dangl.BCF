@@ -5,13 +5,12 @@ namespace iabi.BCF.BCFv2.Schemas
 {
     public partial class VisualizationInfo
     {
-        [XmlIgnore]
-        private string _GUID;
+        [XmlIgnore] private string _GUID;
 
         /// <summary>
-        /// Implemented due to the actual VisualizationInfo XSD schema not defining a viewpoint
-        /// and therefore not allowing to link the Viewpoints in the Markup with the actual
-        /// VisualizationInfo instances.
+        ///     Implemented due to the actual VisualizationInfo XSD schema not defining a viewpoint
+        ///     and therefore not allowing to link the Viewpoints in the Markup with the actual
+        ///     VisualizationInfo instances.
         /// </summary>
         [XmlIgnore]
         public string GUID
@@ -24,10 +23,7 @@ namespace iabi.BCF.BCFv2.Schemas
                 }
                 return _GUID;
             }
-            set
-            {
-                _GUID = value;
-            }
+            set { _GUID = value; }
         }
     }
 }

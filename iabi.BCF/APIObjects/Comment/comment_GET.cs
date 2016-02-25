@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace iabi.BCF.APIObjects.Comment
 {
@@ -27,7 +26,7 @@ namespace iabi.BCF.APIObjects.Comment
 
         public static comment_GET CreateFromJSON(string JSON)
         {
-            return (comment_GET)JsonConvert.DeserializeObject(JSON, typeof(comment_GET));
+            return (comment_GET) JsonConvert.DeserializeObject(JSON, typeof (comment_GET));
         }
     }
 }

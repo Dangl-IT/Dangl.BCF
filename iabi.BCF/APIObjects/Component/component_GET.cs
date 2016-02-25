@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.Component
     {
         public static component_GET CreateFromJSON(string JSON)
         {
-            return (component_GET)JsonConvert.DeserializeObject(JSON, typeof(component_GET));
+            return (component_GET) JsonConvert.DeserializeObject(JSON, typeof (component_GET));
         }
     }
 }

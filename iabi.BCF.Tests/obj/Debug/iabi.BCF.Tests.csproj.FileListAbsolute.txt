@@ -25,3 +25,4 @@ C:\Users\Dangl\Documents\Visual Studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\bin
 C:\Users\Dangl\Documents\Visual Studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Dangl\Documents\Visual Studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.dll
 C:\Users\Dangl\Documents\Visual Studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\obj\Debug\iabi.BCF.Tests.pdb
+C:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF.Tests\bin\Debug\iabi.BCF.xml

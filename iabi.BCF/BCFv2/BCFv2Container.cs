@@ -1,31 +1,39 @@
-﻿using iabi.BCF.BCFv2.Schemas;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using iabi.BCF.BCFv2.Schemas;
+using Version = iabi.BCF.BCFv2.Schemas.Version;
 
 namespace iabi.BCF.BCFv2
 {
     /// <summary>
-    /// Container class for a BCFv2 physical file
+    ///     Container class for a BCFv2 physical file
     /// </summary>
     public class BCFv2Container : BindableBase
     {
-        private iabi.BCF.BCFv2.Schemas.Version _BCFVersionInfo;
+        private ProjectExtension _BCFProject;
+        private Version _BCFVersionInfo;
+
+        private Dictionary<string, byte[]> _FileAttachments;
+
+        private Extensions_XSD _ProjectExtensions;
+
+        private ObservableCollection<BCFTopic> _Topics;
 
         /// <summary>
-        /// Version information for the BCFv2. Read-Only
+        ///     Version information for the BCFv2. Read-Only
         /// </summary>
-        public iabi.BCF.BCFv2.Schemas.Version BCFVersionInfo
+        public Version BCFVersionInfo
         {
             get
             {
                 if (_BCFVersionInfo == null)
                 {
-                    _BCFVersionInfo = new iabi.BCF.BCFv2.Schemas.Version();
+                    _BCFVersionInfo = new Version();
                     // Trimming the "RC" (Release Candidate) from the documentation, this is final now=)
                     _BCFVersionInfo.DetailedVersion = "2.0";
                     _BCFVersionInfo.VersionId = "2.0";
@@ -34,31 +42,18 @@ namespace iabi.BCF.BCFv2
             }
         }
 
-        private ProjectExtension _BCFProject;
-
         /// <summary>
-        /// BCF Project and project extensions information
+        ///     BCF Project and project extensions information
         /// </summary>
         public ProjectExtension BCFProject
         {
-            get
-            {
-                return _BCFProject;
-            }
-            set
-            {
-                SetProperty(ref _BCFProject, value);
-            }
+            get { return _BCFProject; }
+            set { SetProperty(ref _BCFProject, value); }
         }
-
-        private Extensions_XSD _ProjectExtensions;
 
         public Extensions_XSD ProjectExtensions
         {
-            get
-            {
-                return _ProjectExtensions;
-            }
+            get { return _ProjectExtensions; }
             set
             {
                 if (SetProperty(ref _ProjectExtensions, value))
@@ -83,10 +78,8 @@ namespace iabi.BCF.BCFv2
             }
         }
 
-        private ObservableCollection<BCFTopic> _Topics;
-
         /// <summary>
-        /// Contains the BCFv2's single topics
+        ///     Contains the BCFv2's single topics
         /// </summary>
         public ObservableCollection<BCFTopic> Topics
         {
@@ -99,8 +92,6 @@ namespace iabi.BCF.BCFv2
                 return _Topics;
             }
         }
-
-        private Dictionary<string, byte[]> _FileAttachments;
 
         public Dictionary<string, byte[]> FileAttachments
         {
@@ -116,29 +107,32 @@ namespace iabi.BCF.BCFv2
 
         public byte[] GetAttachmentForDocumentReference(TopicDocumentReferences Input)
         {
-            if (Input.isExternal) throw new ArgumentException("Reference is external");
+            if (Input.isExternal)
+            {
+                throw new ArgumentException("Reference is external");
+            }
             return FileAttachments[GetFilenameFromReference(Input.ReferencedDocument)];
         }
 
         /// <summary>
-        /// Creates a BCFv2 zip archive
+        ///     Creates a BCFv2 zip archive
         /// </summary>
         /// <param name="StreamToWrite"></param>
         public void WriteStream(Stream StreamToWrite)
         {
-            using (ZipArchive BCFZip = new ZipArchive(StreamToWrite, ZipArchiveMode.Create, true))
+            using (var BCFZip = new ZipArchive(StreamToWrite, ZipArchiveMode.Create, true))
             {
                 // Write the version information
-                ZipArchiveEntry VersionInformation = BCFZip.CreateEntry("bcf.version");
-                using (StreamWriter VersionWriter = new StreamWriter(VersionInformation.Open()))
+                var VersionInformation = BCFZip.CreateEntry("bcf.version");
+                using (var VersionWriter = new StreamWriter(VersionInformation.Open()))
                 {
                     VersionWriter.Write(BCFVersionInfo.Serialize());
                 }
 
                 if (ProjectExtensions != null && !ProjectExtensions.IsEmpty())
                 {
-                    ZipArchiveEntry ProjectInformation = BCFZip.CreateEntry("extensions.xsd");
-                    using (StreamWriter ProjectInfoWriter = new StreamWriter(ProjectInformation.Open()))
+                    var ProjectInformation = BCFZip.CreateEntry("extensions.xsd");
+                    using (var ProjectInfoWriter = new StreamWriter(ProjectInformation.Open()))
                     {
                         ProjectInfoWriter.Write(ProjectExtensions.WriteExtension());
                     }
@@ -151,8 +145,8 @@ namespace iabi.BCF.BCFv2
                 // Write the project info if it is present
                 if (BCFProject != null)
                 {
-                    ZipArchiveEntry ProjectEntry = BCFZip.CreateEntry("project.bcfp");
-                    using (StreamWriter ProjectInfoWriter = new StreamWriter(ProjectEntry.Open()))
+                    var ProjectEntry = BCFZip.CreateEntry("project.bcfp");
+                    using (var ProjectInfoWriter = new StreamWriter(ProjectEntry.Open()))
                     {
                         ProjectInfoWriter.Write(BCFProject.Serialize());
                     }
@@ -162,8 +156,8 @@ namespace iabi.BCF.BCFv2
                 {
                     foreach (var CurrentAttachment in FileAttachments)
                     {
-                        ZipArchiveEntry AttachmentEntry = BCFZip.CreateEntry(CurrentAttachment.Key);
-                        using (BinaryWriter AttachmentWriter = new BinaryWriter(AttachmentEntry.Open()))
+                        var AttachmentEntry = BCFZip.CreateEntry(CurrentAttachment.Key);
+                        using (var AttachmentWriter = new BinaryWriter(AttachmentEntry.Open()))
                         {
                             AttachmentWriter.Write(CurrentAttachment.Value);
                         }
@@ -186,8 +180,8 @@ namespace iabi.BCF.BCFv2
                         if (!CurrentTopic.Markup.Topic.BimSnippet.isExternal)
                         {
                             CurrentTopic.Markup.Topic.BimSnippet.isExternal = false;
-                            ZipArchiveEntry BIMSnippetBinaryEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Topic.BimSnippet.Reference);
-                            using (BinaryWriter CurrentSnippetWriter = new BinaryWriter(BIMSnippetBinaryEntry.Open()))
+                            var BIMSnippetBinaryEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Topic.BimSnippet.Reference);
+                            using (var CurrentSnippetWriter = new BinaryWriter(BIMSnippetBinaryEntry.Open()))
                             {
                                 if (CurrentTopic.SnippetData != null)
                                 {
@@ -196,25 +190,25 @@ namespace iabi.BCF.BCFv2
                             }
                         }
                     }
-                    ZipArchiveEntry CurrentTopicEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + "markup.bcf");
-                    for (int i = 0; i < CurrentTopic.Viewpoints.Count; i++)
+                    var CurrentTopicEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + "markup.bcf");
+                    for (var i = 0; i < CurrentTopic.Viewpoints.Count; i++)
                     {
                         if (CurrentTopic.ViewpointSnapshots.ContainsKey(CurrentTopic.Viewpoints[i].GUID))
                         {
                             CurrentTopic.Markup.Viewpoints[i].Snapshot = "Snapshot_" + CurrentTopic.Viewpoints[i].GUID + ".png";
                         }
                     }
-                    using (StreamWriter TopicWriter = new StreamWriter(CurrentTopicEntry.Open()))
+                    using (var TopicWriter = new StreamWriter(CurrentTopicEntry.Open()))
                     {
                         TopicWriter.Write(CurrentTopic.Markup.Serialize());
                     }
                     // Write viewpoints if present
-                    for (int i = 0; i < CurrentTopic.Viewpoints.Count; i++)
+                    for (var i = 0; i < CurrentTopic.Viewpoints.Count; i++)
                     {
-                        string EntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Viewpoints[i].Viewpoint;
-                        ZipArchiveEntry CurrentViewpoint = BCFZip.CreateEntry(EntryName);
+                        var EntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Viewpoints[i].Viewpoint;
+                        var CurrentViewpoint = BCFZip.CreateEntry(EntryName);
 
-                        using (StreamWriter CurrentViewpointWriter = new StreamWriter(CurrentViewpoint.Open()))
+                        using (var CurrentViewpointWriter = new StreamWriter(CurrentViewpoint.Open()))
                         {
                             if (CurrentTopic.Viewpoints[i].Bitmaps.Count > 0)
                             {
@@ -228,9 +222,9 @@ namespace iabi.BCF.BCFv2
                         // Write snapshot if present
                         if (CurrentTopic.ViewpointSnapshots.ContainsKey(CurrentTopic.Viewpoints[i].GUID))
                         {
-                            string SnapshotEntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Viewpoints[i].Snapshot;
-                            ZipArchiveEntry CurrentViewpointSnapshot = BCFZip.CreateEntry(SnapshotEntryName);
-                            using (BinaryWriter CurrentViewpointSnapshotWriter = new BinaryWriter(CurrentViewpointSnapshot.Open()))
+                            var SnapshotEntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Viewpoints[i].Snapshot;
+                            var CurrentViewpointSnapshot = BCFZip.CreateEntry(SnapshotEntryName);
+                            using (var CurrentViewpointSnapshotWriter = new BinaryWriter(CurrentViewpointSnapshot.Open()))
                             {
                                 CurrentViewpointSnapshotWriter.Write(CurrentTopic.ViewpointSnapshots[CurrentTopic.Markup.Viewpoints[i].Guid]);
                             }
@@ -238,12 +232,12 @@ namespace iabi.BCF.BCFv2
                         // Write bitmaps if present
                         if (CurrentTopic.ViewpointBitmaps.ContainsKey(CurrentTopic.Viewpoints[i]))
                         {
-                            for (int j = 0; j < CurrentTopic.ViewpointBitmaps[CurrentTopic.Viewpoints[i]].Count; j++)
+                            for (var j = 0; j < CurrentTopic.ViewpointBitmaps[CurrentTopic.Viewpoints[i]].Count; j++)
                             {
                                 // It's a little bit hacky still....
-                                string BitmapEntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Viewpoints[i].Bitmaps[j].Reference;
-                                ZipArchiveEntry CurrentViewpointSnapshot = BCFZip.CreateEntry(BitmapEntryName);
-                                using (BinaryWriter CurrentViewpointSnapshotWriter = new BinaryWriter(CurrentViewpointSnapshot.Open()))
+                                var BitmapEntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Viewpoints[i].Bitmaps[j].Reference;
+                                var CurrentViewpointSnapshot = BCFZip.CreateEntry(BitmapEntryName);
+                                using (var CurrentViewpointSnapshotWriter = new BinaryWriter(CurrentViewpointSnapshot.Open()))
                                 {
                                     CurrentViewpointSnapshotWriter.Write(CurrentTopic.ViewpointBitmaps[CurrentTopic.Viewpoints[i]][j]);
                                 }
@@ -255,19 +249,19 @@ namespace iabi.BCF.BCFv2
         }
 
         /// <summary>
-        /// Reads a BCFv2 zip archive
+        ///     Reads a BCFv2 zip archive
         /// </summary>
         /// <param name="ZIPFileStream">The zip archive of the physical file</param>
         /// <returns></returns>
         public static BCFv2Container ReadStream(Stream ZIPFileStream)
         {
-            BCFv2Container ReturnObject = new BCFv2Container();
+            var ReturnObject = new BCFv2Container();
             var FileToOpen = new ZipArchive(ZIPFileStream, ZipArchiveMode.Read);
             // Check if version info is compliant with this implementation (2.0)
             var VersionEntry = FileToOpen.Entries.FirstOrDefault(Entry => Entry.FullName.ToUpperInvariant() == "bcf.version".ToUpperInvariant());
             if (VersionEntry != null)
             {
-                var ReadFileVersionInfo = iabi.BCF.BCFv2.Schemas.Version.Deserialize(VersionEntry.Open());
+                var ReadFileVersionInfo = Version.Deserialize(VersionEntry.Open());
                 if (ReadFileVersionInfo.VersionId != "2.0" || !ReadFileVersionInfo.DetailedVersion.Contains("2.0"))
                 {
                     throw new NotSupportedException("BCFzip version");
@@ -276,9 +270,9 @@ namespace iabi.BCF.BCFv2
             // Get project info if present
             if (FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").Any())
             {
-                using (StreamReader Rdr = new StreamReader(FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").First().Open()))
+                using (var Rdr = new StreamReader(FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").First().Open()))
                 {
-                    string GetMe = Rdr.ReadToEnd();
+                    var GetMe = Rdr.ReadToEnd();
                     GetMe.ToString();
                 }
                 var Test = FileToOpen.Entries.Where(Entry => Entry.FullName == "project.bcfp").First().Open();
@@ -292,7 +286,7 @@ namespace iabi.BCF.BCFv2
                     ReturnObject.BCFProject = DeserializedProject;
                     if (!string.IsNullOrWhiteSpace(ReturnObject.BCFProject.ExtensionSchema) && FileToOpen.Entries.Any(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema))
                     {
-                        using (StreamReader Rdr = new StreamReader(FileToOpen.Entries.FirstOrDefault(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema).Open()))
+                        using (var Rdr = new StreamReader(FileToOpen.Entries.FirstOrDefault(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema).Open()))
                         {
                             ReturnObject.ProjectExtensions = new Extensions_XSD(Rdr.ReadToEnd());
                         }
@@ -300,10 +294,10 @@ namespace iabi.BCF.BCFv2
                 }
             }
             // Get each topic's GUID and read the topic
-            List<string> TopicGUIDs = new List<string>();
+            var TopicGUIDs = new List<string>();
             foreach (var CurrentEntry in FileToOpen.Entries)
             {
-                string CurrentTopicGUID = CurrentEntry.FullName;
+                var CurrentTopicGUID = CurrentEntry.FullName;
                 if (Regex.IsMatch(CurrentTopicGUID, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}/markup.bcf\b"))
                 {
                     if (!TopicGUIDs.Contains(Regex.Match(CurrentTopicGUID, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value))
@@ -321,8 +315,8 @@ namespace iabi.BCF.BCFv2
         }
 
         /// <summary>
-        /// Will take the current location within a <see cref="ZipArchive"/> and a relative location to that to output
-        /// the absolute location for the ZipArchive Entry.
+        ///     Will take the current location within a <see cref="ZipArchive" /> and a relative location to that to output
+        ///     the absolute location for the ZipArchive Entry.
         /// </summary>
         /// <param name="CurrentPath">Position within the archive from which to start.</param>
         /// <param name="RelativeReference">Relative to the given position.</param>
@@ -333,18 +327,18 @@ namespace iabi.BCF.BCFv2
             {
                 return string.Empty;
             }
-            else if (string.IsNullOrWhiteSpace(CurrentPath))
+            if (string.IsNullOrWhiteSpace(CurrentPath))
             {
                 return RelativeReference;
             }
-            else if (string.IsNullOrWhiteSpace(RelativeReference))
+            if (string.IsNullOrWhiteSpace(RelativeReference))
             {
                 return CurrentPath;
             }
             var PathSegments = CurrentPath.Split('/');
             var ReferenceSegments = RelativeReference.Split('/');
-            List<string> FullPathSegments = PathSegments.Concat(ReferenceSegments).Where(Curr => Curr != "/" && !string.IsNullOrWhiteSpace(Curr)).ToList();
-            for (int i = 0; i < FullPathSegments.Count; i++)
+            var FullPathSegments = PathSegments.Concat(ReferenceSegments).Where(Curr => Curr != "/" && !string.IsNullOrWhiteSpace(Curr)).ToList();
+            for (var i = 0; i < FullPathSegments.Count; i++)
             {
                 // Need to get one higher
                 if (FullPathSegments[i].Trim() == "..")
@@ -364,7 +358,7 @@ namespace iabi.BCF.BCFv2
         }
 
         /// <summary>
-        /// Transforms an absolute path to a relative path from a given location
+        ///     Transforms an absolute path to a relative path from a given location
         /// </summary>
         /// <param name="AbsolutePath"></param>
         /// <param name="CurrentLocation">The location from which to make the relative path</param>
@@ -396,11 +390,11 @@ namespace iabi.BCF.BCFv2
                 }
             }
             var Result = string.Empty;
-            for (int i = 0; i < (CurrentLocComponents.Length - Offset); i++)
+            for (var i = 0; i < CurrentLocComponents.Length - Offset; i++)
             {
                 Result += "../";
             }
-            for (int i = Offset; i < AbsolutePathComponents.Length; i++)
+            for (var i = Offset; i < AbsolutePathComponents.Length; i++)
             {
                 Result += AbsolutePathComponents[i] + "/";
             }
@@ -428,7 +422,7 @@ namespace iabi.BCF.BCFv2
                 }
                 else
                 {
-                    using (MemoryStream MemStream = new MemoryStream())
+                    using (var MemStream = new MemoryStream())
                     {
                         Entry.Open().CopyTo(MemStream);
                         ReturnObject.SnippetData = MemStream.ToArray();
@@ -445,7 +439,7 @@ namespace iabi.BCF.BCFv2
                     // Only append if not known already
                     if (!Container.FileAttachments.ContainsKey(Entry.Name))
                     {
-                        using (MemoryStream MemStream = new MemoryStream())
+                        using (var MemStream = new MemoryStream())
                         {
                             Entry.Open().CopyTo(MemStream);
                             Container.FileAttachments.Add(Entry.Name, MemStream.ToArray());
@@ -463,7 +457,7 @@ namespace iabi.BCF.BCFv2
                     // Only append if not known already
                     if (!Container.FileAttachments.ContainsKey(Entry.Name))
                     {
-                        using (MemoryStream MemStream = new MemoryStream())
+                        using (var MemStream = new MemoryStream())
                         {
                             Entry.Open().CopyTo(MemStream);
                             Container.FileAttachments.Add(Entry.Name, MemStream.ToArray());
@@ -472,7 +466,7 @@ namespace iabi.BCF.BCFv2
                 }
             }
             // Get viewpoints
-            for (int i = 0; i < ReturnObject.Markup.Viewpoints.Count; i++)
+            for (var i = 0; i < ReturnObject.Markup.Viewpoints.Count; i++)
             {
                 var DeserializedViewpoint = VisualizationInfo.Deserialize(Archive.Entries.Where(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Viewpoint).First().Open());
                 DeserializedViewpoint.GUID = ReturnObject.Markup.Viewpoints[i].Guid;
@@ -482,7 +476,7 @@ namespace iabi.BCF.BCFv2
                 {
                     foreach (var ViewpointBitmap in ReturnObject.Viewpoints[i].Bitmaps)
                     {
-                        using (MemoryStream BytesMemoryStream = new MemoryStream())
+                        using (var BytesMemoryStream = new MemoryStream())
                         {
                             var BitmapPathInArchive = GetAbsolutePath(TopicID, ViewpointBitmap.Reference);
                             var BitmapFileEntry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == BitmapPathInArchive);
@@ -511,7 +505,7 @@ namespace iabi.BCF.BCFv2
                 }
                 if (!string.IsNullOrWhiteSpace(ReturnObject.Markup.Viewpoints[i].Snapshot))
                 {
-                    using (MemoryStream BytesMemoryStream = new MemoryStream())
+                    using (var BytesMemoryStream = new MemoryStream())
                     {
                         Archive.Entries.Where(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Snapshot).First().Open().CopyTo(BytesMemoryStream);
                         ReturnObject.AddOrUpdateSnapshot(ReturnObject.Viewpoints[i].GUID, BytesMemoryStream.ToArray());

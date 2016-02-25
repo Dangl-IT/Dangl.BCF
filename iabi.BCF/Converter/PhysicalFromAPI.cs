@@ -1,21 +1,18 @@
-﻿using iabi.BCF.APIObjects.Viewpoint;
-using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using iabi.BCF.BCFv2;
+using iabi.BCF.BCFv2.Schemas;
 
 namespace iabi.BCF.Converter
 {
     /// <summary>
-    /// Will create an <see cref="BCFv2Container"/> instance from a <see cref="APIContainer"/>
+    ///     Will create an <see cref="BCFv2Container" /> instance from a <see cref="APIContainer" />
     /// </summary>
     public static class PhysicalFromAPI
     {
         /// <summary>
-        /// Will create an <see cref="BCFv2Container"/> instance from a <see cref="APIContainer"/>
+        ///     Will create an <see cref="BCFv2Container" /> instance from a <see cref="APIContainer" />
         /// </summary>
         public static BCFv2Container Convert(APIContainer Input)
         {
@@ -59,8 +56,11 @@ namespace iabi.BCF.Converter
 
         private static BCFTopic GetPhysicalTopicFromAPI(TopicContainer GivenAPIContainer, APIContainer APIContainer)
         {
-            if (GivenAPIContainer.Topic == null) throw new ArgumentNullException("Topic");
-            BCFTopic ReturnObject = new BCFTopic();
+            if (GivenAPIContainer.Topic == null)
+            {
+                throw new ArgumentNullException("Topic");
+            }
+            var ReturnObject = new BCFTopic();
             ReturnObject.Markup = new Markup();
             // Get the topic stuff
             {
@@ -117,7 +117,7 @@ namespace iabi.BCF.Converter
                     ReturnObject.Markup.Topic.ModifiedAuthor = GivenAPIContainer.Topic.modified_author;
                     if (GivenAPIContainer.Topic.modified_date != null)
                     {
-                        ReturnObject.Markup.Topic.ModifiedDate = (DateTime)GivenAPIContainer.Topic.modified_date;
+                        ReturnObject.Markup.Topic.ModifiedDate = (DateTime) GivenAPIContainer.Topic.modified_date;
                     }
                 }
                 ReturnObject.Markup.Topic.Priority = GivenAPIContainer.Topic.priority;
@@ -164,7 +164,7 @@ namespace iabi.BCF.Converter
                             ReturnObject.Markup.Comment.Last().ModifiedAuthor = CurrentComment.modified_author;
                             if (CurrentComment.modified_date != null)
                             {
-                                ReturnObject.Markup.Comment.Last().ModifiedDate = (DateTime)CurrentComment.modified_date;
+                                ReturnObject.Markup.Comment.Last().ModifiedDate = (DateTime) CurrentComment.modified_date;
                             }
                         }
                         ReturnObject.Markup.Comment.Last().ReplyToComment = new CommentReplyToComment();
@@ -230,9 +230,9 @@ namespace iabi.BCF.Converter
                                 ReturnObject.Viewpoints.Last().Components.Add(new Component());
                                 ReturnObject.Viewpoints.Last().Components.Last().AuthoringToolId = CurrentComponent.authoring_tool_id;
                                 ReturnObject.Viewpoints.Last().Components.Last().Color = CurrentComponent.color == null ? null : Enumerable.Range(0, CurrentComponent.color.Length)
-                                                                                                                                                                                                .Where(x => x % 2 == 0)
-                                                                                                                                                                                                .Select(x => System.Convert.ToByte(CurrentComponent.color.Substring(x, 2), 16))
-                                                                                                                                                                                                .ToArray();
+                                    .Where(x => x%2 == 0)
+                                    .Select(x => System.Convert.ToByte(CurrentComponent.color.Substring(x, 2), 16))
+                                    .ToArray();
                                 ReturnObject.Viewpoints.Last().Components.Last().IfcGuid = CurrentComponent.ifc_guid;
                                 ReturnObject.Viewpoints.Last().Components.Last().OriginatingSystem = CurrentComponent.originating_system;
                                 if (CurrentComponent.selected)

@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.Topic
     {
         public static topic_PATCH CreateFromJSON(string JSON)
         {
-            return (topic_PATCH)JsonConvert.DeserializeObject(JSON, typeof(topic_PATCH));
+            return (topic_PATCH) JsonConvert.DeserializeObject(JSON, typeof (topic_PATCH));
         }
     }
 }

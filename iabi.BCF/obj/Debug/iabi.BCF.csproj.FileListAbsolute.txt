@@ -5,3 +5,4 @@ c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug
 c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug\Newtonsoft.Json.xml
 c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\obj\Debug\iabi.BCF.dll
 c:\users\dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\obj\Debug\iabi.BCF.pdb
+C:\Users\Dangl\documents\visual studio 2015\Projects\iabi.BCF\iabi.BCF\bin\Debug\iabi.BCF.XML

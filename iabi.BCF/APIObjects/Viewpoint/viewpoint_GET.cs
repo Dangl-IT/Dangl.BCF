@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Viewpoint
 {
@@ -14,7 +13,7 @@ namespace iabi.BCF.APIObjects.Viewpoint
 
         public static viewpoint_GET CreateFromJSON(string JSON)
         {
-            return (viewpoint_GET)JsonConvert.DeserializeObject(JSON, typeof(viewpoint_GET));
+            return (viewpoint_GET) JsonConvert.DeserializeObject(JSON, typeof (viewpoint_GET));
         }
     }
 }

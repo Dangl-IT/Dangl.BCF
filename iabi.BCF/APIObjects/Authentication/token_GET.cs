@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Authentication
 {
@@ -20,7 +19,7 @@ namespace iabi.BCF.APIObjects.Authentication
 
         public static token_GET CreateFromJSON(string JSON)
         {
-            return (token_GET)JsonConvert.DeserializeObject(JSON, typeof(token_GET));
+            return (token_GET) JsonConvert.DeserializeObject(JSON, typeof (token_GET));
         }
 
         public string CreateJSON()

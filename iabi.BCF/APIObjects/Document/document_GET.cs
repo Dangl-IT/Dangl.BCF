@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Document
 {
@@ -19,7 +18,7 @@ namespace iabi.BCF.APIObjects.Document
 
         public static document_GET CreateFromJSON(string JSON)
         {
-            return (document_GET)JsonConvert.DeserializeObject(JSON, typeof(document_GET));
+            return (document_GET) JsonConvert.DeserializeObject(JSON, typeof (document_GET));
         }
     }
 }

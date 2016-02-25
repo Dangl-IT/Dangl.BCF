@@ -1,48 +1,48 @@
-﻿using iabi.BCF.APIObjects.Comment;
+﻿using System.Collections.Generic;
+using iabi.BCF.APIObjects.Comment;
 using iabi.BCF.APIObjects.DocumentReference;
 using iabi.BCF.APIObjects.File;
 using iabi.BCF.APIObjects.RelatedTopic;
 using iabi.BCF.APIObjects.Topic;
-using System.Collections.Generic;
 
 namespace iabi.BCF.Converter
 {
     /// <summary>
-    /// This class represents a BCF topic composed of BCF API objects
+    ///     This class represents a BCF topic composed of BCF API objects
     /// </summary>
     public class TopicContainer
     {
+        private List<comment_GET> _Comments;
+
+        private List<file_GET> _Files;
+
+        private List<document_reference_GET> _ReferencedDocuments;
+
+        private List<related_topic_GET> _RelatedTopics;
+
+        private List<ViewpointContainer> _Viewpoints;
+
         /// <summary>
-        /// The actual topic
+        ///     The actual topic
         /// </summary>
         public topic_GET Topic { get; set; }
 
         /// <summary>
-        /// The BIM Snippet in binary form
+        ///     The BIM Snippet in binary form
         /// </summary>
         public byte[] SnippetData { get; set; }
 
-        private List<file_GET> _Files;
-
         /// <summary>
-        /// A list of file references
+        ///     A list of file references
         /// </summary>
         public List<file_GET> Files
         {
-            get
-            {
-                return _Files ?? (_Files = new List<file_GET>());
-            }
-            set
-            {
-                _Files = value;
-            }
+            get { return _Files ?? (_Files = new List<file_GET>()); }
+            set { _Files = value; }
         }
 
-        private List<related_topic_GET> _RelatedTopics;
-
         /// <summary>
-        /// A list of related topics
+        ///     A list of related topics
         /// </summary>
         public List<related_topic_GET> RelatedTopics
         {
@@ -54,16 +54,11 @@ namespace iabi.BCF.Converter
                 }
                 return _RelatedTopics;
             }
-            set
-            {
-                _RelatedTopics = value;
-            }
+            set { _RelatedTopics = value; }
         }
 
-        private List<document_reference_GET> _ReferencedDocuments;
-
         /// <summary>
-        /// A list of referenced documents
+        ///     A list of referenced documents
         /// </summary>
         public List<document_reference_GET> ReferencedDocuments
         {
@@ -75,16 +70,11 @@ namespace iabi.BCF.Converter
                 }
                 return _ReferencedDocuments;
             }
-            set
-            {
-                _ReferencedDocuments = value;
-            }
+            set { _ReferencedDocuments = value; }
         }
 
-        private List<comment_GET> _Comments;
-
         /// <summary>
-        /// Comments within this topic
+        ///     Comments within this topic
         /// </summary>
         public List<comment_GET> Comments
         {
@@ -96,16 +86,11 @@ namespace iabi.BCF.Converter
                 }
                 return _Comments;
             }
-            set
-            {
-                _Comments = value;
-            }
+            set { _Comments = value; }
         }
 
-        private List<ViewpointContainer> _Viewpoints;
-
         /// <summary>
-        /// Viewpoints within this topic
+        ///     Viewpoints within this topic
         /// </summary>
         public List<ViewpointContainer> Viewpoints
         {
@@ -117,10 +102,7 @@ namespace iabi.BCF.Converter
                 }
                 return _Viewpoints;
             }
-            set
-            {
-                _Viewpoints = value;
-            }
+            set { _Viewpoints = value; }
         }
     }
 }

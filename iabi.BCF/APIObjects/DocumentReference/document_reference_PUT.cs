@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.DocumentReference
     {
         public static document_reference_PUT CreateFromJSON(string JSON)
         {
-            return (document_reference_PUT)JsonConvert.DeserializeObject(JSON, typeof(document_reference_PUT));
+            return (document_reference_PUT) JsonConvert.DeserializeObject(JSON, typeof (document_reference_PUT));
         }
     }
 }

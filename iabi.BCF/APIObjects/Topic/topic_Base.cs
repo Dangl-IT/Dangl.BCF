@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace iabi.BCF.APIObjects.Topic
 {
@@ -60,23 +60,19 @@ namespace iabi.BCF.APIObjects.Topic
     [JsonObject(Title = "bim_snippet")]
     public class bim_snippet
     {
-        [JsonProperty(Required = Required.Always)]
-        public string snippet_type;
+        [JsonProperty(Required = Required.Always)] public bool is_external;
 
-        [JsonProperty(Required = Required.Always)]
-        public bool is_external;
+        [JsonProperty(Required = Required.Always)] public string reference;
 
-        [JsonProperty(Required = Required.Always)]
-        public string reference;
+        [JsonProperty(Required = Required.Always)] public string reference_schema;
 
-        [JsonProperty(Required = Required.Always)]
-        public string reference_schema;
+        [JsonProperty(Required = Required.Always)] public string snippet_type;
 
         public bool HasValues()
         {
             return !string.IsNullOrWhiteSpace(snippet_type)
-                || !string.IsNullOrWhiteSpace(reference)
-                || !string.IsNullOrWhiteSpace(reference_schema);
+                   || !string.IsNullOrWhiteSpace(reference)
+                   || !string.IsNullOrWhiteSpace(reference_schema);
         }
     }
 }

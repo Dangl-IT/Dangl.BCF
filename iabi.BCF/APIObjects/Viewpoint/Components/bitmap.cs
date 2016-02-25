@@ -6,7 +6,7 @@ namespace iabi.BCF.APIObjects.Viewpoint.Components
     public class bitmap
     {
         [JsonProperty(Required = Required.Default, PropertyName = "bitmap_type")]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof (StringEnumConverter))]
         public bitmap_type bitmap_type { get; set; }
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "guid")]

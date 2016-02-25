@@ -1,0 +1,1469 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>iabi.BCF</name>
+    </assembly>
+    <members>
+        <member name="T:iabi.BCF.BCFv2.BCFTopic">
+            <summary>
+            Single BCFv2 topic container
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.BCFTopic.#ctor">
+            <summary>
+            Public constructor. Will hook to the Viewpoints CollectionChanged event and automatically
+            add viewpoints to the markup if they are not yet present.
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFTopic.Markup">
+            <summary>
+            The Markup contains the topic's text informations.
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFTopic.Viewpoints">
+            <summary>
+            The List of all the viewpoints within the topic.
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFTopic._ViewpointSnapshots">
+            <summary>
+            Links ViewpointGuid and Snapshot
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFTopic.ViewpointBitmaps">
+            <summary>
+            Contains the byte arrays for the actual snapshots. Note: Not implementing property- or collection changed event handlers.
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.BCFTopic.OnDispose">
+            <summary>
+            Will de-hook from the Viewpoints CollectionChanged event
+            </summary>
+        </member>
+        <member name="T:iabi.BCF.BCFv2.BCFv2Container">
+            <summary>
+            Container class for a BCFv2 physical file
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFv2Container.BCFVersionInfo">
+            <summary>
+            Version information for the BCFv2. Read-Only
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFv2Container.BCFProject">
+            <summary>
+            BCF Project and project extensions information
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.BCFv2Container.Topics">
+            <summary>
+            Contains the BCFv2's single topics
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.BCFv2Container.WriteStream(System.IO.Stream)">
+            <summary>
+            Creates a BCFv2 zip archive
+            </summary>
+            <param name="StreamToWrite"></param>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.BCFv2Container.ReadStream(System.IO.Stream)">
+            <summary>
+            Reads a BCFv2 zip archive
+            </summary>
+            <param name="ZIPFileStream">The zip archive of the physical file</param>
+            <returns></returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.BCFv2Container.GetAbsolutePath(System.String,System.String)">
+            <summary>
+            Will take the current location within a <see cref="T:System.IO.Compression.ZipArchive"/> and a relative location to that to output
+            the absolute location for the ZipArchive Entry.
+            </summary>
+            <param name="CurrentPath">Position within the archive from which to start.</param>
+            <param name="RelativeReference">Relative to the given position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.BCFv2Container.TransformToRelativePath(System.String,System.String)">
+            <summary>
+            Transforms an absolute path to a relative path from a given location
+            </summary>
+            <param name="AbsolutePath"></param>
+            <param name="CurrentLocation">The location from which to make the relative path</param>
+            <returns></returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.ShouldSerializeHeader">
+            <summary>
+            Test whether Header should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.ShouldSerializeComment">
+            <summary>
+            Test whether Comment should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.ShouldSerializeViewpoints">
+            <summary>
+            Test whether Viewpoints should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.ShouldSerializeTopic">
+            <summary>
+            Test whether Topic should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.Serialize">
+            <summary>
+            Serializes current Markup object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Markup@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Markup object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Markup object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Markup object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Markup.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Markup@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Markup object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Markup object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.#ctor">
+            <summary>
+            HeaderFile class constructor
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.ShouldSerializeDate">
+            <summary>
+            Test whether Date should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.ShouldSerializeisExternal">
+            <summary>
+            Test whether isExternal should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.ShouldSerializeFilename">
+            <summary>
+            Test whether Filename should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.ShouldSerializeReference">
+            <summary>
+            Test whether Reference should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.ShouldSerializeIfcProject">
+            <summary>
+            Test whether IfcProject should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.ShouldSerializeIfcSpatialStructureElement">
+            <summary>
+            Test whether IfcSpatialStructureElement should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.Serialize">
+            <summary>
+            Serializes current HeaderFile object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.HeaderFile@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an HeaderFile object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output HeaderFile object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current HeaderFile object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.HeaderFile.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.HeaderFile@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an HeaderFile object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output HeaderFile object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.ShouldSerializeViewpoint">
+            <summary>
+            Test whether Viewpoint should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.ShouldSerializeSnapshot">
+            <summary>
+            Test whether Snapshot should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.Serialize">
+            <summary>
+            Serializes current ViewPoint object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.ViewPoint@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an ViewPoint object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output ViewPoint object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current ViewPoint object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ViewPoint.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.ViewPoint@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an ViewPoint object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output ViewPoint object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.#ctor">
+            <summary>
+            Comment class constructor
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeDate">
+            <summary>
+            Test whether Date should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeModifiedDate">
+            <summary>
+            Test whether ModifiedDate should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeViewpoint">
+            <summary>
+            Test whether Viewpoint should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeReplyToComment">
+            <summary>
+            Test whether ReplyToComment should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeVerbalStatus">
+            <summary>
+            Test whether VerbalStatus should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeStatus">
+            <summary>
+            Test whether Status should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeAuthor">
+            <summary>
+            Test whether Author should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeComment1">
+            <summary>
+            Test whether Comment1 should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeModifiedAuthor">
+            <summary>
+            Test whether ModifiedAuthor should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.Serialize">
+            <summary>
+            Serializes current Comment object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Comment@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Comment object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Comment object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Comment object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Comment.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Comment@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Comment object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Comment object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentViewpoint.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentViewpoint.Serialize">
+            <summary>
+            Serializes current CommentViewpoint object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentViewpoint.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.CommentViewpoint@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an CommentViewpoint object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output CommentViewpoint object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentViewpoint.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current CommentViewpoint object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentViewpoint.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.CommentViewpoint@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an CommentViewpoint object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output CommentViewpoint object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentReplyToComment.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentReplyToComment.Serialize">
+            <summary>
+            Serializes current CommentReplyToComment object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentReplyToComment.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.CommentReplyToComment@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an CommentReplyToComment object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output CommentReplyToComment object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentReplyToComment.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current CommentReplyToComment object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.CommentReplyToComment.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.CommentReplyToComment@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an CommentReplyToComment object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output CommentReplyToComment object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.#ctor">
+            <summary>
+            BimSnippet class constructor
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.ShouldSerializeisExternal">
+            <summary>
+            Test whether isExternal should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.ShouldSerializeReference">
+            <summary>
+            Test whether Reference should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.ShouldSerializeReferenceSchema">
+            <summary>
+            Test whether ReferenceSchema should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.ShouldSerializeSnippetType">
+            <summary>
+            Test whether SnippetType should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.Serialize">
+            <summary>
+            Serializes current BimSnippet object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.BimSnippet@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an BimSnippet object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output BimSnippet object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current BimSnippet object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.BimSnippet.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.BimSnippet@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an BimSnippet object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output BimSnippet object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeLabels">
+            <summary>
+            Test whether Labels should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeDocumentReferences">
+            <summary>
+            Test whether DocumentReferences should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeRelatedTopics">
+            <summary>
+            Test whether RelatedTopics should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeCreationDate">
+            <summary>
+            Test whether CreationDate should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeModifiedDate">
+            <summary>
+            Test whether ModifiedDate should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeBimSnippet">
+            <summary>
+            Test whether BimSnippet should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeReferenceLink">
+            <summary>
+            Test whether ReferenceLink should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeTitle">
+            <summary>
+            Test whether Title should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializePriority">
+            <summary>
+            Test whether Priority should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeIndex">
+            <summary>
+            Test whether Index should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeCreationAuthor">
+            <summary>
+            Test whether CreationAuthor should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeModifiedAuthor">
+            <summary>
+            Test whether ModifiedAuthor should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeAssignedTo">
+            <summary>
+            Test whether AssignedTo should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeDescription">
+            <summary>
+            Test whether Description should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeTopicType">
+            <summary>
+            Test whether TopicType should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.ShouldSerializeTopicStatus">
+            <summary>
+            Test whether TopicStatus should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.Serialize">
+            <summary>
+            Serializes current Topic object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Topic@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Topic object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Topic object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Topic object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Topic.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Topic@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Topic object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Topic object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.#ctor">
+            <summary>
+            TopicDocumentReferences class constructor
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.ShouldSerializeisExternal">
+            <summary>
+            Test whether isExternal should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.ShouldSerializeReferencedDocument">
+            <summary>
+            Test whether ReferencedDocument should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.ShouldSerializeDescription">
+            <summary>
+            Test whether Description should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.Serialize">
+            <summary>
+            Serializes current TopicDocumentReferences object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.TopicDocumentReferences@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an TopicDocumentReferences object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output TopicDocumentReferences object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current TopicDocumentReferences object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicDocumentReferences.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.TopicDocumentReferences@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an TopicDocumentReferences object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output TopicDocumentReferences object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicRelatedTopics.ShouldSerializeGuid">
+            <summary>
+            Test whether Guid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicRelatedTopics.Serialize">
+            <summary>
+            Serializes current TopicRelatedTopics object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicRelatedTopics.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.TopicRelatedTopics@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an TopicRelatedTopics object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output TopicRelatedTopics object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicRelatedTopics.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current TopicRelatedTopics object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.TopicRelatedTopics.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.TopicRelatedTopics@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an TopicRelatedTopics object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output TopicRelatedTopics object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ProjectExtension.ShouldSerializeProject">
+            <summary>
+            Test whether Project should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ProjectExtension.ShouldSerializeExtensionSchema">
+            <summary>
+            Test whether ExtensionSchema should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ProjectExtension.Serialize">
+            <summary>
+            Serializes current ProjectExtension object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ProjectExtension.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.ProjectExtension@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an ProjectExtension object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output ProjectExtension object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ProjectExtension.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current ProjectExtension object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ProjectExtension.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.ProjectExtension@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an ProjectExtension object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output ProjectExtension object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Project.ShouldSerializeName">
+            <summary>
+            Test whether Name should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Project.ShouldSerializeProjectId">
+            <summary>
+            Test whether ProjectId should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Project.Serialize">
+            <summary>
+            Serializes current Project object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Project.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Project@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Project object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Project object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Project.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Project object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Project.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Project@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Project object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Project object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Version.ShouldSerializeDetailedVersion">
+            <summary>
+            Test whether DetailedVersion should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Version.ShouldSerializeVersionId">
+            <summary>
+            Test whether VersionId should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Version.Serialize">
+            <summary>
+            Serializes current Version object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Version.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Version@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Version object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Version object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Version.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Version object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Version.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Version@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Version object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Version object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="T:iabi.BCF.BCFv2.Schemas.VisualizationInfo">
+            <summary>
+            visualiztioninfo documentation
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.ShouldSerializeComponents">
+            <summary>
+            Test whether Components should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.ShouldSerializeLines">
+            <summary>
+            Test whether Lines should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.ShouldSerializeClippingPlanes">
+            <summary>
+            Test whether ClippingPlanes should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.ShouldSerializeBitmaps">
+            <summary>
+            Test whether Bitmaps should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.ShouldSerializeOrthogonalCamera">
+            <summary>
+            Test whether OrthogonalCamera should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.ShouldSerializePerspectiveCamera">
+            <summary>
+            Test whether PerspectiveCamera should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.Serialize">
+            <summary>
+            Serializes current VisualizationInfo object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.VisualizationInfo@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an VisualizationInfo object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output VisualizationInfo object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current VisualizationInfo object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfo.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.VisualizationInfo@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an VisualizationInfo object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output VisualizationInfo object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.Schemas.VisualizationInfo.GUID">
+            <summary>
+            Implemented due to the actual VisualizationInfo XSD schema not defining a viewpoint
+            and therefore not allowing to link the Viewpoints in the Markup with the actual
+            VisualizationInfo instances.
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.#ctor">
+            <summary>
+            Component class constructor
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.ShouldSerializeSelected">
+            <summary>
+            Test whether Selected should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.ShouldSerializeVisible">
+            <summary>
+            Test whether Visible should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.ShouldSerializeOriginatingSystem">
+            <summary>
+            Test whether OriginatingSystem should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.ShouldSerializeAuthoringToolId">
+            <summary>
+            Test whether AuthoringToolId should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.ShouldSerializeIfcGuid">
+            <summary>
+            Test whether IfcGuid should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.Serialize">
+            <summary>
+            Serializes current Component object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Component@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Component object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Component object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Component object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Component.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Component@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Component object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Component object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ClippingPlane.ShouldSerializeLocation">
+            <summary>
+            Test whether Location should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ClippingPlane.ShouldSerializeDirection">
+            <summary>
+            Test whether Direction should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ClippingPlane.Serialize">
+            <summary>
+            Serializes current ClippingPlane object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ClippingPlane.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.ClippingPlane@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an ClippingPlane object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output ClippingPlane object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ClippingPlane.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current ClippingPlane object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.ClippingPlane.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.ClippingPlane@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an ClippingPlane object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output ClippingPlane object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.ShouldSerializeX">
+            <summary>
+            Test whether X should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.ShouldSerializeY">
+            <summary>
+            Test whether Y should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.ShouldSerializeZ">
+            <summary>
+            Test whether Z should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.Serialize">
+            <summary>
+            Serializes current Point object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Point@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Point object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Point object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Point object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Point.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Point@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Point object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Point object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.ShouldSerializeX">
+            <summary>
+            Test whether X should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.ShouldSerializeY">
+            <summary>
+            Test whether Y should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.ShouldSerializeZ">
+            <summary>
+            Test whether Z should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.Serialize">
+            <summary>
+            Serializes current Direction object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Direction@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Direction object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Direction object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Direction object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Direction.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Direction@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Direction object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Direction object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Line.ShouldSerializeStartPoint">
+            <summary>
+            Test whether StartPoint should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Line.ShouldSerializeEndPoint">
+            <summary>
+            Test whether EndPoint should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Line.Serialize">
+            <summary>
+            Serializes current Line object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Line.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.Line@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an Line object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output Line object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Line.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current Line object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.Line.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.Line@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an Line object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output Line object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.ShouldSerializeFieldOfView">
+            <summary>
+            Test whether FieldOfView should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.ShouldSerializeCameraViewPoint">
+            <summary>
+            Test whether CameraViewPoint should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.ShouldSerializeCameraDirection">
+            <summary>
+            Test whether CameraDirection should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.ShouldSerializeCameraUpVector">
+            <summary>
+            Test whether CameraUpVector should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.Serialize">
+            <summary>
+            Serializes current PerspectiveCamera object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.PerspectiveCamera@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an PerspectiveCamera object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output PerspectiveCamera object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current PerspectiveCamera object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.PerspectiveCamera.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.PerspectiveCamera@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an PerspectiveCamera object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output PerspectiveCamera object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="P:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.ViewToWorldScale">
+            <summary>
+            view's visible size in meters
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.ShouldSerializeViewToWorldScale">
+            <summary>
+            Test whether ViewToWorldScale should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.ShouldSerializeCameraViewPoint">
+            <summary>
+            Test whether CameraViewPoint should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.ShouldSerializeCameraDirection">
+            <summary>
+            Test whether CameraDirection should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.ShouldSerializeCameraUpVector">
+            <summary>
+            Test whether CameraUpVector should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.Serialize">
+            <summary>
+            Serializes current OrthogonalCamera object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.OrthogonalCamera@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an OrthogonalCamera object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output OrthogonalCamera object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current OrthogonalCamera object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.OrthogonalCamera.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.OrthogonalCamera@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an OrthogonalCamera object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output OrthogonalCamera object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.ShouldSerializeBitmap">
+            <summary>
+            Test whether Bitmap should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.ShouldSerializeHeight">
+            <summary>
+            Test whether Height should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.ShouldSerializeLocation">
+            <summary>
+            Test whether Location should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.ShouldSerializeNormal">
+            <summary>
+            Test whether Normal should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.ShouldSerializeUp">
+            <summary>
+            Test whether Up should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.ShouldSerializeReference">
+            <summary>
+            Test whether Reference should be serialized
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.Serialize">
+            <summary>
+            Serializes current VisualizationInfoBitmaps object into an XML string
+            </summary>
+            <returns>string XML value</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.Deserialize(System.String,iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps@,System.Exception@)">
+            <summary>
+            Deserializes workflow markup into an VisualizationInfoBitmaps object
+            </summary>
+            <param name="input">string workflow markup to deserialize</param>
+            <param name="obj">Output VisualizationInfoBitmaps object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.SaveToFile(System.String,System.Exception@)">
+            <summary>
+            Serializes current VisualizationInfoBitmaps object into file
+            </summary>
+            <param name="fileName">full path of outupt xml file</param>
+            <param name="exception">output Exception value if failed</param>
+            <returns>true if can serialize and save into file; otherwise, false</returns>
+        </member>
+        <member name="M:iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps.LoadFromFile(System.String,iabi.BCF.BCFv2.Schemas.VisualizationInfoBitmaps@,System.Exception@)">
+            <summary>
+            Deserializes xml markup from file into an VisualizationInfoBitmaps object
+            </summary>
+            <param name="fileName">string xml file to load and deserialize</param>
+            <param name="obj">Output VisualizationInfoBitmaps object</param>
+            <param name="exception">output Exception value if deserialize failed</param>
+            <returns>true if this Serializer can deserialize the object; otherwise, false</returns>
+        </member>
+        <member name="T:iabi.BCF.BindableBase">
+            <summary>
+            Implements <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> and <see cref="T:System.IDisposable"/>.
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BindableBase.#ctor">
+            <summary>
+            Protected parameterless constructor.
+            </summary>
+        </member>
+        <member name="E:iabi.BCF.BindableBase.PropertyChanged">
+            <summary>
+            <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> implementation.
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BindableBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+                Checks if a property already matches a desired value.  Sets the property and
+                notifies listeners only when necessary.
+            </summary>
+            <typeparam name="T">Type of the property.</typeparam>
+            <param name="Storage">Reference to a property with both getter and setter.</param>
+            <param name="Value">Desired value for the property.</param>
+            <param name="PropertyName">
+                Name of the property used to notify listeners.  This
+                value is optional and can be provided automatically when invoked from compilers that
+                support CallerMemberName.
+            </param>
+            <returns>
+                True if the value was changed, false if the existing value matched the
+                desired value.
+            </returns>
+        </member>
+        <member name="M:iabi.BCF.BindableBase.OnPropertyChanged(System.String)">
+            <summary>
+            Event to be raised for <see cref="T:System.ComponentModel.INotifyPropertyChanged"/>.
+            </summary>
+            <param name="PropertyName">Optional, when not given the <see cref="T:System.Runtime.CompilerServices.CallerMemberNameAttribute"/> is used to determine
+            the calling function.</param>
+        </member>
+        <member name="M:iabi.BCF.BindableBase.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Returns the name of a property as string.
+            Must be called in the form of:
+            GetPropertyName(() => this.Property);
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="GivenProperty">The property for which to return the string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:iabi.BCF.BindableBase.Dispose">
+            <summary>
+            Implementation of <see cref="T:System.IDisposable"/>. Will always call the <see cref="M:iabi.BCF.BindableBase.OnDispose"/> method that
+            may be used in derived classes to implement behaviour upon being disposed, such as releasing event
+            handler listeners.
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.BindableBase.OnDispose">
+            <summary>
+            This method is called by the <see cref="M:iabi.BCF.BindableBase.Dispose"/> method upon disposing of
+            this class via the <see cref="T:System.IDisposable"/> interface.
+            </summary>
+        </member>
+        <member name="T:iabi.BCF.Converter.APIContainer">
+            <summary>
+            This class represents a single BCF file composed of BCF API objects.
+            Note that bitmaps are not supported for the API.
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.APIContainer.Project">
+            <summary>
+            Information about the BCF project
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.APIContainer.Extensions">
+            <summary>
+            BCF project extensions
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.APIContainer.Topics">
+            <summary>
+            Contains topics for this container
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.APIContainer.FileAttachments">
+            <summary>
+            Binary file attachments with file name serving as key
+            </summary>
+        </member>
+        <member name="T:iabi.BCF.Converter.APIFromPhysical">
+            <summary>
+            Will create an <see cref="T:iabi.BCF.Converter.APIContainer"/> instance from a <see cref="T:iabi.BCF.BCFv2.BCFv2Container"/>
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.Converter.APIFromPhysical.Convert(iabi.BCF.BCFv2.BCFv2Container)">
+            <summary>
+            Will create an <see cref="T:iabi.BCF.Converter.APIContainer"/> instance from a <see cref="T:iabi.BCF.BCFv2.BCFv2Container"/>
+            </summary>
+        </member>
+        <member name="T:iabi.BCF.Converter.PhysicalFromAPI">
+            <summary>
+            Will create an <see cref="T:iabi.BCF.BCFv2.BCFv2Container"/> instance from a <see cref="T:iabi.BCF.Converter.APIContainer"/>
+            </summary>
+        </member>
+        <member name="M:iabi.BCF.Converter.PhysicalFromAPI.Convert(iabi.BCF.Converter.APIContainer)">
+            <summary>
+            Will create an <see cref="T:iabi.BCF.BCFv2.BCFv2Container"/> instance from a <see cref="T:iabi.BCF.Converter.APIContainer"/>
+            </summary>
+        </member>
+        <member name="T:iabi.BCF.Converter.TopicContainer">
+            <summary>
+            This class represents a BCF topic composed of BCF API objects
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.Topic">
+            <summary>
+            The actual topic
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.SnippetData">
+            <summary>
+            The BIM Snippet in binary form
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.Files">
+            <summary>
+            A list of file references
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.RelatedTopics">
+            <summary>
+            A list of related topics
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.ReferencedDocuments">
+            <summary>
+            A list of referenced documents
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.Comments">
+            <summary>
+            Comments within this topic
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.TopicContainer.Viewpoints">
+            <summary>
+            Viewpoints within this topic
+            </summary>
+        </member>
+        <member name="T:iabi.BCF.Converter.ViewpointContainer">
+            <summary>
+            This class represents a BCF viewpoint composed of BCF API objects
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.ViewpointContainer.Viewpoint">
+            <summary>
+            The actual viewpoint
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.ViewpointContainer.Components">
+            <summary>
+            The components of the viewpoint (ifc geometry items)
+            </summary>
+        </member>
+        <member name="P:iabi.BCF.Converter.ViewpointContainer.Snapshot">
+            <summary>
+            The screenshot for the viewpoint
+            </summary>
+        </member>
+    </members>
+</doc>

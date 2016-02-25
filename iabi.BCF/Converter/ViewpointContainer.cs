@@ -1,26 +1,26 @@
-﻿using iabi.BCF.APIObjects.Component;
-using iabi.BCF.APIObjects.Viewpoint;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using iabi.BCF.APIObjects.Component;
+using iabi.BCF.APIObjects.Viewpoint;
 
 namespace iabi.BCF.Converter
 {
     /// <summary>
-    /// This class represents a BCF viewpoint composed of BCF API objects
+    ///     This class represents a BCF viewpoint composed of BCF API objects
     /// </summary>
     public class ViewpointContainer
     {
+        private List<component_GET> _Components;
+
+        private byte[] _Snapshot;
         private viewpoint_GET _Viewpoint;
 
         /// <summary>
-        /// The actual viewpoint
+        ///     The actual viewpoint
         /// </summary>
         public viewpoint_GET Viewpoint
         {
-            get
-            {
-                return _Viewpoint;
-            }
+            get { return _Viewpoint; }
             set
             {
                 _Viewpoint = value;
@@ -34,17 +34,12 @@ namespace iabi.BCF.Converter
             }
         }
 
-        private List<component_GET> _Components;
-
         /// <summary>
-        /// The components of the viewpoint (ifc geometry items)
+        ///     The components of the viewpoint (ifc geometry items)
         /// </summary>
         public List<component_GET> Components
         {
-            get
-            {
-                return _Components;
-            }
+            get { return _Components; }
             set
             {
                 _Components = value;
@@ -58,17 +53,12 @@ namespace iabi.BCF.Converter
             }
         }
 
-        private byte[] _Snapshot;
-
         /// <summary>
-        /// The screenshot for the viewpoint
+        ///     The screenshot for the viewpoint
         /// </summary>
         public byte[] Snapshot
         {
-            get
-            {
-                return _Snapshot;
-            }
+            get { return _Snapshot; }
             set
             {
                 _Snapshot = value;

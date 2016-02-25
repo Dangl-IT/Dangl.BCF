@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Topic
 {
@@ -11,7 +10,7 @@ namespace iabi.BCF.APIObjects.Topic
 
         public static topic_PUT CreateFromJSON(string JSON)
         {
-            return (topic_PUT)JsonConvert.DeserializeObject(JSON, typeof(topic_PUT));
+            return (topic_PUT) JsonConvert.DeserializeObject(JSON, typeof (topic_PUT));
         }
     }
 }

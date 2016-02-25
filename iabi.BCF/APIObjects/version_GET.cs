@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace iabi.BCF.APIObjects
 {
-    [Serializable()]
+    [Serializable]
     [JsonObject(Title = "version")]
     public class version_GET
     {
@@ -16,7 +15,7 @@ namespace iabi.BCF.APIObjects
 
         public static version_GET CreateFromJSON(string JSON)
         {
-            return (version_GET)JsonConvert.DeserializeObject(JSON, typeof(version_GET));
+            return (version_GET) JsonConvert.DeserializeObject(JSON, typeof (version_GET));
         }
 
         public string CreateJSON()

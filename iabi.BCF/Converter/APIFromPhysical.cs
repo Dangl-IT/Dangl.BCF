@@ -1,7 +1,11 @@
-﻿using iabi.BCF.APIObjects.Comment;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using iabi.BCF.APIObjects.Comment;
 using iabi.BCF.APIObjects.Component;
 using iabi.BCF.APIObjects.DocumentReference;
 using iabi.BCF.APIObjects.Extensions;
+using iabi.BCF.APIObjects.File;
 using iabi.BCF.APIObjects.Project;
 using iabi.BCF.APIObjects.RelatedTopic;
 using iabi.BCF.APIObjects.Topic;
@@ -9,23 +13,23 @@ using iabi.BCF.APIObjects.Viewpoint;
 using iabi.BCF.APIObjects.Viewpoint.Components;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace iabi.BCF.Converter
 {
     /// <summary>
-    /// Will create an <see cref="APIContainer"/> instance from a <see cref="BCFv2Container"/>
+    ///     Will create an <see cref="APIContainer" /> instance from a <see cref="BCFv2Container" />
     /// </summary>
     public static class APIFromPhysical
     {
         /// <summary>
-        /// Will create an <see cref="APIContainer"/> instance from a <see cref="BCFv2Container"/>
+        ///     Will create an <see cref="APIContainer" /> instance from a <see cref="BCFv2Container" />
         /// </summary>
         public static APIContainer Convert(BCFv2Container Input)
         {
-            if (Input == null) throw new ArgumentNullException("Input");
+            if (Input == null)
+            {
+                throw new ArgumentNullException("Input");
+            }
             var ReturnObject = new APIContainer();
             // Get the project info
             if (Input.BCFProject != null && Input.BCFProject.Project != null)
@@ -46,7 +50,7 @@ namespace iabi.BCF.Converter
                 ReturnObject.Extensions.user_id_type = Input.ProjectExtensions.UserIdType;
             }
             ReturnObject.Topics = new List<TopicContainer>();
-            for (int i = 0; i < Input.Topics.Count; i++)
+            for (var i = 0; i < Input.Topics.Count; i++)
             {
                 ReturnObject.Topics.Add(GetAPITopicFromPhysicalBCF(Input.Topics[i], i, Input));
             }
@@ -60,7 +64,7 @@ namespace iabi.BCF.Converter
 
         private static TopicContainer GetAPITopicFromPhysicalBCF(BCFTopic GivenPhysicalBCFv2, int TopicIndex, BCFv2Container Container)
         {
-            TopicContainer ReturnObject = new TopicContainer();
+            var ReturnObject = new TopicContainer();
             if (GivenPhysicalBCFv2.SnippetData != null)
             {
                 ReturnObject.SnippetData = GivenPhysicalBCFv2.SnippetData;
@@ -70,7 +74,7 @@ namespace iabi.BCF.Converter
             {
                 foreach (var CurrentFile in GivenPhysicalBCFv2.Markup.Header)
                 {
-                    ReturnObject.Files.Add(new APIObjects.File.file_GET
+                    ReturnObject.Files.Add(new file_GET
                     {
                         date = CurrentFile.Date,
                         file_name = CurrentFile.Filename,
@@ -110,7 +114,7 @@ namespace iabi.BCF.Converter
             {
                 if (CurrentViewpoint.Bitmaps.Count > 0)
                 {
-                    for (int i = 0; i < CurrentViewpoint.Bitmaps.Count; i++)
+                    for (var i = 0; i < CurrentViewpoint.Bitmaps.Count; i++)
                     {
                         ReturnObject.Viewpoints.Add(GetSingleViewpoint(CurrentViewpoint, i, TopicIndex, Container));
                     }
@@ -131,7 +135,10 @@ namespace iabi.BCF.Converter
         private static topic_GET GetSingleTopicInfo(BCFTopic GivenPhysicalBCFv2)
         {
             var ReturnObject = new topic_GET();
-            if (GivenPhysicalBCFv2.Markup == null) return ReturnObject;
+            if (GivenPhysicalBCFv2.Markup == null)
+            {
+                return ReturnObject;
+            }
             ReturnObject.assigned_to = GivenPhysicalBCFv2.Markup.Topic.AssignedTo;
             if (GivenPhysicalBCFv2.Markup.Topic.BimSnippet != null)
             {

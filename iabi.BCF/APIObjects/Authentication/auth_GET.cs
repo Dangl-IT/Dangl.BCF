@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace iabi.BCF.APIObjects.Authentication
 {
-    [Serializable()]
+    [Serializable]
     [JsonObject(Title = "auth")]
     public class auth_GET
     {
@@ -19,7 +18,7 @@ namespace iabi.BCF.APIObjects.Authentication
 
         public static auth_GET CreateFromJSON(string JSON)
         {
-            return (auth_GET)JsonConvert.DeserializeObject(JSON, typeof(auth_GET));
+            return (auth_GET) JsonConvert.DeserializeObject(JSON, typeof (auth_GET));
         }
 
         public string CreateJSON()

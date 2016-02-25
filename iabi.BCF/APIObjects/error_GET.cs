@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace iabi.BCF.APIObjects
 {
-    [Serializable()]
+    [Serializable]
     [JsonObject(Title = "version")]
     public class error_GET
     {
@@ -13,7 +12,7 @@ namespace iabi.BCF.APIObjects
 
         public static error_GET CreateFromJSON(string JSON)
         {
-            return (error_GET)JsonConvert.DeserializeObject(JSON, typeof(error_GET));
+            return (error_GET) JsonConvert.DeserializeObject(JSON, typeof (error_GET));
         }
 
         public string CreateJSON()

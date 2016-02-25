@@ -6,19 +6,22 @@ using System.Runtime.CompilerServices;
 namespace iabi.BCF
 {
     /// <summary>
-    /// Implements <see cref="INotifyPropertyChanged"/> and <see cref="IDisposable"/>.
+    ///     Implements <see cref="INotifyPropertyChanged" /> and <see cref="IDisposable" />.
     /// </summary>
     public abstract class BindableBase : INotifyPropertyChanged, IDisposable
     {
         /// <summary>
-        /// Protected parameterless constructor.
+        ///     Implementation of <see cref="IDisposable" />. Will always call the <see cref="OnDispose" /> method that
+        ///     may be used in derived classes to implement behaviour upon being disposed, such as releasing event
+        ///     handler listeners.
         /// </summary>
-        protected BindableBase()
+        public void Dispose()
         {
+            OnDispose();
         }
 
         /// <summary>
-        /// <see cref="INotifyPropertyChanged"/> implementation.
+        ///     <see cref="INotifyPropertyChanged" /> implementation.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,7 +41,7 @@ namespace iabi.BCF
         ///     True if the value was changed, false if the existing value matched the
         ///     desired value.
         /// </returns>
-        protected bool SetProperty<T>(ref T Storage, T Value, [CallerMemberName] String PropertyName = null)
+        protected bool SetProperty<T>(ref T Storage, T Value, [CallerMemberName] string PropertyName = null)
         {
             if (Equals(Storage, Value))
             {
@@ -51,13 +54,16 @@ namespace iabi.BCF
         }
 
         /// <summary>
-        /// Event to be raised for <see cref="INotifyPropertyChanged"/>.
+        ///     Event to be raised for <see cref="INotifyPropertyChanged" />.
         /// </summary>
-        /// <param name="PropertyName">Optional, when not given the <see cref="System.Runtime.CompilerServices.CallerMemberNameAttribute"/> is used to determine
-        /// the calling function.</param>
+        /// <param name="PropertyName">
+        ///     Optional, when not given the <see cref="System.Runtime.CompilerServices.CallerMemberNameAttribute" /> is used to
+        ///     determine
+        ///     the calling function.
+        /// </param>
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
-            PropertyChangedEventHandler Handler = PropertyChanged;
+            var Handler = PropertyChanged;
             if (Handler != null)
             {
                 Handler(this, new PropertyChangedEventArgs(PropertyName));
@@ -65,31 +71,21 @@ namespace iabi.BCF
         }
 
         /// <summary>
-        /// Returns the name of a property as string.
-        /// Must be called in the form of:
-        /// GetPropertyName(() => this.Property);
+        ///     Returns the name of a property as string.
+        ///     Must be called in the form of:
+        ///     GetPropertyName(() => this.Property);
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="GivenProperty">The property for which to return the string.</param>
         /// <returns></returns>
         public string GetPropertyName<T>(Expression<Func<T>> GivenProperty)
         {
-            return ((MemberExpression)GivenProperty.Body).Member.Name;
+            return ((MemberExpression) GivenProperty.Body).Member.Name;
         }
 
         /// <summary>
-        /// Implementation of <see cref="IDisposable"/>. Will always call the <see cref="OnDispose"/> method that
-        /// may be used in derived classes to implement behaviour upon being disposed, such as releasing event
-        /// handler listeners.
-        /// </summary>
-        public void Dispose()
-        {
-            OnDispose();
-        }
-
-        /// <summary>
-        /// This method is called by the <see cref="Dispose"/> method upon disposing of
-        /// this class via the <see cref="IDisposable"/> interface.
+        ///     This method is called by the <see cref="Dispose" /> method upon disposing of
+        ///     this class via the <see cref="IDisposable" /> interface.
         /// </summary>
         protected virtual void OnDispose()
         {

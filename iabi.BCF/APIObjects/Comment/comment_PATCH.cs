@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.Comment
     {
         public static comment_PATCH CreateFromJSON(string JSON)
         {
-            return (comment_PATCH)JsonConvert.DeserializeObject(JSON, typeof(comment_PATCH));
+            return (comment_PATCH) JsonConvert.DeserializeObject(JSON, typeof (comment_PATCH));
         }
     }
 }

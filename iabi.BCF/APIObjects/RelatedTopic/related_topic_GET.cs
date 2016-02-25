@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.RelatedTopic
 {
@@ -8,7 +7,7 @@ namespace iabi.BCF.APIObjects.RelatedTopic
     {
         public static related_topic_GET CreateFromJSON(string JSON)
         {
-            return (related_topic_GET)JsonConvert.DeserializeObject(JSON, typeof(related_topic_GET));
+            return (related_topic_GET) JsonConvert.DeserializeObject(JSON, typeof (related_topic_GET));
         }
     }
 }

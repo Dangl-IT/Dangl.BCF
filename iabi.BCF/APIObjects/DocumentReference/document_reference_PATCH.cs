@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.DocumentReference
     {
         public static document_reference_PATCH CreateFromJSON(string JSON)
         {
-            return (document_reference_PATCH)JsonConvert.DeserializeObject(JSON, typeof(document_reference_PATCH));
+            return (document_reference_PATCH) JsonConvert.DeserializeObject(JSON, typeof (document_reference_PATCH));
         }
     }
 }

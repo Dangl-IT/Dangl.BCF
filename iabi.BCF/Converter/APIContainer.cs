@@ -1,29 +1,31 @@
-﻿using iabi.BCF.APIObjects.Extensions;
+﻿using System.Collections.Generic;
+using iabi.BCF.APIObjects.Extensions;
 using iabi.BCF.APIObjects.Project;
-using System.Collections.Generic;
 
 namespace iabi.BCF.Converter
 {
     /// <summary>
-    /// This class represents a single BCF file composed of BCF API objects.
-    /// Note that bitmaps are not supported for the API.
+    ///     This class represents a single BCF file composed of BCF API objects.
+    ///     Note that bitmaps are not supported for the API.
     /// </summary>
     public class APIContainer
     {
-        /// <summary>
-        /// Information about the BCF project
-        /// </summary>
-        public project_GET Project { get; set; }
-
-        /// <summary>
-        /// BCF project extensions
-        /// </summary>
-        public extensions_GET Extensions { get; set; }
+        private Dictionary<string, byte[]> _FileAttachments;
 
         private List<TopicContainer> _Topics;
 
         /// <summary>
-        /// Contains topics for this container
+        ///     Information about the BCF project
+        /// </summary>
+        public project_GET Project { get; set; }
+
+        /// <summary>
+        ///     BCF project extensions
+        /// </summary>
+        public extensions_GET Extensions { get; set; }
+
+        /// <summary>
+        ///     Contains topics for this container
         /// </summary>
         public List<TopicContainer> Topics
         {
@@ -35,23 +37,15 @@ namespace iabi.BCF.Converter
                 }
                 return _Topics;
             }
-            set
-            {
-                _Topics = value;
-            }
+            set { _Topics = value; }
         }
 
-        private Dictionary<string, byte[]> _FileAttachments;
-
         /// <summary>
-        /// Binary file attachments with file name serving as key
+        ///     Binary file attachments with file name serving as key
         /// </summary>
         public Dictionary<string, byte[]> FileAttachments
         {
-            get
-            {
-                return _FileAttachments ?? (_FileAttachments = new Dictionary<string, byte[]>());
-            }
+            get { return _FileAttachments ?? (_FileAttachments = new Dictionary<string, byte[]>()); }
         }
     }
 }

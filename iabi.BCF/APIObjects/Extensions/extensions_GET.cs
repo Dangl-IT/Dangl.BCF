@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.Extensions
     {
         public static extensions_GET CreateFromJSON(string JSON)
         {
-            return (extensions_GET)JsonConvert.DeserializeObject(JSON, typeof(extensions_GET));
+            return (extensions_GET) JsonConvert.DeserializeObject(JSON, typeof (extensions_GET));
         }
     }
 }

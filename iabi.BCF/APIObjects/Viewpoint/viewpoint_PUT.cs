@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.Viewpoint
     {
         public static viewpoint_PUT CreateFromJSON(string JSON)
         {
-            return (viewpoint_PUT)JsonConvert.DeserializeObject(JSON, typeof(viewpoint_PUT));
+            return (viewpoint_PUT) JsonConvert.DeserializeObject(JSON, typeof (viewpoint_PUT));
         }
     }
 }

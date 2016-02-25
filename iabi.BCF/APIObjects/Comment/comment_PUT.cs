@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Comment
 {
@@ -14,7 +13,7 @@ namespace iabi.BCF.APIObjects.Comment
 
         public static comment_PUT CreateFromJSON(string JSON)
         {
-            return (comment_PUT)JsonConvert.DeserializeObject(JSON, typeof(comment_PUT));
+            return (comment_PUT) JsonConvert.DeserializeObject(JSON, typeof (comment_PUT));
         }
     }
 }

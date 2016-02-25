@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Authentication
 {
@@ -14,7 +13,7 @@ namespace iabi.BCF.APIObjects.Authentication
 
         public static dynRegClient_GET CreateFromJSON(string JSON)
         {
-            return (dynRegClient_GET)JsonConvert.DeserializeObject(JSON, typeof(dynRegClient_GET));
+            return (dynRegClient_GET) JsonConvert.DeserializeObject(JSON, typeof (dynRegClient_GET));
         }
 
         public string CreateJSON()

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace iabi.BCF.APIObjects.Project
 {
@@ -14,7 +13,7 @@ namespace iabi.BCF.APIObjects.Project
 
         public static project_GET CreateFromJSON(string JSON)
         {
-            return (project_GET)JsonConvert.DeserializeObject(JSON, typeof(project_GET));
+            return (project_GET) JsonConvert.DeserializeObject(JSON, typeof (project_GET));
         }
     }
 }

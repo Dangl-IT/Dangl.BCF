@@ -22,7 +22,7 @@ namespace iabi.BCF.APIObjects.Viewpoint
         public clipping_planes clipping_planes { get; set; }
 
         [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, PropertyName = "bitmaps")]
-        public List<bitmap> bitmaps{ get; set; }
+        public List<bitmap> bitmaps { get; set; }
 
         public string CreateJSON()
         {

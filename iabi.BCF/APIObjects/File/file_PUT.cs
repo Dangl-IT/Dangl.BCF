@@ -7,7 +7,7 @@ namespace iabi.BCF.APIObjects.File
     {
         public static file_PUT CreateFromJSON(string JSON)
         {
-            return (file_PUT)JsonConvert.DeserializeObject(JSON, typeof(file_PUT));
+            return (file_PUT) JsonConvert.DeserializeObject(JSON, typeof (file_PUT));
         }
     }
 }
