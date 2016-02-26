@@ -77,11 +77,12 @@ namespace iabi.BCF.BCFv2
             }
         }
 
+
+        private Dictionary<string, byte[]> _ViewpointSnapshots { get; set; }
+
         /// <summary>
         ///     Links ViewpointGuid and Snapshot
         /// </summary>
-        private Dictionary<string, byte[]> _ViewpointSnapshots { get; set; }
-
         public ReadOnlyDictionary<string, byte[]> ViewpointSnapshots
         {
             get
@@ -162,6 +163,11 @@ namespace iabi.BCF.BCFv2
             base.OnDispose();
         }
 
+        /// <summary>
+        /// Adds or updates a snapshots binary data
+        /// </summary>
+        /// <param name="ViewpointGuid"></param>
+        /// <param name="SnapshotData"></param>
         public void AddOrUpdateSnapshot(string ViewpointGuid, byte[] SnapshotData)
         {
             if (ViewpointSnapshots.ContainsKey(ViewpointGuid))
