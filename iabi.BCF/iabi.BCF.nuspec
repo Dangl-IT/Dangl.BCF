@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://documentation.dan.gl/Projects/iabi.BCF</projectUrl>
+    <iconUrl>http://iabi.eu/wp-content/uploads/fbrfg/favicon-32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2016 iabi e.V.</copyright>
+  </metadata>
+  <files>
+	<file src="bin\Release\iabi.BCF.xml" />
+  </files>
+</package>
