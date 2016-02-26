@@ -22,7 +22,7 @@ namespace iabi.BCF.Converter
     public static class APIFromPhysical
     {
         /// <summary>
-        ///     Will create an <see cref="APIContainer" /> instance from a <see cref="BCFv2Container" />
+        ///     Will create an <see cref="APIContainer" /> instance from a <see cref="BCFv2Container" />. Internal document references will not be output currently.
         /// </summary>
         public static APIContainer Convert(BCFv2Container Input)
         {
@@ -96,7 +96,7 @@ namespace iabi.BCF.Converter
                 // Get referenced documents
                 foreach (var CurrentDocument in GivenPhysicalBCFv2.Markup.Topic.DocumentReferences)
                 {
-                    // TODO do something clever in the case of the physical file having an INTERNAL document.
+                    // There is currently no support for internal documents
                     ReturnObject.ReferencedDocuments.Add(new document_reference_GET());
                     ReturnObject.ReferencedDocuments[ReturnObject.ReferencedDocuments.Count - 1].description = CurrentDocument.Description;
                     ReturnObject.ReferencedDocuments[ReturnObject.ReferencedDocuments.Count - 1].guid = CurrentDocument.Guid;
@@ -222,24 +222,7 @@ namespace iabi.BCF.Converter
                 ReturnObject.Viewpoint.perspective_camera = GetViewpointPerspectiveCamera(GivenPhysicalViewpoint.PerspectiveCamera);
             }
             // Get the bitmaps if there are any
-            // TODO
-            //if (BitmapIndex > -1)
-            //{
-            //    ReturnObject.Viewpoint.snapshot = new snapshot();
-            //    ReturnObject.Viewpoint.snapshot.height = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Height;
-            //    ReturnObject.Viewpoint.snapshot.location = new PointOrVector();
-            //    ReturnObject.Viewpoint.snapshot.location.x = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Location.X;
-            //    ReturnObject.Viewpoint.snapshot.location.y = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Location.Y;
-            //    ReturnObject.Viewpoint.snapshot.location.z = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Location.Z;
-            //    ReturnObject.Viewpoint.snapshot.normal = new PointOrVector();
-            //    ReturnObject.Viewpoint.snapshot.normal.x = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Normal.X;
-            //    ReturnObject.Viewpoint.snapshot.normal.y = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Normal.Y;
-            //    ReturnObject.Viewpoint.snapshot.normal.z = GivenPhysicalViewpoint.Bitmaps[BitmapIndex].Normal.Z;
-            //    if (Container.Topics.FirstOrDefault(Curr => Curr.Markup.Viewpoints.Any(VP => VP.Guid == GivenPhysicalViewpoint.GUID)).ViewpointSnapshots.ContainsKey(GivenPhysicalViewpoint.GUID))
-            //    {
-            //        ReturnObject.Snapshot = Container.Topics.FirstOrDefault(Curr => Curr.Markup.Viewpoints.Any(VP => VP.Guid == GivenPhysicalViewpoint.GUID)).ViewpointSnapshots[GivenPhysicalViewpoint.GUID];
-            //    }
-            //}
+            // Bitmaps are CURRENTLY NOT SUPPORTED
             return ReturnObject;
         }
 

@@ -516,22 +516,11 @@ namespace iabi.BCF.Tests.BCFv2
                 ReturnObject[1].Components[1].Visible = false;
                 ReturnObject[1].Components[1].OriginatingSystem = "UnitTestTool";
 
-                // TODO NOT WORKING
                 // Make a viewpoint with a snapshot
                 ReturnObject.Add(new VisualizationInfo());
-                //ReturnObject[2].Bitmaps = new System.Collections.Generic.List<iabi.BCF_REST_API.BCFv2.Schemas.VisualizationInfoBitmaps>();
-                //ReturnObject[2].Bitmaps.Add(new iabi.BCF_REST_API.BCFv2.Schemas.VisualizationInfoBitmaps());
-                //ReturnObject[2].Bitmaps[0].Bitmap = iabi.BCF_REST_API.BCFv2.Schemas.BitmapFormat.PNG;
-                //ReturnObject[2].Bitmaps[0].Height = 1.0; // Noone knows what this actually means.. Heigth in Pixels? Ratio-Scale? Let's better define it!
-                //// Will not set a reference since the snapshot will be included in the file
 
                 //// Make one with another snapshot
                 ReturnObject.Add(new VisualizationInfo());
-                //ReturnObject[3].Bitmaps = new System.Collections.Generic.List<iabi.BCF_REST_API.BCFv2.Schemas.VisualizationInfoBitmaps>();
-                //ReturnObject[3].Bitmaps.Add(new iabi.BCF_REST_API.BCFv2.Schemas.VisualizationInfoBitmaps());
-                //ReturnObject[3].Bitmaps[0].Bitmap = iabi.BCF_REST_API.BCFv2.Schemas.BitmapFormat.PNG;
-                //ReturnObject[3].Bitmaps[0].Height = 1.0; // Noone knows what this actually means.. Heigth in Pixels? Ratio-Scale? Let's better define it!
-                // Will not set a reference since the snapshot will be included in the file
 
                 return ReturnObject;
             }
