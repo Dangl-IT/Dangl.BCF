@@ -108,6 +108,13 @@
     <Compile Include="APIObjects\Viewpoint\viewpoint_PATCH.cs" />
     <Compile Include="APIObjects\Viewpoint\viewpoint_POST.cs" />
     <Compile Include="APIObjects\Viewpoint\viewpoint_PUT.cs" />
+    <Compile Include="BCFv21\BCFExtensions.cs" />
+    <Compile Include="BCFv21\BCFTopic.cs" />
+    <Compile Include="BCFv21\BCFv21Container.cs" />
+    <Compile Include="BCFv21\Schemas\markup.Designer.cs" />
+    <Compile Include="BCFv21\Schemas\project.Designer.cs" />
+    <Compile Include="BCFv21\Schemas\version.Designer.cs" />
+    <Compile Include="BCFv21\Schemas\visinfo.Designer.cs" />
     <Compile Include="BCFv2\BCFTopic.cs" />
     <Compile Include="BCFv2\BCFv2Container.cs" />
     <Compile Include="BCFv2\Schemas\Extensions.cs">
@@ -128,6 +135,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BCFv21\Schemas\markup.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BCFv21\Schemas\project.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BCFv21\Schemas\version.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BCFv21\Schemas\visinfo.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="BCFv2\Schemas\extensions.xsd">
       <SubType>Designer</SubType>
     </None>
