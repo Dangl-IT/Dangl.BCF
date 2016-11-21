@@ -5,7 +5,7 @@ using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Converter;
 using iabi.BCF.Tests.BCFTestCases;
-using iabi.BCF.Tests.BCFTestCases.CreateAndExport.Factory;
+using iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory;
 using Xunit;
 
 namespace iabi.BCF.Tests.Converter

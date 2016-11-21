@@ -68,65 +68,65 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIObjects\Extensions\extensions_PATCHTest.cs" />
-    <Compile Include="BCFTestCases\APIConversion\Converter.cs" />
-    <Compile Include="BCFTestCases\APIConversion\TestCaseProvider.cs" />
+    <Compile Include="BCFTestCases\v2\APIConversion\Converter.cs" />
+    <Compile Include="BCFTestCases\v2\APIConversion\TestCaseProvider.cs" />
     <Compile Include="BCFTestCases\CompareTool.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\BCFTestCaseData.Designer.cs">
+    <Compile Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BCFTestCaseData.resx</DependentUpon>
     </Compile>
-    <Compile Include="BCFTestCases\CreateAndExport\ComponentSelectionTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\DocumentReferenceExternalTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\ExtensionSchemaTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\ExternalBIMSnippetTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\BCFTestCaseFactory.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\ComponentSelectionTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\DocumentReferenceExternalTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\ExtensionSchemaTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\ExternalBIMSnippetTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\InternalBIMSnippetTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\MaximumInformationTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\MinimumInformationTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\OrthogonalCameraTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\PDFFileTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\Factory\PerspectiveCameraTestCase.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\InternalBIMSnippetTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\MaximumInformationTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\MinimumInformationTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\OrthogonalCameraTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\PDFFileTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\PerspectiveCameraTest.cs" />
-    <Compile Include="BCFTestCases\CreateAndExport\ZipArchiveFactory.cs" />
-    <Compile Include="BCFTestCases\Import\BCFFilesFactory.cs" />
-    <Compile Include="BCFTestCases\Import\BCFTestCasesImportData.Designer.cs">
+    <Compile Include="BCFTestCases\v2\CreateAndExport\ComponentSelectionTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\DocumentReferenceExternalTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\ExtensionSchemaTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\ExternalBIMSnippetTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\BCFTestCaseFactory.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\ComponentSelectionTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\DocumentReferenceExternalTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\ExtensionSchemaTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\ExternalBIMSnippetTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\InternalBIMSnippetTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\MaximumInformationTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\MinimumInformationTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\OrthogonalCameraTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\PDFFileTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\Factory\PerspectiveCameraTestCase.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\InternalBIMSnippetTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\MaximumInformationTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\MinimumInformationTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\OrthogonalCameraTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\PDFFileTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\PerspectiveCameraTest.cs" />
+    <Compile Include="BCFTestCases\v2\CreateAndExport\ZipArchiveFactory.cs" />
+    <Compile Include="BCFTestCases\v2\Import\BCFFilesFactory.cs" />
+    <Compile Include="BCFTestCases\v2\Import\BCFTestCasesImportData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BCFTestCasesImportData.resx</DependentUpon>
     </Compile>
-    <Compile Include="BCFTestCases\Import\Bitmap.cs" />
-    <Compile Include="BCFTestCases\Import\Clippingplane.cs" />
-    <Compile Include="BCFTestCases\Import\CommentsWithoutViewpoints.cs" />
-    <Compile Include="BCFTestCases\Import\ComponentColoring.cs" />
-    <Compile Include="BCFTestCases\Import\DecomposedObjects.cs" />
-    <Compile Include="BCFTestCases\Import\DecomposedObjectsWithParentGuid.cs" />
-    <Compile Include="BCFTestCases\Import\DefaultComponentVisibility.cs" />
-    <Compile Include="BCFTestCases\Import\HeaderWithNoFiles.cs" />
-    <Compile Include="BCFTestCases\Import\HeaderWithSingleFile.cs" />
-    <Compile Include="BCFTestCases\Import\Lines.cs" />
-    <Compile Include="BCFTestCases\Import\MultipleFilesInHeader.cs" />
-    <Compile Include="BCFTestCases\Import\MultipleTopics.cs" />
-    <Compile Include="BCFTestCases\Import\MultipleViewpointsWithoutComments.cs" />
-    <Compile Include="BCFTestCases\Import\PerspectiveView.cs" />
-    <Compile Include="BCFTestCases\Import\RelatedTopicsWithBothTopicsInSameFile.cs" />
-    <Compile Include="BCFTestCases\Import\RelatedTopicWithOtherTopicMissing.cs" />
-    <Compile Include="BCFTestCases\Import\SelectedComponent.cs" />
-    <Compile Include="BCFTestCases\Import\SingleInvisibleWall.cs" />
-    <Compile Include="BCFTestCases\Import\SingleVisibleSpace.cs" />
-    <Compile Include="BCFTestCases\Import\SingleVisibleWall.cs" />
-    <Compile Include="BCFTestCases\Import\UserAssignment.cs" />
-    <Compile Include="BCFTestCases\Import\VisibleOpening.cs" />
-    <Compile Include="BCFTestCases\Import\VisibleSpaceAndRestOfModelVisible.cs" />
+    <Compile Include="BCFTestCases\v2\Import\Bitmap.cs" />
+    <Compile Include="BCFTestCases\v2\Import\Clippingplane.cs" />
+    <Compile Include="BCFTestCases\v2\Import\CommentsWithoutViewpoints.cs" />
+    <Compile Include="BCFTestCases\v2\Import\ComponentColoring.cs" />
+    <Compile Include="BCFTestCases\v2\Import\DecomposedObjects.cs" />
+    <Compile Include="BCFTestCases\v2\Import\DecomposedObjectsWithParentGuid.cs" />
+    <Compile Include="BCFTestCases\v2\Import\DefaultComponentVisibility.cs" />
+    <Compile Include="BCFTestCases\v2\Import\HeaderWithNoFiles.cs" />
+    <Compile Include="BCFTestCases\v2\Import\HeaderWithSingleFile.cs" />
+    <Compile Include="BCFTestCases\v2\Import\Lines.cs" />
+    <Compile Include="BCFTestCases\v2\Import\MultipleFilesInHeader.cs" />
+    <Compile Include="BCFTestCases\v2\Import\MultipleTopics.cs" />
+    <Compile Include="BCFTestCases\v2\Import\MultipleViewpointsWithoutComments.cs" />
+    <Compile Include="BCFTestCases\v2\Import\PerspectiveView.cs" />
+    <Compile Include="BCFTestCases\v2\Import\RelatedTopicsWithBothTopicsInSameFile.cs" />
+    <Compile Include="BCFTestCases\v2\Import\RelatedTopicWithOtherTopicMissing.cs" />
+    <Compile Include="BCFTestCases\v2\Import\SelectedComponent.cs" />
+    <Compile Include="BCFTestCases\v2\Import\SingleInvisibleWall.cs" />
+    <Compile Include="BCFTestCases\v2\Import\SingleVisibleSpace.cs" />
+    <Compile Include="BCFTestCases\v2\Import\SingleVisibleWall.cs" />
+    <Compile Include="BCFTestCases\v2\Import\UserAssignment.cs" />
+    <Compile Include="BCFTestCases\v2\Import\VisibleOpening.cs" />
+    <Compile Include="BCFTestCases\v2\Import\VisibleSpaceAndRestOfModelVisible.cs" />
     <Compile Include="BCFv2\BCFTopicTest.cs" />
     <Compile Include="BCFv2\BCFv2Container_Test.cs" />
     <Compile Include="BCFv2\BCFv2TestResources.Designer.cs">
@@ -210,11 +210,11 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BCFTestCases\CreateAndExport\BCFTestCaseData.resx">
+    <EmbeddedResource Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseData.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BCFTestCaseData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="BCFTestCases\Import\BCFTestCasesImportData.resx">
+    <EmbeddedResource Include="BCFTestCases\v2\Import\BCFTestCasesImportData.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BCFTestCasesImportData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -235,6 +235,9 @@
       <Project>{43dff7d4-6178-4e15-af0c-8423451b5f93}</Project>
       <Name>iabi.BCF</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BCFv21\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
