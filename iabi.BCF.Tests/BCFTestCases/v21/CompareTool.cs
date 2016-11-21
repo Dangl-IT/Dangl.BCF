@@ -6,6 +6,7 @@ using System.Linq;
 using iabi.BCF.BCFv21;
 using iabi.BCF.BCFv21.Schemas;
 using Xunit;
+using System.Collections;
 
 namespace iabi.BCF.Tests.BCFTestCases.v21
 {
@@ -54,7 +55,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
 
         public static void CompareProjectExtensions(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer)
         {
-            if (TestCompareUtilities.BothNotNull(ExpectedContainer.ProjectExtensions, ActualContainer.ProjectExtensions, "ProjectExtensions"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedContainer.ProjectExtensions, ActualContainer.ProjectExtensions, "ProjectExtensions"))
             {
                 CompareStringList(ExpectedContainer.ProjectExtensions.SnippetType, ActualContainer.ProjectExtensions.SnippetType, "SnippetType");
                 CompareStringList(ExpectedContainer.ProjectExtensions.Priority, ActualContainer.ProjectExtensions.Priority, "Priority");
@@ -103,9 +104,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
         public static void CompareProjectAndVersion(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer)
         {
             // Compare project
-            if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFProject, ActualContainer.BCFProject, "BCFProject"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedContainer.BCFProject, ActualContainer.BCFProject, "BCFProject"))
             {
-                if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFProject.Project, ActualContainer.BCFProject.Project, "BCFProject.Project"))
+                if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedContainer.BCFProject.Project, ActualContainer.BCFProject.Project, "BCFProject.Project"))
                 {
                     Assert.Equal(ExpectedContainer.BCFProject.Project.Name, ActualContainer.BCFProject.Project.Name);
                     Assert.Equal(ExpectedContainer.BCFProject.Project.ProjectId, ActualContainer.BCFProject.Project.ProjectId);
@@ -114,11 +115,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Compare version
-            if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFVersionInfo, ActualContainer.BCFVersionInfo, "BCFVersionInfo"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedContainer.BCFVersionInfo, ActualContainer.BCFVersionInfo, "BCFVersionInfo"))
             {
-                if (ExpectedContainer.BCFVersionInfo.VersionId.Contains("2.0"))
+                if (ExpectedContainer.BCFVersionInfo.VersionId.Contains("2.1"))
                 {
-                    Assert.True(ActualContainer.BCFVersionInfo.VersionId.Contains("2.0"));
+                    Assert.True(ActualContainer.BCFVersionInfo.VersionId.Contains("2.1"));
                 }
                 else
                 {
@@ -137,7 +138,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
         /// <param name="ActualObject"></param>
         /// <param name="ParameterName"></param>
         /// <returns></returns>
-        public static bool BothNotNull(object ExpectedObject, object ActualObject, string ParameterName)
+        public static bool BothNotNullAndEmpty(object ExpectedObject, object ActualObject, string ParameterName)
         {
             if (ExpectedObject == null && ActualObject != null)
             {
@@ -146,6 +147,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             else if (ExpectedObject != null && ActualObject == null)
             {
                 Assert.True(false, "Parameter: " + ParameterName + "; Actual is null but Expected is present.");
+            }
+            if (ExpectedObject != null && ExpectedObject is IEnumerable && ActualObject != null && ActualObject is IEnumerable)
+            {
+                if (((IEnumerable<object>) ExpectedObject).Count() != ((IEnumerable<object>) ActualObject).Count())
+                {
+                    Assert.True(false, "Parameter: " + ParameterName + "; Actual and Expected have different count of values");
+                }
+                return ((IEnumerable<object>) ExpectedObject).Count() != 0;
             }
             return ExpectedObject != null;
         }
@@ -284,7 +293,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
         public static void CompareMarkup(Markup ExpectedMarkup, Markup ActualMarkup, ZipArchive ExpectedArchive, ZipArchive ActualArchive)
         {
             // Compare Header Section
-            if (TestCompareUtilities.BothNotNull(ExpectedMarkup.Header, ActualMarkup.Header, "Markup.Header"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedMarkup.Header, ActualMarkup.Header, "Markup.Header"))
             {
                 foreach (var CurrentHeaderEntry in ExpectedMarkup.Header)
                 {
@@ -306,12 +315,12 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
 
             CompareComments(ExpectedMarkup.Comment, ActualMarkup.Comment);
 
-            if (TestCompareUtilities.BothNotNull(ExpectedMarkup.Viewpoints, ActualMarkup.Viewpoints, "Markup.Viewpoints"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedMarkup.Viewpoints, ActualMarkup.Viewpoints, "Markup.Viewpoints"))
             {
                 CompareViewpoints(ExpectedMarkup.Viewpoints, ActualMarkup.Viewpoints, ExpectedArchive, ActualArchive, ExpectedMarkup.Topic.Guid);
             }
 
-            if (TestCompareUtilities.BothNotNull(ExpectedMarkup.Topic, ActualMarkup.Topic, "Markup.Topic"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedMarkup.Topic, ActualMarkup.Topic, "Markup.Topic"))
             {
                 CompareTopic(ExpectedMarkup.Topic, ActualMarkup.Topic);
             }
@@ -360,7 +369,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             Assert.Equal(ExpectedTopic.AssignedTo, ActualTopic.AssignedTo);
 
             // Compare Snippet
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet, "Markup.BimSnippet"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet, "Markup.BimSnippet"))
             {
                 Assert.Equal(1, ExpectedTopic.BimSnippet.Count);
                 Assert.Equal(1, ActualTopic.BimSnippet.Count);
@@ -368,7 +377,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Compare document references
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.DocumentReference, ActualTopic.DocumentReference, "Markup.DocumentReferences"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedTopic.DocumentReference, ActualTopic.DocumentReference, "Markup.DocumentReferences"))
             {
                 Assert.Equal(ExpectedTopic.DocumentReference.Count, ActualTopic.DocumentReference.Count);
 
@@ -386,7 +395,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Check labels
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.Labels, ActualTopic.Labels, "Markup.Labels"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedTopic.Labels, ActualTopic.Labels, "Markup.Labels"))
             {
                 Assert.Equal(ExpectedTopic.Labels.Count, ActualTopic.Labels.Count);
                 foreach (var ExpectedLabel in ExpectedTopic.Labels)
@@ -396,7 +405,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Check related topics
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.RelatedTopic, ActualTopic.RelatedTopic, "Markup.RelatedTopics"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedTopic.RelatedTopic, ActualTopic.RelatedTopic, "Markup.RelatedTopics"))
             {
                 Assert.Equal(ExpectedTopic.RelatedTopic.Count, ActualTopic.RelatedTopic.Count);
                 foreach (var ExpectedRelatedTopic in ExpectedTopic.RelatedTopic)
@@ -502,7 +511,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             Assert.Equal(ExpectedViewpoint.Guid, ActualViewpoint.Guid);
 
             // Compare Bitmaps
-            if (!OriginatesFromAPIConversion && TestCompareUtilities.BothNotNull(ExpectedViewpoint.Bitmap, ActualViewpoint.Bitmap, "Viewpoint.Bitmaps"))
+            if (!OriginatesFromAPIConversion && TestCompareUtilities.BothNotNullAndEmpty(ExpectedViewpoint.Bitmap, ActualViewpoint.Bitmap, "Viewpoint.Bitmaps"))
             {
                 Assert.Equal(ExpectedViewpoint.Bitmap.Count, ActualViewpoint.Bitmap.Count);
                 foreach (var ExpectedBitmap in ExpectedViewpoint.Bitmap)
@@ -526,7 +535,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Compare Components
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.Components, ActualViewpoint.Components, "Viewpoint.Components"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedViewpoint.Components, ActualViewpoint.Components, "Viewpoint.Components"))
             {
                 Assert.Equal(ExpectedViewpoint.Components.DefaultVisibilityComponents, ActualViewpoint.Components.DefaultVisibilityComponents);
                 Assert.Equal(ExpectedViewpoint.Components.DefaultVisibilityOpenings, ActualViewpoint.Components.DefaultVisibilityOpenings);
@@ -564,7 +573,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Compare Lines
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.Lines, ActualViewpoint.Lines, "Viewpoint.Lines"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedViewpoint.Lines, ActualViewpoint.Lines, "Viewpoint.Lines"))
             {
                 foreach (var ExpectedLine in ExpectedViewpoint.Lines)
                 {
@@ -581,7 +590,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Compare Clipping planes
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.ClippingPlanes, ActualViewpoint.ClippingPlanes, "Viewpoint.ClippingPlanes"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedViewpoint.ClippingPlanes, ActualViewpoint.ClippingPlanes, "Viewpoint.ClippingPlanes"))
             {
                 foreach (var ExpectedPlane in ExpectedViewpoint.ClippingPlanes)
                 {
@@ -598,12 +607,12 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             }
 
             // Compare OrthogonalCamera
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.OrthogonalCamera, ActualViewpoint.OrthogonalCamera, "Viewpoint.OrthogonalCamera"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedViewpoint.OrthogonalCamera, ActualViewpoint.OrthogonalCamera, "Viewpoint.OrthogonalCamera"))
             {
                 CompareOrthogonalCameras(ExpectedViewpoint.OrthogonalCamera, ActualViewpoint.OrthogonalCamera);
             }
             // Compare PerspectiveCamera
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.PerspectiveCamera, ActualViewpoint.PerspectiveCamera, "Viewpoint.PerspectiveCamera"))
+            if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedViewpoint.PerspectiveCamera, ActualViewpoint.PerspectiveCamera, "Viewpoint.PerspectiveCamera"))
             {
                 ComparePerspectiveCameras(ExpectedViewpoint.PerspectiveCamera, ActualViewpoint.PerspectiveCamera);
             }

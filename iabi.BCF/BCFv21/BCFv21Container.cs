@@ -264,7 +264,7 @@ namespace iabi.BCF.BCFv21
             if (VersionEntry != null)
             {
                 var ReadFileVersionInfo = Version.Deserialize(VersionEntry.Open());
-                if (ReadFileVersionInfo.VersionId != "2.0" || !ReadFileVersionInfo.DetailedVersion.Contains("2.0"))
+                if (ReadFileVersionInfo.VersionId != "2.1" || !ReadFileVersionInfo.DetailedVersion.Contains("2.1"))
                 {
                     throw new NotSupportedException("BCFzip version");
                 }
