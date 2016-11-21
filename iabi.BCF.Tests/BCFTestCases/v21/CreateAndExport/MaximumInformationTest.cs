@@ -397,23 +397,51 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // Default Visibility for Components
             var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            Assert.NotNull(defaultComponentsVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents, defaultComponentsVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultComponentsVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultComponentsVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents, defaultComponentsVisibilitySetting.Value);
+            }
 
             // Default Visibility for Openings
             var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            Assert.NotNull(defaultOpeningsVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings, defaultOpeningsVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultOpeningsVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultOpeningsVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings, defaultOpeningsVisibilitySetting.Value);
+            }
 
             // Default Visibility for Spaces
             var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            Assert.NotNull(defaultSpacesVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces, defaultSpacesVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultSpacesVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultSpacesVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces, defaultSpacesVisibilitySetting.Value);
+            }
 
             // Default Visibility for Openings
             var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries, defaultSpaceBoundariesVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries, defaultSpaceBoundariesVisibilitySetting.Value);
+            }
         }
 
         [Fact]
@@ -471,23 +499,51 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // Default Visibility for Components
             var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            Assert.NotNull(defaultComponentsVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents, defaultComponentsVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultComponentsVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultComponentsVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents, defaultComponentsVisibilitySetting.Value);
+            }
 
             // Default Visibility for Openings
             var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            Assert.NotNull(defaultOpeningsVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings, defaultOpeningsVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultOpeningsVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultOpeningsVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings, defaultOpeningsVisibilitySetting.Value);
+            }
 
             // Default Visibility for Spaces
             var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            Assert.NotNull(defaultSpacesVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces, defaultSpacesVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultSpacesVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultSpacesVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces, defaultSpacesVisibilitySetting.Value);
+            }
 
             // Default Visibility for Openings
             var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries, defaultSpaceBoundariesVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries, defaultSpaceBoundariesVisibilitySetting.Value);
+            }
         }
 
         [Fact]
@@ -533,23 +589,51 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // Default Visibility for Components
             var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            Assert.NotNull(defaultComponentsVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents, defaultComponentsVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultComponentsVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultComponentsVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents, defaultComponentsVisibilitySetting.Value);
+            }
 
             // Default Visibility for Openings
             var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            Assert.NotNull(defaultOpeningsVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings, defaultOpeningsVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultOpeningsVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultOpeningsVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings, defaultOpeningsVisibilitySetting.Value);
+            }
 
             // Default Visibility for Spaces
             var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            Assert.NotNull(defaultSpacesVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces, defaultSpacesVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultSpacesVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultSpacesVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces, defaultSpacesVisibilitySetting.Value);
+            }
 
             // Default Visibility for Openings
             var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-            Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries, defaultSpaceBoundariesVisibilitySetting.Value);
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries)) // true is the default value and therefore not serialized
+            {
+                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
+            }
+            else
+            {
+                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+                Assert.Equal(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries, defaultSpaceBoundariesVisibilitySetting.Value);
+            }
         }
 
         [Fact]

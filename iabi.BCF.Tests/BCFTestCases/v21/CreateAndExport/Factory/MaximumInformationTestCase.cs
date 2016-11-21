@@ -289,10 +289,10 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
         {
             return new VisualizationInfoComponents
             {
-                DefaultVisibilityComponents = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents),
-                DefaultVisibilityOpenings = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings),
-                DefaultVisibilitySpaceBoundaries = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries),
-                DefaultVisibilitySpaces = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces),
+                DefaultVisibilityComponents = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents),
+                DefaultVisibilityOpenings = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings),
+                DefaultVisibilitySpaceBoundaries = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries),
+                DefaultVisibilitySpaces = bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces),
                 Component = new List<Component>
                 {
                     new Component
