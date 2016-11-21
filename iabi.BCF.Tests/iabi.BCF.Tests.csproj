@@ -68,6 +68,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIObjects\Extensions\extensions_PATCHTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BCFTestCaseData.resx</DependentUpon>
+    </Compile>
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\BCFTestCaseFactory.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\MinimumInformationTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\MinimumInformationTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\ZipArchiveFactory.cs" />
     <Compile Include="BCFTestCases\v2\APIConversion\Converter.cs" />
     <Compile Include="BCFTestCases\v2\APIConversion\TestCaseProvider.cs" />
     <Compile Include="BCFTestCases\CompareTool.cs" />
@@ -176,6 +185,7 @@
     </None>
     <None Include="Resources\MaximumInformation_Readme.md" />
     <None Include="Resources\MinimumInformation_Readme.md" />
+    <None Include="Resources\MinimumInformation_Readme_2_1.md" />
     <None Include="Resources\multiple-files-in-header.bcfzip" />
     <None Include="Resources\multiple-files-in-header_Readme.md" />
     <None Include="Resources\multiple_topics.bcfzip.zip" />
@@ -210,6 +220,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BCFTestCaseData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseData.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BCFTestCaseData.Designer.cs</LastGenOutput>
