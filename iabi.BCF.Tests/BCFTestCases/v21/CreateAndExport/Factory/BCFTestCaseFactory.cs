@@ -27,10 +27,10 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
             {
                 return MinimumInformationTestCase.CreateContainer();
             }
-            //if (Test == TestCaseEnum.MaximumInformation)
-            //{
-            //    return MaximumInformationTestCase.CreateContainer();
-            //}
+            if (Test == TestCaseEnum.MaximumInformation)
+            {
+                return MaximumInformationTestCase.CreateContainer();
+            }
             //if (Test == TestCaseEnum.PerspectiveCamera)
             //{
             //    return PerspectiveCameraTestCase.CreateContainer();
@@ -58,7 +58,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
         //PDFFile,
         //ExtensionSchema,
         MinimumInformation,
-        //MaximumInformation,
+        MaximumInformation,
         //PerspectiveCamera,
         //OrthogonalCamera,
         //DocumentReferenceExternal,

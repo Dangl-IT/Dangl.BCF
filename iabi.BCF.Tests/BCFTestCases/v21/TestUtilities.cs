@@ -4,9 +4,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml.Linq;
-using iabi.BCF.BCFv2.Schemas;
+using iabi.BCF.BCFv21.Schemas;
 
-namespace iabi.BCF.Tests
+namespace iabi.BCF.Tests.BCFTestCases.v21
 {
     public static class TestUtilities
     {
@@ -48,9 +48,6 @@ namespace iabi.BCF.Tests
             {
                 Comment.ModifiedDate = (DateTime) CommentXml.Descendants("ModifiedDate").FirstOrDefault();
             }
-            Comment.ReplyToComment = CommentXml.Descendants("ReplyToComment").Any() ? new CommentReplyToComment {Guid = CommentXml.Descendants("ReplyToComment").FirstOrDefault().Attribute("Guid").Value} : null;
-            Comment.Status = CommentXml.Descendants("Status").FirstOrDefault().Value;
-            Comment.VerbalStatus = CommentXml.Descendants("VerbalStatus").FirstOrDefault().Value;
             Comment.Viewpoint = CommentXml.Descendants("Viewpoint").Any() ? new CommentViewpoint {Guid = CommentXml.Descendants("Viewpoint").FirstOrDefault().Attribute("Guid").Value} : null;
 
             return Comment;

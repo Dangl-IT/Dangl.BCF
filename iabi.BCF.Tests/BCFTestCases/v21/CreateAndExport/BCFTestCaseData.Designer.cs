@@ -61,6 +61,250 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] IfcPile {
+            get {
+                object obj = ResourceManager.GetObject("IfcPile", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] JsonElement {
+            get {
+                object obj = ResourceManager.GetObject("JsonElement", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MarkupSchema {
+            get {
+                object obj = ResourceManager.GetObject("MarkupSchema", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MaximumInfo_Snapshot_01 {
+            get {
+                object obj = ResourceManager.GetObject("MaximumInfo_Snapshot_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MaximumInfo_Snapshot_02 {
+            get {
+                object obj = ResourceManager.GetObject("MaximumInfo_Snapshot_02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MaximumInfo_Snapshot_03 {
+            get {
+                object obj = ResourceManager.GetObject("MaximumInfo_Snapshot_03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die # Maximum Information
+        ///
+        ///This test case verifies support of a BCFzip file that contains all information available in the schema.
+        ///
+        ///## Testing process
+        ///
+        ///1. Import _MaximumInformation.bcfzip_.
+        ///2. Verify the bcfzip was imported correctly:
+        ///&gt; 1. There are two topics within the zip file:
+        ///&gt; &gt; Maximum Content - 63E78882-7C6A-4BF7-8982-FC478AFB9C97
+        ///&gt; &gt; Referenced topic - 5019D939-62A4-45D9-B205-FAB602C98FE8
+        ///&gt; 2. Verify that all information can be processed.
+        ///
+        ///3. Export the topic you imported to _exported.bcf [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_Readme {
+            get {
+                return ResourceManager.GetString("MaximumInformation_Readme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 5019D939-62A4-45D9-B205-FAB602C98FE8 ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_ReferencedTopicGuid {
+            get {
+                return ResourceManager.GetString("MaximumInformation_ReferencedTopicGuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die MaximumInformation ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_TestCaseName {
+            get {
+                return ResourceManager.GetString("MaximumInformation_TestCaseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 63E78882-7C6A-4BF7-8982-FC478AFB9C97 ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_TopicGuid {
+            get {
+                return ResourceManager.GetString("MaximumInformation_TopicGuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 8dc86298-9737-40b4-a448-98a9e953293a ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_ViewpointGuid_01 {
+            get {
+                return ResourceManager.GetString("MaximumInformation_ViewpointGuid_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 21dd4807-e9af-439e-a980-04d913a6b1ce ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_ViewpointGuid_02 {
+            get {
+                return ResourceManager.GetString("MaximumInformation_ViewpointGuid_02", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 81daa431-bf01-4a49-80a2-1ab07c177717 ähnelt.
+        /// </summary>
+        internal static string MaximumInformation_ViewpointGuid_03 {
+            get {
+                return ResourceManager.GetString("MaximumInformation_ViewpointGuid_03", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Minimum Information
         ///
         ///This test case verifies support of a minimal BCFzip file.

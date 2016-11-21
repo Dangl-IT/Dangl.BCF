@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using iabi.BCF.BCFv2;
-using iabi.BCF.BCFv2.Schemas;
+using iabi.BCF.BCFv21;
+using iabi.BCF.BCFv21.Schemas;
 using Xunit;
 
-namespace iabi.BCF.Tests.BCFTestCases
+namespace iabi.BCF.Tests.BCFTestCases.v21
 {
     public static class CompareTool
     {
@@ -15,8 +15,8 @@ namespace iabi.BCF.Tests.BCFTestCases
         {
             // Check that archive file contents are present
             ArchiveFilesCompareTool.CompareZipArchiveFileEntries(FileToImport, ReadAndWrittenFile);
-            var ExpectedFile = BCFv2Container.ReadStream(new MemoryStream(FileToImport));
-            var ActualFile = BCFv2Container.ReadStream(new MemoryStream(ReadAndWrittenFile));
+            var ExpectedFile = BCFv21Container.ReadStream(new MemoryStream(FileToImport));
+            var ActualFile = BCFv21Container.ReadStream(new MemoryStream(ReadAndWrittenFile));
             CompareContainers(ExpectedFile, ActualFile, new ZipArchive(new MemoryStream(FileToImport)), new ZipArchive(new MemoryStream(ReadAndWrittenFile)));
         }
 
@@ -27,7 +27,7 @@ namespace iabi.BCF.Tests.BCFTestCases
         /// <param name="ExpectedArchive"></param>
         /// <param name="ActualArchive"></param>
         /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareContainers(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer, ZipArchive ExpectedArchive = null, ZipArchive ActualArchive = null, bool OriginatesFromAPIConversion = false)
+        public static void CompareContainers(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer, ZipArchive ExpectedArchive = null, ZipArchive ActualArchive = null, bool OriginatesFromAPIConversion = false)
         {
             CompareProjectAndVersion(ExpectedContainer, ActualContainer);
             CompareFileAttachments(ExpectedContainer, ActualContainer);
@@ -52,7 +52,7 @@ namespace iabi.BCF.Tests.BCFTestCases
             TopicsCompareTool.CompareAllTopics(ExpectedContainer, ActualContainer, ExpectedArchive, ActualArchive, OriginatesFromAPIConversion);
         }
 
-        public static void CompareProjectExtensions(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer)
+        public static void CompareProjectExtensions(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer)
         {
             if (TestCompareUtilities.BothNotNull(ExpectedContainer.ProjectExtensions, ActualContainer.ProjectExtensions, "ProjectExtensions"))
             {
@@ -79,7 +79,7 @@ namespace iabi.BCF.Tests.BCFTestCases
             }
         }
 
-        public static void CompareFileAttachments(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer)
+        public static void CompareFileAttachments(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer)
         {
             // Check that all files from the expected container are present
             foreach (var CurrentFile in ExpectedContainer.FileAttachments)
@@ -100,7 +100,7 @@ namespace iabi.BCF.Tests.BCFTestCases
         /// </summary>
         /// <param name="ExpectedContainer"></param>
         /// <param name="ActualContainer"></param>
-        public static void CompareProjectAndVersion(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer)
+        public static void CompareProjectAndVersion(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer)
         {
             // Compare project
             if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFProject, ActualContainer.BCFProject, "BCFProject"))
@@ -235,7 +235,7 @@ namespace iabi.BCF.Tests.BCFTestCases
         /// <param name="ExpectedArchive"></param>
         /// <param name="ActualArchive"></param>
         /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareAllTopics(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer, ZipArchive ExpectedArchive, ZipArchive ActualArchive, bool OriginatesFromAPIConversion)
+        public static void CompareAllTopics(BCFv21Container ExpectedContainer, BCFv21Container ActualContainer, ZipArchive ExpectedArchive, ZipArchive ActualArchive, bool OriginatesFromAPIConversion)
         {
             foreach (var ExpectedTopic in ExpectedContainer.Topics)
             {
@@ -362,18 +362,20 @@ namespace iabi.BCF.Tests.BCFTestCases
             // Compare Snippet
             if (TestCompareUtilities.BothNotNull(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet, "Markup.BimSnippet"))
             {
-                CompareBimSnippet(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet);
+                Assert.Equal(1, ExpectedTopic.BimSnippet.Count);
+                Assert.Equal(1, ActualTopic.BimSnippet.Count);
+                CompareBimSnippet(ExpectedTopic.BimSnippet.First(), ActualTopic.BimSnippet.First());
             }
 
             // Compare document references
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.DocumentReferences, ActualTopic.DocumentReferences, "Markup.DocumentReferences"))
+            if (TestCompareUtilities.BothNotNull(ExpectedTopic.DocumentReference, ActualTopic.DocumentReference, "Markup.DocumentReferences"))
             {
-                Assert.Equal(ExpectedTopic.DocumentReferences.Count, ActualTopic.DocumentReferences.Count);
+                Assert.Equal(ExpectedTopic.DocumentReference.Count, ActualTopic.DocumentReference.Count);
 
-                foreach (var ExpectedDocumentReference in ExpectedTopic.DocumentReferences)
+                foreach (var ExpectedDocumentReference in ExpectedTopic.DocumentReference)
                 {
                     // Find the matching document reference in the actual topic
-                    var ActualDocumentReference = ActualTopic.DocumentReferences
+                    var ActualDocumentReference = ActualTopic.DocumentReference
                         .Where(Curr => Curr.Description == ExpectedDocumentReference.Description)
                         .Where(Curr => Curr.Guid == ExpectedDocumentReference.Guid)
                         .Where(Curr => Curr.isExternal == ExpectedDocumentReference.isExternal)
@@ -394,12 +396,12 @@ namespace iabi.BCF.Tests.BCFTestCases
             }
 
             // Check related topics
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.RelatedTopics, ActualTopic.RelatedTopics, "Markup.RelatedTopics"))
+            if (TestCompareUtilities.BothNotNull(ExpectedTopic.RelatedTopic, ActualTopic.RelatedTopic, "Markup.RelatedTopics"))
             {
-                Assert.Equal(ExpectedTopic.RelatedTopics.Count, ActualTopic.RelatedTopics.Count);
-                foreach (var ExpectedRelatedTopic in ExpectedTopic.RelatedTopics)
+                Assert.Equal(ExpectedTopic.RelatedTopic.Count, ActualTopic.RelatedTopic.Count);
+                foreach (var ExpectedRelatedTopic in ExpectedTopic.RelatedTopic)
                 {
-                    var ActualRelatedTopic = ActualTopic.RelatedTopics
+                    var ActualRelatedTopic = ActualTopic.RelatedTopic
                         .Where(Curr => Curr.Guid == ExpectedRelatedTopic.Guid)
                         .FirstOrDefault();
                     Assert.NotNull(ActualRelatedTopic);
@@ -408,7 +410,8 @@ namespace iabi.BCF.Tests.BCFTestCases
 
             Assert.Equal(ExpectedTopic.CreationAuthor, ActualTopic.CreationAuthor);
             Assert.True((int) (ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds < 5);
-            Assert.Equal(ExpectedTopic.CreationDateSpecified, ActualTopic.CreationDateSpecified);
+            Assert.True(ExpectedTopic.ShouldSerializeCreationDate());
+            Assert.True(ActualTopic.ShouldSerializeCreationDate());
 
             if (!(string.IsNullOrWhiteSpace(ExpectedTopic.Description) && string.IsNullOrWhiteSpace(ActualTopic.Description)))
             {
@@ -418,11 +421,7 @@ namespace iabi.BCF.Tests.BCFTestCases
 
             if (ExpectedTopic.Index != ActualTopic.Index)
             {
-                if (!(ExpectedTopic.Index != null && ExpectedTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ActualTopic.Index)
-                      || ActualTopic.Index != null && ActualTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ExpectedTopic.Index)))
-                {
-                    Assert.True(false, "Index does not match");
-                }
+                Assert.True(false, "Index does not match");
             }
 
             Assert.Equal(ExpectedTopic.ModifiedAuthor, ActualTopic.ModifiedAuthor);
@@ -467,19 +466,6 @@ namespace iabi.BCF.Tests.BCFTestCases
             Assert.Equal(ExpectedComment.ModifiedDate, ActualComment.ModifiedDate);
             Assert.Equal(ExpectedComment.ModifiedDateSpecified, ActualComment.ModifiedDateSpecified);
 
-            if (ExpectedComment.ShouldSerializeReplyToComment())
-            {
-                Assert.True(ActualComment.ShouldSerializeReplyToComment());
-                Assert.Equal(ExpectedComment.ReplyToComment.Guid, ActualComment.ReplyToComment.Guid);
-            }
-            else
-            {
-                Assert.False(ActualComment.ShouldSerializeReplyToComment());
-            }
-
-            Assert.Equal(ExpectedComment.Status, ActualComment.Status);
-            Assert.Equal(ExpectedComment.VerbalStatus, ActualComment.VerbalStatus);
-
             if (ExpectedComment.ShouldSerializeViewpoint())
             {
                 Assert.True(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
@@ -500,7 +486,7 @@ namespace iabi.BCF.Tests.BCFTestCases
         {
             foreach (var ExpectedViewpoint in ExpectedViewpoints)
             {
-                var ActualViewpoint = ActualViewpoints.FirstOrDefault(Curr => Curr.GUID == ExpectedViewpoint.GUID);
+                var ActualViewpoint = ActualViewpoints.FirstOrDefault(Curr => Curr.Guid == ExpectedViewpoint.Guid);
                 Assert.NotNull(ActualViewpoint);
                 CompareSingleViewpoints(ExpectedViewpoint, ActualViewpoint, OriginatesFromAPIConversion);
             }
@@ -513,15 +499,15 @@ namespace iabi.BCF.Tests.BCFTestCases
         /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
         public static void CompareSingleViewpoints(VisualizationInfo ExpectedViewpoint, VisualizationInfo ActualViewpoint, bool OriginatesFromAPIConversion)
         {
-            Assert.Equal(ExpectedViewpoint.GUID, ActualViewpoint.GUID);
+            Assert.Equal(ExpectedViewpoint.Guid, ActualViewpoint.Guid);
 
             // Compare Bitmaps
-            if (!OriginatesFromAPIConversion && TestCompareUtilities.BothNotNull(ExpectedViewpoint.Bitmaps, ActualViewpoint.Bitmaps, "Viewpoint.Bitmaps"))
+            if (!OriginatesFromAPIConversion && TestCompareUtilities.BothNotNull(ExpectedViewpoint.Bitmap, ActualViewpoint.Bitmap, "Viewpoint.Bitmaps"))
             {
-                Assert.Equal(ExpectedViewpoint.Bitmaps.Count, ActualViewpoint.Bitmaps.Count);
-                foreach (var ExpectedBitmap in ExpectedViewpoint.Bitmaps)
+                Assert.Equal(ExpectedViewpoint.Bitmap.Count, ActualViewpoint.Bitmap.Count);
+                foreach (var ExpectedBitmap in ExpectedViewpoint.Bitmap)
                 {
-                    var ActualBitmap = ActualViewpoint.Bitmaps
+                    var ActualBitmap = ActualViewpoint.Bitmap
                         .Where(Curr => Curr.Bitmap == ExpectedBitmap.Bitmap)
                         .Where(Curr => Curr.Height == ExpectedBitmap.Height)
                         .Where(Curr => Curr.Location.X == ExpectedBitmap.Location.X)
@@ -542,10 +528,15 @@ namespace iabi.BCF.Tests.BCFTestCases
             // Compare Components
             if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.Components, ActualViewpoint.Components, "Viewpoint.Components"))
             {
-                if (ExpectedViewpoint.Components.Count == 1 && ActualViewpoint.Components.Count == 1)
+                Assert.Equal(ExpectedViewpoint.Components.DefaultVisibilityComponents, ActualViewpoint.Components.DefaultVisibilityComponents);
+                Assert.Equal(ExpectedViewpoint.Components.DefaultVisibilityOpenings, ActualViewpoint.Components.DefaultVisibilityOpenings);
+                Assert.Equal(ExpectedViewpoint.Components.DefaultVisibilitySpaceBoundaries, ActualViewpoint.Components.DefaultVisibilitySpaceBoundaries);
+                Assert.Equal(ExpectedViewpoint.Components.DefaultVisibilitySpaces, ActualViewpoint.Components.DefaultVisibilitySpaces);
+
+                if (ExpectedViewpoint.Components.Component.Count == 1 && ActualViewpoint.Components.Component.Count == 1)
                 {
-                    var ExpectedComponent = ExpectedViewpoint.Components.First();
-                    var ActualComponent = ActualViewpoint.Components.First();
+                    var ExpectedComponent = ExpectedViewpoint.Components.Component.First();
+                    var ActualComponent = ActualViewpoint.Components.Component.First();
 
                     Assert.Equal(ExpectedComponent.AuthoringToolId, ActualComponent.AuthoringToolId);
                     Assert.True((ExpectedComponent.Color == null && ActualComponent.Color == null) || ExpectedComponent.Color.SequenceEqual(ActualComponent.Color), "Color");
@@ -556,9 +547,9 @@ namespace iabi.BCF.Tests.BCFTestCases
                 }
                 else
                 {
-                    foreach (var CurrentComponent in ExpectedViewpoint.Components)
+                    foreach (var CurrentComponent in ExpectedViewpoint.Components.Component)
                     {
-                        var ActualComponent = ActualViewpoint.Components
+                        var ActualComponent = ActualViewpoint.Components.Component
                             .Where(Curr => Curr.AuthoringToolId == CurrentComponent.AuthoringToolId)
                             .Where(Curr => (Curr.Color == null && CurrentComponent.Color == null) || Curr.Color.SequenceEqual(CurrentComponent.Color))
                             .Where(Curr => Curr.IfcGuid == CurrentComponent.IfcGuid)
@@ -650,7 +641,7 @@ namespace iabi.BCF.Tests.BCFTestCases
         {
             foreach (var ExpectedBitmap in ExpectedBitmaps)
             {
-                var ActualBitmap = ActualBitmaps[ActualBitmaps.Keys.FirstOrDefault(Curr => Curr.GUID == ExpectedBitmap.Key.GUID)];
+                var ActualBitmap = ActualBitmaps[ActualBitmaps.Keys.FirstOrDefault(Curr => Curr.Guid == ExpectedBitmap.Key.Guid)];
                 foreach (var ExpectedBitmapSingleByte in ExpectedBitmap.Value)
                 {
                     Assert.True(ActualBitmap.Any(Curr => Curr.SequenceEqual(ExpectedBitmapSingleByte)), "Did not find matching bitmap binary data");

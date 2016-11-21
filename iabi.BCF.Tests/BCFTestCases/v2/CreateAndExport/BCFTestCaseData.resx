@@ -203,7 +203,7 @@
     <value>..\..\..\Resources\InternalBIMSnippet_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\MaximumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>..\..\..\Resources\MaximumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\Resources\MinimumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

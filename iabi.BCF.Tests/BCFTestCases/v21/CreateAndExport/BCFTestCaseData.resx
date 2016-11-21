@@ -118,6 +118,81 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="IfcPile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\resources\ifcpile_2_1._01ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\resources\jsonelement_2_1.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupSchema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\Resources\markup_2_1.xsd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\resources\maximuminformation_readme_2_1.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="MaximumInformation_ReferencedTopicGuid" xml:space="preserve">
+    <value>5019D939-62A4-45D9-B205-FAB602C98FE8</value>
+  </data>
+  <data name="MaximumInformation_TestCaseName" xml:space="preserve">
+    <value>MaximumInformation</value>
+  </data>
+  <data name="MaximumInformation_TopicGuid" xml:space="preserve">
+    <value>63E78882-7C6A-4BF7-8982-FC478AFB9C97</value>
+  </data>
+  <data name="MaximumInformation_ViewpointGuid_01" xml:space="preserve">
+    <value>8dc86298-9737-40b4-a448-98a9e953293a</value>
+  </data>
+  <data name="MaximumInformation_ViewpointGuid_02" xml:space="preserve">
+    <value>21dd4807-e9af-439e-a980-04d913a6b1ce</value>
+  </data>
+  <data name="MaximumInformation_ViewpointGuid_03" xml:space="preserve">
+    <value>81daa431-bf01-4a49-80a2-1ab07c177717</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\resources\bitmap_00d8eccf-8723-42e9-955f-d513d274f838_2_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\resources\bitmap_c698d881-5228-48f4-92d5-f534ed890464_2_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\..\resources\bitmap_d0d46591-4354-479b-bc75-8de93168ae5a_2_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\resources\minimuminformation_readme_2_1.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

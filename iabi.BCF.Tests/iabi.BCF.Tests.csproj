@@ -68,18 +68,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIObjects\Extensions\extensions_PATCHTest.cs" />
+    <Compile Include="BCFTestCases\v21\CompareTool.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BCFTestCaseData.resx</DependentUpon>
     </Compile>
     <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\BCFTestCaseFactory.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\MaximumInformationTestCase.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\MinimumInformationTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\MaximumInformationTest.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\MinimumInformationTest.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\ZipArchiveFactory.cs" />
+    <Compile Include="BCFTestCases\v21\TestUtilities.cs" />
     <Compile Include="BCFTestCases\v2\APIConversion\Converter.cs" />
     <Compile Include="BCFTestCases\v2\APIConversion\TestCaseProvider.cs" />
-    <Compile Include="BCFTestCases\CompareTool.cs" />
+    <Compile Include="BCFTestCases\v2\CompareTool.cs" />
     <Compile Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -147,7 +151,7 @@
     <Compile Include="Converter\PhysicalFromAPI.cs" />
     <Compile Include="Converter\ViewpointContainerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestUtilities.cs" />
+    <Compile Include="BCFTestCases\v2\TestUtilities.cs" />
     <Compile Include="XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,14 +180,20 @@
     <None Include="Resources\header_with_single_file.bcfzip" />
     <None Include="Resources\header_with_single_file_Readme.md" />
     <None Include="Resources\IfcPile._01ifc" />
+    <None Include="Resources\IfcPile_2_1._01ifc" />
     <None Include="Resources\InternalBIMSnippet_Readme.md" />
     <None Include="Resources\JsonElement.json" />
+    <None Include="Resources\JsonElement_2_1.json" />
     <None Include="Resources\Lines.bcfzip" />
     <None Include="Resources\Lines_Readme.md" />
     <None Include="Resources\markup.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Resources\markup_2_1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\MaximumInformation_Readme.md" />
+    <None Include="Resources\MaximumInformation_Readme_2_1.md" />
     <None Include="Resources\MinimumInformation_Readme.md" />
     <None Include="Resources\MinimumInformation_Readme_2_1.md" />
     <None Include="Resources\multiple-files-in-header.bcfzip" />
@@ -239,8 +249,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838.png" />
+    <None Include="Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838_2_1.png" />
     <Content Include="Resources\Bitmap_c698d881-5228-48f4-92d5-f534ed890464.png" />
+    <None Include="Resources\Bitmap_c698d881-5228-48f4-92d5-f534ed890464_2_1.png" />
     <Content Include="Resources\Bitmap_d0d46591-4354-479b-bc75-8de93168ae5a.png" />
+    <None Include="Resources\Bitmap_d0d46591-4354-479b-bc75-8de93168ae5a_2_1.png" />
     <Content Include="Resources\ComponentCollection_Snapshot_01.png" />
     <Content Include="Resources\PerspectiveCamera_Snapshot_01.png" />
   </ItemGroup>
