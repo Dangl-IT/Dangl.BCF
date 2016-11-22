@@ -119,135 +119,72 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Bitmap" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Bitmap.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Bitmap_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\bitmap.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Clippingplane" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Clippingplane.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Clippingplane_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Clippingplane_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\clippingplane.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="comments_without_viewpoints" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\comments-without-viewpoints.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="comments_without_viewpoints_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\comments-without-viewpoints_Readme.md;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>bcftestcaseimportresources\comments-without-viewpoints.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="component_coloring" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\component coloring.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="component_coloring_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\component coloring_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\component coloring.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Decomposed_objects" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Decomposed objects.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Decomposed_objects_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Decomposed objects_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\decomposed objects.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Decomposed_object_with_parent_guid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Decomposed object with parent guid.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Decomposed_object_with_parent_guid_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Decomposed object with parent guid_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\decomposed object with parent guid.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="default_component_visibility" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\default-component-visibility.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="default_component_visibility_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\default-component-visibility_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="multiple_files_in_header" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\multiple-files-in-header.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="multiple_files_in_header_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\multiple-files-in-header_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\default-component-visibility.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="header_with_no_files" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\header-with-no-files.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="header_with_no_files_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\header-with-no-files_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\header-with-no-files.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="header_with_single_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\header_with_single_file.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="header_with_single_file_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\header_with_single_file_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\header_with_single_file.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Lines" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Lines.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>bcftestcaseimportresources\lines.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Lines_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Lines_Readme.md;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="multiple_files_in_header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcaseimportresources\multiple-files-in-header.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="multiple_topics_bcfzip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\multiple_topics.bcfzip.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="multiple_topics_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\multiple_topics_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="multiple_topics" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcaseimportresources\multiple_topics.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="multiple_viewpoints_without_comments" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\multiple_viewpoints_without_comments.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="multiple_viewpoints_without_comments_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\multiple_viewpoints_without_comments_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\multiple_viewpoints_without_comments.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Perspective_view" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Perspective-view.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>bcftestcaseimportresources\perspective-view.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RelatedTopicsWithBothTopicsInSameFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\RelatedTopicsWithBothTopicsInSameFile.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RelatedTopicsWithBothTopicsInSameFile_readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\RelatedTopicsWithBothTopicsInSameFile_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\relatedtopicswithbothtopicsinsamefile.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RelatedTopicsWithOtherTopicMissing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\RelatedTopicsWithOtherTopicMissing.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RelatedTopicsWithOtherTopicMissing_readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\RelatedTopicsWithOtherTopicMissing_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\relatedtopicswithothertopicmissing.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Selected_component" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Selected-component.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>bcftestcaseimportresources\selected-component.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SingleInvisibleWall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\SingleInvisibleWall.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SingleInvisibleWall_readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\SingleInvisibleWall_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\singleinvisiblewall.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="single_visible_space" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\single-visible-space.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="single_visible_space_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\single-visible-space_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\single-visible-space.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="single_visible_wall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\single_visible_wall.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="single_visible_wall_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\single_visible_wall_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\single_visible_wall.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="user_assignment" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\user_assignment.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="user_assignment_readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\user_assignment_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\user_assignment.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Visible_Opening" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Visible Opening.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Visible_Opening_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Visibile Opening_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\visible opening.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="visible_space_and_the_rest_of_the_model_visible" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\visible space and the rest of the model visible.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="visible_space_and_the_rest_of_the_model_visible_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\visible space and the rest of the model visible_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcaseimportresources\visible space and the rest of the model visible.bcfzip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

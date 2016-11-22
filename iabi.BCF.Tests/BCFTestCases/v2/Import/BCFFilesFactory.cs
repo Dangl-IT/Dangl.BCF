@@ -65,7 +65,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                     break;
 
                 case BCFImportTest.MultipleTopics:
-                    CreatedContainer = ReadFromBinary(BCFTestCasesImportData.multiple_topics_bcfzip);
+                    CreatedContainer = ReadFromBinary(BCFTestCasesImportData.multiple_topics);
                     break;
 
                 case BCFImportTest.MultipleViewpointsWithoutComments:

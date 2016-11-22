@@ -78,7 +78,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             var MemStream = new MemoryStream();
             ReadContainer.WriteStream(MemStream);
             var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(BCFTestCasesImportData.multiple_topics_bcfzip, Data);
+            CompareTool.CompareFiles(BCFTestCasesImportData.multiple_topics, Data);
         }
 
 
@@ -163,7 +163,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_CompareSnapshotBinary()
             {
-                var Expected = BCFTestCasesImportData.multiple_topics_bcfzip.GetBinaryData("33b0e849-72f1-434c-88e1-b7b3b8c27f38/snapshot.png");
+                var Expected = BCFTestCasesImportData.multiple_topics.GetBinaryData("33b0e849-72f1-434c-88e1-b7b3b8c27f38/snapshot.png");
                 var Actual = ReadTopic.ViewpointSnapshots.First().Value;
                 Assert.True(Expected.SequenceEqual(Actual));
             }
@@ -276,7 +276,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_CompareSnapshotBinary()
             {
-                var Expected = BCFTestCasesImportData.multiple_topics_bcfzip.GetBinaryData("402d5148-88ef-4510-8b9d-e632602541c6/snapshot.png");
+                var Expected = BCFTestCasesImportData.multiple_topics.GetBinaryData("402d5148-88ef-4510-8b9d-e632602541c6/snapshot.png");
                 var Actual = ReadTopic.ViewpointSnapshots.First().Value;
                 Assert.True(Expected.SequenceEqual(Actual));
             }
@@ -389,7 +389,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_CompareSnapshotBinary()
             {
-                var Expected = BCFTestCasesImportData.multiple_topics_bcfzip.GetBinaryData("f5d76cd4-46bc-450c-a513-c1f62ac24026/snapshot.png");
+                var Expected = BCFTestCasesImportData.multiple_topics.GetBinaryData("f5d76cd4-46bc-450c-a513-c1f62ac24026/snapshot.png");
                 var Actual = ReadTopic.ViewpointSnapshots.First().Value;
                 Assert.True(Expected.SequenceEqual(Actual));
             }

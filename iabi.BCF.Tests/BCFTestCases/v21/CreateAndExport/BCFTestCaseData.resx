@@ -117,13 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\resources\maximuminformation_readme_2_1.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\resources\minimuminformation_readme_2_1.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="ComponentSelection_TestCaseName" xml:space="preserve">
     <value>Component Selection</value>
   </data>
@@ -196,6 +189,7 @@
   <data name="PerspectiveCamera_TopicGuid" xml:space="preserve">
     <value>3153ceb9-0d9b-4f89-9670-dc95768836af</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ComponentCollection_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>bcftestcasedataresources\componentcollection_snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -300,5 +294,11 @@
   </data>
   <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>bcftestcasedataresources\jsonelement.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\maximuminformation_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\minimuminformation_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

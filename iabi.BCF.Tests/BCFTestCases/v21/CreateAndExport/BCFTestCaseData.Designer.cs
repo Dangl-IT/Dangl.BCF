@@ -480,18 +480,19 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Maximum Information
         ///
-        ///This test case verifies support of a BCFzip file that contains all information available in the schema.
+        ///This test case verifies support of a BCF file that contains all information available in the schema.
         ///
         ///## Testing process
         ///
-        ///1. Import _MaximumInformation.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
+        ///1. Import _MaximumInformation.bcf_.
+        ///2. Verify the bcf was imported correctly:
         ///&gt; 1. There are two topics within the zip file:
         ///&gt; &gt; Maximum Content - 63E78882-7C6A-4BF7-8982-FC478AFB9C97
         ///&gt; &gt; Referenced topic - 5019D939-62A4-45D9-B205-FAB602C98FE8
         ///&gt; 2. Verify that all information can be processed.
         ///
-        ///3. Export the topic you imported to _exported.bcf [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///3. Export the topic you imported to _exported.bcf_.
+        ///4. Ve [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string MaximumInformation_Readme {
             get {
@@ -556,18 +557,19 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Minimum Information
         ///
-        ///This test case verifies support of a minimal BCFzip file.
+        ///This test case verifies support of a minimal BCF file.
         ///
         ///## Testing process
         ///
-        ///1. Import _MinimumInformation.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
+        ///1. Import _MinimumInformation.bcf_.
+        ///2. Verify the bcf was imported correctly:
         ///&gt; 1. The imported topic does have the following properties:
         ///&gt;&gt; * Guid: 9898DE65-C0CE-414B-857E-1DF97FFAED8D
-        ///&gt;&gt; * Title: Minimum information BCFZip topic.
+        ///&gt;&gt; * Title: Minimum information BCF topic.
         ///&gt;&gt; * CreationDate: 2015-07-15T13:12:42Z (Z indicating an UTC timestamp)
         ///&gt;&gt; * CreationAuthor: Developer@example.com
-        ///3. Export the topic you imported to _exporte [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///3. Export the topic you imported to _exported.bcf_.
+        ///4.  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string MinimumInformation_Readme {
             get {
