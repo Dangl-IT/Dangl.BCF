@@ -111,8 +111,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.0";
-            var ExpectedDetailedVersion = "2.0";
+            var ExpectedVersionId = "2.1";
+            var ExpectedDetailedVersion = "2.1";
             var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
             var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
@@ -135,7 +135,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         {
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.PDFFile_TopicGuid + "/markup.bcf");
 
-            var DocumentRefsXml = MarkupXml.Descendants("DocumentReferences").First();
+            var DocumentRefsXml = MarkupXml.Descendants("DocumentReference").First();
 
             Assert.NotNull(DocumentRefsXml);
             Assert.Equal(DocumentRefsXml.Descendants("ReferencedDocument").First().Value, "../Requirements.pdf");

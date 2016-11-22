@@ -115,6 +115,7 @@
     <Compile Include="BCFv21\Schemas\project.Designer.cs" />
     <Compile Include="BCFv21\Schemas\version.Designer.cs" />
     <Compile Include="BCFv21\Schemas\visinfo.Designer.cs" />
+    <Compile Include="BCFv21\Schemas\VisualizationInfo.cs" />
     <Compile Include="BCFv2\BCFTopic.cs" />
     <Compile Include="BCFv2\BCFv2Container.cs" />
     <Compile Include="BCFv2\Schemas\Extensions.cs">

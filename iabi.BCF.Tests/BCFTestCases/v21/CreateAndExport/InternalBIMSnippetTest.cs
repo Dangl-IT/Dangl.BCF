@@ -111,8 +111,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.0";
-            var ExpectedDetailedVersion = "2.0";
+            var ExpectedVersionId = "2.1";
+            var ExpectedDetailedVersion = "2.1";
             var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
             var ActualVersionId = VersionXml.Attribute("VersionId").Value;
             var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;

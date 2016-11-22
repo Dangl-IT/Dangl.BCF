@@ -113,12 +113,12 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         ///
         ///## Testing process
         ///
-        ///1. Import _ComponentSelection.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
+        ///1. Import _ComponentSelection.bcf_.
+        ///2. Verify the bcf was imported correctly:
         ///&gt; 1. Exactly three components are selected in your application.
         ///&gt; 2. All other components are being displayed with their default settings.
         ///
-        ///3. Export the topic you imported to _exported.bcfzip_.
+        ///3. Export the topic you imported to _exported.bcf_.
         ///4. Verify that no information was lost during the export ähnelt.
         /// </summary>
         internal static string ComponentSelection_Readme {
@@ -146,16 +146,25 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 817b50b5-f6b2-4e5d-8a37-b692d67cdd91 ähnelt.
+        /// </summary>
+        internal static string ComponentSelection_ViewpointGuid {
+            get {
+                return ResourceManager.GetString("ComponentSelection_ViewpointGuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Document Reference External
         ///
-        ///This test case verifies support of a document reference that is external to the BCFZip file, referenced with an absolute URL.
+        ///This test case verifies support of a document reference that is external to the BCF file, referenced with an absolute URL.
         ///
         ///## Testing process
         ///
-        ///1. Import _DocumentReferenceExternal.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
+        ///1. Import _DocumentReferenceExternal.bcf_.
+        ///2. Verify the bcf was imported correctly:
         ///&gt; 1. Your application is aware of the absolute reference to the document outside of the BCFzip as given in the _DocumentReferences_ property in the _markup.bcf_ file.
-        ///&gt; 2. The .xsd file attachment can be retrieved (public download fro [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///&gt; 2. The .xsd file attachment can be retrieved (public download from buildin [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string DocumentReferenceExternal_Readme {
             get {
@@ -194,14 +203,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Extension Schema
         ///
-        ///This test case verifies support of an embedded extension schema withing a BCFZip file.
+        ///This test case verifies support of an embedded extension schema withing a BCF file.
         ///
         ///## Testing process
         ///
-        ///1. Import _ExtensionSchema.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
+        ///1. Import _ExtensionSchema.bcf_.
+        ///2. Verify the bcf was imported correctly:
         ///&gt; 1. Your application is aware of the relative reference to _extensions.xsd_ as given in the _ProjectExtension_&apos;s _ExtensionSchema_ property in the _project.bcfp_ file.
-        ///&gt; 2. The values within the _extensions.xsd_ are imported into your application&apos;s issue management interface and presented as  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///&gt; 2. The values within the _extensions.xsd_ are imported into your application&apos;s issue management interface and presented as selectabl [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string ExtensionSchema_Readme {
             get {
@@ -230,13 +239,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # External BIM Snippet
         ///
-        ///This test case verifies support of an external BIM Snippet reference within a BCFZip file.
+        ///This test case verifies support of an external BIM Snippet reference within a BCF file.
         ///
         ///## Testing process
         ///
-        ///1. Import _ExternalBIMSnippet.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
-        ///&gt; 1. Your application is aware of the relative reference to _http://bimfiles.example.com/JsonElement.json_ as given in the _Topic_s _BIMSnippet_ property in the _markup.bcf_ file. The reference is marked as external to indicate that the actual snippet data is not contained within the [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///1. Import _ExternalBIMSnippet.bcf_.
+        ///2. Verify the bcf was imported correctly:
+        ///&gt; 1. Your application is aware of the relative reference to _http://bimfiles.example.com/JsonElement.json_ as given in the _Topic_s _BIMSnippet_ property in the _markup.bcf_ file. The reference is marked as external to indicate that the actual snippet data is not contained within the BCFZip.        /// [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string ExternalBIMSnippet_Readme {
             get {
@@ -285,16 +294,16 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Internal BIM Snippet
         ///
-        ///This test case verifies support of an internal BIM Snippet reference within a BCFZip file.
+        ///This test case verifies support of an internal BIM Snippet reference within a BCF file.
         ///
         ///## Testing process
         ///
-        ///1. Import _InternalBIMSnippet.bcfzip_.
+        ///1. Import _InternalBIMSnippet.bcf_.
         ///2. Verify the bcfzip was imported correctly:
         ///&gt; 1. Your application is aware of the relative reference to _JsonElement.json_ as given in the _Topic_s _BIMSnippet_ property in the _markup.bcf_ file.
         ///&gt; 2. The _JsonElement.json_ file has been imported successfully.
-        ///3. Export the topic you imported to _exported.bcfzip_.
-        ///4. Verify [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///3. Export the topic you imported to _exported.bcf_.
+        ///4. Verify that no  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string InternalBIMSnippet_Readme {
             get {
@@ -597,18 +606,18 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Orthogonal Camera
         ///
-        ///This test case verifies support of a BCFzip file that contains a single viewpoint with an orthogonal camera.
+        ///This test case verifies support of a BCF file that contains a single viewpoint with an orthogonal camera.
         ///
         ///## Testing process
         ///
-        ///1. Import _OrthogonalCamera.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
+        ///1. Import _OrthogonalCamera.bcf_.
+        ///2. Verify the bcf was imported correctly:
         ///&gt; 1. There is one topic within the zip file:
         ///&gt; &gt; Orthogonal Camera - 97881cb2-6462-4161-8d57-3d179b280755
         ///&gt; 2. Verify that all information can be processed.
         ///
-        ///3. Export the topic you imported to _exported.bcfzip_.
-        ///4. Verify that no information was lost during the exp [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///3. Export the topic you imported to _exported.bcf_.
+        ///4. Verify that no information was lost during the export ähnelt.
         /// </summary>
         internal static string OrthogonalCamera_Readme {
             get {
@@ -641,13 +650,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         ///
         ///## Testing process
         ///
-        ///1. Import _PDFFile.bcfzip_.
-        ///2. Verify the bcfzip was imported correctly:
-        ///&gt; 1. Your application is aware of the relative reference to _Requirements.pdf_ in the BCFzip root directory as given in the _DocumentReferences_ property in the _markup.bcf_ file.
+        ///1. Import _PDFFile.bcf_.
+        ///2. Verify the bcf was imported correctly:
+        ///&gt; 1. Your application is aware of the relative reference to _Requirements.pdf_ in the BCF root directory as given in the _DocumentReferences_ property in the _markup.bcf_ file.
         ///&gt; 2. The .pdf file attachment is present.
         ///
-        ///3. Export the topic you imported to _exported.bcfzip_.
-        ///4. Verify  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///3. Export the topic you imported to _exported.bcf_.
+        ///4. Verify that no info [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string PDFFile_Readme {
             get {
@@ -676,18 +685,18 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Perspective Camera
         ///
-        ///This test case verifies support of a BCFzip file that contains a single viewpoint with a perspective camera.
+        ///This test case verifies support of a BCF file that contains a single viewpoint with a perspective camera.
         ///
         ///## Testing process
         ///
-        ///1. Import _PerspectiveCamera.bcfzip_.
+        ///1. Import _PerspectiveCamera.bcf_.
         ///2. Verify the bcfzip was imported correctly:
         ///&gt; 1. There is one topic within the zip file:
         ///&gt; &gt; Perspective Camera - 3153ceb9-0d9b-4f89-9670-dc95768836af
         ///&gt; 2. Verify that all information can be processed.
         ///
-        ///3. Export the topic you imported to _exported.bcfzip_.
-        ///4. Verify that no information was lost during the  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///3. Export the topic you imported to _exported.bcf_.
+        ///4. Verify that no information was lost during the export ähnelt.
         /// </summary>
         internal static string PerspectiveCamera_Readme {
             get {

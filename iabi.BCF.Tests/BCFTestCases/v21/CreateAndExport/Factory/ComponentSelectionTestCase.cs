@@ -58,6 +58,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
         {
             return new VisualizationInfo
             {
+                Guid = BCFTestCaseData.ComponentSelection_ViewpointGuid,
                 PerspectiveCamera = new PerspectiveCamera
                 {
                     FieldOfView = 60,

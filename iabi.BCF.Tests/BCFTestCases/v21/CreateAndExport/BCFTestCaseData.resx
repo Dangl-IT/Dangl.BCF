@@ -301,4 +301,7 @@
   <data name="ComponentSelection_DefaultVisibilitySpaces" xml:space="preserve">
     <value>false</value>
   </data>
+  <data name="ComponentSelection_ViewpointGuid" xml:space="preserve">
+    <value>817b50b5-f6b2-4e5d-8a37-b692d67cdd91</value>
+  </data>
 </root>
