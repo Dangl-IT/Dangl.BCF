@@ -409,7 +409,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // Default Visibility for Openings
             var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings)) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultOpeningsVisibilitySetting);
             }
@@ -421,7 +421,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // Default Visibility for Spaces
             var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces)) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultSpacesVisibilitySetting);
             }
@@ -433,7 +433,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // Default Visibility for Openings
             var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents)) // true is the default value and therefore not serialized
+            if (bool.Parse(BCFTestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries)) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultSpaceBoundariesVisibilitySetting);
             }
@@ -763,7 +763,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 
             // isExternal is false by default, so if the actual element points to an external snippet
             // the XML attribute may be omitted
-            if (MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet.First().isExternal)
+            if (MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet.isExternal)
             {
                 Assert.NotNull(SnippetXml.Attribute("isExternal"));
                 Assert.Equal("true", SnippetXml.Attribute("isExternal").Value);
@@ -784,7 +784,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFTestCaseData.MaximumInformation_TopicGuid + "/markup.bcf");
             var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
 
-            var SnippetExpected = MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet.First();
+            var SnippetExpected = MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet;
 
             var SnippetActual = TestUtilities.GetBimSnippetFromXml(SnippetXml);
             TopicsCompareTool.CompareBimSnippet(SnippetExpected, SnippetActual);

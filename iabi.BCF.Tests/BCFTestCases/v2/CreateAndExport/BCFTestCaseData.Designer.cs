@@ -295,6 +295,114 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die true ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die false ähnelt.
+        /// </summary>
+        internal static string MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces {
+            get {
+                return ResourceManager.GetString("MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap MaximumInfo_Snapshot_01 {

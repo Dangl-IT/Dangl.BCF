@@ -165,60 +165,11 @@
   <data name="PDFFile_TopicGuid" xml:space="preserve">
     <value>8e46d831-4603-4bd1-ae0c-d1817ca50bf0</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="IfcPile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\IfcPile._01ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\JsonElement.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MarkupSchema" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\markup.xsd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MaximumInfo_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MaximumInfo_Snapshot_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Bitmap_d0d46591-4354-479b-bc75-8de93168ae5a.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MaximumInfo_Snapshot_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Bitmap_c698d881-5228-48f4-92d5-f534ed890464.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Requirements" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Requirements.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="PerspectiveCamera_TestCaseName" xml:space="preserve">
     <value>PerspectiveCamera</value>
   </data>
   <data name="PerspectiveCamera_TopicGuid" xml:space="preserve">
     <value>3153ceb9-0d9b-4f89-9670-dc95768836af</value>
-  </data>
-  <data name="ExtensionSchema_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\ExtensionSchema_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="ExternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\ExternalBIMSnippet_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="InternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\InternalBIMSnippet_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\MaximumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
-  <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\MinimumInformation_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="PDFFile_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\PDFFile_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="PerspectiveCamera_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\PerspectiveCamera_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Estructura" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\Estructura.ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="PerspectiveCamera_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\PerspectiveCamera_Snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OrthogonalCamera_TestCaseName" xml:space="preserve">
     <value>OrthogonalCamera</value>
@@ -226,17 +177,11 @@
   <data name="OrthogonalCamera_TopicGuid" xml:space="preserve">
     <value>97881cb2-6462-4161-8d57-3d179b280755</value>
   </data>
-  <data name="OrthogonalCamera_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\OrthogonalCamera_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="DocumentReferenceExternal_TestCaseName" xml:space="preserve">
     <value>Document Reference External</value>
   </data>
   <data name="DocumentReferenceExternal_TopicGuid" xml:space="preserve">
     <value>1b66b5cb-18b4-4edd-a700-d02c3a673710</value>
-  </data>
-  <data name="DocumentReferenceExternal_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\DocumentReferenceExternal_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="ComponentSelection_TestCaseName" xml:space="preserve">
     <value>Component Selection</value>
@@ -244,10 +189,101 @@
   <data name="ComponentSelection_TopicGuid" xml:space="preserve">
     <value>42929e02-f00f-4db8-918e-0fbbc64a45d3</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ComponentCollection_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\ComponentCollection_Snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>bcftestcasedataresources\componentcollection_snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PerspectiveCamera_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\perspectivecamera_snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ComponentSelection_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\Resources\ComponentSelection_Readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>bcftestcasedataresources\componentselection_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="DocumentReferenceExternal_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\documentreferenceexternal_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Estructura" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\estructura.ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExtensionSchema_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\extensionschema_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ExternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\externalbimsnippet_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="IfcPile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\ifcpile.ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="InternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\internalbimsnippet_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\jsonelement.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MarkupSchema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\markup.xsd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\maximuminformation_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\maximuminfo_snapshot_01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\maximuminfo_snapshot_02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaximumInfo_Snapshot_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\maximuminfo_snapshot_03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MinimumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\minimuminformation_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="OrthogonalCamera_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\orthogonalcamera_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PDFFile_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\pdffile_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PerspectiveCamera_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\perspectivecamera_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Requirements" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\requirements.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings" xml:space="preserve">
+    <value>true</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries" xml:space="preserve">
+    <value>false</value>
+  </data>
+  <data name="MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces" xml:space="preserve">
+    <value>false</value>
   </data>
 </root>

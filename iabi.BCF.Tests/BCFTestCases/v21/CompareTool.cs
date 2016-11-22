@@ -371,9 +371,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             // Compare Snippet
             if (TestCompareUtilities.BothNotNullAndEmpty(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet, "Markup.BimSnippet"))
             {
-                Assert.Equal(1, ExpectedTopic.BimSnippet.Count);
-                Assert.Equal(1, ActualTopic.BimSnippet.Count);
-                CompareBimSnippet(ExpectedTopic.BimSnippet.First(), ActualTopic.BimSnippet.First());
+                CompareBimSnippet(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet);
             }
 
             // Compare document references

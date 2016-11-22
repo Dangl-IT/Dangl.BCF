@@ -74,11 +74,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BCFTestCaseData.resx</DependentUpon>
     </Compile>
+    <Compile Include="BCFTestCases\v21\CreateAndExport\ComponentSelectionTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\DocumentReferenceExternalTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\ExtensionSchemaTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\ExternalBIMSnippetTest.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\BCFTestCaseFactory.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\ComponentSelectionTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\DocumentReferenceExternalTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\ExtensionSchemaTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\ExternalBIMSnippetTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\InternalBIMSnippetTestCase.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\MaximumInformationTestCase.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\MinimumInformationTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\OrthogonalCameraTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\PDFFileTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\Factory\PerspectiveCameraTestCase.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\InternalBIMSnippetTest.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\MaximumInformationTest.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\MinimumInformationTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\OrthogonalCameraTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\PDFFileTest.cs" />
+    <Compile Include="BCFTestCases\v21\CreateAndExport\PerspectiveCameraTest.cs" />
     <Compile Include="BCFTestCases\v21\CreateAndExport\ZipArchiveFactory.cs" />
     <Compile Include="BCFTestCases\v21\TestUtilities.cs" />
     <Compile Include="BCFTestCases\v2\APIConversion\Converter.cs" />
@@ -155,6 +171,23 @@
     <Compile Include="XmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\ComponentSelection_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\DocumentReferenceExternal_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\Estructura.ifc" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\ExtensionSchema_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\ExternalBIMSnippet_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\IfcPile.ifc" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\InternalBIMSnippet_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\JsonElement.json" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\markup.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\MaximumInformation_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\MinimumInformation_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\OrthogonalCamera_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\PDFFile_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\PerspectiveCamera_Readme.md" />
+    <None Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\Requirements.pdf" />
     <None Include="packages.config" />
     <None Include="Resources\Bitmap.bcfzip" />
     <None Include="Resources\Clippingplane.bcfzip" />
@@ -163,38 +196,38 @@
     <None Include="Resources\comments-without-viewpoints_Readme.md" />
     <None Include="Resources\component coloring.bcfzip" />
     <None Include="Resources\component coloring_Readme.md" />
-    <None Include="Resources\ComponentSelection_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\ComponentSelection_Readme.md" />
     <None Include="Resources\Decomposed object with parent guid.bcfzip" />
     <None Include="Resources\Decomposed object with parent guid_Readme.md" />
     <None Include="Resources\Decomposed objects.bcfzip" />
     <None Include="Resources\Decomposed objects_Readme.md" />
     <None Include="Resources\default-component-visibility.bcfzip" />
     <None Include="Resources\default-component-visibility_Readme.md" />
-    <None Include="Resources\DocumentReferenceExternal_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\DocumentReferenceExternal_Readme.md" />
     <None Include="Resources\EmptyProject.bcfzip" />
-    <None Include="Resources\Estructura.ifc" />
-    <None Include="Resources\ExtensionSchema_Readme.md" />
-    <None Include="Resources\ExternalBIMSnippet_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\Estructura.ifc" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\ExtensionSchema_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\ExternalBIMSnippet_Readme.md" />
     <None Include="Resources\header-with-no-files.bcfzip" />
     <None Include="Resources\header-with-no-files_Readme.md" />
     <None Include="Resources\header_with_single_file.bcfzip" />
     <None Include="Resources\header_with_single_file_Readme.md" />
-    <None Include="Resources\IfcPile._01ifc" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\IfcPile.ifc" />
     <None Include="Resources\IfcPile_2_1._01ifc" />
-    <None Include="Resources\InternalBIMSnippet_Readme.md" />
-    <None Include="Resources\JsonElement.json" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\InternalBIMSnippet_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\JsonElement.json" />
     <None Include="Resources\JsonElement_2_1.json" />
     <None Include="Resources\Lines.bcfzip" />
     <None Include="Resources\Lines_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\markup.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\markup.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Resources\markup_2_1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resources\MaximumInformation_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\MaximumInformation_Readme.md" />
     <None Include="Resources\MaximumInformation_Readme_2_1.md" />
-    <None Include="Resources\MinimumInformation_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\MinimumInformation_Readme.md" />
     <None Include="Resources\MinimumInformation_Readme_2_1.md" />
     <None Include="Resources\multiple-files-in-header.bcfzip" />
     <None Include="Resources\multiple-files-in-header_Readme.md" />
@@ -202,16 +235,16 @@
     <None Include="Resources\multiple_topics_Readme.md" />
     <None Include="Resources\multiple_viewpoints_without_comments.bcfzip" />
     <None Include="Resources\multiple_viewpoints_without_comments_Readme.md" />
-    <None Include="Resources\OrthogonalCamera_Readme.md" />
-    <None Include="Resources\PDFFile_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\OrthogonalCamera_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\PDFFile_Readme.md" />
     <None Include="Resources\Perspective-view.bcfzip" />
-    <None Include="Resources\PerspectiveCamera_Readme.md" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\PerspectiveCamera_Readme.md" />
     <None Include="Resources\Readme.md" />
     <None Include="Resources\RelatedTopicsWithBothTopicsInSameFile.bcfzip" />
     <None Include="Resources\RelatedTopicsWithBothTopicsInSameFile_readme.md" />
     <None Include="Resources\RelatedTopicsWithOtherTopicMissing.bcfzip" />
     <None Include="Resources\RelatedTopicsWithOtherTopicMissing_readme.md" />
-    <None Include="Resources\Requirements.pdf" />
+    <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\Requirements.pdf" />
     <None Include="Resources\Selected-component.bcfzip" />
     <None Include="Resources\single-visible-space.bcfzip" />
     <None Include="Resources\single-visible-space_Readme.md" />
@@ -248,14 +281,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838.png" />
-    <None Include="Resources\Bitmap_00d8eccf-8723-42e9-955f-d513d274f838_2_1.png" />
-    <Content Include="Resources\Bitmap_c698d881-5228-48f4-92d5-f534ed890464.png" />
-    <None Include="Resources\Bitmap_c698d881-5228-48f4-92d5-f534ed890464_2_1.png" />
-    <Content Include="Resources\Bitmap_d0d46591-4354-479b-bc75-8de93168ae5a.png" />
-    <None Include="Resources\Bitmap_d0d46591-4354-479b-bc75-8de93168ae5a_2_1.png" />
-    <Content Include="Resources\ComponentCollection_Snapshot_01.png" />
-    <Content Include="Resources\PerspectiveCamera_Snapshot_01.png" />
+    <Content Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\ComponentCollection_Snapshot_01.png" />
+    <Content Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\MaximumInfo_Snapshot_01.png" />
+    <Content Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\MaximumInfo_Snapshot_02.png" />
+    <Content Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\MaximumInfo_Snapshot_03.png" />
+    <Content Include="BCFTestCases\v21\CreateAndExport\BCFTestCaseDataResources\PerspectiveCamera_Snapshot_01.png" />
+    <Content Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\MaximumInfo_Snapshot_01.png" />
+    <Content Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\MaximumInfo_Snapshot_02.png" />
+    <Content Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\MaximumInfo_Snapshot_03.png" />
+    <Content Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\ComponentCollection_Snapshot_01.png" />
+    <Content Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\PerspectiveCamera_Snapshot_01.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iabi.BCF\iabi.BCF.csproj">

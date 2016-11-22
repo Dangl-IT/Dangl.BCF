@@ -437,13 +437,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
             Markup.Topic = new Topic
             {
                 AssignedTo = "linhard@iabi.eu",
-                BimSnippet = new []{ new BimSnippet
+                BimSnippet =  new BimSnippet
                 {
                     isExternal = false,
                     Reference = "JsonElement.json",
                     ReferenceSchema = "http://json-schema.org",
                     SnippetType = "JSON"
-                }}.ToList(),
+                },
                 CreationAuthor = "dangl@iabi.eu",
                 CreationDate = new DateTime(2015, 06, 21, 12, 00, 00, DateTimeKind.Utc),
                 Description = "This is a topic with all informations present.",

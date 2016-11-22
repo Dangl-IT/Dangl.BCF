@@ -176,13 +176,13 @@ namespace iabi.BCF.BCFv21
                     {
                         CurrentTopic.Markup.Topic.Guid = Guid.NewGuid().ToString();
                     }
-                    if (CurrentTopic.Markup.Topic.ShouldSerializeBimSnippet() && CurrentTopic.Markup.Topic.BimSnippet.Count >= 1)
+                    if (CurrentTopic.Markup.Topic.ShouldSerializeBimSnippet())
                     {
                         // Write BIM Snippet if present in the file and internal
-                        if (!CurrentTopic.Markup.Topic.BimSnippet.First().isExternal)
+                        if (!CurrentTopic.Markup.Topic.BimSnippet.isExternal)
                         {
-                            CurrentTopic.Markup.Topic.BimSnippet.First().isExternal = false;
-                            var BIMSnippetBinaryEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Topic.BimSnippet.First().Reference);
+                            CurrentTopic.Markup.Topic.BimSnippet.isExternal = false;
+                            var BIMSnippetBinaryEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Topic.BimSnippet.Reference);
                             using (var CurrentSnippetWriter = new BinaryWriter(BIMSnippetBinaryEntry.Open()))
                             {
                                 if (CurrentTopic.SnippetData != null)
@@ -411,14 +411,14 @@ namespace iabi.BCF.BCFv21
             {
                 CurrentComment.Viewpoint = null;
             }
-            if (ReturnObject.Markup.Topic.ShouldSerializeBimSnippet() && ReturnObject.Markup.Topic.BimSnippet.Any() && !ReturnObject.Markup.Topic.BimSnippet.First().isExternal)
+            if (ReturnObject.Markup.Topic.ShouldSerializeBimSnippet()  && !ReturnObject.Markup.Topic.BimSnippet.isExternal)
             {
                 // Read the snippet
-                var SnippetPathInArchive = GetAbsolutePath(TopicID, ReturnObject.Markup.Topic.BimSnippet.First().Reference);
+                var SnippetPathInArchive = GetAbsolutePath(TopicID, ReturnObject.Markup.Topic.BimSnippet.Reference);
                 var Entry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == SnippetPathInArchive);
                 if (Entry == null)
                 {
-                    ReturnObject.Markup.Topic.BimSnippet.First().isExternal = true;
+                    ReturnObject.Markup.Topic.BimSnippet.isExternal = true;
                 }
                 else
                 {

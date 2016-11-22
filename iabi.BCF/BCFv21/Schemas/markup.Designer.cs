@@ -2024,7 +2024,7 @@ namespace iabi.BCF.BCFv21.Schemas
 
         private string _description;
 
-        private List<BimSnippet> _bimSnippet;
+        private BimSnippet _bimSnippet;
 
         private List<TopicDocumentReference> _documentReference;
 
@@ -2288,14 +2288,14 @@ namespace iabi.BCF.BCFv21.Schemas
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("BimSnippet", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public List<BimSnippet> BimSnippet
+        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public BimSnippet BimSnippet
         {
             get
             {
                 if ((this._bimSnippet == null))
                 {
-                    this._bimSnippet = new List<BimSnippet>();
+                    this._bimSnippet = new BimSnippet();
                 }
                 return this._bimSnippet;
             }
@@ -2407,14 +2407,6 @@ namespace iabi.BCF.BCFv21.Schemas
         }
 
         /// <summary>
-        /// Test whether BimSnippet should be serialized
-        /// </summary>
-        public virtual bool ShouldSerializeBimSnippet()
-        {
-            return BimSnippet != null && BimSnippet.Count > 0;
-        }
-
-        /// <summary>
         /// Test whether DocumentReference should be serialized
         /// </summary>
         public virtual bool ShouldSerializeDocumentReference()
@@ -2476,6 +2468,14 @@ namespace iabi.BCF.BCFv21.Schemas
                 return true;
             }
             return (_dueDate != default(System.DateTime));
+        }
+
+        /// <summary>
+        /// Test whether BimSnippet should be serialized
+        /// </summary>
+        public virtual bool ShouldSerializeBimSnippet()
+        {
+            return (_bimSnippet != null);
         }
 
         /// <summary>
