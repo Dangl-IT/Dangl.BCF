@@ -118,12 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="IfcPile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\resources\ifcpile_2_1._01ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\..\resources\jsonelement_2_1.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="MaximumInformation_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\..\resources\maximuminformation_readme_2_1.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -220,9 +214,6 @@
   <data name="ExternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>bcftestcasedataresources\externalbimsnippet_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="IfcPile1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>bcftestcasedataresources\ifcpile.ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="InternalBIMSnippet_Readme" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>bcftestcasedataresources\internalbimsnippet_readme.md;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -303,5 +294,11 @@
   </data>
   <data name="ComponentSelection_ViewpointGuid" xml:space="preserve">
     <value>817b50b5-f6b2-4e5d-8a37-b692d67cdd91</value>
+  </data>
+  <data name="IfcPile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\ifcpile.ifc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="JsonElement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>bcftestcasedataresources\jsonelement.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

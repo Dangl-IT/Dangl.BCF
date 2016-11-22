@@ -213,16 +213,11 @@
     <None Include="Resources\header_with_single_file.bcfzip" />
     <None Include="Resources\header_with_single_file_Readme.md" />
     <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\IfcPile.ifc" />
-    <None Include="Resources\IfcPile_2_1._01ifc" />
     <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\InternalBIMSnippet_Readme.md" />
     <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\JsonElement.json" />
-    <None Include="Resources\JsonElement_2_1.json" />
     <None Include="Resources\Lines.bcfzip" />
     <None Include="Resources\Lines_Readme.md" />
     <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\markup.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resources\markup.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="BCFTestCases\v2\CreateAndExport\BCFTestCaseDataResources\MaximumInformation_Readme.md" />
@@ -299,6 +294,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BCFTestCases\v2\Import\BCFTestCaseImportResources\" />
     <Folder Include="BCFv21\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

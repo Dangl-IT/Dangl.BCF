@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 using iabi.BCF.BCFv21;
+using System;
 
 namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 {
@@ -34,6 +35,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             FilePath = FOLDERNAME + @"\" + TestCaseName + @"\Readme.md";
             using (var StreamWriter = new StreamWriter(File.Create(FilePath)))
             {
+                var readmeText = ReadmeText.TrimEnd()
+                                 + Environment.NewLine
+                                 + Environment.NewLine
+                                 + "---"
+                                 + Environment.NewLine
+                                 + Environment.NewLine
+                                 +$"Created by iabi at {DateTime.UtcNow:dd.MM.yyyy hh:mm} (UTC)";
                 StreamWriter.Write(ReadmeText);
             }
 

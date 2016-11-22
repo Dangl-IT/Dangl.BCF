@@ -282,16 +282,6 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
-        /// </summary>
-        internal static byte[] IfcPile1 {
-            get {
-                object obj = ResourceManager.GetObject("IfcPile1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die # Internal BIM Snippet
         ///
         ///This test case verifies support of an internal BIM Snippet reference within a BCF file.
