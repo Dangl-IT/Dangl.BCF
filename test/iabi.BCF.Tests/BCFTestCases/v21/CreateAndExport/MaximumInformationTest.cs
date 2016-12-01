@@ -400,7 +400,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents.ToString(), defaultComponentsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents, bool.Parse(defaultComponentsVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -412,7 +412,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings.ToString(), defaultOpeningsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings, bool.Parse(defaultOpeningsVisibilitySetting.Value));
             }
 
             // Default Visibility for Spaces
@@ -424,7 +424,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces.ToString(), defaultSpacesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces, bool.Parse(defaultSpacesVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -436,7 +436,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries.ToString(), defaultSpaceBoundariesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
             }
         }
 
@@ -502,7 +502,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents.ToString(), defaultComponentsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents, bool.Parse(defaultComponentsVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -514,7 +514,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings.ToString(), defaultOpeningsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings, bool.Parse(defaultOpeningsVisibilitySetting.Value));
             }
 
             // Default Visibility for Spaces
@@ -526,7 +526,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces.ToString(), defaultSpacesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces, bool.Parse(defaultSpacesVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -538,7 +538,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries.ToString(), defaultSpaceBoundariesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
             }
         }
 
@@ -592,7 +592,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents.ToString(), defaultComponentsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents, bool.Parse(defaultComponentsVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -604,7 +604,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings.ToString(), defaultOpeningsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings, bool.Parse(defaultOpeningsVisibilitySetting.Value));
             }
 
             // Default Visibility for Spaces
@@ -616,7 +616,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces.ToString(), defaultSpacesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces, bool.Parse(defaultSpacesVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -628,7 +628,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries.ToString(), defaultSpaceBoundariesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
             }
         }
 

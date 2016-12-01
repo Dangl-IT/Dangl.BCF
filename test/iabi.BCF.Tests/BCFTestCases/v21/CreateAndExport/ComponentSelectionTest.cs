@@ -118,7 +118,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilityComponents.ToString(), defaultComponentsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilityComponents, bool.Parse(defaultComponentsVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -130,7 +130,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilityOpenings.ToString(), defaultOpeningsVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilityOpenings, bool.Parse(defaultOpeningsVisibilitySetting.Value));
             }
 
             // Default Visibility for Spaces
@@ -142,7 +142,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaces.ToString(), defaultSpacesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaces, bool.Parse(defaultSpacesVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
@@ -154,7 +154,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             else
             {
                 Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaceBoundaries.ToString(), defaultSpaceBoundariesVisibilitySetting.Value);
+                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaceBoundaries, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
             }
         }
 

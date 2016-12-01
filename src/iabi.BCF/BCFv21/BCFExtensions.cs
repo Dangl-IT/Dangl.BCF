@@ -8,6 +8,10 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.IO;
 
+// TODO RENAME CLASS
+// TODO ADD COMMENT FOR ORIGINATING APPLICATION AND TEST IT
+// TODO ADD COMMENTS ON ALL GENERATED XML FILES (MARKUP, VIEWPOINT ETC) AND TEST IT
+
 namespace iabi.BCF.BCFv21
 {
     public class BCFExtensions
@@ -147,6 +151,40 @@ namespace iabi.BCF.BCFv21
         /// <returns></returns>
         public string WriteExtension()
         {
+            var extensionsDocument = new XDocument();
+            var extensionsRoot = new XElement((XNamespace)"http://www.w3.org/2001/XMLSchema" + "schema");
+            extensionsDocument.Add(extensionsRoot);
+
+            var redefineElement = new XElement((XNamespace)"http://www.w3.org/2001/XMLSchema" + "redefine");
+            extensionsRoot.Add(redefineElement);
+            redefineElement.SetAttributeValue("schemaLocation", "markup.xsd");
+
+            Action<string, IEnumerable<string>> addRedefinition = (name, values) =>
+            {
+                var valueRedefiningElement = new XElement((XNamespace)"http://www.w3.org/2001/XMLSchema" + "simpleType");
+                redefineElement.Add(valueRedefiningElement);
+                valueRedefiningElement.SetAttributeValue("name", name);
+                var restrictionBaseElement = new XElement((XNamespace)"http://www.w3.org/2001/XMLSchema" + "restriction");
+                valueRedefiningElement.Add(restrictionBaseElement);
+                restrictionBaseElement.SetAttributeValue("base", name);
+                foreach (var value in values)
+                {
+                    var enumerationElement = new XElement((XNamespace)"http://www.w3.org/2001/XMLSchema" + "enumeration");
+                    restrictionBaseElement.Add(enumerationElement);
+                    enumerationElement.SetAttributeValue("value", value);
+                }
+            };
+
+            addRedefinition("TopicType", TopicType);
+            addRedefinition("TopicStatus", TopicStatus);
+            addRedefinition("TopicLabel", TopicLabel);
+            addRedefinition("SnippetType", SnippetType);
+            addRedefinition("Priority", Priority);
+            addRedefinition("UserIdType", UserIdType);
+            addRedefinition("Stage", Stage);
+
+            return extensionsDocument.ToString();
+
             throw new NotImplementedException();
             try
             {

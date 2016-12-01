@@ -607,14 +607,14 @@ namespace iabi.BCF.Tests.BCFv2
                 [Fact]
                 public void JustRead()
                 {
-                    var Instance = TestDataFactory.GetContainerForTestCase(TestDataFactory.TestCase.EmptyProject);
+                    var Instance = TestCaseResourceFactory.GetCustomTestContainerV2(CustomTestFilesv2.EmptyProject);
                     Assert.NotNull(Instance);
                 }
 
                 [Fact]
                 public void DontReadEmptyProjectDefinitions()
                 {
-                    var Instance = TestDataFactory.GetContainerForTestCase(TestDataFactory.TestCase.EmptyProject);
+                    var Instance = TestCaseResourceFactory.GetCustomTestContainerV2(CustomTestFilesv2.EmptyProject);
                     Assert.Null(Instance.BCFProject);
                 }
             }
@@ -638,39 +638,6 @@ namespace iabi.BCF.Tests.BCFv2
                     }
                 }
             }
-        }
-    }
-
-    public static class TestDataFactory
-    {
-        public enum TestCase
-        {
-            EmptyProject
-        }
-
-        private static Dictionary<TestCase, BCFv2Container> _Containers;
-
-        private static Dictionary<TestCase, BCFv2Container> Containers
-        {
-            get { return _Containers ?? (_Containers = new Dictionary<TestCase, BCFv2Container>()); }
-        }
-
-        public static BCFv2Container GetContainerForTestCase(TestCase DesiredTestCase)
-        {
-            if (!Containers.ContainsKey(DesiredTestCase))
-            {
-                switch (DesiredTestCase)
-                {
-                    case TestCase.EmptyProject:
-                        throw new NotImplementedException();
-                        //Containers.Add(TestCase.EmptyProject, BCFv2Container.ReadStream(new MemoryStream(BCFv2TestResources.EmptyProject)));
-                        break;
-
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-            return Containers[DesiredTestCase];
         }
     }
 }

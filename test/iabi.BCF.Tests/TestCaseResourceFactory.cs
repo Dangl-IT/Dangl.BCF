@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
 using iabi.BCF.BCFv2;
+using iabi.BCF.BCFv21;
 
 // TODO ADD TESTS THAT ALL RESOURCES CAN BE RETRIEVED
 
@@ -17,15 +18,19 @@ namespace iabi.BCF.Tests
         public static byte[] GetViewpointSnapshot(ViewpointSnapshots snapshot)
         {
             var resourcePath = $"{RESOURCE_NAMESPACE}.ViewpointSnapshots.{snapshot}.png";
-            var resourceStream = GetResourceStreamFromResourcePath(resourcePath);
-            return ConvertFromStream(resourceStream);
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return ConvertFromStream(resourceStream);
+            }
         }
 
         public static byte[] GetIfcFile(IfcFiles ifcFile)
         {
             var resourcePath = $"{RESOURCE_NAMESPACE}.IfcFiles.{ifcFile}.ifc";
-            var resourceStream = GetResourceStreamFromResourcePath(resourcePath);
-            return ConvertFromStream(resourceStream);
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return ConvertFromStream(resourceStream);
+            }
         }
 
         public static byte[] GetFileAttachment(FileAttachments file)
@@ -48,30 +53,66 @@ namespace iabi.BCF.Tests
                 default:
                     throw new NotImplementedException();
             }
-            var resourceStream =  GetResourceStreamFromResourcePath(resourcePath);
-            return ConvertFromStream(resourceStream);
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return ConvertFromStream(resourceStream);
+            }
         }
 
         public static string GetReadmeForV2(BcfTestCaseV2 testCase)
         {
-            throw new NotImplementedException();
+            var resourcePath = $"{RESOURCE_NAMESPACE}.ExportTestCaseReadmes.v2.{testCase}.md";
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                using (var streamReader = new StreamReader(resourceStream))
+                {
+                    return streamReader.ReadToEnd();
+                }
+            }
         }
 
         public static string GetReadmeForV21(BcfTestCaseV21 testCase)
         {
-            throw new NotImplementedException();
+            var resourcePath = $"{RESOURCE_NAMESPACE}.ExportTestCaseReadmes.v21.{testCase}.md";
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                using (var streamReader = new StreamReader(resourceStream))
+                {
+                    return streamReader.ReadToEnd();
+                }
+            }
         }
 
         public static byte[] GetImportTestCase(BCFv2ImportTestCases testCase)
         {
             var resourcePath = $"{RESOURCE_NAMESPACE}.ImportTestCases.v2.{testCase}.bcfzip";
-            var resourceStream = GetResourceStreamFromResourcePath(resourcePath);
-            return ConvertFromStream(resourceStream);
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return ConvertFromStream(resourceStream);
+            }
         }
 
         public static BCFv2Container GetImportTestCaseContainer(BCFv2ImportTestCases testCase)
         {
             return BCFv2Container.ReadStream(new MemoryStream(GetImportTestCase(testCase)));
+        }
+
+        public static BCFv2Container GetCustomTestContainerV2(CustomTestFilesv2 testFile)
+        {
+            var resourcePath = $"{RESOURCE_NAMESPACE}.CustomTestFiles.v2.{testFile}.bcfzip";
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return BCFv2Container.ReadStream(resourceStream);
+            }
+        }
+
+        public static BCFv21Container GetCustomTestContainerV21(CustomTestFilesv21 testFile)
+        {
+            var resourcePath = $"{RESOURCE_NAMESPACE}.CustomTestFiles.v21.{testFile}.bcfzip";
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return BCFv21Container.ReadStream(resourceStream);
+            }
         }
 
         private static Stream GetResourceStreamFromResourcePath(string resourcePath)
@@ -103,6 +144,16 @@ namespace iabi.BCF.Tests
         OrthogonalCamera,
         PDFFile,
         PerspectiveCamera
+    }
+
+    public enum CustomTestFilesv2
+    {
+        EmptyProject
+    }
+
+    public enum CustomTestFilesv21
+    {
+        
     }
 
     public enum BcfTestCaseV21
