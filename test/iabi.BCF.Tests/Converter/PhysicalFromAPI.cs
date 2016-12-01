@@ -91,7 +91,7 @@ namespace iabi.BCF.Tests.Converter
                 CompareExtensions(Instance.Extensions, BCFv2Instance.ProjectExtensions);
             }
 
-            private void CompareExtensions(extensions_GET ExpectedExtensions, Extensions_XSD ActualExtensions)
+            private void CompareExtensions(extensions_GET ExpectedExtensions, ProjectExtensions ActualExtensions)
             {
                 Assert.True(ExpectedExtensions.priority.SequenceEqual(ActualExtensions.Priority));
                 Assert.True(ExpectedExtensions.snippet_type.SequenceEqual(ActualExtensions.SnippetType));

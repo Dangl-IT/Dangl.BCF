@@ -20,7 +20,7 @@ namespace iabi.BCF.BCFv2
 
         private Dictionary<string, byte[]> _FileAttachments;
 
-        private Extensions_XSD _ProjectExtensions;
+        private ProjectExtensions _ProjectExtensions;
 
         private ObservableCollection<BCFTopic> _Topics;
 
@@ -46,7 +46,7 @@ namespace iabi.BCF.BCFv2
         /// <summary>
         /// Contains allowed property values for this project, e.g. a list of which topic types are allowed
         /// </summary>
-        public Extensions_XSD ProjectExtensions
+        public ProjectExtensions ProjectExtensions
         {
             get { return _ProjectExtensions; }
             set
@@ -285,7 +285,7 @@ namespace iabi.BCF.BCFv2
                     {
                         using (var Rdr = new StreamReader(FileToOpen.Entries.First(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema).Open()))
                         {
-                            ReturnObject.ProjectExtensions = new Extensions_XSD(Rdr.ReadToEnd());
+                            ReturnObject.ProjectExtensions = new ProjectExtensions(Rdr.ReadToEnd());
                         }
                     }
                 }

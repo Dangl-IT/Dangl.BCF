@@ -9,7 +9,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
         public static BCFv2Container CreateContainer()
         {
             var Container = new BCFv2Container();
-            Container.ProjectExtensions = new Extensions_XSD();
+            Container.ProjectExtensions = new ProjectExtensions();
             Container.ProjectExtensions.Priority.Add("Low");
             Container.ProjectExtensions.Priority.Add("Medium");
             Container.ProjectExtensions.Priority.Add("High");

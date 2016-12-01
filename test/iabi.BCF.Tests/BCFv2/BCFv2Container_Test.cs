@@ -445,9 +445,9 @@ namespace iabi.BCF.Tests.BCFv2
                 return ReturnObject;
             }
 
-            public Extensions_XSD MockExtensions()
+            public ProjectExtensions MockExtensions()
             {
-                var ReturnObject = new Extensions_XSD();
+                var ReturnObject = new ProjectExtensions();
                 ReturnObject.Priority.Add("Low");
                 ReturnObject.Priority.Add("Medium");
                 ReturnObject.Priority.Add("High");
@@ -594,7 +594,7 @@ namespace iabi.BCF.Tests.BCFv2
             public void SetPathToExtensionsWhenExtensionsSet()
             {
                 var Instance = new BCFv2Container();
-                Instance.ProjectExtensions = new Extensions_XSD();
+                Instance.ProjectExtensions = new ProjectExtensions();
                 Assert.Equal("extensions.xsd", Instance.BCFProject.ExtensionSchema);
             }
         }
@@ -626,7 +626,7 @@ namespace iabi.BCF.Tests.BCFv2
                 public void SimpleExtensions()
                 {
                     var OriginalContainer = new BCFv2Container();
-                    OriginalContainer.ProjectExtensions = new Extensions_XSD();
+                    OriginalContainer.ProjectExtensions = new ProjectExtensions();
                     OriginalContainer.ProjectExtensions.UserIdType.Add("Some user");
                     using (var MemStream = new MemoryStream())
                     {

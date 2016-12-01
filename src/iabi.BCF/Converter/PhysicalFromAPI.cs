@@ -36,7 +36,7 @@ namespace iabi.BCF.Converter
                     ReturnObject.BCFProject = new ProjectExtension();
                 }
                 ReturnObject.BCFProject.ExtensionSchema = "extensions.xsd";
-                ReturnObject.ProjectExtensions = new Extensions_XSD();
+                ReturnObject.ProjectExtensions = new ProjectExtensions();
                 ReturnObject.ProjectExtensions.Priority = Input.Extensions.priority;
                 ReturnObject.ProjectExtensions.SnippetType = Input.Extensions.snippet_type;
                 ReturnObject.ProjectExtensions.TopicLabel = Input.Extensions.topic_label;

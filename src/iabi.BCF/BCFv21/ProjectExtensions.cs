@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Schema;
+using System.IO;
 
-// TODO RENAME CLASS
 // TODO ADD COMMENT FOR ORIGINATING APPLICATION AND TEST IT
 // TODO ADD COMMENTS ON ALL GENERATED XML FILES (MARKUP, VIEWPOINT ETC) AND TEST IT
 
-namespace iabi.BCF.BCFv2.Schemas
+namespace iabi.BCF.BCFv21
 {
-    /// <summary>
-    /// Container for the project extensions schema. This schema is basically just having lists of allowed property values within a project
-    /// </summary>
-    public class Extensions_XSD
+    public class ProjectExtensions
     {
         private List<string> _Priority;
 
@@ -27,11 +27,13 @@ namespace iabi.BCF.BCFv2.Schemas
 
         private List<string> _UserIdType;
 
+        private List<string> _Stage;
+
         /// <summary>
         /// Wil initialize the object from the passed string parameter.
         /// </summary>
         /// <param name="schemaString"></param>
-        public Extensions_XSD(string schemaString)
+        public ProjectExtensions(string schemaString)
         {
             var SchemaXml = XElement.Parse(schemaString);
 
@@ -65,12 +67,17 @@ namespace iabi.BCF.BCFv2.Schemas
             {
                 UserIdType = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value).ToList();
             }
+            RestrictionBaseElement = SchemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "Stage"));
+            if (RestrictionBaseElement != null)
+            {
+                Stage = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value).ToList();
+            }
         }
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Extensions_XSD()
+        public ProjectExtensions()
         {
         }
 
@@ -129,6 +136,15 @@ namespace iabi.BCF.BCFv2.Schemas
         }
 
         /// <summary>
+        /// List of user emails within the project
+        /// </summary>
+        public List<string> Stage
+        {
+            get { return _Stage ?? (_Stage = new List<string>()); }
+            internal set { _Stage = value; }
+        }
+
+        /// <summary>
         /// Returns the string representation of the extension.xsd file
         /// </summary>
         /// <returns></returns>
@@ -164,16 +180,11 @@ namespace iabi.BCF.BCFv2.Schemas
             addRedefinition("SnippetType", SnippetType);
             addRedefinition("Priority", Priority);
             addRedefinition("UserIdType", UserIdType);
+            addRedefinition("Stage", Stage);
 
             return extensionsDocument.ToString();
 
-            //using (var memStream = new MemoryStream())
-            //{
-                
-            //}
-
-
-                throw new System.NotImplementedException();
+            throw new NotImplementedException();
             try
             {
                 //var ExtensionsSchemaToWrite = new XmlSchema();
@@ -188,6 +199,7 @@ namespace iabi.BCF.BCFv2.Schemas
                 //SchemaRedefine.Items.Add(SnippetTypeSchemas());
                 //SchemaRedefine.Items.Add(PrioritySchemas());
                 //SchemaRedefine.Items.Add(UserIdSchemas());
+                //SchemaRedefine.Items.Add(StageSchemas());
                 //using (var CurrentMemoryStream = new MemoryStream())
                 //{
                 //    ExtensionsSchemaToWrite.Write(CurrentMemoryStream);
@@ -268,6 +280,14 @@ namespace iabi.BCF.BCFv2.Schemas
         //    return UserIdTypeSchemaElement;
         //}
 
+        //private XmlSchemaSimpleType StageSchemas()
+        //{
+        //    var UserIdTypeSchemaElement = new XmlSchemaSimpleType();
+        //    UserIdTypeSchemaElement.Name = "Stage";
+        //    UserIdTypeSchemaElement.Content = EnumRestrictions(UserIdType, UserIdTypeSchemaElement.QualifiedName);
+        //    return UserIdTypeSchemaElement;
+        //}
+
         /// <summary>
         /// Indicates true if all list properties are empty
         /// </summary>
@@ -280,7 +300,8 @@ namespace iabi.BCF.BCFv2.Schemas
                 && (TopicLabel == null || TopicLabel.Count == 0)
                 && (Priority == null || Priority.Count == 0)
                 && (SnippetType == null || SnippetType.Count == 0)
-                && (UserIdType == null || UserIdType.Count == 0);
+                && (UserIdType == null || UserIdType.Count == 0)
+                && (Stage == null || Stage.Count == 0);
         }
     }
 }

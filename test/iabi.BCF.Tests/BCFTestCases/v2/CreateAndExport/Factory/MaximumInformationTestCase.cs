@@ -32,9 +32,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
             return Container;
         }
 
-        public static Extensions_XSD CreateExtensions()
+        public static ProjectExtensions CreateExtensions()
         {
-            var ReturnObject = new Extensions_XSD();
+            var ReturnObject = new ProjectExtensions();
             ReturnObject.TopicType.Add("Architecture");
             ReturnObject.TopicType.Add("Hidden Type");
             ReturnObject.TopicType.Add("Structural");

@@ -720,7 +720,7 @@ namespace iabi.BCF.Tests.Converter
             public void CreateExtensionsWhenPresent()
             {
                 var Instance = new BCFv2Container();
-                Instance.ProjectExtensions = new Extensions_XSD();
+                Instance.ProjectExtensions = new ProjectExtensions();
                 var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
                 Assert.NotNull(ApiContainerInstance.Extensions);
@@ -730,7 +730,7 @@ namespace iabi.BCF.Tests.Converter
             public void CreatedExtensionsMatch()
             {
                 var Instance = new BCFv2Container();
-                Instance.ProjectExtensions = new Extensions_XSD();
+                Instance.ProjectExtensions = new ProjectExtensions();
 
                 Instance.ProjectExtensions.Priority.Add("Lorem");
                 Instance.ProjectExtensions.Priority.Add("ipsum");
@@ -751,7 +751,7 @@ namespace iabi.BCF.Tests.Converter
                 CompareExtensions(Instance.ProjectExtensions, ApiContainerInstance.Extensions);
             }
 
-            private void CompareExtensions(Extensions_XSD ExpectedExtensions, extensions_GET ActualExtensions)
+            private void CompareExtensions(ProjectExtensions ExpectedExtensions, extensions_GET ActualExtensions)
             {
                 Assert.True(ExpectedExtensions.Priority.SequenceEqual(ActualExtensions.priority));
                 Assert.True(ExpectedExtensions.SnippetType.SequenceEqual(ActualExtensions.snippet_type));
