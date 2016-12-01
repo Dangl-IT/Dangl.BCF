@@ -7,7 +7,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 {
     public static class ZipArchiveFactory
     {
-        public const string FOLDERNAME = @"C:\Users\Dangl\Downloads\BCFv2.1 Output";
+        public const string FOLDERNAME = @"";
 
         public static ZipArchive ReturnAndWriteIfRequired(BCFv21Container Container, string TestCaseName, string ReadmeText)
         {
@@ -41,8 +41,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
                                  + "---"
                                  + Environment.NewLine
                                  + Environment.NewLine
-                                 +$"Created by iabi at {DateTime.UtcNow:dd.MM.yyyy hh:mm} (UTC)";
-                StreamWriter.Write(ReadmeText);
+                                 +$"Created by iabi at {DateTime.UtcNow:dd.MM.yyyy HH:mm} (UTC)";
+                StreamWriter.Write(readmeText);
             }
 
             return CreatedArchive;

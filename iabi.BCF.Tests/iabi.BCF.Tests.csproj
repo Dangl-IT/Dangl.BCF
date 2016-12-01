@@ -292,6 +292,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BCFTestCases\v21\APIConversion\" />
+    <Folder Include="BCFTestCases\v21\Import\" />
     <Folder Include="BCFv21\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
