@@ -847,5 +847,15 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
                 CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
             }
         }
+
+        [Fact]
+        public void CheckXmlBrandingCommentsArePresent()
+        {
+            using (var MemStream = new MemoryStream())
+            {
+                CreatedContainer.WriteStream(MemStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+            }
+        }
     }
 }

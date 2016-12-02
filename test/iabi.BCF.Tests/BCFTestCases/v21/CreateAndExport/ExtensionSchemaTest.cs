@@ -221,7 +221,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         }
 
         [Fact]
-        public void ReadWriteAndCompare()
+        public void WriteReadAgainAndCompare()
         {
             using (var MemStream = new MemoryStream())
             {
@@ -235,8 +235,16 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
                 var WrittenZipArchive = new ZipArchive(ReadMemStream);
 
                 CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+            }
+        }
 
-                //TestUtilities.CompareBCFv21Container(CreatedContainer, ReadContainer);
+        [Fact]
+        public void CheckXmlBrandingCommentsArePresent()
+        {
+            using (var MemStream = new MemoryStream())
+            {
+                CreatedContainer.WriteStream(MemStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
             }
         }
     }

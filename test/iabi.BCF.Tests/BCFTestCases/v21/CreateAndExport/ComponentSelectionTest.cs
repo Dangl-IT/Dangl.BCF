@@ -6,8 +6,6 @@ using iabi.BCF.BCFv21;
 using iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory;
 using Xunit;
 
-// TODO TEST FOR ALL TEST CASES THAT GENERATED VIEWPOINTS HAVE A CONSISTENT GUID
-
 namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 {
     /*
@@ -173,6 +171,16 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
                 var WrittenZipArchive = new ZipArchive(ReadMemStream);
 
                 CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+            }
+        }
+
+        [Fact]
+        public void CheckXmlBrandingCommentsArePresent()
+        {
+            using (var MemStream = new MemoryStream())
+            {
+                CreatedContainer.WriteStream(MemStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
             }
         }
     }

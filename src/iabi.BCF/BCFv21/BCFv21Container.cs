@@ -128,7 +128,8 @@ namespace iabi.BCF.BCFv21
                 var VersionInformation = BCFZip.CreateEntry("bcf.version");
                 using (var VersionWriter = new StreamWriter(VersionInformation.Open()))
                 {
-                    VersionWriter.Write(BCFVersionInfo.Serialize());
+                    var serializedVersionInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BCFVersionInfo.Serialize());
+                    VersionWriter.Write(serializedVersionInfo);
                 }
 
                 if (ProjectExtensions != null && !ProjectExtensions.IsEmpty())
@@ -136,7 +137,8 @@ namespace iabi.BCF.BCFv21
                     var ProjectInformation = BCFZip.CreateEntry("extensions.xsd");
                     using (var ProjectInfoWriter = new StreamWriter(ProjectInformation.Open()))
                     {
-                        ProjectInfoWriter.Write(ProjectExtensions.WriteExtension());
+                        var serializedExtensions = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(ProjectExtensions.WriteExtension());
+                        ProjectInfoWriter.Write(serializedExtensions);
                     }
                     if (BCFProject == null)
                     {
@@ -150,7 +152,8 @@ namespace iabi.BCF.BCFv21
                     var ProjectEntry = BCFZip.CreateEntry("project.bcfp");
                     using (var ProjectInfoWriter = new StreamWriter(ProjectEntry.Open()))
                     {
-                        ProjectInfoWriter.Write(BCFProject.Serialize());
+                        var serializedProjectInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BCFProject.Serialize());
+                        ProjectInfoWriter.Write(serializedProjectInfo);
                     }
                 }
                 // Write file attachments
@@ -202,7 +205,8 @@ namespace iabi.BCF.BCFv21
                     }
                     using (var TopicWriter = new StreamWriter(CurrentTopicEntry.Open()))
                     {
-                        TopicWriter.Write(CurrentTopic.Markup.Serialize());
+                        var serializedTopic = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(CurrentTopic.Markup.Serialize());
+                        TopicWriter.Write(serializedTopic);
                     }
                     // Write viewpoints if present
                     for (var i = 0; i < CurrentTopic.Viewpoints.Count; i++)
@@ -219,7 +223,8 @@ namespace iabi.BCF.BCFv21
                                     CurrentBitmap.Reference = "Bitmap_" + Guid.NewGuid() + "." + (CurrentBitmap.Bitmap == Schemas.BitmapFormat.JPG ? "jpg" : "png");
                                 }
                             }
-                            CurrentViewpointWriter.Write(CurrentTopic.Viewpoints[i].Serialize());
+                            var serializedViewpoint = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(CurrentTopic.Viewpoints[i].Serialize());
+                            CurrentViewpointWriter.Write(serializedViewpoint);
                         }
                         // Write snapshot if present
                         if (CurrentTopic.ViewpointSnapshots.ContainsKey(CurrentTopic.Viewpoints[i].Guid))

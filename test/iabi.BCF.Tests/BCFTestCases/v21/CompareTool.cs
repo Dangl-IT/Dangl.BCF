@@ -7,6 +7,7 @@ using iabi.BCF.BCFv21;
 using iabi.BCF.BCFv21.Schemas;
 using Xunit;
 using System.Collections;
+using System.Reflection;
 
 namespace iabi.BCF.Tests.BCFTestCases.v21
 {
@@ -19,6 +20,36 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             var ExpectedFile = BCFv21Container.ReadStream(new MemoryStream(FileToImport));
             var ActualFile = BCFv21Container.ReadStream(new MemoryStream(ReadAndWrittenFile));
             CompareContainers(ExpectedFile, ActualFile, new ZipArchive(new MemoryStream(FileToImport)), new ZipArchive(new MemoryStream(ReadAndWrittenFile)));
+        }
+
+        public static void CheckBrandingCommentPresenceInEveryFile(byte[] createdZipArchive)
+        {
+            using (var memStream = new MemoryStream(createdZipArchive))
+            {
+                using (var zipArchive = new ZipArchive(memStream))
+                {
+                    var createdXmlEntries = zipArchive.Entries
+                        .Where(entry => entry.Name.EndsWith("bcf.version", System.StringComparison.OrdinalIgnoreCase)
+                                        || entry.Name.EndsWith("extensions.xsd", System.StringComparison.OrdinalIgnoreCase)
+                                        || entry.Name.EndsWith("project.bcfp", System.StringComparison.OrdinalIgnoreCase)
+                                        || entry.Name.EndsWith(".bcf", System.StringComparison.OrdinalIgnoreCase)
+                                        || entry.Name.EndsWith(".bcfv", System.StringComparison.OrdinalIgnoreCase))
+                                        .ToList();
+                    Assert.True(createdXmlEntries.Any()); // Might be an ivalid archive otherwise
+                    foreach (var currentEntry in createdXmlEntries)
+                    {
+                        using (var streamReader = new StreamReader(currentEntry.Open()))
+                        {
+                            var readXml = streamReader.ReadToEnd();
+                            var bcfToolsVersion = typeof(BrandingCommentFactory).GetTypeInfo().Assembly.GetName().Version;
+                            var expectedStart = $"Created with the iabi.BCF library, V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision} at ";
+                            var expectedEnd = $". Visit {BrandingCommentFactory.IABI_BRANDING_URL} to find out more.";
+                            Assert.True(readXml.Contains("<!--" + expectedStart));
+                            Assert.True(readXml.Contains(expectedEnd + "-->"));
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Xml.Linq;
 using iabi.BCF.BCFv2;
@@ -131,6 +132,34 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var Actual = (AuthorXml.FirstNode as XText).Value;
 
             Assert.Equal(Expected, Actual);
+        }
+
+        [Fact]
+        public void WriteReadAgainAndCompare()
+        {
+            using (var MemStream = new MemoryStream())
+            {
+                CreatedContainer.WriteStream(MemStream);
+                MemStream.Position = 0;
+
+                var ReadContainer = BCFv2Container.ReadStream(MemStream);
+
+                var ReadMemStream = new MemoryStream();
+                ReadContainer.WriteStream(ReadMemStream);
+                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+
+                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+            }
+        }
+
+        [Fact]
+        public void CheckXmlBrandingCommentsArePresent()
+        {
+            using (var MemStream = new MemoryStream())
+            {
+                CreatedContainer.WriteStream(MemStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+            }
         }
     }
 }
