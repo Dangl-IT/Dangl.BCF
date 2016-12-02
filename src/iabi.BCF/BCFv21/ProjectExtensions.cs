@@ -10,6 +10,7 @@ using System.IO;
 
 // TODO ADD COMMENT FOR ORIGINATING APPLICATION AND TEST IT
 // TODO ADD COMMENTS ON ALL GENERATED XML FILES (MARKUP, VIEWPOINT ETC) AND TEST IT
+// TODO TEST FOR ALL XMLS IF DECLARATIONS ARE PRESENT
 
 namespace iabi.BCF.BCFv21
 {
@@ -182,111 +183,19 @@ namespace iabi.BCF.BCFv21
             addRedefinition("UserIdType", UserIdType);
             addRedefinition("Stage", Stage);
 
-            return extensionsDocument.ToString();
+            extensionsDocument.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
-            throw new NotImplementedException();
-            try
+            using (var memStream = new MemoryStream())
             {
-                //var ExtensionsSchemaToWrite = new XmlSchema();
-                //// Add the redfines tag
-                //var SchemaRedefine = new XmlSchemaRedefine();
-                //SchemaRedefine.SchemaLocation = "markup.xsd";
-                //ExtensionsSchemaToWrite.Includes.Add(SchemaRedefine);
-                //// Add the items
-                //SchemaRedefine.Items.Add(TopicTypeSchemas());
-                //SchemaRedefine.Items.Add(TopicStatusSchemas());
-                //SchemaRedefine.Items.Add(TopicLabelSchemas());
-                //SchemaRedefine.Items.Add(SnippetTypeSchemas());
-                //SchemaRedefine.Items.Add(PrioritySchemas());
-                //SchemaRedefine.Items.Add(UserIdSchemas());
-                //SchemaRedefine.Items.Add(StageSchemas());
-                //using (var CurrentMemoryStream = new MemoryStream())
-                //{
-                //    ExtensionsSchemaToWrite.Write(CurrentMemoryStream);
-
-                //    using (var reader = new StreamReader(CurrentMemoryStream))
-                //    {
-                //        CurrentMemoryStream.Position = 0;
-                //        var SchemaString = reader.ReadToEnd();
-                //        return SchemaString;
-                //    }
-                //}
-            }
-            catch
-            {
-                return "";
+                using (var streamReader = new StreamReader(memStream))
+                {
+                    extensionsDocument.Save(memStream);
+                    memStream.Position = 0;
+                    var xmlString = streamReader.ReadToEnd();
+                    return xmlString;
+                }
             }
         }
-
-        //private static XmlSchemaSimpleTypeRestriction EnumRestrictions(IReadOnlyCollection<string> Values, XmlQualifiedName Name)
-        //{
-        //    var RestrictionsRoReturn = new XmlSchemaSimpleTypeRestriction();
-        //    RestrictionsRoReturn.BaseTypeName = Name;
-        //    if (Values.Count > 0)
-        //    {
-        //        foreach (var GivenValue in Values)
-        //        {
-        //            RestrictionsRoReturn.Facets.Add(new XmlSchemaEnumerationFacet { Value = GivenValue });
-        //        }
-        //    }
-        //    return RestrictionsRoReturn;
-        //}
-
-        //private XmlSchemaSimpleType TopicTypeSchemas()
-        //{
-        //    var TopicTypesSchemaElement = new XmlSchemaSimpleType();
-        //    TopicTypesSchemaElement.Name = "TopicType";
-        //    TopicTypesSchemaElement.Content = EnumRestrictions(TopicType, TopicTypesSchemaElement.QualifiedName);
-        //    return TopicTypesSchemaElement;
-        //}
-
-        //private XmlSchemaSimpleType TopicStatusSchemas()
-        //{
-        //    var TopicStatusSchemaElement = new XmlSchemaSimpleType();
-        //    TopicStatusSchemaElement.Name = "TopicStatus";
-        //    TopicStatusSchemaElement.Content = EnumRestrictions(TopicStatus, TopicStatusSchemaElement.QualifiedName);
-        //    return TopicStatusSchemaElement;
-        //}
-
-        //private XmlSchemaSimpleType TopicLabelSchemas()
-        //{
-        //    var TopicLabelSchemaElement = new XmlSchemaSimpleType();
-        //    TopicLabelSchemaElement.Name = "TopicLabel";
-        //    TopicLabelSchemaElement.Content = EnumRestrictions(TopicLabel, TopicLabelSchemaElement.QualifiedName);
-        //    return TopicLabelSchemaElement;
-        //}
-
-        //private XmlSchemaSimpleType SnippetTypeSchemas()
-        //{
-        //    var SnippetTypeSchemaElement = new XmlSchemaSimpleType();
-        //    SnippetTypeSchemaElement.Name = "SnippetType";
-        //    SnippetTypeSchemaElement.Content = EnumRestrictions(SnippetType, SnippetTypeSchemaElement.QualifiedName);
-        //    return SnippetTypeSchemaElement;
-        //}
-
-        //private XmlSchemaSimpleType PrioritySchemas()
-        //{
-        //    var PrioritySchemaElement = new XmlSchemaSimpleType();
-        //    PrioritySchemaElement.Name = "Priority";
-        //    PrioritySchemaElement.Content = EnumRestrictions(Priority, PrioritySchemaElement.QualifiedName);
-        //    return PrioritySchemaElement;
-        //}
-
-        //private XmlSchemaSimpleType UserIdSchemas()
-        //{
-        //    var UserIdTypeSchemaElement = new XmlSchemaSimpleType();
-        //    UserIdTypeSchemaElement.Name = "UserIdType";
-        //    UserIdTypeSchemaElement.Content = EnumRestrictions(UserIdType, UserIdTypeSchemaElement.QualifiedName);
-        //    return UserIdTypeSchemaElement;
-        //}
-
-        //private XmlSchemaSimpleType StageSchemas()
-        //{
-        //    var UserIdTypeSchemaElement = new XmlSchemaSimpleType();
-        //    UserIdTypeSchemaElement.Name = "Stage";
-        //    UserIdTypeSchemaElement.Content = EnumRestrictions(UserIdType, UserIdTypeSchemaElement.QualifiedName);
-        //    return UserIdTypeSchemaElement;
-        //}
 
         /// <summary>
         /// Indicates true if all list properties are empty
