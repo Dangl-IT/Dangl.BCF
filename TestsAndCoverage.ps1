@@ -22,8 +22,9 @@ foreach ($testProject in $testProjects) {
             -returntargetcode `
             -output:"$PSScriptRoot\OpenCover.coverageresults" `
             -mergeoutput `
+            -oldStyle `
             -excludebyattribute:System.CodeDom.Compiler.GeneratedCodeAttribute `
-            "-filter:+[Dangl.GAEB*]* -[*.Tests]* -[*.Tests.*]*"
+            "-filter:+[iabi.BCF]* -[*.Tests]* -[*.Tests.*]*"
 
         $testRuns++
     }
