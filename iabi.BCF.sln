@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{591193A1-C40A-4386-B4BA-3B8AEBA0B75B}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		TestsAndCoverage.ps1 = TestsAndCoverage.ps1
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "iabi.BCF", "src\iabi.BCF\iabi.BCF.xproj", "{DCA85189-B152-45F3-9364-69E802BEC5BA}"
