@@ -12,7 +12,6 @@
         "System.Xml.Linq": "4.0.0.0",
         "System.Xml.XmlSerializer": "4.0.0.0",
         "System.IO.Compression": "4.0.0.0",
-        "System.ComponentModel.Annotations": "4.0.0.0",
         "System.ComponentModel.DataAnnotations": "4.0.0.0"
       }
     }, 
