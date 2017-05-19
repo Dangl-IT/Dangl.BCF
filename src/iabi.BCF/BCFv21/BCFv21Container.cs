@@ -102,24 +102,24 @@ namespace iabi.BCF.BCFv21
         /// <summary>
         /// Returns the raw byte array of the attachment
         /// </summary>
-        /// <param name="Input"></param>
+        /// <param name="topicDocumentReference"></param>
         /// <returns></returns>
-        public byte[] GetAttachmentForDocumentReference(TopicDocumentReference Input)
+        public byte[] GetAttachmentForDocumentReference(TopicDocumentReference topicDocumentReference)
         {
-            if (Input.isExternal)
+            if (topicDocumentReference.isExternal)
             {
                 throw new ArgumentException("Reference is external");
             }
-            return FileAttachments[GetFilenameFromReference(Input.ReferencedDocument)];
+            return FileAttachments[GetFilenameFromReference(topicDocumentReference.ReferencedDocument)];
         }
 
         /// <summary>
         ///     Creates a BCFv2 zip archive
         /// </summary>
-        /// <param name="StreamToWrite"></param>
-        public void WriteStream(Stream StreamToWrite)
+        /// <param name="streamToWrite"></param>
+        public void WriteStream(Stream streamToWrite)
         {
-            using (var bcfZip = new ZipArchive(StreamToWrite, ZipArchiveMode.Create, true))
+            using (var bcfZip = new ZipArchive(streamToWrite, ZipArchiveMode.Create, true))
             {
                 // Write the version information
                 var versionInformation = bcfZip.CreateEntry("bcf.version");
