@@ -30,9 +30,9 @@ namespace iabi.BCF
         ///     notifies listeners only when necessary.
         /// </summary>
         /// <typeparam name="T">Type of the property.</typeparam>
-        /// <param name="Storage">Reference to a property with both getter and setter.</param>
-        /// <param name="Value">Desired value for the property.</param>
-        /// <param name="PropertyName">
+        /// <param name="storage">Reference to a property with both getter and setter.</param>
+        /// <param name="value">Desired value for the property.</param>
+        /// <param name="propertyName">
         ///     Name of the property used to notify listeners.  This
         ///     value is optional and can be provided automatically when invoked from compilers that
         ///     support CallerMemberName.
@@ -41,33 +41,28 @@ namespace iabi.BCF
         ///     True if the value was changed, false if the existing value matched the
         ///     desired value.
         /// </returns>
-        protected bool SetProperty<T>(ref T Storage, T Value, [CallerMemberName] string PropertyName = null)
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            if (Equals(Storage, Value))
+            if (Equals(storage, value))
             {
                 return false;
             }
-
-            Storage = Value;
-            OnPropertyChanged(PropertyName);
+            storage = value;
+            OnPropertyChanged(propertyName);
             return true;
         }
 
         /// <summary>
         ///     Event to be raised for <see cref="INotifyPropertyChanged" />.
         /// </summary>
-        /// <param name="PropertyName">
+        /// <param name="propertyName">
         ///     Optional, when not given the <see cref="System.Runtime.CompilerServices.CallerMemberNameAttribute" /> is used to
         ///     determine
         ///     the calling function.
         /// </param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var Handler = PropertyChanged;
-            if (Handler != null)
-            {
-                Handler(this, new PropertyChangedEventArgs(PropertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -76,11 +71,11 @@ namespace iabi.BCF
         ///     GetPropertyName(() => this.Property);
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="GivenProperty">The property for which to return the string.</param>
+        /// <param name="property">The property for which to return the string.</param>
         /// <returns></returns>
-        public string GetPropertyName<T>(Expression<Func<T>> GivenProperty)
+        public string GetPropertyName<T>(Expression<Func<T>> property)
         {
-            return ((MemberExpression) GivenProperty.Body).Member.Name;
+            return ((MemberExpression) property.Body).Member.Name;
         }
 
         /// <summary>

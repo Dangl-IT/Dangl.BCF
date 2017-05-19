@@ -23,79 +23,79 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         [Fact]
         public void CheckTopicGuid()
         {
-            var Expected = "06cf5831-cde5-4b19-b2f9-a319a9590bc2";
-            var Actual = ReadContainer.Topics.First().Markup.Topic.Guid;
-            Assert.Equal(Expected, Actual);
+            var expected = "06cf5831-cde5-4b19-b2f9-a319a9590bc2";
+            var actual = ReadContainer.Topics.First().Markup.Topic.Guid;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CheckTopicCount()
         {
-            var Expected = 1;
-            var Actual = ReadContainer.Topics.Count;
-            Assert.Equal(Expected, Actual);
+            var expected = 1;
+            var actual = ReadContainer.Topics.Count;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CheckCommentGuid_01()
         {
-            var Expected = "fc72d354-8534-44b4-9686-f7b9c4a19adf";
-            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(Curr => Curr.Guid == Expected));
+            var expected = "fc72d354-8534-44b4-9686-f7b9c4a19adf";
+            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(curr => curr.Guid == expected));
         }
 
         [Fact]
         public void CheckCommentCount()
         {
-            var Expected = 1;
-            var Actual = ReadContainer.Topics.First().Markup.Comment.Count;
-            Assert.Equal(Expected, Actual);
+            var expected = 1;
+            var actual = ReadContainer.Topics.First().Markup.Comment.Count;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CheckCommentViewpointReference_01()
         {
-            var CommentGuid = "fc72d354-8534-44b4-9686-f7b9c4a19adf";
-            var Comment = ReadContainer.Topics.First().Markup.Comment.FirstOrDefault(Curr => Curr.Guid == CommentGuid);
-            Assert.False(Comment.ShouldSerializeViewpoint());
+            var commentGuid = "fc72d354-8534-44b4-9686-f7b9c4a19adf";
+            var comment = ReadContainer.Topics.First().Markup.Comment.FirstOrDefault(curr => curr.Guid == commentGuid);
+            Assert.False(comment.ShouldSerializeViewpoint());
         }
 
         [Fact]
         public void CheckViewpointGuid_InMarkup()
         {
-            var Expected = "812da616-a239-404d-adeb-66dc69fa7cf1";
-            var Actual = ReadContainer.Topics.First().Markup.Viewpoints.First().Guid;
-            Assert.Equal(Expected, Actual);
+            var expected = "812da616-a239-404d-adeb-66dc69fa7cf1";
+            var actual = ReadContainer.Topics.First().Markup.Viewpoints.First().Guid;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CheckViewpointCount_InMarkup()
         {
-            var Expected = 1;
-            var Actual = ReadContainer.Topics.First().Markup.Viewpoints.Count;
-            Assert.Equal(Expected, Actual);
+            var expected = 1;
+            var actual = ReadContainer.Topics.First().Markup.Viewpoints.Count;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CheckViewpointCount()
         {
-            var Expected = 1;
-            var Actual = ReadContainer.Topics.First().Viewpoints.Count;
-            Assert.Equal(Expected, Actual);
+            var expected = 1;
+            var actual = ReadContainer.Topics.First().Viewpoints.Count;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void Viewpoint_CompareSnapshotBinary()
         {
-            var Expected = TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.ComponentColoring).GetBinaryData("06cf5831-cde5-4b19-b2f9-a319a9590bc2/snapshot.png");
-            var Actual = ReadContainer.Topics.First().ViewpointSnapshots.First().Value;
-            Assert.True(Expected.SequenceEqual(Actual));
+            var expected = TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.ComponentColoring).GetBinaryData("06cf5831-cde5-4b19-b2f9-a319a9590bc2/snapshot.png");
+            var actual = ReadContainer.Topics.First().ViewpointSnapshots.First().Value;
+            Assert.True(expected.SequenceEqual(actual));
         }
 
         [Fact]
         public void Viewpoint_NoOrthogonalCamera()
         {
-            var Actual = ReadContainer.Topics.First().Viewpoints.First();
-            Assert.False(Actual.ShouldSerializeOrthogonalCamera());
+            var actual = ReadContainer.Topics.First().Viewpoints.First();
+            Assert.False(actual.ShouldSerializeOrthogonalCamera());
         }
 
         [Fact]
@@ -107,34 +107,34 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         [Fact]
         public void Viewpoint_ComponentCorrect_01()
         {
-            var Component = ReadContainer.Topics.First().Viewpoints.First().Components.First();
-            Assert.False(Component.ShouldSerializeAuthoringToolId());
-            Assert.True(new byte[] {255, 0, 255, 0}.SequenceEqual(Component.Color));
-            Assert.Equal("1mrgg_O_bBBv_tvdtVwK59", Component.IfcGuid);
-            Assert.Equal("Allplan", Component.OriginatingSystem);
-            Assert.Equal(false, Component.Selected);
-            Assert.Equal(true, Component.SelectedSpecified);
-            Assert.Equal(true, Component.Visible);
+            var component = ReadContainer.Topics.First().Viewpoints.First().Components.First();
+            Assert.False(component.ShouldSerializeAuthoringToolId());
+            Assert.True(new byte[] {255, 0, 255, 0}.SequenceEqual(component.Color));
+            Assert.Equal("1mrgg_O_bBBv_tvdtVwK59", component.IfcGuid);
+            Assert.Equal("Allplan", component.OriginatingSystem);
+            Assert.Equal(false, component.Selected);
+            Assert.Equal(true, component.SelectedSpecified);
+            Assert.Equal(true, component.Visible);
         }
 
 
         [Fact]
         public void WriteOut()
         {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
+            var memStream = new MemoryStream();
+            ReadContainer.WriteStream(memStream);
+            var data = memStream.ToArray();
+            Assert.NotNull(data);
+            Assert.True(data.Length > 0);
         }
 
         [Fact]
         public void WriteAndCompare()
         {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.ComponentColoring), Data);
+            var memStream = new MemoryStream();
+            ReadContainer.WriteStream(memStream);
+            var data = memStream.ToArray();
+            CompareTool.CompareFiles(TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.ComponentColoring), data);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace iabi.BCF.Tests.Converter
                 // Taking the container from the unit test
                 if (CreatedContainer == null)
                 {
-                    CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+                    CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
                 }
                 if (CreatedAPIContainer == null)
                 {
@@ -43,8 +43,8 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ProjectCorrect()
             {
-                Assert.Equal(CreatedContainer.BCFProject.Project.Name, CreatedAPIContainer.Project.name);
-                Assert.Equal(CreatedContainer.BCFProject.Project.ProjectId, CreatedAPIContainer.Project.project_id);
+                Assert.Equal(CreatedContainer.BcfProject.Project.Name, CreatedAPIContainer.Project.name);
+                Assert.Equal(CreatedContainer.BcfProject.Project.ProjectId, CreatedAPIContainer.Project.project_id);
             }
 
             [Fact]
@@ -669,14 +669,14 @@ namespace iabi.BCF.Tests.Converter
             [Fact]
             public void ConvertBackToPhysicalAndDontCrash()
             {
-                var PhysicalAgain = BCF.Converter.PhysicalFromAPI.Convert(CreatedAPIContainer);
+                var PhysicalAgain = BCF.Converter.PhysicalFromApi.Convert(CreatedAPIContainer);
                 Assert.NotNull(PhysicalAgain);
             }
 
             [Fact]
             public void ConvertBackToPhysicalAndStillCorrect()
             {
-                var PhysicalAgain = BCF.Converter.PhysicalFromAPI.Convert(CreatedAPIContainer);
+                var PhysicalAgain = BCF.Converter.PhysicalFromApi.Convert(CreatedAPIContainer);
                 CompareTool.CompareContainers(CreatedContainer, PhysicalAgain);
             }
         }
@@ -697,7 +697,7 @@ namespace iabi.BCF.Tests.Converter
 
                 Assert.NotNull(ApiContainerInstance.Topics.First().Viewpoints.First().Snapshot);
 
-                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromApi.Convert(ApiContainerInstance);
 
                 Assert.NotNull(ReadBackContainer.Topics.First().ViewpointSnapshots[Instance.Topics.First().Viewpoints.First().GUID]);
                 Assert.NotNull(ReadBackContainer.Topics.First().ViewpointSnapshots[Instance.Topics.First().Viewpoints.First().GUID]);
@@ -801,7 +801,7 @@ namespace iabi.BCF.Tests.Converter
                 var Instance = new BCFv2Container();
                 var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
-                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromApi.Convert(ApiContainerInstance);
                 Assert.NotNull(ReadBackContainer);
             }
 
@@ -813,7 +813,7 @@ namespace iabi.BCF.Tests.Converter
                 Instance.Topics.First().Viewpoints.Add(new VisualizationInfo());
                 var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
-                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromApi.Convert(ApiContainerInstance);
                 Assert.NotNull(ReadBackContainer);
             }
 
@@ -824,7 +824,7 @@ namespace iabi.BCF.Tests.Converter
                 Instance.Topics.Add(new BCFTopic());
                 var ApiContainerInstance = BCF.Converter.APIFromPhysical.Convert(Instance);
                 //var ApiContainerInstance = new iabi.BCF.Converter.APIFromPhysical(Instance).APIContainer;
-                var ReadBackContainer = BCF.Converter.PhysicalFromAPI.Convert(ApiContainerInstance);
+                var ReadBackContainer = BCF.Converter.PhysicalFromApi.Convert(ApiContainerInstance);
                 Assert.NotNull(ReadBackContainer);
             }
         }

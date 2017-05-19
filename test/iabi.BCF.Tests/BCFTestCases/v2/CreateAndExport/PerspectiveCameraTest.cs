@@ -24,11 +24,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             if (CreatedContainer == null)
             {
-                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.PerspectiveCamera);
+                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.PerspectiveCamera);
             }
             if (CreatedArchive == null)
             {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFv2TestCaseData.PerspectiveCamera_TestCaseName, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.PerspectiveCamera));
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv2TestCaseData.PERSPECTIVE_CAMERA_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.PerspectiveCamera));
             }
         }
 
@@ -47,18 +47,18 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckIfFilesAreAllValidXml()
         {
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (CurrentEntry.FullName.Contains(".bcfp")
-                    || CurrentEntry.FullName.Contains(".version")
-                    || CurrentEntry.FullName.Contains(".bcf")
-                    || CurrentEntry.FullName.Contains(".bcfv")
-                    || CurrentEntry.FullName.Contains(".xsd"))
+                if (currentEntry.FullName.Contains(".bcfp")
+                    || currentEntry.FullName.Contains(".version")
+                    || currentEntry.FullName.Contains(".bcf")
+                    || currentEntry.FullName.Contains(".bcfv")
+                    || currentEntry.FullName.Contains(".xsd"))
                 {
-                    using (StreamReader Rdr = new StreamReader(CurrentEntry.Open()))
+                    using (StreamReader rdr = new StreamReader(currentEntry.Open()))
                     {
-                        var Text = Rdr.ReadToEnd();
-                        var Xml = XElement.Parse(Text);
+                        var text = rdr.ReadToEnd();
+                        var xml = XElement.Parse(text);
                         // No exception no cry!
                     }
                 }
@@ -68,42 +68,42 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.0";
-            var ExpectedDetailedVersion = "2.0";
-            var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
-            var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
+            var expectedVersionId = "2.0";
+            var expectedDetailedVersion = "2.0";
+            var versionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
+            var actualVersionId = versionXml.Attribute("VersionId").Value;
+            var actualDetailedVersion = ((XText)((XElement)versionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.Equal(ExpectedVersionId, ActualVersionId);
-            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(versionXml.Nodes().Count() == 1 && ((XElement)versionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(expectedVersionId, actualVersionId);
+            Assert.Equal(expectedDetailedVersion, actualDetailedVersion);
         }
 
         [Fact]
         public void WriteReadAgainAndCompare()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv2Container.ReadStream(MemStream);
+                var readContainer = BCFv2Container.ReadStream(memStream);
 
-                var ReadMemStream = new MemoryStream();
-                ReadContainer.WriteStream(ReadMemStream);
-                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+                var readMemStream = new MemoryStream();
+                readContainer.WriteStream(readMemStream);
+                var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
             }
         }
 
         [Fact]
         public void CheckXmlBrandingCommentsArePresent()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+                CreatedContainer.WriteStream(memStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
     }

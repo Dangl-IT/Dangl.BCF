@@ -8,36 +8,36 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
     {
         public const string FOLDERNAME = @"";
 
-        public static ZipArchive ReturnAndWriteIfRequired(BCFv2Container Container, string TestCaseName, string ReadmeText)
+        public static ZipArchive ReturnAndWriteIfRequired(BCFv2Container container, string testCaseName, string readmeText)
         {
-            var MemStream = new MemoryStream();
-            Container.WriteStream(MemStream);
-            MemStream.Position = 0;
-            var CreatedArchive = new ZipArchive(MemStream, ZipArchiveMode.Read);
+            var memStream = new MemoryStream();
+            container.WriteStream(memStream);
+            memStream.Position = 0;
+            var createdArchive = new ZipArchive(memStream, ZipArchiveMode.Read);
 
             if (string.IsNullOrWhiteSpace(FOLDERNAME))
             {
-                return CreatedArchive;
+                return createdArchive;
             }
 
-            if (!Directory.Exists(FOLDERNAME + @"\" + TestCaseName))
+            if (!Directory.Exists(FOLDERNAME + @"\" + testCaseName))
             {
-                Directory.CreateDirectory(FOLDERNAME + @"\" + TestCaseName);
+                Directory.CreateDirectory(FOLDERNAME + @"\" + testCaseName);
             }
 
-            var FilePath = FOLDERNAME + @"\" + TestCaseName + @"\" + TestCaseName + ".bcfzip";
-            using (var FileStream = File.Create(FilePath))
+            var filePath = FOLDERNAME + @"\" + testCaseName + @"\" + testCaseName + ".bcfzip";
+            using (var fileStream = File.Create(filePath))
             {
-                Container.WriteStream(FileStream);
+                container.WriteStream(fileStream);
             }
 
-            FilePath = FOLDERNAME + @"\" + TestCaseName + @"\Readme.md";
-            using (var StreamWriter = new StreamWriter(File.Create(FilePath)))
+            filePath = FOLDERNAME + @"\" + testCaseName + @"\Readme.md";
+            using (var streamWriter = new StreamWriter(File.Create(filePath)))
             {
-                StreamWriter.Write(ReadmeText);
+                streamWriter.Write(readmeText);
             }
 
-            return CreatedArchive;
+            return createdArchive;
         }
     }
 }

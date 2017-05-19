@@ -10,25 +10,24 @@ namespace iabi.BCF.Converter
     /// </summary>
     public class ViewpointContainer
     {
-        private List<component_GET> _Components;
-
-        private byte[] _Snapshot;
-        private viewpoint_GET _Viewpoint;
+        private List<component_GET> _components;
+        private byte[] _snapshot;
+        private viewpoint_GET _viewpoint;
 
         /// <summary>
         ///     The actual viewpoint
         /// </summary>
         public viewpoint_GET Viewpoint
         {
-            get { return _Viewpoint; }
+            get { return _viewpoint; }
             set
             {
-                _Viewpoint = value;
+                _viewpoint = value;
                 if (value != null)
                 {
-                    if (string.IsNullOrWhiteSpace(_Viewpoint.guid))
+                    if (string.IsNullOrWhiteSpace(_viewpoint.guid))
                     {
-                        _Viewpoint.guid = Guid.NewGuid().ToString();
+                        _viewpoint.guid = Guid.NewGuid().ToString();
                     }
                 }
             }
@@ -39,10 +38,10 @@ namespace iabi.BCF.Converter
         /// </summary>
         public List<component_GET> Components
         {
-            get { return _Components; }
+            get { return _components; }
             set
             {
-                _Components = value;
+                _components = value;
                 if (value != null)
                 {
                     if (Viewpoint == null)
@@ -58,10 +57,10 @@ namespace iabi.BCF.Converter
         /// </summary>
         public byte[] Snapshot
         {
-            get { return _Snapshot; }
+            get { return _snapshot; }
             set
             {
-                _Snapshot = value;
+                _snapshot = value;
                 if (value != null)
                 {
                     if (Viewpoint == null)

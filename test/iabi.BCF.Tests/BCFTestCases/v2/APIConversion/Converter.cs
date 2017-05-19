@@ -6,20 +6,20 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.APIConversion
 {
     public class Converter
     {
-        private static object[] _TestCasesContainer;
+        private static object[] _testCasesContainer;
 
         public static object[] TestCasesContainer
         {
-            get { return _TestCasesContainer ?? (_TestCasesContainer = TestCaseProvider.GetAllContainersFromTestCases().Select(container => new[] {container}).ToArray()); }
+            get { return _testCasesContainer ?? (_testCasesContainer = TestCaseProvider.GetAllContainersFromTestCases().Select(container => new[] {container}).ToArray()); }
         }
 
         [Theory]
         [MemberData(nameof(TestCasesContainer))]
         public void ConvertAllTestCases(ContainerAndName input)
         {
-            var ConvertedToApi = APIFromPhysical.Convert(input.Container);
-            var ConvertedBackToPhysical = PhysicalFromAPI.Convert(ConvertedToApi);
-            CompareTool.CompareContainers(input.Container, ConvertedBackToPhysical, null, null, true);
+            var convertedToApi = APIFromPhysical.Convert(input.Container);
+            var convertedBackToPhysical = PhysicalFromApi.Convert(convertedToApi);
+            CompareTool.CompareContainers(input.Container, convertedBackToPhysical, null, null, true);
         }
     }
 }

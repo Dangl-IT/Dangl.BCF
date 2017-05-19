@@ -10,9 +10,8 @@ namespace iabi.BCF.Converter
     /// </summary>
     public class APIContainer
     {
-        private Dictionary<string, byte[]> _FileAttachments;
-
-        private List<TopicContainer> _Topics;
+        private Dictionary<string, byte[]> _fileAttachments;
+        private List<TopicContainer> _topics;
 
         /// <summary>
         ///     Information about the BCF project
@@ -31,13 +30,13 @@ namespace iabi.BCF.Converter
         {
             get
             {
-                if (_Topics == null)
+                if (_topics == null)
                 {
-                    _Topics = new List<TopicContainer>();
+                    _topics = new List<TopicContainer>();
                 }
-                return _Topics;
+                return _topics;
             }
-            set { _Topics = value; }
+            set { _topics = value; }
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace iabi.BCF.Converter
         /// </summary>
         public Dictionary<string, byte[]> FileAttachments
         {
-            get { return _FileAttachments ?? (_FileAttachments = new Dictionary<string, byte[]>()); }
+            get { return _fileAttachments ?? (_fileAttachments = new Dictionary<string, byte[]>()); }
         }
     }
 }

@@ -11,39 +11,39 @@ namespace iabi.BCF.Converter
         /// <summary>
         /// Returns true if this camera has any values set and should therefore be serialized
         /// </summary>
-        /// <param name="Camera"></param>
+        /// <param name="camera"></param>
         /// <returns></returns>
-        public static bool AnyValueSet(this OrthogonalCamera Camera)
+        public static bool IsAnyValueSet(this OrthogonalCamera camera)
         {
-            return Math.Abs(Camera.ViewToWorldScale) > 0.01
-                   || Math.Abs(Camera.CameraViewPoint.X) > 0.01
-                   || Math.Abs(Camera.CameraViewPoint.Y) > 0.01
-                   || Math.Abs(Camera.CameraViewPoint.Z) > 0.01
-                   || Math.Abs(Camera.CameraUpVector.Z) > 0.01
-                   || Math.Abs(Camera.CameraUpVector.Z) > 0.01
-                   || Math.Abs(Camera.CameraUpVector.Z) > 0.01
-                   || Math.Abs(Camera.CameraDirection.Z) > 0.01
-                   || Math.Abs(Camera.CameraDirection.Z) > 0.01
-                   || Math.Abs(Camera.CameraDirection.Z) > 0.01;
+            return Math.Abs(camera.ViewToWorldScale) > 0.01
+                   || Math.Abs(camera.CameraViewPoint.X) > 0.01
+                   || Math.Abs(camera.CameraViewPoint.Y) > 0.01
+                   || Math.Abs(camera.CameraViewPoint.Z) > 0.01
+                   || Math.Abs(camera.CameraUpVector.Z) > 0.01
+                   || Math.Abs(camera.CameraUpVector.Z) > 0.01
+                   || Math.Abs(camera.CameraUpVector.Z) > 0.01
+                   || Math.Abs(camera.CameraDirection.Z) > 0.01
+                   || Math.Abs(camera.CameraDirection.Z) > 0.01
+                   || Math.Abs(camera.CameraDirection.Z) > 0.01;
         }
 
         /// <summary>
         /// Returns true if this camera has any values set and should therefore be serialized
         /// </summary>
-        /// <param name="Camera"></param>
+        /// <param name="camera"></param>
         /// <returns></returns>
-        public static bool AnyValueSet(this PerspectiveCamera Camera)
+        public static bool IsAnyValueSet(this PerspectiveCamera camera)
         {
-            return Math.Abs(Camera.FieldOfView) > 0.01
-                   || Math.Abs(Camera.CameraViewPoint.X) > 0.01
-                   || Math.Abs(Camera.CameraViewPoint.Y) > 0.01
-                   || Math.Abs(Camera.CameraViewPoint.Z) > 0.01
-                   || Math.Abs(Camera.CameraUpVector.Z) > 0.01
-                   || Math.Abs(Camera.CameraUpVector.Z) > 0.01
-                   || Math.Abs(Camera.CameraUpVector.Z) > 0.01
-                   || Math.Abs(Camera.CameraDirection.Z) > 0.01
-                   || Math.Abs(Camera.CameraDirection.Z) > 0.01
-                   || Math.Abs(Camera.CameraDirection.Z) > 0.01;
+            return Math.Abs(camera.FieldOfView) > 0.01
+                   || Math.Abs(camera.CameraViewPoint.X) > 0.01
+                   || Math.Abs(camera.CameraViewPoint.Y) > 0.01
+                   || Math.Abs(camera.CameraViewPoint.Z) > 0.01
+                   || Math.Abs(camera.CameraUpVector.Z) > 0.01
+                   || Math.Abs(camera.CameraUpVector.Z) > 0.01
+                   || Math.Abs(camera.CameraUpVector.Z) > 0.01
+                   || Math.Abs(camera.CameraDirection.Z) > 0.01
+                   || Math.Abs(camera.CameraDirection.Z) > 0.01
+                   || Math.Abs(camera.CameraDirection.Z) > 0.01;
         }
     }
 }

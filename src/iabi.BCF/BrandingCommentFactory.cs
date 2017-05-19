@@ -8,10 +8,12 @@ namespace iabi.BCF
     public class BrandingCommentFactory
     {
         public const string IABI_BRANDING_URL = "http://iabi.eu";
+
         public static string GetBrandingComment()
         {
             var bcfToolsVersion = typeof(BrandingCommentFactory).GetTypeInfo().Assembly.GetName().Version;
-            return $"Created with the iabi.BCF library, V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision} at {DateTime.Now:dd.MM.yyyy HH:mm}. Visit {IABI_BRANDING_URL} to find out more.";
+            string version = $"V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision}";
+            return $"Created with the iabi.BCF library, {version} at {DateTime.Now:dd.MM.yyyy HH:mm}. Visit {IABI_BRANDING_URL} to find out more.";
         }
 
         public static string AppendBrandingCommentToTopLevelXml(string xmlInput)

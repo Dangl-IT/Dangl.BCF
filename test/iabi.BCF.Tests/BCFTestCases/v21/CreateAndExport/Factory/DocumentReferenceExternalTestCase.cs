@@ -9,27 +9,27 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
     {
         public static BCFv21Container CreateContainer()
         {
-            var Container = new BCFv21Container();
-            Container.Topics.Add(CreateTopic());
-            return Container;
+            var container = new BCFv21Container();
+            container.Topics.Add(CreateTopic());
+            return container;
         }
 
         public static BCFTopic CreateTopic()
         {
-            var ReturnTopic = new BCFTopic();
-            ReturnTopic.Markup = CreateMarkup();
-            return ReturnTopic;
+            var returnTopic = new BCFTopic();
+            returnTopic.Markup = CreateMarkup();
+            return returnTopic;
         }
 
         private static Markup CreateMarkup()
         {
-            var Markup = new Markup();
-            Markup.Topic = new Topic
+            var markup = new Markup();
+            markup.Topic = new Topic
             {
                 CreationAuthor = "dangl@iabi.eu",
                 CreationDate = new DateTime(2015, 10, 11, 12, 13, 14, DateTimeKind.Utc),
                 Description = "This topic has a document reference to an external file via an absolute URL. It references the old BCFv1 Markup Schema.",
-                Guid = BCFv21TestCaseData.DocumentReferenceExternal_TopicGuid,
+                Guid = BcFv21TestCaseData.DOCUMENT_REFERENCE_EXTERNAL_TOPIC_GUID,
                 Index = 0,
                 Title = "Document Reference External",
                 DocumentReference = new List<TopicDocumentReference>
@@ -42,7 +42,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                     }
                 }
             };
-            return Markup;
+            return markup;
         }
     }
 }

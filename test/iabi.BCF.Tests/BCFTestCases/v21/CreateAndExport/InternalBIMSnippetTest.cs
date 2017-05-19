@@ -8,21 +8,21 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 {
-    public class InternalBIMSnippetTest
+    public class InternalBimSnippetTest
     {
         public static BCFv21Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-        public InternalBIMSnippetTest()
+        public InternalBimSnippetTest()
         {
             if (CreatedContainer == null)
             {
-                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.InternalBIMSnippet);
+                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.InternalBimSnippet);
             }
             if (CreatedArchive == null)
             {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFv21TestCaseData.InternalBIMSnippet_TestCaseName, TestCaseResourceFactory.GetReadmeForV21(BcfTestCaseV21.InternalBIMSnippet));
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv21TestCaseData.INTERNAL_BIM_SNIPPET_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV21(BcfTestCaseV21.InternalBIMSnippet));
             }
         }
 
@@ -33,8 +33,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
                 return new[]
                 {
                     "bcf.version",
-                    BCFv21TestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf",
-                    BCFv21TestCaseData.InternalBIMSnippet_TopicGuid + "/JsonElement.json" // Data element of the BIM Snippet
+                    BcFv21TestCaseData.INTERNAL_BIM_SNIPPET_TOPIC_GUID + "/markup.bcf",
+                    BcFv21TestCaseData.INTERNAL_BIM_SNIPPET_TOPIC_GUID + "/JsonElement.json" // Data element of the BIM Snippet
                 };
             }
         }
@@ -54,11 +54,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFilesPresent()
         {
-            foreach (var ExpectedFile in ExpectedFiles)
+            foreach (var expectedFile in ExpectedFiles)
             {
-                if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
+                if (CreatedArchive.Entries.All(curr => curr.FullName != expectedFile))
                 {
-                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + expectedFile);
                 }
             }
         }
@@ -66,11 +66,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfNoAdditionalFilesPresent()
         {
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (!ExpectedFiles.Contains(CurrentEntry.FullName))
+                if (!ExpectedFiles.Contains(currentEntry.FullName))
                 {
-                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + currentEntry.FullName);
                 }
             }
         }
@@ -78,18 +78,18 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFilesAreAllValidXml()
         {
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (CurrentEntry.FullName.Contains(".bcfp")
-                    || CurrentEntry.FullName.Contains(".version")
-                    || CurrentEntry.FullName.Contains(".bcf")
-                    || CurrentEntry.FullName.Contains(".bcfv")
-                    || CurrentEntry.FullName.Contains(".xsd"))
+                if (currentEntry.FullName.Contains(".bcfp")
+                    || currentEntry.FullName.Contains(".version")
+                    || currentEntry.FullName.Contains(".bcf")
+                    || currentEntry.FullName.Contains(".bcfv")
+                    || currentEntry.FullName.Contains(".xsd"))
                 {
-                    using (var Rdr = new StreamReader(CurrentEntry.Open()))
+                    using (var rdr = new StreamReader(currentEntry.Open()))
                     {
-                        var Text = Rdr.ReadToEnd();
-                        var Xml = XElement.Parse(Text);
+                        var text = rdr.ReadToEnd();
+                        var xml = XElement.Parse(text);
                         // No exception no cry!
                     }
                 }
@@ -99,76 +99,76 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFileDataIsEqual_JsonElement()
         {
-            var DataExpected = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
-            using (var MemStream = new MemoryStream())
+            var dataExpected = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
+            using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == BCFv21TestCaseData.InternalBIMSnippet_TopicGuid + "/JsonElement.json").Open().CopyTo(MemStream);
-                var DataActual = MemStream.ToArray();
-                Assert.True(DataExpected.SequenceEqual(DataActual));
+                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv21TestCaseData.INTERNAL_BIM_SNIPPET_TOPIC_GUID + "/JsonElement.json").Open().CopyTo(memStream);
+                var dataActual = memStream.ToArray();
+                Assert.True(dataExpected.SequenceEqual(dataActual));
             }
         }
 
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.1";
-            var ExpectedDetailedVersion = "2.1";
-            var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
-            var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
+            var expectedVersionId = "2.1";
+            var expectedDetailedVersion = "2.1";
+            var versionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
+            var actualVersionId = versionXml.Attribute("VersionId").Value;
+            var actualDetailedVersion = ((XText) ((XElement) versionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement) VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.Equal(ExpectedVersionId, ActualVersionId);
-            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(versionXml.Nodes().Count() == 1 && ((XElement) versionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(expectedVersionId, actualVersionId);
+            Assert.Equal(expectedDetailedVersion, actualDetailedVersion);
         }
 
         [Fact]
         public void VerifySnippetPresent()
         {
-            var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
-            Assert.NotNull(SnippetXml);
+            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.INTERNAL_BIM_SNIPPET_TOPIC_GUID + "/markup.bcf");
+            var snippetXml = markupXml.Descendants("BimSnippet").FirstOrDefault();
+            Assert.NotNull(snippetXml);
         }
 
         [Fact]
         public void VerifySnippetIsNotExternal()
         {
-            var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.InternalBIMSnippet_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
+            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.INTERNAL_BIM_SNIPPET_TOPIC_GUID + "/markup.bcf");
+            var snippetXml = markupXml.Descendants("BimSnippet").FirstOrDefault();
             // Null means false by default
-            if (SnippetXml.Attribute("isExternal") != null)
+            if (snippetXml.Attribute("isExternal") != null)
             {
-                var Expected = "false";
-                var Actual = SnippetXml.Attribute("isExternal").Value;
-                Assert.Equal(Expected, Actual);
+                var expected = "false";
+                var actual = snippetXml.Attribute("isExternal").Value;
+                Assert.Equal(expected, actual);
             }
         }
 
         [Fact]
         public void WriteReadAgainAndCompare()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv21Container.ReadStream(MemStream);
+                var readContainer = BCFv21Container.ReadStream(memStream);
 
-                var ReadMemStream = new MemoryStream();
-                ReadContainer.WriteStream(ReadMemStream);
-                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+                var readMemStream = new MemoryStream();
+                readContainer.WriteStream(readMemStream);
+                var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
             }
         }
 
         [Fact]
         public void CheckXmlBrandingCommentsArePresent()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+                CreatedContainer.WriteStream(memStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
     }

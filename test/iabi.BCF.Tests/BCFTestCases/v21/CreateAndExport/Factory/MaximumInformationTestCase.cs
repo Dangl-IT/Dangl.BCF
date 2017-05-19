@@ -11,73 +11,73 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
     {
         public static BCFv21Container CreateContainer()
         {
-            var Container = new BCFv21Container();
+            var container = new BCFv21Container();
             // Set the project
-            Container.BCFProject = new ProjectExtension();
-            Container.BCFProject.Project = new Project();
-            Container.BCFProject.Project.Name = "BCF API Implementation";
-            Container.BCFProject.Project.ProjectId = "F338B6F0-A93E-40FF-A4D6-6117CD21EC2A";
+            container.BcfProject = new ProjectExtension();
+            container.BcfProject.Project = new Project();
+            container.BcfProject.Project.Name = "BCF API Implementation";
+            container.BcfProject.Project.ProjectId = "F338B6F0-A93E-40FF-A4D6-6117CD21EC2A";
 
             // Set extensions
-            Container.ProjectExtensions = CreateExtensions();
+            container.ProjectExtensions = CreateExtensions();
 
             // Set Topics
-            Container.Topics.Add(CreateSimpleTopicToActAsReference());
-            Container.Topics.Add(CreateTopic());
+            container.Topics.Add(CreateSimpleTopicToActAsReference());
+            container.Topics.Add(CreateTopic());
 
-            Container.FileAttachments.Add("IfcPile_01.ifc", TestCaseResourceFactory.GetIfcFile(IfcFiles.IfcPile));
+            container.FileAttachments.Add("IfcPile_01.ifc", TestCaseResourceFactory.GetIfcFile(IfcFiles.IfcPile));
 
-            Container.FileAttachments.Add("markup.xsd", TestCaseResourceFactory.GetFileAttachment(FileAttachments.MarkupSchemaV21));
+            container.FileAttachments.Add("markup.xsd", TestCaseResourceFactory.GetFileAttachment(FileAttachments.MarkupSchemaV21));
 
-            return Container;
+            return container;
         }
 
         public static ProjectExtensions CreateExtensions()
         {
-            var ReturnObject = new ProjectExtensions();
-            ReturnObject.TopicType.Add("Architecture");
-            ReturnObject.TopicType.Add("Hidden Type");
-            ReturnObject.TopicType.Add("Structural");
-            ReturnObject.TopicStatus.Add("Finished status");
-            ReturnObject.TopicStatus.Add("Open");
-            ReturnObject.TopicStatus.Add("Closed");
-            ReturnObject.TopicLabel.Add("Architecture");
-            ReturnObject.TopicLabel.Add("IT Development");
-            ReturnObject.TopicLabel.Add("Management");
-            ReturnObject.TopicLabel.Add("Mechanical");
-            ReturnObject.TopicLabel.Add("Structural");
-            ReturnObject.SnippetType.Add("IFC2X3");
-            ReturnObject.SnippetType.Add("PDF");
-            ReturnObject.SnippetType.Add("XLSX");
-            ReturnObject.Priority.Add("Low");
-            ReturnObject.Priority.Add("High");
-            ReturnObject.Priority.Add("Medium");
-            ReturnObject.UserIdType.Add("dangl@iabi.eu");
-            ReturnObject.UserIdType.Add("linhard@iabi.eu");
-            return ReturnObject;
+            var returnObject = new ProjectExtensions();
+            returnObject.TopicType.Add("Architecture");
+            returnObject.TopicType.Add("Hidden Type");
+            returnObject.TopicType.Add("Structural");
+            returnObject.TopicStatus.Add("Finished status");
+            returnObject.TopicStatus.Add("Open");
+            returnObject.TopicStatus.Add("Closed");
+            returnObject.TopicLabel.Add("Architecture");
+            returnObject.TopicLabel.Add("IT Development");
+            returnObject.TopicLabel.Add("Management");
+            returnObject.TopicLabel.Add("Mechanical");
+            returnObject.TopicLabel.Add("Structural");
+            returnObject.SnippetType.Add("IFC2X3");
+            returnObject.SnippetType.Add("PDF");
+            returnObject.SnippetType.Add("XLSX");
+            returnObject.Priority.Add("Low");
+            returnObject.Priority.Add("High");
+            returnObject.Priority.Add("Medium");
+            returnObject.UserIdType.Add("dangl@iabi.eu");
+            returnObject.UserIdType.Add("linhard@iabi.eu");
+            return returnObject;
         }
 
         public static BCFTopic CreateTopic()
         {
-            var ReturnTopic = new BCFTopic();
+            var returnTopic = new BCFTopic();
 
             // Set Markup
-            ReturnTopic.Markup = CreateMarkup();
+            returnTopic.Markup = CreateMarkup();
 
-            ReturnTopic.SnippetData = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
+            returnTopic.SnippetData = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
 
             //ReturnTopic.ViewpointBitmaps = new Dictionary<VisualizationInfo,List<byte[]>>;
 
-            foreach (var CurrViewpoint in CreateViewpoints())
+            foreach (var currViewpoint in CreateViewpoints())
             {
-                ReturnTopic.Viewpoints.Add(CurrViewpoint);
+                returnTopic.Viewpoints.Add(currViewpoint);
             }
 
-            ReturnTopic.AddOrUpdateSnapshot(BCFv21TestCaseData.MaximumInformation_ViewpointGuid_01, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_01));
-            ReturnTopic.AddOrUpdateSnapshot(BCFv21TestCaseData.MaximumInformation_ViewpointGuid_02, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_02));
-            ReturnTopic.AddOrUpdateSnapshot(BCFv21TestCaseData.MaximumInformation_ViewpointGuid_03, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_03));
+            returnTopic.AddOrUpdateSnapshot(BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_01));
+            returnTopic.AddOrUpdateSnapshot(BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_02));
+            returnTopic.AddOrUpdateSnapshot(BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_03));
 
-            return ReturnTopic;
+            return returnTopic;
         }
 
         public static IEnumerable<VisualizationInfo> CreateViewpoints()
@@ -88,7 +88,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                 //Bitmaps = "",
                 ClippingPlanes = GetPlanes().ToList(),
                 Components = GetList_01(),
-                Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_01,
+                Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01,
                 Lines = GetLines().ToList(),
                 //OrthogonalCamera = "",
                 PerspectiveCamera = GetCamera_01()
@@ -99,7 +99,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                 //Bitmaps = "",
                 //ClippingPlanes = "",
                 Components = GetList_02(),
-                Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_02,
+                Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02,
                 //Lines = "",
                 //OrthogonalCamera = "",
                 PerspectiveCamera = GetCamera_02()
@@ -110,7 +110,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                 //Bitmaps = "",
                 //ClippingPlanes = "",
                 Components = GetList_03(),
-                Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_03,
+                Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03,
                 //Lines = "",
                 //OrthogonalCamera = "",
                 PerspectiveCamera = GetCamera_03()
@@ -204,10 +204,10 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
         {
             return new VisualizationInfoComponents
             {
-                DefaultVisibilityComponents = BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityComponents,
-                DefaultVisibilityOpenings = BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilityOpenings,
-                DefaultVisibilitySpaceBoundaries = BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaceBoundaries,
-                DefaultVisibilitySpaces = BCFv21TestCaseData.MaximimumInformation_Viewpoint_01_DefaultVisibilitySpaces,
+                DefaultVisibilityComponents = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_COMPONENTS,
+                DefaultVisibilityOpenings = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_OPENINGS,
+                DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                DefaultVisibilitySpaces = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACES,
                 Component = new List<Component>
                 {
                     new Component
@@ -253,10 +253,10 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
         {
             return new VisualizationInfoComponents
             {
-                DefaultVisibilityComponents = BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityComponents,
-                DefaultVisibilityOpenings = BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilityOpenings,
-                DefaultVisibilitySpaceBoundaries = BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaceBoundaries,
-                DefaultVisibilitySpaces = BCFv21TestCaseData.MaximimumInformation_Viewpoint_02_DefaultVisibilitySpaces,
+                DefaultVisibilityComponents = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_COMPONENTS,
+                DefaultVisibilityOpenings = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_OPENINGS,
+                DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                DefaultVisibilitySpaces = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACES,
                 Component = new List<Component>
                 {
                     new Component
@@ -287,10 +287,10 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
         {
             return new VisualizationInfoComponents
             {
-                DefaultVisibilityComponents = BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityComponents,
-                DefaultVisibilityOpenings = BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilityOpenings,
-                DefaultVisibilitySpaceBoundaries = BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaceBoundaries,
-                DefaultVisibilitySpaces = BCFv21TestCaseData.MaximimumInformation_Viewpoint_03_DefaultVisibilitySpaces,
+                DefaultVisibilityComponents = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_COMPONENTS,
+                DefaultVisibilityOpenings = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_OPENINGS,
+                DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                DefaultVisibilitySpaces = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACES,
                 Component = new List<Component>
                 {
                     new Component
@@ -398,28 +398,28 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
 
         public static BCFTopic CreateSimpleTopicToActAsReference()
         {
-            var Topic = new BCFTopic();
+            var topic = new BCFTopic();
 
-            Topic.Markup = new Markup
+            topic.Markup = new Markup
             {
                 Topic = new Topic
                 {
                     Title = "Referenced topic",
-                    Guid = BCFv21TestCaseData.MaximumInformation_ReferencedTopicGuid,
+                    Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_REFERENCED_TOPIC_GUID,
                     Description = "This is just an empty topic that acts as a referenced topic."
                 }
             };
 
-            return Topic;
+            return topic;
         }
 
         private static Markup CreateMarkup()
         {
-            var Markup = new Markup();
+            var markup = new Markup();
 
-            Markup.Comment = CreateComments().ToList();
+            markup.Comment = CreateComments().ToList();
 
-            Markup.Header = new List<HeaderFile>
+            markup.Header = new List<HeaderFile>
             {
                 new HeaderFile
                 {
@@ -432,7 +432,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                 }
             };
 
-            Markup.Topic = new Topic
+            markup.Topic = new Topic
             {
                 AssignedTo = "linhard@iabi.eu",
                 BimSnippet =  new BimSnippet
@@ -460,7 +460,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                         ReferencedDocument = "../markup.xsd"
                     }
                 },
-                Guid = BCFv21TestCaseData.MaximumInformation_TopicGuid,
+                Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID,
                 Index = 0,
                 Labels = new List<string> {"Structural", "IT Development"},
                 ModifiedAuthor = "dangl@iabi.eu",
@@ -479,25 +479,25 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                 TopicType = "Structural"
             };
 
-            Markup.Viewpoints = new List<ViewPoint>
+            markup.Viewpoints = new List<ViewPoint>
             {
                 new ViewPoint
                 {
-                    Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_01
+                    Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01
                 },
                 new ViewPoint
                 {
-                    Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_02
+                    Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02
                 },
                 new ViewPoint
                 {
-                    Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_03
+                    Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03
                 }
             };
 
             //Markup.Viewpoints = CreateViewpoints().ToList();
 
-            return Markup;
+            return markup;
         }
 
         public static IEnumerable<Comment> CreateComments()
@@ -529,7 +529,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                 Guid = "39C4B780-1B48-44E5-9802-D359007AA44E",
                 Viewpoint = new CommentViewpoint
                 {
-                    Guid = BCFv21TestCaseData.MaximumInformation_ViewpointGuid_01
+                    Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01
                 }
             };
 

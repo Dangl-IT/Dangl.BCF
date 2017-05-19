@@ -12,13 +12,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
 {
     public static class CompareTool
     {
-        public static void CompareFiles(byte[] FileToImport, byte[] ReadAndWrittenFile)
+        public static void CompareFiles(byte[] fileToImport, byte[] readAndWrittenFile)
         {
             // Check that archive file contents are present
-            ArchiveFilesCompareTool.CompareZipArchiveFileEntries(FileToImport, ReadAndWrittenFile);
-            var ExpectedFile = BCFv2Container.ReadStream(new MemoryStream(FileToImport));
-            var ActualFile = BCFv2Container.ReadStream(new MemoryStream(ReadAndWrittenFile));
-            CompareContainers(ExpectedFile, ActualFile, new ZipArchive(new MemoryStream(FileToImport)), new ZipArchive(new MemoryStream(ReadAndWrittenFile)));
+            ArchiveFilesCompareTool.CompareZipArchiveFileEntries(fileToImport, readAndWrittenFile);
+            var expectedFile = BCFv2Container.ReadStream(new MemoryStream(fileToImport));
+            var actualFile = BCFv2Container.ReadStream(new MemoryStream(readAndWrittenFile));
+            CompareContainers(expectedFile, actualFile, new ZipArchive(new MemoryStream(fileToImport)), new ZipArchive(new MemoryStream(readAndWrittenFile)));
         }
 
         public static void CheckBrandingCommentPresenceInEveryFile(byte[] createdZipArchive)
@@ -53,103 +53,103 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
 
         /// <summary>
         /// </summary>
-        /// <param name="ExpectedContainer"></param>
-        /// <param name="ActualContainer"></param>
-        /// <param name="ExpectedArchive"></param>
-        /// <param name="ActualArchive"></param>
-        /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareContainers(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer, ZipArchive ExpectedArchive = null, ZipArchive ActualArchive = null, bool OriginatesFromAPIConversion = false)
+        /// <param name="expectedContainer"></param>
+        /// <param name="actualContainer"></param>
+        /// <param name="expectedArchive"></param>
+        /// <param name="actualArchive"></param>
+        /// <param name="originatesFromApiConversion">If true, Bitmaps are not compared since the API does not support them</param>
+        public static void CompareContainers(BCFv2Container expectedContainer, BCFv2Container actualContainer, ZipArchive expectedArchive = null, ZipArchive actualArchive = null, bool originatesFromApiConversion = false)
         {
-            CompareProjectAndVersion(ExpectedContainer, ActualContainer);
-            CompareFileAttachments(ExpectedContainer, ActualContainer);
-            CompareProjectExtensions(ExpectedContainer, ActualContainer);
+            CompareProjectAndVersion(expectedContainer, actualContainer);
+            CompareFileAttachments(expectedContainer, actualContainer);
+            CompareProjectExtensions(expectedContainer, actualContainer);
 
-            if (ExpectedArchive == null && ActualArchive == null)
+            if (expectedArchive == null && actualArchive == null)
             {
-                using (var MemStream_01 = new MemoryStream())
+                using (var memStream01 = new MemoryStream())
                 {
-                    ExpectedContainer.WriteStream(MemStream_01);
-                    ExpectedArchive = new ZipArchive(MemStream_01);
-                    using (var MemStream_02 = new MemoryStream())
+                    expectedContainer.WriteStream(memStream01);
+                    expectedArchive = new ZipArchive(memStream01);
+                    using (var memStream02 = new MemoryStream())
                     {
-                        ExpectedContainer.WriteStream(MemStream_02);
-                        ActualArchive = new ZipArchive(MemStream_02);
-                        TopicsCompareTool.CompareAllTopics(ExpectedContainer, ActualContainer, ExpectedArchive, ActualArchive, OriginatesFromAPIConversion);
+                        expectedContainer.WriteStream(memStream02);
+                        actualArchive = new ZipArchive(memStream02);
+                        TopicsCompareTool.CompareAllTopics(expectedContainer, actualContainer, expectedArchive, actualArchive, originatesFromApiConversion);
                         return;
                     }
                 }
             }
 
-            TopicsCompareTool.CompareAllTopics(ExpectedContainer, ActualContainer, ExpectedArchive, ActualArchive, OriginatesFromAPIConversion);
+            TopicsCompareTool.CompareAllTopics(expectedContainer, actualContainer, expectedArchive, actualArchive, originatesFromApiConversion);
         }
 
-        public static void CompareProjectExtensions(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer)
+        public static void CompareProjectExtensions(BCFv2Container expectedContainer, BCFv2Container actualContainer)
         {
-            if (TestCompareUtilities.BothNotNull(ExpectedContainer.ProjectExtensions, ActualContainer.ProjectExtensions, "ProjectExtensions"))
+            if (TestCompareUtilities.BothNotNull(expectedContainer.ProjectExtensions, actualContainer.ProjectExtensions, "ProjectExtensions"))
             {
-                CompareStringList(ExpectedContainer.ProjectExtensions.SnippetType, ActualContainer.ProjectExtensions.SnippetType, "SnippetType");
-                CompareStringList(ExpectedContainer.ProjectExtensions.Priority, ActualContainer.ProjectExtensions.Priority, "Priority");
-                CompareStringList(ExpectedContainer.ProjectExtensions.TopicStatus, ActualContainer.ProjectExtensions.TopicStatus, "TopicStatus");
-                CompareStringList(ExpectedContainer.ProjectExtensions.TopicType, ActualContainer.ProjectExtensions.TopicType, "TopicType");
-                CompareStringList(ExpectedContainer.ProjectExtensions.UserIdType, ActualContainer.ProjectExtensions.UserIdType, "UserIdType");
-                CompareStringList(ExpectedContainer.ProjectExtensions.TopicLabel, ActualContainer.ProjectExtensions.TopicLabel, "TopicLabel");
+                CompareStringList(expectedContainer.ProjectExtensions.SnippetType, actualContainer.ProjectExtensions.SnippetType, "SnippetType");
+                CompareStringList(expectedContainer.ProjectExtensions.Priority, actualContainer.ProjectExtensions.Priority, "Priority");
+                CompareStringList(expectedContainer.ProjectExtensions.TopicStatus, actualContainer.ProjectExtensions.TopicStatus, "TopicStatus");
+                CompareStringList(expectedContainer.ProjectExtensions.TopicType, actualContainer.ProjectExtensions.TopicType, "TopicType");
+                CompareStringList(expectedContainer.ProjectExtensions.UserIdType, actualContainer.ProjectExtensions.UserIdType, "UserIdType");
+                CompareStringList(expectedContainer.ProjectExtensions.TopicLabel, actualContainer.ProjectExtensions.TopicLabel, "TopicLabel");
             }
         }
 
-        public static void CompareStringList(List<string> Expected, List<string> Actual, string ListName)
+        public static void CompareStringList(List<string> expected, List<string> actual, string listName)
         {
             // Check that all expected values are present
-            foreach (var CurrentValue in Expected)
+            foreach (var currentValue in expected)
             {
-                Assert.True(Actual.Contains(CurrentValue), "Value: " + CurrentValue + " is missing in actual list of name: " + ListName);
+                Assert.True(actual.Contains(currentValue), "Value: " + currentValue + " is missing in actual list of name: " + listName);
             }
             // Check that no additional values are present
-            foreach (var CurrentValue in Actual)
+            foreach (var currentValue in actual)
             {
-                Assert.True(Expected.Contains(CurrentValue), "Value: " + CurrentValue + " is missing in expected list of name: " + ListName + " but present in actual list.");
+                Assert.True(expected.Contains(currentValue), "Value: " + currentValue + " is missing in expected list of name: " + listName + " but present in actual list.");
             }
         }
 
-        public static void CompareFileAttachments(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer)
+        public static void CompareFileAttachments(BCFv2Container expectedContainer, BCFv2Container actualContainer)
         {
             // Check that all files from the expected container are present
-            foreach (var CurrentFile in ExpectedContainer.FileAttachments)
+            foreach (var currentFile in expectedContainer.FileAttachments)
             {
-                Assert.True(ActualContainer.FileAttachments.ContainsKey(CurrentFile.Key), "Missing file: " + CurrentFile.Key + " in actual container.");
-                Assert.True(ExpectedContainer.FileAttachments[CurrentFile.Key].SequenceEqual(ActualContainer.FileAttachments[CurrentFile.Key]), "File: " + CurrentFile.Key + " binary different in actual container");
+                Assert.True(actualContainer.FileAttachments.ContainsKey(currentFile.Key), "Missing file: " + currentFile.Key + " in actual container.");
+                Assert.True(expectedContainer.FileAttachments[currentFile.Key].SequenceEqual(actualContainer.FileAttachments[currentFile.Key]), "File: " + currentFile.Key + " binary different in actual container");
             }
 
             // Check that no file attachments were added
-            foreach (var CurrentFile in ActualContainer.FileAttachments)
+            foreach (var currentFile in actualContainer.FileAttachments)
             {
-                Assert.True(ExpectedContainer.FileAttachments.ContainsKey(CurrentFile.Key));
+                Assert.True(expectedContainer.FileAttachments.ContainsKey(currentFile.Key));
             }
         }
 
         /// <summary>
         ///     Will compare the project and version descriptions within the file
         /// </summary>
-        /// <param name="ExpectedContainer"></param>
-        /// <param name="ActualContainer"></param>
-        public static void CompareProjectAndVersion(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer)
+        /// <param name="expectedContainer"></param>
+        /// <param name="actualContainer"></param>
+        public static void CompareProjectAndVersion(BCFv2Container expectedContainer, BCFv2Container actualContainer)
         {
             // Compare project
-            if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFProject, ActualContainer.BCFProject, "BCFProject"))
+            if (TestCompareUtilities.BothNotNull(expectedContainer.BcfProject, actualContainer.BcfProject, "BCFProject"))
             {
-                if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFProject.Project, ActualContainer.BCFProject.Project, "BCFProject.Project"))
+                if (TestCompareUtilities.BothNotNull(expectedContainer.BcfProject.Project, actualContainer.BcfProject.Project, "BCFProject.Project"))
                 {
-                    Assert.Equal(ExpectedContainer.BCFProject.Project.Name, ActualContainer.BCFProject.Project.Name);
-                    Assert.Equal(ExpectedContainer.BCFProject.Project.ProjectId, ActualContainer.BCFProject.Project.ProjectId);
+                    Assert.Equal(expectedContainer.BcfProject.Project.Name, actualContainer.BcfProject.Project.Name);
+                    Assert.Equal(expectedContainer.BcfProject.Project.ProjectId, actualContainer.BcfProject.Project.ProjectId);
                 }
-                Assert.Equal(ExpectedContainer.BCFProject.ExtensionSchema, ActualContainer.BCFProject.ExtensionSchema);
+                Assert.Equal(expectedContainer.BcfProject.ExtensionSchema, actualContainer.BcfProject.ExtensionSchema);
             }
 
             // Compare version
-            if (TestCompareUtilities.BothNotNull(ExpectedContainer.BCFVersionInfo, ActualContainer.BCFVersionInfo, "BCFVersionInfo"))
+            if (TestCompareUtilities.BothNotNull(expectedContainer.BcfVersionInfo, actualContainer.BcfVersionInfo, "BCFVersionInfo"))
             {
-                if (ExpectedContainer.BCFVersionInfo.VersionId.Contains("2.0"))
+                if (expectedContainer.BcfVersionInfo.VersionId.Contains("2.0"))
                 {
-                    Assert.True(ActualContainer.BCFVersionInfo.VersionId.Contains("2.0"));
+                    Assert.True(actualContainer.BcfVersionInfo.VersionId.Contains("2.0"));
                 }
                 else
                 {
@@ -164,96 +164,96 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
         /// <summary>
         ///     Raises <see cref="Assert.Fail" /> if one is null and the other one is not
         /// </summary>
-        /// <param name="ExpectedObject"></param>
-        /// <param name="ActualObject"></param>
-        /// <param name="ParameterName"></param>
+        /// <param name="expectedObject"></param>
+        /// <param name="actualObject"></param>
+        /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static bool BothNotNull(object ExpectedObject, object ActualObject, string ParameterName)
+        public static bool BothNotNull(object expectedObject, object actualObject, string parameterName)
         {
-            if (ExpectedObject == null && ActualObject != null)
+            if (expectedObject == null && actualObject != null)
             {
-                Assert.True(false, "Parameter: " + ParameterName + "; Expected is null but actual is present.");
+                Assert.True(false, "Parameter: " + parameterName + "; Expected is null but actual is present.");
             }
-            else if (ExpectedObject != null && ActualObject == null)
+            else if (expectedObject != null && actualObject == null)
             {
-                Assert.True(false, "Parameter: " + ParameterName + "; Actual is null but Expected is present.");
+                Assert.True(false, "Parameter: " + parameterName + "; Actual is null but Expected is present.");
             }
-            return ExpectedObject != null;
+            return expectedObject != null;
         }
     }
 
     public static class ArchiveFilesCompareTool
     {
-        public static void CompareZipArchiveFileEntries(byte[] FileToImport, byte[] ReadAndWrittenFile)
+        public static void CompareZipArchiveFileEntries(byte[] fileToImport, byte[] readAndWrittenFile)
         {
-            var ExpectedZipArchive = new ZipArchive(new MemoryStream(FileToImport));
-            var ActualZipArchive = new ZipArchive(new MemoryStream(ReadAndWrittenFile));
+            var expectedZipArchive = new ZipArchive(new MemoryStream(fileToImport));
+            var actualZipArchive = new ZipArchive(new MemoryStream(readAndWrittenFile));
 
             // Check that all expected files are present
-            foreach (var CurrentExpectedFile in ExpectedZipArchive.Entries)
+            foreach (var currentExpectedFile in expectedZipArchive.Entries)
             {
-                var FilePresent = ActualZipArchive.Entries.Any(Curr => Curr.FullName == CurrentExpectedFile.FullName);
-                if (!FilePresent && (
-                    CurrentExpectedFile.FullName.ToUpperInvariant().EndsWith(".png".ToUpperInvariant())
-                    || CurrentExpectedFile.FullName.ToUpperInvariant().EndsWith(".jpg".ToUpperInvariant())
-                    || CurrentExpectedFile.FullName.ToUpperInvariant().EndsWith(".jpeg".ToUpperInvariant())))
+                var filePresent = actualZipArchive.Entries.Any(curr => curr.FullName == currentExpectedFile.FullName);
+                if (!filePresent && (
+                    currentExpectedFile.FullName.ToUpperInvariant().EndsWith(".png".ToUpperInvariant())
+                    || currentExpectedFile.FullName.ToUpperInvariant().EndsWith(".jpg".ToUpperInvariant())
+                    || currentExpectedFile.FullName.ToUpperInvariant().EndsWith(".jpeg".ToUpperInvariant())))
                 {
                     // It may be a snapshot or a bitmap that was just renamed (for example, from snapshot.png to {Guid}.png
                     // Will search for a file in the same directory with the same size
-                    FilePresent = FileIsPresentInSameFolderWithDifferentName(ExpectedZipArchive, ActualZipArchive, CurrentExpectedFile.FullName);
+                    filePresent = FileIsPresentInSameFolderWithDifferentName(expectedZipArchive, actualZipArchive, currentExpectedFile.FullName);
                 }
-                if (!FilePresent && CurrentExpectedFile.FullName.ToUpperInvariant().EndsWith(".bcfv".ToUpperInvariant()))
+                if (!filePresent && currentExpectedFile.FullName.ToUpperInvariant().EndsWith(".bcfv".ToUpperInvariant()))
                 {
                     // Viewpoints may be renamed
-                    var Folder = CurrentExpectedFile.FullName.Substring(0, CurrentExpectedFile.FullName.Length - CurrentExpectedFile.FullName.Split('/').Last().Length);
-                    var ExpectedMarkupXml = XmlUtilities.GetElementFromZipFile(ExpectedZipArchive, Folder + "markup.bcf");
-                    var ViewpointGuid = ExpectedMarkupXml.Descendants("Viewpoints").Where(Curr => Curr.Descendants("Viewpoint").FirstOrDefault().Value == CurrentExpectedFile.FullName.Split('/').Last()).FirstOrDefault().Attributes().FirstOrDefault(Curr => Curr.Name == "Guid").Value;
+                    var folder = currentExpectedFile.FullName.Substring(0, currentExpectedFile.FullName.Length - currentExpectedFile.FullName.Split('/').Last().Length);
+                    var expectedMarkupXml = XmlUtilities.GetElementFromZipFile(expectedZipArchive, folder + "markup.bcf");
+                    var viewpointGuid = expectedMarkupXml.Descendants("Viewpoints").Where(curr => curr.Descendants("Viewpoint").FirstOrDefault().Value == currentExpectedFile.FullName.Split('/').Last()).FirstOrDefault().Attributes().FirstOrDefault(curr => curr.Name == "Guid").Value;
 
                     // Get viewpoint reference for this viewpoint in the created archive
-                    var ActualMarkupXml = XmlUtilities.GetElementFromZipFile(ActualZipArchive, Folder + "markup.bcf");
-                    var ActualViewpointReference = ActualMarkupXml.Descendants("Viewpoints").Where(Curr => Curr.Attributes().Where(Attr => Attr.Name == "Guid" && Attr.Value == ViewpointGuid).Any()).FirstOrDefault().Descendants("Viewpoint").FirstOrDefault().Value;
+                    var actualMarkupXml = XmlUtilities.GetElementFromZipFile(actualZipArchive, folder + "markup.bcf");
+                    var actualViewpointReference = actualMarkupXml.Descendants("Viewpoints").Where(curr => curr.Attributes().Where(attr => attr.Name == "Guid" && attr.Value == viewpointGuid).Any()).FirstOrDefault().Descendants("Viewpoint").FirstOrDefault().Value;
 
-                    FilePresent = ActualZipArchive.Entries.Any(Curr => Curr.FullName == Folder + ActualViewpointReference);
+                    filePresent = actualZipArchive.Entries.Any(curr => curr.FullName == folder + actualViewpointReference);
                 }
-                if (!FilePresent && CurrentExpectedFile.FullName.ToUpperInvariant().EndsWith("project.bcfp".ToUpperInvariant()))
+                if (!filePresent && currentExpectedFile.FullName.ToUpperInvariant().EndsWith("project.bcfp".ToUpperInvariant()))
                 {
                     // Originating file has maybe an empty project.bcfp, check this and do not enforce file availability then.
-                    var ExpectedProjectXml = XmlUtilities.GetElementFromZipFile(ExpectedZipArchive, CurrentExpectedFile.FullName);
+                    var expectedProjectXml = XmlUtilities.GetElementFromZipFile(expectedZipArchive, currentExpectedFile.FullName);
 
-                    var ProjectShouldBeTreatedAsEmpty =
-                        (!ExpectedProjectXml.Descendants("ExtensionSchema").Any() || ExpectedProjectXml.Descendants("ExtensionSchema").All(Curr => string.IsNullOrWhiteSpace(Curr.Value))) // ExtensionSchema not present or empty
-                        && (!ExpectedProjectXml.Descendants("Project").Any() || ExpectedProjectXml.Descendants("Project").All(Curr => Curr.Attribute("ProjectId") == null || string.IsNullOrWhiteSpace(Curr.Attribute("ProjectId").Value))) // Project Id not present or empty
-                        && (!ExpectedProjectXml.Descendants("Name").Where(Curr => Curr.Parent.Name.LocalName == "Project").Any() || ExpectedProjectXml.Descendants("Name").Where(Curr => Curr.Parent.Name.LocalName == "Project").All(Curr => string.IsNullOrWhiteSpace(Curr.Value))); // Project Name not present or empty
-                    if (ProjectShouldBeTreatedAsEmpty)
+                    var projectShouldBeTreatedAsEmpty =
+                        (!expectedProjectXml.Descendants("ExtensionSchema").Any() || expectedProjectXml.Descendants("ExtensionSchema").All(curr => string.IsNullOrWhiteSpace(curr.Value))) // ExtensionSchema not present or empty
+                        && (!expectedProjectXml.Descendants("Project").Any() || expectedProjectXml.Descendants("Project").All(curr => curr.Attribute("ProjectId") == null || string.IsNullOrWhiteSpace(curr.Attribute("ProjectId").Value))) // Project Id not present or empty
+                        && (!expectedProjectXml.Descendants("Name").Where(curr => curr.Parent.Name.LocalName == "Project").Any() || expectedProjectXml.Descendants("Name").Where(curr => curr.Parent.Name.LocalName == "Project").All(curr => string.IsNullOrWhiteSpace(curr.Value))); // Project Name not present or empty
+                    if (projectShouldBeTreatedAsEmpty)
                     {
-                        FilePresent = true;
+                        filePresent = true;
                     }
                 }
 
-                if (!FilePresent)
+                if (!filePresent)
                 {
-                    FilePresent = CurrentExpectedFile.Length == 0; // Empty entry, then dont look for it
+                    filePresent = currentExpectedFile.Length == 0; // Empty entry, then dont look for it
                 }
 
-                if (!FilePresent)
+                if (!filePresent)
                 {
-                    Assert.True(false, "File: \"" + CurrentExpectedFile.FullName + "\" not present in created archive.");
+                    Assert.True(false, "File: \"" + currentExpectedFile.FullName + "\" not present in created archive.");
                 }
             }
         }
 
-        public static bool FileIsPresentInSameFolderWithDifferentName(ZipArchive ExpectedArchive, ZipArchive ActualArchive, string ExpectedEntryFullName)
+        public static bool FileIsPresentInSameFolderWithDifferentName(ZipArchive expectedArchive, ZipArchive actualArchive, string expectedEntryFullName)
         {
-            var ExpectedEntry = ExpectedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == ExpectedEntryFullName);
-            var Folder = ExpectedEntryFullName.Substring(0, ExpectedEntryFullName.Length - ExpectedEntryFullName.Split('/').Last().Length);
+            var expectedEntry = expectedArchive.Entries.FirstOrDefault(curr => curr.FullName == expectedEntryFullName);
+            var folder = expectedEntryFullName.Substring(0, expectedEntryFullName.Length - expectedEntryFullName.Split('/').Last().Length);
 
-            var SameFileInFolder = ActualArchive.Entries
-                .Where(Curr => Curr.FullName.StartsWith(Folder))
-                .Where(Curr => !Curr.FullName.Substring(Folder.Length).Contains('/'))
-                .Where(Curr => Curr.Length == ExpectedEntry.Length)
+            var sameFileInFolder = actualArchive.Entries
+                .Where(curr => curr.FullName.StartsWith(folder))
+                .Where(curr => !curr.FullName.Substring(folder.Length).Contains('/'))
+                .Where(curr => curr.Length == expectedEntry.Length)
                 .Any();
 
-            return SameFileInFolder;
+            return sameFileInFolder;
         }
     }
 
@@ -261,439 +261,439 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
     {
         /// <summary>
         /// </summary>
-        /// <param name="ExpectedContainer"></param>
-        /// <param name="ActualContainer"></param>
-        /// <param name="ExpectedArchive"></param>
-        /// <param name="ActualArchive"></param>
-        /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareAllTopics(BCFv2Container ExpectedContainer, BCFv2Container ActualContainer, ZipArchive ExpectedArchive, ZipArchive ActualArchive, bool OriginatesFromAPIConversion)
+        /// <param name="expectedContainer"></param>
+        /// <param name="actualContainer"></param>
+        /// <param name="expectedArchive"></param>
+        /// <param name="actualArchive"></param>
+        /// <param name="originatesFromApiConversion">If true, Bitmaps are not compared since the API does not support them</param>
+        public static void CompareAllTopics(BCFv2Container expectedContainer, BCFv2Container actualContainer, ZipArchive expectedArchive, ZipArchive actualArchive, bool originatesFromApiConversion)
         {
-            foreach (var ExpectedTopic in ExpectedContainer.Topics)
+            foreach (var expectedTopic in expectedContainer.Topics)
             {
                 // Make sure topic is present only one
-                Assert.Equal(1, ActualContainer.Topics.Where(Curr => Curr.Markup.Topic.Guid == ExpectedTopic.Markup.Topic.Guid).Count());
-                var ActualTopic = ActualContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == ExpectedTopic.Markup.Topic.Guid);
-                CompareSingleTopic(ExpectedTopic, ActualTopic, ExpectedArchive, ActualArchive, OriginatesFromAPIConversion);
+                Assert.Equal(1, actualContainer.Topics.Where(curr => curr.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid).Count());
+                var actualTopic = actualContainer.Topics.FirstOrDefault(curr => curr.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid);
+                CompareSingleTopic(expectedTopic, actualTopic, expectedArchive, actualArchive, originatesFromApiConversion);
             }
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="ExpectedTopic"></param>
-        /// <param name="ActualTopic"></param>
-        /// <param name="ExpectedArchive"></param>
-        /// <param name="ActualArchive"></param>
-        /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareSingleTopic(BCFTopic ExpectedTopic, BCFTopic ActualTopic, ZipArchive ExpectedArchive, ZipArchive ActualArchive, bool OriginatesFromAPIConversion)
+        /// <param name="expectedTopic"></param>
+        /// <param name="actualTopic"></param>
+        /// <param name="expectedArchive"></param>
+        /// <param name="actualArchive"></param>
+        /// <param name="originatesFromApiConversion">If true, Bitmaps are not compared since the API does not support them</param>
+        public static void CompareSingleTopic(BCFTopic expectedTopic, BCFTopic actualTopic, ZipArchive expectedArchive, ZipArchive actualArchive, bool originatesFromApiConversion)
         {
             // Compare Markup
-            CompareMarkup(ExpectedTopic.Markup, ActualTopic.Markup, ExpectedArchive, ActualArchive);
+            CompareMarkup(expectedTopic.Markup, actualTopic.Markup, expectedArchive, actualArchive);
 
             // Compare SnippetData
-            if (ExpectedTopic.SnippetData != null)
+            if (expectedTopic.SnippetData != null)
             {
-                Assert.True(ExpectedTopic.SnippetData.SequenceEqual(ActualTopic.SnippetData));
+                Assert.True(expectedTopic.SnippetData.SequenceEqual(actualTopic.SnippetData));
             }
             else
             {
-                Assert.Null(ActualTopic.SnippetData);
+                Assert.Null(actualTopic.SnippetData);
             }
 
             // Compare Viewpoints
-            CompareViewpoints(ExpectedTopic.Viewpoints, ActualTopic.Viewpoints, OriginatesFromAPIConversion);
+            CompareViewpoints(expectedTopic.Viewpoints, actualTopic.Viewpoints, originatesFromApiConversion);
 
             // Compare ViewpointBitmaps
-            if (!OriginatesFromAPIConversion)
+            if (!originatesFromApiConversion)
             {
-                CompareViewpointBitmaps(ExpectedTopic.ViewpointBitmaps, ActualTopic.ViewpointBitmaps);
+                CompareViewpointBitmaps(expectedTopic.ViewpointBitmaps, actualTopic.ViewpointBitmaps);
             }
 
             // Compare ViewpointSnapshots
-            CompareViewpointSnapshots(ExpectedTopic.ViewpointSnapshots, ActualTopic.ViewpointSnapshots);
+            CompareViewpointSnapshots(expectedTopic.ViewpointSnapshots, actualTopic.ViewpointSnapshots);
         }
 
-        public static void CompareMarkup(Markup ExpectedMarkup, Markup ActualMarkup, ZipArchive ExpectedArchive, ZipArchive ActualArchive)
+        public static void CompareMarkup(Markup expectedMarkup, Markup actualMarkup, ZipArchive expectedArchive, ZipArchive actualArchive)
         {
             // Compare Header Section
-            if (TestCompareUtilities.BothNotNull(ExpectedMarkup.Header, ActualMarkup.Header, "Markup.Header"))
+            if (TestCompareUtilities.BothNotNull(expectedMarkup.Header, actualMarkup.Header, "Markup.Header"))
             {
-                foreach (var CurrentHeaderEntry in ExpectedMarkup.Header)
+                foreach (var currentHeaderEntry in expectedMarkup.Header)
                 {
-                    var FoundExactlyOneMatchignEntryInActual = ActualMarkup.Header
-                        .Where(Curr => Curr.Date == CurrentHeaderEntry.Date)
-                        .Where(Curr => Curr.Filename == CurrentHeaderEntry.Filename)
-                        .Where(Curr => Curr.IfcProject == CurrentHeaderEntry.IfcProject)
-                        .Where(Curr => Curr.IfcSpatialStructureElement == CurrentHeaderEntry.IfcSpatialStructureElement)
-                        .Where(Curr => Curr.isExternal == CurrentHeaderEntry.isExternal)
-                        .Where(Curr => Curr.Reference == CurrentHeaderEntry.Reference)
+                    var foundExactlyOneMatchignEntryInActual = actualMarkup.Header
+                        .Where(curr => curr.Date == currentHeaderEntry.Date)
+                        .Where(curr => curr.Filename == currentHeaderEntry.Filename)
+                        .Where(curr => curr.IfcProject == currentHeaderEntry.IfcProject)
+                        .Where(curr => curr.IfcSpatialStructureElement == currentHeaderEntry.IfcSpatialStructureElement)
+                        .Where(curr => curr.isExternal == currentHeaderEntry.isExternal)
+                        .Where(curr => curr.Reference == currentHeaderEntry.Reference)
                         .Count() == 1;
 
-                    Assert.True(FoundExactlyOneMatchignEntryInActual, "Found not matching header entry in actual file.");
+                    Assert.True(foundExactlyOneMatchignEntryInActual, "Found not matching header entry in actual file.");
                 }
 
                 // Check that the both sections contain the same number of entries
-                Assert.Equal(ExpectedMarkup.Header.Count, ActualMarkup.Header.Count);
+                Assert.Equal(expectedMarkup.Header.Count, actualMarkup.Header.Count);
             }
 
-            CompareComments(ExpectedMarkup.Comment, ActualMarkup.Comment);
+            CompareComments(expectedMarkup.Comment, actualMarkup.Comment);
 
-            if (TestCompareUtilities.BothNotNull(ExpectedMarkup.Viewpoints, ActualMarkup.Viewpoints, "Markup.Viewpoints"))
+            if (TestCompareUtilities.BothNotNull(expectedMarkup.Viewpoints, actualMarkup.Viewpoints, "Markup.Viewpoints"))
             {
-                CompareViewpoints(ExpectedMarkup.Viewpoints, ActualMarkup.Viewpoints, ExpectedArchive, ActualArchive, ExpectedMarkup.Topic.Guid);
+                CompareViewpoints(expectedMarkup.Viewpoints, actualMarkup.Viewpoints, expectedArchive, actualArchive, expectedMarkup.Topic.Guid);
             }
 
-            if (TestCompareUtilities.BothNotNull(ExpectedMarkup.Topic, ActualMarkup.Topic, "Markup.Topic"))
+            if (TestCompareUtilities.BothNotNull(expectedMarkup.Topic, actualMarkup.Topic, "Markup.Topic"))
             {
-                CompareTopic(ExpectedMarkup.Topic, ActualMarkup.Topic);
+                CompareTopic(expectedMarkup.Topic, actualMarkup.Topic);
             }
         }
 
-        public static void CompareViewpoints(List<ViewPoint> ExpectedViewpoints, List<ViewPoint> ActualViewpoints, ZipArchive ExpectedArchive, ZipArchive ActualArchive, string TopicGuid)
+        public static void CompareViewpoints(List<ViewPoint> expectedViewpoints, List<ViewPoint> actualViewpoints, ZipArchive expectedArchive, ZipArchive actualArchive, string topicGuid)
         {
             // Count Matches
-            Assert.Equal(ExpectedViewpoints.Count, ActualViewpoints.Count);
+            Assert.Equal(expectedViewpoints.Count, actualViewpoints.Count);
 
-            foreach (var ExpectedViewpoint in ExpectedViewpoints)
+            foreach (var expectedViewpoint in expectedViewpoints)
             {
-                var ActualViewpoint = ActualViewpoints.FirstOrDefault(Curr => Curr.Guid == ExpectedViewpoint.Guid);
+                var actualViewpoint = actualViewpoints.FirstOrDefault(curr => curr.Guid == expectedViewpoint.Guid);
 
-                Assert.Equal(ExpectedViewpoint.Guid, ActualViewpoint.Guid);
-                if (ExpectedViewpoint.Snapshot != ActualViewpoint.Snapshot)
+                Assert.Equal(expectedViewpoint.Guid, actualViewpoint.Guid);
+                if (expectedViewpoint.Snapshot != actualViewpoint.Snapshot)
                 {
                     // This means the file reference to the snapshot is different; need to check it then in binary format
-                    var ExpectedViewpointSnapshotStream = new MemoryStream();
-                    ExpectedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == TopicGuid + "/" + ExpectedViewpoint.Snapshot).Open().CopyTo(ExpectedViewpointSnapshotStream);
-                    var ExpectedViewpointSnapshotBinary = ExpectedViewpointSnapshotStream.ToArray();
+                    var expectedViewpointSnapshotStream = new MemoryStream();
+                    expectedArchive.Entries.FirstOrDefault(curr => curr.FullName == topicGuid + "/" + expectedViewpoint.Snapshot).Open().CopyTo(expectedViewpointSnapshotStream);
+                    var expectedViewpointSnapshotBinary = expectedViewpointSnapshotStream.ToArray();
 
-                    Assert.False(string.IsNullOrWhiteSpace(ActualViewpoint.Snapshot));
-                    var ActualViewpointEntry = ActualArchive.Entries.FirstOrDefault(Curr => Curr.FullName == TopicGuid + "/" + ActualViewpoint.Snapshot);
-                    Assert.NotNull(ActualViewpointEntry);
-                    var ActualViewpointSnapshotStream = new MemoryStream();
-                    ActualViewpointEntry.Open().CopyTo(ActualViewpointSnapshotStream);
-                    var ActualViewpointSnapshotBinary = ActualViewpointSnapshotStream.ToArray();
+                    Assert.False(string.IsNullOrWhiteSpace(actualViewpoint.Snapshot));
+                    var actualViewpointEntry = actualArchive.Entries.FirstOrDefault(curr => curr.FullName == topicGuid + "/" + actualViewpoint.Snapshot);
+                    Assert.NotNull(actualViewpointEntry);
+                    var actualViewpointSnapshotStream = new MemoryStream();
+                    actualViewpointEntry.Open().CopyTo(actualViewpointSnapshotStream);
+                    var actualViewpointSnapshotBinary = actualViewpointSnapshotStream.ToArray();
 
-                    Assert.True(ExpectedViewpointSnapshotBinary.SequenceEqual(ActualViewpointSnapshotBinary));
+                    Assert.True(expectedViewpointSnapshotBinary.SequenceEqual(actualViewpointSnapshotBinary));
                 }
-                Assert.Equal(ExpectedViewpoint.Viewpoint, ActualViewpoint.Viewpoint);
+                Assert.Equal(expectedViewpoint.Viewpoint, actualViewpoint.Viewpoint);
             }
         }
 
-        public static void CompareBimSnippet(BimSnippet Expected, BimSnippet Actual)
+        public static void CompareBimSnippet(BimSnippet expected, BimSnippet actual)
         {
-            Assert.Equal(Expected.isExternal, Actual.isExternal);
-            Assert.Equal(Expected.Reference, Actual.Reference);
-            Assert.Equal(Expected.ReferenceSchema, Actual.ReferenceSchema);
-            Assert.Equal(Expected.SnippetType, Actual.SnippetType);
+            Assert.Equal(expected.isExternal, actual.isExternal);
+            Assert.Equal(expected.Reference, actual.Reference);
+            Assert.Equal(expected.ReferenceSchema, actual.ReferenceSchema);
+            Assert.Equal(expected.SnippetType, actual.SnippetType);
         }
 
-        public static void CompareTopic(Topic ExpectedTopic, Topic ActualTopic)
+        public static void CompareTopic(Topic expectedTopic, Topic actualTopic)
         {
-            Assert.Equal(ExpectedTopic.AssignedTo, ActualTopic.AssignedTo);
+            Assert.Equal(expectedTopic.AssignedTo, actualTopic.AssignedTo);
 
             // Compare Snippet
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet, "Markup.BimSnippet"))
+            if (TestCompareUtilities.BothNotNull(expectedTopic.BimSnippet, actualTopic.BimSnippet, "Markup.BimSnippet"))
             {
-                CompareBimSnippet(ExpectedTopic.BimSnippet, ActualTopic.BimSnippet);
+                CompareBimSnippet(expectedTopic.BimSnippet, actualTopic.BimSnippet);
             }
 
             // Compare document references
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.DocumentReferences, ActualTopic.DocumentReferences, "Markup.DocumentReferences"))
+            if (TestCompareUtilities.BothNotNull(expectedTopic.DocumentReferences, actualTopic.DocumentReferences, "Markup.DocumentReferences"))
             {
-                Assert.Equal(ExpectedTopic.DocumentReferences.Count, ActualTopic.DocumentReferences.Count);
+                Assert.Equal(expectedTopic.DocumentReferences.Count, actualTopic.DocumentReferences.Count);
 
-                foreach (var ExpectedDocumentReference in ExpectedTopic.DocumentReferences)
+                foreach (var expectedDocumentReference in expectedTopic.DocumentReferences)
                 {
                     // Find the matching document reference in the actual topic
-                    var ActualDocumentReference = ActualTopic.DocumentReferences
-                        .Where(Curr => Curr.Description == ExpectedDocumentReference.Description)
-                        .Where(Curr => Curr.Guid == ExpectedDocumentReference.Guid)
-                        .Where(Curr => Curr.isExternal == ExpectedDocumentReference.isExternal)
-                        .Where(Curr => Curr.ReferencedDocument == ExpectedDocumentReference.ReferencedDocument)
+                    var actualDocumentReference = actualTopic.DocumentReferences
+                        .Where(curr => curr.Description == expectedDocumentReference.Description)
+                        .Where(curr => curr.Guid == expectedDocumentReference.Guid)
+                        .Where(curr => curr.isExternal == expectedDocumentReference.isExternal)
+                        .Where(curr => curr.ReferencedDocument == expectedDocumentReference.ReferencedDocument)
                         .FirstOrDefault();
-                    Assert.NotNull(ActualDocumentReference);
+                    Assert.NotNull(actualDocumentReference);
                 }
             }
 
             // Check labels
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.Labels, ActualTopic.Labels, "Markup.Labels"))
+            if (TestCompareUtilities.BothNotNull(expectedTopic.Labels, actualTopic.Labels, "Markup.Labels"))
             {
-                Assert.Equal(ExpectedTopic.Labels.Count, ActualTopic.Labels.Count);
-                foreach (var ExpectedLabel in ExpectedTopic.Labels)
+                Assert.Equal(expectedTopic.Labels.Count, actualTopic.Labels.Count);
+                foreach (var expectedLabel in expectedTopic.Labels)
                 {
-                    Assert.True(ActualTopic.Labels.Contains(ExpectedLabel));
+                    Assert.True(actualTopic.Labels.Contains(expectedLabel));
                 }
             }
 
             // Check related topics
-            if (TestCompareUtilities.BothNotNull(ExpectedTopic.RelatedTopics, ActualTopic.RelatedTopics, "Markup.RelatedTopics"))
+            if (TestCompareUtilities.BothNotNull(expectedTopic.RelatedTopics, actualTopic.RelatedTopics, "Markup.RelatedTopics"))
             {
-                Assert.Equal(ExpectedTopic.RelatedTopics.Count, ActualTopic.RelatedTopics.Count);
-                foreach (var ExpectedRelatedTopic in ExpectedTopic.RelatedTopics)
+                Assert.Equal(expectedTopic.RelatedTopics.Count, actualTopic.RelatedTopics.Count);
+                foreach (var expectedRelatedTopic in expectedTopic.RelatedTopics)
                 {
-                    var ActualRelatedTopic = ActualTopic.RelatedTopics
-                        .Where(Curr => Curr.Guid == ExpectedRelatedTopic.Guid)
+                    var actualRelatedTopic = actualTopic.RelatedTopics
+                        .Where(curr => curr.Guid == expectedRelatedTopic.Guid)
                         .FirstOrDefault();
-                    Assert.NotNull(ActualRelatedTopic);
+                    Assert.NotNull(actualRelatedTopic);
                 }
             }
 
-            Assert.Equal(ExpectedTopic.CreationAuthor, ActualTopic.CreationAuthor);
-            Assert.True((int) (ExpectedTopic.CreationDate - ActualTopic.CreationDate).TotalSeconds < 5);
-            Assert.Equal(ExpectedTopic.CreationDateSpecified, ActualTopic.CreationDateSpecified);
+            Assert.Equal(expectedTopic.CreationAuthor, actualTopic.CreationAuthor);
+            Assert.True((int) (expectedTopic.CreationDate - actualTopic.CreationDate).TotalSeconds < 5);
+            Assert.Equal(expectedTopic.CreationDateSpecified, actualTopic.CreationDateSpecified);
 
-            if (!(string.IsNullOrWhiteSpace(ExpectedTopic.Description) && string.IsNullOrWhiteSpace(ActualTopic.Description)))
+            if (!(string.IsNullOrWhiteSpace(expectedTopic.Description) && string.IsNullOrWhiteSpace(actualTopic.Description)))
             {
-                Assert.Equal(ExpectedTopic.Description, ActualTopic.Description);
+                Assert.Equal(expectedTopic.Description, actualTopic.Description);
             }
-            Assert.Equal(ExpectedTopic.Guid, ActualTopic.Guid);
+            Assert.Equal(expectedTopic.Guid, actualTopic.Guid);
 
-            if (ExpectedTopic.Index != ActualTopic.Index)
+            if (expectedTopic.Index != actualTopic.Index)
             {
-                if (!(ExpectedTopic.Index != null && ExpectedTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ActualTopic.Index)
-                      || ActualTopic.Index != null && ActualTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(ExpectedTopic.Index)))
+                if (!(expectedTopic.Index != null && expectedTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(actualTopic.Index)
+                      || actualTopic.Index != null && actualTopic.Index.Trim() == "0" && string.IsNullOrWhiteSpace(expectedTopic.Index)))
                 {
                     Assert.True(false, "Index does not match");
                 }
             }
 
-            Assert.Equal(ExpectedTopic.ModifiedAuthor, ActualTopic.ModifiedAuthor);
-            Assert.Equal(ExpectedTopic.ModifiedDate, ActualTopic.ModifiedDate);
-            Assert.Equal(ExpectedTopic.ModifiedDateSpecified, ActualTopic.ModifiedDateSpecified);
-            Assert.Equal(ExpectedTopic.Priority, ActualTopic.Priority);
-            Assert.Equal(ExpectedTopic.ReferenceLink, ActualTopic.ReferenceLink);
-            Assert.Equal(ExpectedTopic.Title, ActualTopic.Title);
-            Assert.Equal(ExpectedTopic.TopicStatus, ActualTopic.TopicStatus);
-            Assert.Equal(ExpectedTopic.TopicType, ActualTopic.TopicType);
+            Assert.Equal(expectedTopic.ModifiedAuthor, actualTopic.ModifiedAuthor);
+            Assert.Equal(expectedTopic.ModifiedDate, actualTopic.ModifiedDate);
+            Assert.Equal(expectedTopic.ModifiedDateSpecified, actualTopic.ModifiedDateSpecified);
+            Assert.Equal(expectedTopic.Priority, actualTopic.Priority);
+            Assert.Equal(expectedTopic.ReferenceLink, actualTopic.ReferenceLink);
+            Assert.Equal(expectedTopic.Title, actualTopic.Title);
+            Assert.Equal(expectedTopic.TopicStatus, actualTopic.TopicStatus);
+            Assert.Equal(expectedTopic.TopicType, actualTopic.TopicType);
         }
 
-        public static void CompareComments(List<Comment> ExpectedComments, List<Comment> ActualComments)
+        public static void CompareComments(List<Comment> expectedComments, List<Comment> actualComments)
         {
             // Compare count
-            Assert.Equal(ExpectedComments.Count, ActualComments.Count);
+            Assert.Equal(expectedComments.Count, actualComments.Count);
 
-            foreach (var ExpectedComment in ExpectedComments)
+            foreach (var expectedComment in expectedComments)
             {
                 // Get actual comment
-                var ActualComment = ActualComments.FirstOrDefault(Curr => Curr.Guid == ExpectedComment.Guid);
-                Assert.NotNull(ActualComment);
-                CompareSingleComment(ExpectedComment, ActualComment);
+                var actualComment = actualComments.FirstOrDefault(curr => curr.Guid == expectedComment.Guid);
+                Assert.NotNull(actualComment);
+                CompareSingleComment(expectedComment, actualComment);
             }
         }
 
-        public static void CompareSingleComment(Comment ExpectedComment, Comment ActualComment)
+        public static void CompareSingleComment(Comment expectedComment, Comment actualComment)
         {
-            Assert.Equal(ExpectedComment.Author, ActualComment.Author);
+            Assert.Equal(expectedComment.Author, actualComment.Author);
 
-            var CommentTextMatches = ExpectedComment.Comment1 == ActualComment.Comment1;
-            if (!CommentTextMatches)
+            var commentTextMatches = expectedComment.Comment1 == actualComment.Comment1;
+            if (!commentTextMatches)
             {
                 // It's possible that there is no actual comment text but the XML file does have the <Comment> element with an empty value
-                CommentTextMatches = string.IsNullOrWhiteSpace(ExpectedComment.Comment1) && string.IsNullOrWhiteSpace(ActualComment.Comment1);
+                commentTextMatches = string.IsNullOrWhiteSpace(expectedComment.Comment1) && string.IsNullOrWhiteSpace(actualComment.Comment1);
             }
-            Assert.True(CommentTextMatches, "No match in comment: Comment1");
+            Assert.True(commentTextMatches, "No match in comment: Comment1");
 
-            Assert.Equal(ExpectedComment.Date, ActualComment.Date);
-            Assert.Equal(ExpectedComment.Guid, ActualComment.Guid);
-            Assert.Equal(ExpectedComment.ModifiedAuthor, ActualComment.ModifiedAuthor);
-            Assert.Equal(ExpectedComment.ModifiedDate, ActualComment.ModifiedDate);
-            Assert.Equal(ExpectedComment.ModifiedDateSpecified, ActualComment.ModifiedDateSpecified);
+            Assert.Equal(expectedComment.Date, actualComment.Date);
+            Assert.Equal(expectedComment.Guid, actualComment.Guid);
+            Assert.Equal(expectedComment.ModifiedAuthor, actualComment.ModifiedAuthor);
+            Assert.Equal(expectedComment.ModifiedDate, actualComment.ModifiedDate);
+            Assert.Equal(expectedComment.ModifiedDateSpecified, actualComment.ModifiedDateSpecified);
 
-            if (ExpectedComment.ShouldSerializeReplyToComment())
+            if (expectedComment.ShouldSerializeReplyToComment())
             {
-                Assert.True(ActualComment.ShouldSerializeReplyToComment());
-                Assert.Equal(ExpectedComment.ReplyToComment.Guid, ActualComment.ReplyToComment.Guid);
-            }
-            else
-            {
-                Assert.False(ActualComment.ShouldSerializeReplyToComment());
-            }
-
-            Assert.Equal(ExpectedComment.Status, ActualComment.Status);
-            Assert.Equal(ExpectedComment.VerbalStatus, ActualComment.VerbalStatus);
-
-            if (ExpectedComment.ShouldSerializeViewpoint())
-            {
-                Assert.True(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
-                Assert.Equal(ExpectedComment.Viewpoint.Guid, ActualComment.Viewpoint.Guid);
+                Assert.True(actualComment.ShouldSerializeReplyToComment());
+                Assert.Equal(expectedComment.ReplyToComment.Guid, actualComment.ReplyToComment.Guid);
             }
             else
             {
-                Assert.False(ActualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
+                Assert.False(actualComment.ShouldSerializeReplyToComment());
+            }
+
+            Assert.Equal(expectedComment.Status, actualComment.Status);
+            Assert.Equal(expectedComment.VerbalStatus, actualComment.VerbalStatus);
+
+            if (expectedComment.ShouldSerializeViewpoint())
+            {
+                Assert.True(actualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
+                Assert.Equal(expectedComment.Viewpoint.Guid, actualComment.Viewpoint.Guid);
+            }
+            else
+            {
+                Assert.False(actualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
             }
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="ExpectedViewpoints"></param>
-        /// <param name="ActualViewpoints"></param>
-        /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareViewpoints(IEnumerable<VisualizationInfo> ExpectedViewpoints, IEnumerable<VisualizationInfo> ActualViewpoints, bool OriginatesFromAPIConversion)
+        /// <param name="expectedViewpoints"></param>
+        /// <param name="actualViewpoints"></param>
+        /// <param name="originatesFromApiConversion">If true, Bitmaps are not compared since the API does not support them</param>
+        public static void CompareViewpoints(IEnumerable<VisualizationInfo> expectedViewpoints, IEnumerable<VisualizationInfo> actualViewpoints, bool originatesFromApiConversion)
         {
-            foreach (var ExpectedViewpoint in ExpectedViewpoints)
+            foreach (var expectedViewpoint in expectedViewpoints)
             {
-                var ActualViewpoint = ActualViewpoints.FirstOrDefault(Curr => Curr.GUID == ExpectedViewpoint.GUID);
-                Assert.NotNull(ActualViewpoint);
-                CompareSingleViewpoints(ExpectedViewpoint, ActualViewpoint, OriginatesFromAPIConversion);
+                var actualViewpoint = actualViewpoints.FirstOrDefault(curr => curr.GUID == expectedViewpoint.GUID);
+                Assert.NotNull(actualViewpoint);
+                CompareSingleViewpoints(expectedViewpoint, actualViewpoint, originatesFromApiConversion);
             }
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="ExpectedViewpoint"></param>
-        /// <param name="ActualViewpoint"></param>
-        /// <param name="OriginatesFromAPIConversion">If true, Bitmaps are not compared since the API does not support them</param>
-        public static void CompareSingleViewpoints(VisualizationInfo ExpectedViewpoint, VisualizationInfo ActualViewpoint, bool OriginatesFromAPIConversion)
+        /// <param name="expectedViewpoint"></param>
+        /// <param name="actualViewpoint"></param>
+        /// <param name="originatesFromApiConversion">If true, Bitmaps are not compared since the API does not support them</param>
+        public static void CompareSingleViewpoints(VisualizationInfo expectedViewpoint, VisualizationInfo actualViewpoint, bool originatesFromApiConversion)
         {
-            Assert.Equal(ExpectedViewpoint.GUID, ActualViewpoint.GUID);
+            Assert.Equal(expectedViewpoint.GUID, actualViewpoint.GUID);
 
             // Compare Bitmaps
-            if (!OriginatesFromAPIConversion && TestCompareUtilities.BothNotNull(ExpectedViewpoint.Bitmaps, ActualViewpoint.Bitmaps, "Viewpoint.Bitmaps"))
+            if (!originatesFromApiConversion && TestCompareUtilities.BothNotNull(expectedViewpoint.Bitmaps, actualViewpoint.Bitmaps, "Viewpoint.Bitmaps"))
             {
-                Assert.Equal(ExpectedViewpoint.Bitmaps.Count, ActualViewpoint.Bitmaps.Count);
-                foreach (var ExpectedBitmap in ExpectedViewpoint.Bitmaps)
+                Assert.Equal(expectedViewpoint.Bitmaps.Count, actualViewpoint.Bitmaps.Count);
+                foreach (var expectedBitmap in expectedViewpoint.Bitmaps)
                 {
-                    var ActualBitmap = ActualViewpoint.Bitmaps
-                        .Where(Curr => Curr.Bitmap == ExpectedBitmap.Bitmap)
-                        .Where(Curr => Curr.Height == ExpectedBitmap.Height)
-                        .Where(Curr => Curr.Location.X == ExpectedBitmap.Location.X)
-                        .Where(Curr => Curr.Location.Y == ExpectedBitmap.Location.Y)
-                        .Where(Curr => Curr.Location.Z == ExpectedBitmap.Location.Z)
-                        .Where(Curr => Curr.Normal.X == ExpectedBitmap.Normal.X)
-                        .Where(Curr => Curr.Normal.Y == ExpectedBitmap.Normal.Y)
-                        .Where(Curr => Curr.Normal.Z == ExpectedBitmap.Normal.Z)
-                        .Where(Curr => Curr.Reference == ExpectedBitmap.Reference)
-                        .Where(Curr => Curr.Up.X == ExpectedBitmap.Up.X)
-                        .Where(Curr => Curr.Up.Y == ExpectedBitmap.Up.Y)
-                        .Where(Curr => Curr.Up.Z == ExpectedBitmap.Up.Z)
+                    var actualBitmap = actualViewpoint.Bitmaps
+                        .Where(curr => curr.Bitmap == expectedBitmap.Bitmap)
+                        .Where(curr => curr.Height == expectedBitmap.Height)
+                        .Where(curr => curr.Location.X == expectedBitmap.Location.X)
+                        .Where(curr => curr.Location.Y == expectedBitmap.Location.Y)
+                        .Where(curr => curr.Location.Z == expectedBitmap.Location.Z)
+                        .Where(curr => curr.Normal.X == expectedBitmap.Normal.X)
+                        .Where(curr => curr.Normal.Y == expectedBitmap.Normal.Y)
+                        .Where(curr => curr.Normal.Z == expectedBitmap.Normal.Z)
+                        .Where(curr => curr.Reference == expectedBitmap.Reference)
+                        .Where(curr => curr.Up.X == expectedBitmap.Up.X)
+                        .Where(curr => curr.Up.Y == expectedBitmap.Up.Y)
+                        .Where(curr => curr.Up.Z == expectedBitmap.Up.Z)
                         .FirstOrDefault();
-                    Assert.NotNull(ActualViewpoint);
+                    Assert.NotNull(actualViewpoint);
                 }
             }
 
             // Compare Components
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.Components, ActualViewpoint.Components, "Viewpoint.Components"))
+            if (TestCompareUtilities.BothNotNull(expectedViewpoint.Components, actualViewpoint.Components, "Viewpoint.Components"))
             {
-                if (ExpectedViewpoint.Components.Count == 1 && ActualViewpoint.Components.Count == 1)
+                if (expectedViewpoint.Components.Count == 1 && actualViewpoint.Components.Count == 1)
                 {
-                    var ExpectedComponent = ExpectedViewpoint.Components.First();
-                    var ActualComponent = ActualViewpoint.Components.First();
+                    var expectedComponent = expectedViewpoint.Components.First();
+                    var actualComponent = actualViewpoint.Components.First();
 
-                    Assert.Equal(ExpectedComponent.AuthoringToolId, ActualComponent.AuthoringToolId);
-                    Assert.True((ExpectedComponent.Color == null && ActualComponent.Color == null) || ExpectedComponent.Color.SequenceEqual(ActualComponent.Color), "Color");
-                    Assert.Equal(ExpectedComponent.IfcGuid, ActualComponent.IfcGuid);
-                    Assert.Equal(ExpectedComponent.OriginatingSystem, ActualComponent.OriginatingSystem);
-                    Assert.Equal(ExpectedComponent.Selected, ActualComponent.Selected);
-                    Assert.Equal(ExpectedComponent.Visible, ActualComponent.Visible);
+                    Assert.Equal(expectedComponent.AuthoringToolId, actualComponent.AuthoringToolId);
+                    Assert.True((expectedComponent.Color == null && actualComponent.Color == null) || expectedComponent.Color.SequenceEqual(actualComponent.Color), "Color");
+                    Assert.Equal(expectedComponent.IfcGuid, actualComponent.IfcGuid);
+                    Assert.Equal(expectedComponent.OriginatingSystem, actualComponent.OriginatingSystem);
+                    Assert.Equal(expectedComponent.Selected, actualComponent.Selected);
+                    Assert.Equal(expectedComponent.Visible, actualComponent.Visible);
                 }
                 else
                 {
-                    foreach (var CurrentComponent in ExpectedViewpoint.Components)
+                    foreach (var currentComponent in expectedViewpoint.Components)
                     {
-                        var ActualComponent = ActualViewpoint.Components
-                            .Where(Curr => Curr.AuthoringToolId == CurrentComponent.AuthoringToolId)
-                            .Where(Curr => (Curr.Color == null && CurrentComponent.Color == null) || Curr.Color.SequenceEqual(CurrentComponent.Color))
-                            .Where(Curr => Curr.IfcGuid == CurrentComponent.IfcGuid)
-                            .Where(Curr => Curr.OriginatingSystem == CurrentComponent.OriginatingSystem)
-                            .Where(Curr => Curr.Selected == CurrentComponent.Selected)
-                            .Where(Curr => Curr.Visible == CurrentComponent.Visible)
+                        var actualComponent = actualViewpoint.Components
+                            .Where(curr => curr.AuthoringToolId == currentComponent.AuthoringToolId)
+                            .Where(curr => (curr.Color == null && currentComponent.Color == null) || curr.Color.SequenceEqual(currentComponent.Color))
+                            .Where(curr => curr.IfcGuid == currentComponent.IfcGuid)
+                            .Where(curr => curr.OriginatingSystem == currentComponent.OriginatingSystem)
+                            .Where(curr => curr.Selected == currentComponent.Selected)
+                            .Where(curr => curr.Visible == currentComponent.Visible)
                             .FirstOrDefault();
 
-                        Assert.NotNull(ActualComponent);
+                        Assert.NotNull(actualComponent);
                     }
                 }
             }
 
             // Compare Lines
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.Lines, ActualViewpoint.Lines, "Viewpoint.Lines"))
+            if (TestCompareUtilities.BothNotNull(expectedViewpoint.Lines, actualViewpoint.Lines, "Viewpoint.Lines"))
             {
-                foreach (var ExpectedLine in ExpectedViewpoint.Lines)
+                foreach (var expectedLine in expectedViewpoint.Lines)
                 {
-                    var ActualLine = ActualViewpoint.Lines
-                        .Where(Curr => Curr.EndPoint.X == ExpectedLine.EndPoint.X)
-                        .Where(Curr => Curr.EndPoint.Y == ExpectedLine.EndPoint.Y)
-                        .Where(Curr => Curr.EndPoint.Z == ExpectedLine.EndPoint.Z)
-                        .Where(Curr => Curr.StartPoint.X == ExpectedLine.StartPoint.X)
-                        .Where(Curr => Curr.StartPoint.Y == ExpectedLine.StartPoint.Y)
-                        .Where(Curr => Curr.StartPoint.Z == ExpectedLine.StartPoint.Z)
+                    var actualLine = actualViewpoint.Lines
+                        .Where(curr => curr.EndPoint.X == expectedLine.EndPoint.X)
+                        .Where(curr => curr.EndPoint.Y == expectedLine.EndPoint.Y)
+                        .Where(curr => curr.EndPoint.Z == expectedLine.EndPoint.Z)
+                        .Where(curr => curr.StartPoint.X == expectedLine.StartPoint.X)
+                        .Where(curr => curr.StartPoint.Y == expectedLine.StartPoint.Y)
+                        .Where(curr => curr.StartPoint.Z == expectedLine.StartPoint.Z)
                         .FirstOrDefault();
-                    Assert.NotNull(ActualLine);
+                    Assert.NotNull(actualLine);
                 }
             }
 
             // Compare Clipping planes
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.ClippingPlanes, ActualViewpoint.ClippingPlanes, "Viewpoint.ClippingPlanes"))
+            if (TestCompareUtilities.BothNotNull(expectedViewpoint.ClippingPlanes, actualViewpoint.ClippingPlanes, "Viewpoint.ClippingPlanes"))
             {
-                foreach (var ExpectedPlane in ExpectedViewpoint.ClippingPlanes)
+                foreach (var expectedPlane in expectedViewpoint.ClippingPlanes)
                 {
-                    var ActualPlane = ActualViewpoint.ClippingPlanes
-                        .Where(Curr => Curr.Direction.X == ExpectedPlane.Direction.X)
-                        .Where(Curr => Curr.Direction.Y == ExpectedPlane.Direction.Y)
-                        .Where(Curr => Curr.Direction.Z == ExpectedPlane.Direction.Z)
-                        .Where(Curr => Curr.Location.X == ExpectedPlane.Location.X)
-                        .Where(Curr => Curr.Location.Y == ExpectedPlane.Location.Y)
-                        .Where(Curr => Curr.Location.Z == ExpectedPlane.Location.Z)
+                    var actualPlane = actualViewpoint.ClippingPlanes
+                        .Where(curr => curr.Direction.X == expectedPlane.Direction.X)
+                        .Where(curr => curr.Direction.Y == expectedPlane.Direction.Y)
+                        .Where(curr => curr.Direction.Z == expectedPlane.Direction.Z)
+                        .Where(curr => curr.Location.X == expectedPlane.Location.X)
+                        .Where(curr => curr.Location.Y == expectedPlane.Location.Y)
+                        .Where(curr => curr.Location.Z == expectedPlane.Location.Z)
                         .FirstOrDefault();
-                    Assert.NotNull(ActualPlane);
+                    Assert.NotNull(actualPlane);
                 }
             }
 
             // Compare OrthogonalCamera
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.OrthogonalCamera, ActualViewpoint.OrthogonalCamera, "Viewpoint.OrthogonalCamera"))
+            if (TestCompareUtilities.BothNotNull(expectedViewpoint.OrthogonalCamera, actualViewpoint.OrthogonalCamera, "Viewpoint.OrthogonalCamera"))
             {
-                CompareOrthogonalCameras(ExpectedViewpoint.OrthogonalCamera, ActualViewpoint.OrthogonalCamera);
+                CompareOrthogonalCameras(expectedViewpoint.OrthogonalCamera, actualViewpoint.OrthogonalCamera);
             }
             // Compare PerspectiveCamera
-            if (TestCompareUtilities.BothNotNull(ExpectedViewpoint.PerspectiveCamera, ActualViewpoint.PerspectiveCamera, "Viewpoint.PerspectiveCamera"))
+            if (TestCompareUtilities.BothNotNull(expectedViewpoint.PerspectiveCamera, actualViewpoint.PerspectiveCamera, "Viewpoint.PerspectiveCamera"))
             {
-                ComparePerspectiveCameras(ExpectedViewpoint.PerspectiveCamera, ActualViewpoint.PerspectiveCamera);
+                ComparePerspectiveCameras(expectedViewpoint.PerspectiveCamera, actualViewpoint.PerspectiveCamera);
             }
         }
 
-        public static void CompareOrthogonalCameras(OrthogonalCamera Expected, OrthogonalCamera Actual)
+        public static void CompareOrthogonalCameras(OrthogonalCamera expected, OrthogonalCamera actual)
         {
-            Assert.Equal(Expected.ViewToWorldScale, Actual.ViewToWorldScale);
-            Assert.Equal(Expected.CameraDirection.X, Actual.CameraDirection.X);
-            Assert.Equal(Expected.CameraDirection.Y, Actual.CameraDirection.Y);
-            Assert.Equal(Expected.CameraDirection.Z, Actual.CameraDirection.Z);
-            Assert.Equal(Expected.CameraUpVector.X, Actual.CameraUpVector.X);
-            Assert.Equal(Expected.CameraUpVector.Y, Actual.CameraUpVector.Y);
-            Assert.Equal(Expected.CameraUpVector.Z, Actual.CameraUpVector.Z);
-            Assert.Equal(Expected.CameraViewPoint.X, Actual.CameraViewPoint.X);
-            Assert.Equal(Expected.CameraViewPoint.Y, Actual.CameraViewPoint.Y);
-            Assert.Equal(Expected.CameraViewPoint.Z, Actual.CameraViewPoint.Z);
+            Assert.Equal(expected.ViewToWorldScale, actual.ViewToWorldScale);
+            Assert.Equal(expected.CameraDirection.X, actual.CameraDirection.X);
+            Assert.Equal(expected.CameraDirection.Y, actual.CameraDirection.Y);
+            Assert.Equal(expected.CameraDirection.Z, actual.CameraDirection.Z);
+            Assert.Equal(expected.CameraUpVector.X, actual.CameraUpVector.X);
+            Assert.Equal(expected.CameraUpVector.Y, actual.CameraUpVector.Y);
+            Assert.Equal(expected.CameraUpVector.Z, actual.CameraUpVector.Z);
+            Assert.Equal(expected.CameraViewPoint.X, actual.CameraViewPoint.X);
+            Assert.Equal(expected.CameraViewPoint.Y, actual.CameraViewPoint.Y);
+            Assert.Equal(expected.CameraViewPoint.Z, actual.CameraViewPoint.Z);
         }
 
-        public static void ComparePerspectiveCameras(PerspectiveCamera Expected, PerspectiveCamera Actual)
+        public static void ComparePerspectiveCameras(PerspectiveCamera expected, PerspectiveCamera actual)
         {
-            Assert.Equal(Expected.FieldOfView, Actual.FieldOfView);
-            Assert.Equal(Expected.CameraDirection.X, Actual.CameraDirection.X);
-            Assert.Equal(Expected.CameraDirection.Y, Actual.CameraDirection.Y);
-            Assert.Equal(Expected.CameraDirection.Z, Actual.CameraDirection.Z);
-            Assert.Equal(Expected.CameraUpVector.X, Actual.CameraUpVector.X);
-            Assert.Equal(Expected.CameraUpVector.Y, Actual.CameraUpVector.Y);
-            Assert.Equal(Expected.CameraUpVector.Z, Actual.CameraUpVector.Z);
-            Assert.Equal(Expected.CameraViewPoint.X, Actual.CameraViewPoint.X);
-            Assert.Equal(Expected.CameraViewPoint.Y, Actual.CameraViewPoint.Y);
-            Assert.Equal(Expected.CameraViewPoint.Z, Actual.CameraViewPoint.Z);
+            Assert.Equal(expected.FieldOfView, actual.FieldOfView);
+            Assert.Equal(expected.CameraDirection.X, actual.CameraDirection.X);
+            Assert.Equal(expected.CameraDirection.Y, actual.CameraDirection.Y);
+            Assert.Equal(expected.CameraDirection.Z, actual.CameraDirection.Z);
+            Assert.Equal(expected.CameraUpVector.X, actual.CameraUpVector.X);
+            Assert.Equal(expected.CameraUpVector.Y, actual.CameraUpVector.Y);
+            Assert.Equal(expected.CameraUpVector.Z, actual.CameraUpVector.Z);
+            Assert.Equal(expected.CameraViewPoint.X, actual.CameraViewPoint.X);
+            Assert.Equal(expected.CameraViewPoint.Y, actual.CameraViewPoint.Y);
+            Assert.Equal(expected.CameraViewPoint.Z, actual.CameraViewPoint.Z);
         }
 
-        public static void CompareViewpointBitmaps(Dictionary<VisualizationInfo, List<byte[]>> ExpectedBitmaps, Dictionary<VisualizationInfo, List<byte[]>> ActualBitmaps)
+        public static void CompareViewpointBitmaps(Dictionary<VisualizationInfo, List<byte[]>> expectedBitmaps, Dictionary<VisualizationInfo, List<byte[]>> actualBitmaps)
         {
-            foreach (var ExpectedBitmap in ExpectedBitmaps)
+            foreach (var expectedBitmap in expectedBitmaps)
             {
-                var ActualBitmap = ActualBitmaps[ActualBitmaps.Keys.FirstOrDefault(Curr => Curr.GUID == ExpectedBitmap.Key.GUID)];
-                foreach (var ExpectedBitmapSingleByte in ExpectedBitmap.Value)
+                var actualBitmap = actualBitmaps[actualBitmaps.Keys.FirstOrDefault(curr => curr.GUID == expectedBitmap.Key.GUID)];
+                foreach (var expectedBitmapSingleByte in expectedBitmap.Value)
                 {
-                    Assert.True(ActualBitmap.Any(Curr => Curr.SequenceEqual(ExpectedBitmapSingleByte)), "Did not find matching bitmap binary data");
+                    Assert.True(actualBitmap.Any(curr => curr.SequenceEqual(expectedBitmapSingleByte)), "Did not find matching bitmap binary data");
                 }
             }
         }
 
-        public static void CompareViewpointSnapshots(ReadOnlyDictionary<string, byte[]> ExpectedSnapshots, ReadOnlyDictionary<string, byte[]> ActualSnapshots)
+        public static void CompareViewpointSnapshots(ReadOnlyDictionary<string, byte[]> expectedSnapshots, ReadOnlyDictionary<string, byte[]> actualSnapshots)
         {
-            foreach (var ExpectedSnapshot in ExpectedSnapshots)
+            foreach (var expectedSnapshot in expectedSnapshots)
             {
-                Assert.True(ExpectedSnapshot.Value.SequenceEqual(ActualSnapshots[ExpectedSnapshot.Key]), "Did not find matching snapshot binary data");
+                Assert.True(expectedSnapshot.Value.SequenceEqual(actualSnapshots[expectedSnapshot.Key]), "Did not find matching snapshot binary data");
             }
         }
     }

@@ -12,15 +12,11 @@ namespace iabi.BCF.Converter
     /// </summary>
     public class TopicContainer
     {
-        private List<comment_GET> _Comments;
-
-        private List<file_GET> _Files;
-
-        private List<document_reference_GET> _ReferencedDocuments;
-
-        private List<related_topic_GET> _RelatedTopics;
-
-        private List<ViewpointContainer> _Viewpoints;
+        private List<comment_GET> _comments;
+        private List<file_GET> _files;
+        private List<document_reference_GET> _referencedDocuments;
+        private List<related_topic_GET> _relatedTopics;
+        private List<ViewpointContainer> _viewpoints;
 
         /// <summary>
         ///     The actual topic
@@ -37,8 +33,8 @@ namespace iabi.BCF.Converter
         /// </summary>
         public List<file_GET> Files
         {
-            get { return _Files ?? (_Files = new List<file_GET>()); }
-            set { _Files = value; }
+            get { return _files ?? (_files = new List<file_GET>()); }
+            set { _files = value; }
         }
 
         /// <summary>
@@ -48,13 +44,13 @@ namespace iabi.BCF.Converter
         {
             get
             {
-                if (_RelatedTopics == null)
+                if (_relatedTopics == null)
                 {
-                    _RelatedTopics = new List<related_topic_GET>();
+                    _relatedTopics = new List<related_topic_GET>();
                 }
-                return _RelatedTopics;
+                return _relatedTopics;
             }
-            set { _RelatedTopics = value; }
+            set { _relatedTopics = value; }
         }
 
         /// <summary>
@@ -64,13 +60,13 @@ namespace iabi.BCF.Converter
         {
             get
             {
-                if (_ReferencedDocuments == null)
+                if (_referencedDocuments == null)
                 {
-                    _ReferencedDocuments = new List<document_reference_GET>();
+                    _referencedDocuments = new List<document_reference_GET>();
                 }
-                return _ReferencedDocuments;
+                return _referencedDocuments;
             }
-            set { _ReferencedDocuments = value; }
+            set { _referencedDocuments = value; }
         }
 
         /// <summary>
@@ -80,13 +76,13 @@ namespace iabi.BCF.Converter
         {
             get
             {
-                if (_Comments == null)
+                if (_comments == null)
                 {
-                    _Comments = new List<comment_GET>();
+                    _comments = new List<comment_GET>();
                 }
-                return _Comments;
+                return _comments;
             }
-            set { _Comments = value; }
+            set { _comments = value; }
         }
 
         /// <summary>
@@ -96,13 +92,13 @@ namespace iabi.BCF.Converter
         {
             get
             {
-                if (_Viewpoints == null)
+                if (_viewpoints == null)
                 {
-                    _Viewpoints = new List<ViewpointContainer>();
+                    _viewpoints = new List<ViewpointContainer>();
                 }
-                return _Viewpoints;
+                return _viewpoints;
             }
-            set { _Viewpoints = value; }
+            set { _viewpoints = value; }
         }
     }
 }

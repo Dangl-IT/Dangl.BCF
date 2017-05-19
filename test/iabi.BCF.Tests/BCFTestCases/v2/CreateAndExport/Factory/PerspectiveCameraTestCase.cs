@@ -11,34 +11,34 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
     {
         public static BCFv2Container CreateContainer()
         {
-            var Container = new BCFv2Container();
-            Container.Topics.Add(CreateTopic());
-            Container.FileAttachments.Add("Estructura.ifc", TestCaseResourceFactory.GetIfcFile(IfcFiles.Estructura));
-            return Container;
+            var container = new BCFv2Container();
+            container.Topics.Add(CreateTopic());
+            container.FileAttachments.Add("Estructura.ifc", TestCaseResourceFactory.GetIfcFile(IfcFiles.Estructura));
+            return container;
         }
 
         public static BCFTopic CreateTopic()
         {
-            var ReturnTopic = new BCFTopic();
-            ReturnTopic.Markup = CreateMarkup();
-            ReturnTopic.Viewpoints.Add(CreateViewpoiont());
-            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().GUID, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.PerspectiveCamera_Snapshot_01));
-            return ReturnTopic;
+            var returnTopic = new BCFTopic();
+            returnTopic.Markup = CreateMarkup();
+            returnTopic.Viewpoints.Add(CreateViewpoiont());
+            returnTopic.AddOrUpdateSnapshot(returnTopic.Viewpoints.Last().GUID, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.PerspectiveCamera_Snapshot_01));
+            return returnTopic;
         }
 
         private static Markup CreateMarkup()
         {
-            var Markup = new Markup();
-            Markup.Topic = new Topic
+            var markup = new Markup();
+            markup.Topic = new Topic
             {
                 CreationAuthor = "dangl@iabi.eu",
                 CreationDate = new DateTime(2015, 10, 16, 12, 13, 14, DateTimeKind.Utc),
                 Description = "This topic has a single viewpoint with a perspective camera.",
-                Guid = BCFv2TestCaseData.PerspectiveCamera_TopicGuid,
+                Guid = BcFv2TestCaseData.PERSPECTIVE_CAMERA_TOPIC_GUID,
                 Index = "0",
                 Title = "Perspective Camera"
             };
-            Markup.Header = new List<HeaderFile>
+            markup.Header = new List<HeaderFile>
             {
                 new HeaderFile
                 {
@@ -49,7 +49,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
                     Reference = "../Estructura.ifc"
                 }
             };
-            return Markup;
+            return markup;
         }
 
         private static VisualizationInfo CreateViewpoiont()

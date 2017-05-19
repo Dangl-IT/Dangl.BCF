@@ -24,12 +24,12 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         {
             if (CreatedContainer == null)
             {
-                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
+                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.ComponentSelection);
             }
 
             if (CreatedArchive == null)
             {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFv21TestCaseData.ComponentSelection_TestCaseName, TestCaseResourceFactory.GetReadmeForV21(BcfTestCaseV21.ComponentSelection));
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv21TestCaseData.COMPONENT_SELECTION_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV21(BcfTestCaseV21.ComponentSelection));
             }
         }
 
@@ -48,18 +48,18 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFilesAreAllValidXml()
         {
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (CurrentEntry.FullName.Contains(".bcfp")
-                    || CurrentEntry.FullName.Contains(".version")
-                    || CurrentEntry.FullName.Contains(".bcf")
-                    || CurrentEntry.FullName.Contains(".bcfv")
-                    || CurrentEntry.FullName.Contains(".xsd"))
+                if (currentEntry.FullName.Contains(".bcfp")
+                    || currentEntry.FullName.Contains(".version")
+                    || currentEntry.FullName.Contains(".bcf")
+                    || currentEntry.FullName.Contains(".bcfv")
+                    || currentEntry.FullName.Contains(".xsd"))
                 {
-                    using (StreamReader Rdr = new StreamReader(CurrentEntry.Open()))
+                    using (StreamReader rdr = new StreamReader(currentEntry.Open()))
                     {
-                        var Text = Rdr.ReadToEnd();
-                        var Xml = XElement.Parse(Text);
+                        var text = rdr.ReadToEnd();
+                        var xml = XElement.Parse(text);
                         // No exception no cry!
                     }
                 }
@@ -69,118 +69,118 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.1";
-            var ExpectedDetailedVersion = "2.1";
-            var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
-            var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText)((XElement)VersionXml.FirstNode).FirstNode).Value;
+            var expectedVersionId = "2.1";
+            var expectedDetailedVersion = "2.1";
+            var versionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
+            var actualVersionId = versionXml.Attribute("VersionId").Value;
+            var actualDetailedVersion = ((XText)((XElement)versionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement)VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.Equal(ExpectedVersionId, ActualVersionId);
-            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(versionXml.Nodes().Count() == 1 && ((XElement)versionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(expectedVersionId, actualVersionId);
+            Assert.Equal(expectedDetailedVersion, actualDetailedVersion);
         }
 
         [Fact]
         public void CorrectGuidCreated_InMarkup()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.ComponentSelection_TopicGuid + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/markup.bcf");
             var viewpointsElement = markupXml.Descendants().OfType<XElement>()
                 .Where(element => element.Name.LocalName == "Viewpoints");
             Assert.Equal(1, viewpointsElement.Count());
-            Assert.Equal(BCFv21TestCaseData.ComponentSelection_ViewpointGuid, viewpointsElement.First().Attributes().First(attribute => attribute.Name.LocalName == "Guid").Value);
+            Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID, viewpointsElement.First().Attributes().First(attribute => attribute.Name.LocalName == "Guid").Value);
         }
 
         [Fact]
         public void CorrectGuidCreated_InVisinfo()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.ComponentSelection_TopicGuid + "/Viewpoint_" + BCFv21TestCaseData.ComponentSelection_ViewpointGuid + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID + ".bcfv");
 
             var guidAttribute = viewpointXml.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "Guid");
             Assert.NotNull(guidAttribute);
-            Assert.Equal(BCFv21TestCaseData.ComponentSelection_ViewpointGuid, guidAttribute.Value);
+            Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID, guidAttribute.Value);
         }
 
         [Fact]
         public void ViewpointComponentDefaultVisiblityCorrect()
         {
-            var ViewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.ComponentSelection_TopicGuid + "/Viewpoint_" + BCFv21TestCaseData.ComponentSelection_ViewpointGuid + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID + ".bcfv");
 
-            var components = ViewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Components
             var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            if (BCFv21TestCaseData.ComponentSelection_DefaultVisibilityComponents) // true is the default value and therefore not serialized
+            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultComponentsVisibilitySetting);
             }
             else
             {
                 Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilityComponents, bool.Parse(defaultComponentsVisibilitySetting.Value));
+                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
             var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            if (BCFv21TestCaseData.ComponentSelection_DefaultVisibilityOpenings) // true is the default value and therefore not serialized
+            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultOpeningsVisibilitySetting);
             }
             else
             {
                 Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilityOpenings, bool.Parse(defaultOpeningsVisibilitySetting.Value));
+                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
             }
 
             // Default Visibility for Spaces
             var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            if (BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaces) // true is the default value and therefore not serialized
+            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultSpacesVisibilitySetting);
             }
             else
             {
                 Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaces, bool.Parse(defaultSpacesVisibilitySetting.Value));
+                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
             }
 
             // Default Visibility for Openings
             var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            if (BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaceBoundaries) // true is the default value and therefore not serialized
+            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES) // true is the default value and therefore not serialized
             {
                 Assert.Null(defaultSpaceBoundariesVisibilitySetting);
             }
             else
             {
                 Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaceBoundaries, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
+                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
             }
         }
 
         [Fact]
         public void WriteReadAgainAndCompare()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv21Container.ReadStream(MemStream);
+                var readContainer = BCFv21Container.ReadStream(memStream);
 
-                var ReadMemStream = new MemoryStream();
-                ReadContainer.WriteStream(ReadMemStream);
-                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+                var readMemStream = new MemoryStream();
+                readContainer.WriteStream(readMemStream);
+                var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
             }
         }
 
         [Fact]
         public void CheckXmlBrandingCommentsArePresent()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+                CreatedContainer.WriteStream(memStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
     }

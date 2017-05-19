@@ -3,47 +3,47 @@ using iabi.BCF.BCFv2;
 
 namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
 {
-    public static class BCFTestCaseFactory
+    public static class BcfTestCaseFactory
     {
-        public static BCFv2Container GetContainerByTestName(TestCaseEnum Test)
+        public static BCFv2Container GetContainerByTestName(TestCaseEnum test)
         {
-            if (Test == TestCaseEnum.InternalBIMSnippet)
+            if (test == TestCaseEnum.InternalBimSnippet)
             {
-                return InternalBIMSnippetTestCase.CreateContainer();
+                return InternalBimSnippetTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.ExternalBIMSnippet)
+            if (test == TestCaseEnum.ExternalBimSnippet)
             {
-                return ExternalBIMSnippetTestCase.CreateContainer();
+                return ExternalBimSnippetTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.PDFFile)
+            if (test == TestCaseEnum.PdfFile)
             {
-                return PDFFileTestCase.CreateContainer();
+                return PdfFileTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.ExtensionSchema)
+            if (test == TestCaseEnum.ExtensionSchema)
             {
                 return ExtensionSchemaTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.MinimumInformation)
+            if (test == TestCaseEnum.MinimumInformation)
             {
                 return MinimumInformationTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.MaximumInformation)
+            if (test == TestCaseEnum.MaximumInformation)
             {
                 return MaximumInformationTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.PerspectiveCamera)
+            if (test == TestCaseEnum.PerspectiveCamera)
             {
                 return PerspectiveCameraTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.OrthogonalCamera)
+            if (test == TestCaseEnum.OrthogonalCamera)
             {
                 return OrthogonalCameraTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.DocumentReferenceExternal)
+            if (test == TestCaseEnum.DocumentReferenceExternal)
             {
                 return DocumentReferenceExternalTestCase.CreateContainer();
             }
-            if (Test == TestCaseEnum.ComponentSelection)
+            if (test == TestCaseEnum.ComponentSelection)
             {
                 return ComponentSelectionTestCase.CreateContainer();
             }
@@ -53,9 +53,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
 
     public enum TestCaseEnum
     {
-        InternalBIMSnippet,
-        ExternalBIMSnippet,
-        PDFFile,
+        InternalBimSnippet,
+        ExternalBimSnippet,
+        PdfFile,
         ExtensionSchema,
         MinimumInformation,
         MaximumInformation,
