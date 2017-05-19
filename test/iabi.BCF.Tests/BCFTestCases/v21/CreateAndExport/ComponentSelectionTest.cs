@@ -101,59 +101,63 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         }
 
         [Fact]
-        public void ViewpointComponentDefaultVisiblityCorrect()
+        public void ViewpointComponentDefaultVisiblity()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Components
-            var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultComponentsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
-            }
+            var defaultComponentsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibility");
+            Assert.NotNull(defaultComponentsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void ViewpointComponentDefaultVisiblitySpaceBoundaries()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Openings
-            var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultOpeningsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
-            }
+            var defaultSpaceBoundariesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpaceBoundariesVisible");
+            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void ViewpointComponentDefaultVisiblitySpaces()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Spaces
-            var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpacesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
-            }
+            var defaultSpacesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpacesVisible");
+            Assert.NotNull(defaultSpacesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void ViewpointComponentDefaultVisiblityOpenings()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Openings
-            var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            if (BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
-            }
+            var defaultOpeningsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "OpeningsVisible");
+            Assert.NotNull(defaultOpeningsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
         }
 
         [Fact]

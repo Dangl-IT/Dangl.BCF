@@ -385,285 +385,411 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         }
 
         [Fact]
-        public void Viewpoint_01_ComponentDefaultValues()
+        public void Viewpoint_01_ComponentDefaultVisiblity()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Components
-            var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_COMPONENTS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultComponentsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
-            }
-
-            // Default Visibility for Openings
-            var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_OPENINGS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultOpeningsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
-            }
-
-            // Default Visibility for Spaces
-            var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpacesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
-            }
-
-            // Default Visibility for Openings
-            var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACE_BOUNDARIES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
-            }
+            var defaultComponentsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibility");
+            Assert.NotNull(defaultComponentsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
         }
 
         [Fact]
-        public void Viewpoint_01_ComponentsSet()
+        public void Viewpoint_01_ComponentDefaultVisiblitySpaceBoundaries()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
 
-            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Components")
-                .Nodes().OfType<XElement>().Where(curr => curr.Name.LocalName == "Component")
-                .Select(curr => new
-                {
-                    IfcGuid = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "IfcGuid").Value,
-                    Visible = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Visible") == null ? false : bool.Parse(curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Visible").Value),
-                    Selected = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Selected") == null ? false : bool.Parse(curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Selected").Value)
-                }).ToList();
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
-            // Count of components
-            Assert.Equal(7, components.Count);
-
-            // #1
-            Assert.Equal("0Gl71cVurFn8bxAOox6M4X", components[0].IfcGuid);
-            Assert.Equal(true, components[0].Selected);
-
-            // #2
-            Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", components[1].IfcGuid);
-            Assert.Equal(true, components[1].Selected);
-
-            // #3
-            Assert.Equal("3DvyPxGIn8qR0KDwbL_9r1", components[2].IfcGuid);
-            Assert.Equal(true, components[2].Selected);
-
-            // #4
-            Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", components[3].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
-
-            // #5
-            Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", components[4].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
-
-            // #6
-            Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", components[5].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
-
-            // #7
-            Assert.Equal("1jQQiGIAnFzxOUzrdmJYDS", components[6].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            // Default Visibility for Openings
+            var defaultSpaceBoundariesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpaceBoundariesVisible");
+            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
         }
 
         [Fact]
-        public void Viewpoint_02_ComponentDefaultValues()
+        public void Viewpoint_01_ComponentDefaultVisiblitySpaces()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
+
+            // Default Visibility for Spaces
+            var defaultSpacesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpacesVisible");
+            Assert.NotNull(defaultSpacesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_01_ComponentDefaultVisiblityOpenings()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
+
+            // Default Visibility for Openings
+            var defaultOpeningsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "OpeningsVisible");
+            Assert.NotNull(defaultOpeningsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_01_SelectionComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+
+            var selectionComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Selection")
+                .Elements()
+                .Select(e => new
+                {
+                    IfcGuid = e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid")?.Value
+                })
+                .ToList();
+
+            var expectedComponents = MaximumInformationTestCase.GetViewpointComponents_01().Selection;
+            Assert.Equal(expectedComponents.Count, selectionComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
+            {
+                var componentIsPresent = selectionComponents.Any(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.True(componentIsPresent);
+            }
+        }
+
+        [Fact]
+        public void Viewpoint_01_ExceptionComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+
+            var exceptionComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Exceptions")
+                .Elements()
+                .Select(e => new
+                {
+                    IfcGuid = e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid")?.Value
+                })
+                .ToList();
+
+            var expectedComponents = MaximumInformationTestCase.GetViewpointComponents_01().Visibility.Exceptions;
+            Assert.Equal(expectedComponents.Count, exceptionComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
+            {
+                var componentIsPresent = exceptionComponents.Any(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.True(componentIsPresent);
+            }
+        }
+
+        [Fact]
+        public void Viewpoint_01_ColoringComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+
+            var coloringComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Coloring")
+                .Elements().Where(e => e.Name.LocalName == "Color")
+                .Select(c => new
+                {
+                    Color = c.Attributes().FirstOrDefault(a => a.Name.LocalName == "Color").Value,
+                    IfcGuids = c.Elements().Select(e => e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid").Value).ToList()
+                })
+                .ToList();
+
+            var expectedColors = MaximumInformationTestCase.GetViewpointComponents_01().Coloring;
+            foreach (var expectedColor in expectedColors)
+            {
+                var actualColor = coloringComponents.FirstOrDefault(c => c.Color == expectedColor.Color);
+                Assert.NotNull(actualColor);
+                Assert.Equal(expectedColor.Component.Count, actualColor.IfcGuids.Count);
+                var allIfcGuidsPresent = expectedColor.Component.All(c => actualColor.IfcGuids.Contains(c.IfcGuid));
+                Assert.True(allIfcGuidsPresent);
+            }
+        }
+
+        [Fact]
+        public void Viewpoint_02_ComponentDefaultVisiblity()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Components
-            var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_COMPONENTS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultComponentsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
-            }
-
-            // Default Visibility for Openings
-            var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_OPENINGS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultOpeningsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
-            }
-
-            // Default Visibility for Spaces
-            var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpacesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
-            }
-
-            // Default Visibility for Openings
-            var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACE_BOUNDARIES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
-            }
+            var defaultComponentsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibility");
+            Assert.NotNull(defaultComponentsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
         }
 
         [Fact]
-        public void Viewpoint_02_ComponentsSet()
+        public void Viewpoint_02_ComponentDefaultVisiblitySpaceBoundaries()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
 
-            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Components")
-                .Nodes().OfType<XElement>().Where(curr => curr.Name.LocalName == "Component")
-                .Select(curr => new
-                {
-                    IfcGuid = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "IfcGuid").Value,
-                    Visible = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Visible") == null ? false : bool.Parse(curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Visible").Value),
-                    Selected = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Selected") == null ? false : bool.Parse(curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Selected").Value)
-                }).ToList();
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
-            // Count of components
-            Assert.Equal(4, components.Count);
-
-            // #1
-            Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", components[0].IfcGuid);
-            Assert.Equal(true, components[0].Selected);
-
-            // #2
-            Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", components[1].IfcGuid);
-            Assert.Equal(true, components[1].Selected);
-
-            // #3
-            Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", components[2].IfcGuid);
-            Assert.Equal(true, components[2].Selected);
-
-            // #4
-            Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", components[3].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            // Default Visibility for Openings
+            var defaultSpaceBoundariesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpaceBoundariesVisible");
+            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
         }
 
         [Fact]
-        public void Viewpoint_03_ComponentDefaultValues()
+        public void Viewpoint_02_ComponentDefaultVisiblitySpaces()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
+
+            // Default Visibility for Spaces
+            var defaultSpacesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpacesVisible");
+            Assert.NotNull(defaultSpacesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_02_ComponentDefaultVisiblityOpenings()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
+
+            // Default Visibility for Openings
+            var defaultOpeningsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "OpeningsVisible");
+            Assert.NotNull(defaultOpeningsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_02_SelectionComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+
+            var selectionComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Selection")
+                .Elements()
+                .Select(e => new
+                {
+                    IfcGuid = e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid")?.Value
+                })
+                .ToList();
+
+            var expectedComponents = MaximumInformationTestCase.GetViewpointComponents_02().Selection;
+            Assert.Equal(expectedComponents.Count, selectionComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
+            {
+                var componentIsPresent = selectionComponents.Any(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.True(componentIsPresent);
+            }
+        }
+
+        [Fact]
+        public void Viewpoint_02_ExceptionComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+
+            var exceptionComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Exceptions")
+                .Elements()
+                .Select(e => new
+                {
+                    IfcGuid = e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid")?.Value
+                })
+                .ToList();
+
+            var expectedComponents = MaximumInformationTestCase.GetViewpointComponents_02().Visibility.Exceptions;
+            Assert.Equal(expectedComponents.Count, exceptionComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
+            {
+                var componentIsPresent = exceptionComponents.Any(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.True(componentIsPresent);
+            }
+        }
+
+        [Fact]
+        public void Viewpoint_02_ColoringComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+
+            var coloringComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Coloring")
+                .Elements().Where(e => e.Name.LocalName == "Color")
+                .Select(c => new
+                {
+                    Color = c.Attributes().FirstOrDefault(a => a.Name.LocalName == "Color").Value,
+                    IfcGuids = c.Elements().Select(e => e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid").Value).ToList()
+                })
+                .ToList();
+
+            var expectedColors = MaximumInformationTestCase.GetViewpointComponents_02().Coloring;
+            foreach (var expectedColor in expectedColors)
+            {
+                var actualColor = coloringComponents.FirstOrDefault(c => c.Color == expectedColor.Color);
+                Assert.NotNull(actualColor);
+                Assert.Equal(expectedColor.Component.Count, actualColor.IfcGuids.Count);
+                var allIfcGuidsPresent = expectedColor.Component.All(c => actualColor.IfcGuids.Contains(c.IfcGuid));
+                Assert.True(allIfcGuidsPresent);
+            }
+        }
+
+        [Fact]
+        public void Viewpoint_03_ComponentDefaultVisiblity()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Components
-            var defaultComponentsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityComponents");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_COMPONENTS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultComponentsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultComponentsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
-            }
+            var defaultComponentsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibility");
+            Assert.NotNull(defaultComponentsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_COMPONENTS, bool.Parse(defaultComponentsVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_03_ComponentDefaultVisiblitySpaceBoundaries()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Openings
-            var defaultOpeningsVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilityOpenings");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_OPENINGS) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultOpeningsVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultOpeningsVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
-            }
+            var defaultSpaceBoundariesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpaceBoundariesVisible");
+            Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_03_ComponentDefaultVisiblitySpaces()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Spaces
-            var defaultSpacesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaces");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACES) // true is the default value and therefore not serialized
-            {
-                Assert.Null(defaultSpacesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpacesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
-            }
+            var defaultSpacesVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "SpacesVisible");
+            Assert.NotNull(defaultSpacesVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACES, bool.Parse(defaultSpacesVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_03_ComponentDefaultVisiblityOpenings()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+
+            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(element => element.Name.LocalName == "Components");
 
             // Default Visibility for Openings
-            var defaultSpaceBoundariesVisibilitySetting = components.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "DefaultVisibilitySpaceBoundaries");
-            if (BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACE_BOUNDARIES) // true is the default value and therefore not serialized
+            var defaultOpeningsVisibilitySetting = components
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "ViewSetupHints")
+                ?.Attributes().FirstOrDefault(attribute => attribute.Name.LocalName == "OpeningsVisible");
+            Assert.NotNull(defaultOpeningsVisibilitySetting);
+            Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_OPENINGS, bool.Parse(defaultOpeningsVisibilitySetting.Value));
+        }
+
+        [Fact]
+        public void Viewpoint_03_SelectionComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+
+            var selectionComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Selection")
+                .Elements()
+                .Select(e => new
+                {
+                    IfcGuid = e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid")?.Value
+                })
+                .ToList();
+
+            var expectedComponents = MaximumInformationTestCase.GetViewpointComponents_03().Selection;
+            Assert.Equal(expectedComponents.Count, selectionComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
             {
-                Assert.Null(defaultSpaceBoundariesVisibilitySetting);
-            }
-            else
-            {
-                Assert.NotNull(defaultSpaceBoundariesVisibilitySetting);
-                Assert.Equal(BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACE_BOUNDARIES, bool.Parse(defaultSpaceBoundariesVisibilitySetting.Value));
+                var componentIsPresent = selectionComponents.Any(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.True(componentIsPresent);
             }
         }
 
         [Fact]
-        public void Viewpoint_03_ComponentsSet()
+        public void Viewpoint_03_ExceptionComponentsSet()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
 
-            var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Components")
-                .Nodes().OfType<XElement>().Where(curr => curr.Name.LocalName == "Component")
-                .Select(curr => new
+            var exceptionComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Visibility")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Exceptions")
+                .Elements()
+                .Select(e => new
                 {
-                    IfcGuid = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "IfcGuid").Value,
-                    Visible = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Visible") == null ? false : bool.Parse(curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Visible").Value),
-                    Selected = curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Selected") == null ? false : bool.Parse(curr.Attributes().FirstOrDefault(attr => attr.Name.LocalName == "Selected").Value)
-                }).ToList();
+                    IfcGuid = e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid")?.Value
+                })
+                .ToList();
 
-            // Count of components
-            Assert.Equal(4, components.Count);
+            var expectedComponents = MaximumInformationTestCase.GetViewpointComponents_03().Visibility.Exceptions;
+            Assert.Equal(expectedComponents.Count, exceptionComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
+            {
+                var componentIsPresent = exceptionComponents.Any(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.True(componentIsPresent);
+            }
+        }
 
-            // #1
-            Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", components[0].IfcGuid);
-            Assert.Equal(false, components[0].Visible);
+        [Fact]
+        public void Viewpoint_03_ColoringComponentsSet()
+        {
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
 
-            // #2
-            Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", components[1].IfcGuid);
-            Assert.Equal(false, components[1].Visible);
+            var coloringComponents = viewpointXml.Descendants()
+                .FirstOrDefault(d => d.Name.LocalName == "Components")
+                .Elements().FirstOrDefault(e => e.Name.LocalName == "Coloring")
+                .Elements().Where(e => e.Name.LocalName == "Color")
+                .Select(c => new
+                {
+                    Color = c.Attributes().FirstOrDefault(a => a.Name.LocalName == "Color").Value,
+                    IfcGuids = c.Elements().Select(e => e.Attributes().FirstOrDefault(a => a.Name.LocalName == "IfcGuid").Value).ToList()
+                })
+                .ToList();
 
-            // #3
-            Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", components[2].IfcGuid);
-            Assert.Equal(false, components[2].Visible);
-
-            // #4
-            Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", components[3].IfcGuid);
-            Assert.Equal(false, components[3].Visible);
+            var expectedColors = MaximumInformationTestCase.GetViewpointComponents_03().Coloring;
+            foreach (var expectedColor in expectedColors)
+            {
+                var actualColor = coloringComponents.FirstOrDefault(c => c.Color == expectedColor.Color);
+                Assert.NotNull(actualColor);
+                Assert.Equal(expectedColor.Component.Count, actualColor.IfcGuids.Count);
+                var allIfcGuidsPresent = expectedColor.Component.All(c => actualColor.IfcGuids.Contains(c.IfcGuid));
+                Assert.True(allIfcGuidsPresent);
+            }
         }
 
         [Fact]

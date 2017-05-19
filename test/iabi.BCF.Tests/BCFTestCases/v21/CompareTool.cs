@@ -566,39 +566,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             // Compare Components
             if (TestCompareUtilities.BothNotNullAndEmpty(expectedViewpoint.Components, actualViewpoint.Components, "Viewpoint.Components"))
             {
-                Assert.Equal(expectedViewpoint.Components.DefaultVisibilityComponents, actualViewpoint.Components.DefaultVisibilityComponents);
-                Assert.Equal(expectedViewpoint.Components.DefaultVisibilityOpenings, actualViewpoint.Components.DefaultVisibilityOpenings);
-                Assert.Equal(expectedViewpoint.Components.DefaultVisibilitySpaceBoundaries, actualViewpoint.Components.DefaultVisibilitySpaceBoundaries);
-                Assert.Equal(expectedViewpoint.Components.DefaultVisibilitySpaces, actualViewpoint.Components.DefaultVisibilitySpaces);
-
-                if (expectedViewpoint.Components.Component.Count == 1 && actualViewpoint.Components.Component.Count == 1)
-                {
-                    var expectedComponent = expectedViewpoint.Components.Component.First();
-                    var actualComponent = actualViewpoint.Components.Component.First();
-
-                    Assert.Equal(expectedComponent.AuthoringToolId, actualComponent.AuthoringToolId);
-                    Assert.True((expectedComponent.Color == null && actualComponent.Color == null) || expectedComponent.Color.SequenceEqual(actualComponent.Color), "Color");
-                    Assert.Equal(expectedComponent.IfcGuid, actualComponent.IfcGuid);
-                    Assert.Equal(expectedComponent.OriginatingSystem, actualComponent.OriginatingSystem);
-                    Assert.Equal(expectedComponent.Selected, actualComponent.Selected);
-                    Assert.Equal(expectedComponent.Visible, actualComponent.Visible);
-                }
-                else
-                {
-                    foreach (var currentComponent in expectedViewpoint.Components.Component)
-                    {
-                        var actualComponent = actualViewpoint.Components.Component
-                            .Where(c => c.AuthoringToolId == currentComponent.AuthoringToolId)
-                            .Where(c => (c.Color == null && currentComponent.Color == null) || c.Color.SequenceEqual(currentComponent.Color))
-                            .Where(c => c.IfcGuid == currentComponent.IfcGuid)
-                            .Where(c => c.OriginatingSystem == currentComponent.OriginatingSystem)
-                            .Where(c => c.Selected == currentComponent.Selected)
-                            .Where(c => c.Visible == currentComponent.Visible)
-                            .FirstOrDefault();
-
-                        Assert.NotNull(actualComponent);
-                    }
-                }
+                CompareComponents(expectedViewpoint.Components, actualViewpoint.Components);
             }
 
             // Compare Lines
@@ -645,6 +613,58 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             {
                 ComparePerspectiveCameras(expectedViewpoint.PerspectiveCamera, actualViewpoint.PerspectiveCamera);
             }
+        }
+
+        private static void CompareComponents(Components expectedComponents, Components actualComponents)
+        {
+            if (TestCompareUtilities.BothNotNullAndEmpty(expectedComponents.Coloring, actualComponents.Coloring, "Viewpoint.Components.Coloring"))
+            {
+                Assert.Equal(expectedComponents.Coloring.Count, actualComponents.Coloring.Count);
+                foreach (var expectedColoring in expectedComponents.Coloring)
+                {
+                    var actualColoring = actualComponents.Coloring.FirstOrDefault(c => c.Color == expectedColoring.Color);
+                    Assert.NotNull(actualColoring);
+                    CompareComponentsList(expectedColoring.Component, actualColoring.Component);
+                }
+                var allActualColorsAreExpected = actualComponents.Coloring.All(c => expectedComponents.Coloring.Any(ec => ec.Color == c.Color));
+                Assert.True(allActualColorsAreExpected);
+            }
+            CompareComponentsList(expectedComponents.Selection, actualComponents.Selection);
+            if (TestCompareUtilities.BothNotNullAndEmpty(expectedComponents.ViewSetupHints, actualComponents.ViewSetupHints, "Viewpoint.Components.ViewSetupHints"))
+            {
+                var expectedViewSetupHints = expectedComponents.ViewSetupHints;
+                var actualViewSetupHints = actualComponents.ViewSetupHints;
+                Assert.Equal(expectedViewSetupHints.OpeningsVisible, actualViewSetupHints.OpeningsVisible);
+                Assert.Equal(expectedViewSetupHints.SpaceBoundariesVisible, actualViewSetupHints.SpaceBoundariesVisible);
+                Assert.Equal(expectedViewSetupHints.SpacesVisible, actualViewSetupHints.SpacesVisible);
+            }
+            if (TestCompareUtilities.BothNotNullAndEmpty(expectedComponents.Visibility, actualComponents.Visibility, "Viewpoint.Components.Visibility"))
+            {
+                var expectedVisibility = expectedComponents.Visibility;
+                var actualVisibility = actualComponents.Visibility;
+                Assert.Equal(expectedVisibility.DefaultVisibility, actualVisibility.DefaultVisibility);
+                CompareComponentsList(expectedVisibility.Exceptions, actualVisibility.Exceptions);
+            }
+        }
+
+        private static void CompareComponentsList(List<Component> expectedComponents, List<Component> actualComponents)
+        {
+            if (expectedComponents == null)
+            {
+                Assert.Null(actualComponents);
+                return;
+            }
+            Assert.Equal(expectedComponents.Count, actualComponents.Count);
+            foreach (var expectedComponent in expectedComponents)
+            {
+                var actualComponent = actualComponents.FirstOrDefault(c => c.IfcGuid == expectedComponent.IfcGuid);
+                Assert.NotNull(actualComponent);
+                Assert.Equal(expectedComponent.AuthoringToolId, actualComponent.AuthoringToolId);
+                Assert.Equal(expectedComponent.IfcGuid, actualComponent.IfcGuid);
+                Assert.Equal(expectedComponent.OriginatingSystem, actualComponent.OriginatingSystem);
+            }
+            var allActualComponentsAreExpected = actualComponents.All(c => expectedComponents.Any(ec => ec.IfcGuid == c.IfcGuid));
+            Assert.True(allActualComponentsAreExpected);
         }
 
         public static void CompareOrthogonalCameras(OrthogonalCamera expected, OrthogonalCamera actual)

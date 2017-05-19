@@ -87,7 +87,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
             {
                 //Bitmaps = "",
                 ClippingPlanes = GetPlanes().ToList(),
-                Components = GetList_01(),
+                Components = GetViewpointComponents_01(),
                 Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01,
                 Lines = GetLines().ToList(),
                 //OrthogonalCamera = "",
@@ -98,7 +98,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
             {
                 //Bitmaps = "",
                 //ClippingPlanes = "",
-                Components = GetList_02(),
+                Components = GetViewpointComponents_02(),
                 Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02,
                 //Lines = "",
                 //OrthogonalCamera = "",
@@ -109,7 +109,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
             {
                 //Bitmaps = "",
                 //ClippingPlanes = "",
-                Components = GetList_03(),
+                Components = GetViewpointComponents_03(),
                 Guid = BcFv21TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03,
                 //Lines = "",
                 //OrthogonalCamera = "",
@@ -200,120 +200,134 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
             };
         }
 
-        public static VisualizationInfoComponents GetList_01()
+        public static Components GetViewpointComponents_01()
         {
-            return new VisualizationInfoComponents
+            var viewSetupHints = new ViewSetupHints
             {
-                DefaultVisibilityComponents = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_COMPONENTS,
-                DefaultVisibilityOpenings = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_OPENINGS,
-                DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
-                DefaultVisibilitySpaces = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACES,
-                Component = new List<Component>
+                OpeningsVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_OPENINGS,
+                SpaceBoundariesVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                SpacesVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_SPACES
+            };
+            var visibilityExceptions = GetComponentsList_01();
+            var visibility = new ComponentVisibility
+            {
+                DefaultVisibility = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_01_DEFAULT_VISIBILITY_COMPONENTS,
+                Exceptions = visibilityExceptions
+            };
+            var components = GetComponentsList_02();
+            var coloring = new List<ComponentColoringColor>
+            {
+                new ComponentColoringColor
                 {
-                    new Component
-                    {
-                        IfcGuid = "0Gl71cVurFn8bxAOox6M4X",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "3DvyPxGIn8qR0KDwbL_9r1",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "1jQQiGIAnFzxOUzrdmJYDS",
-                        Selected = true
-                    }
+                    Component = GetComponentsList_03(),
+                    Color = "3498db"
                 }
+            };
+            return new Components
+            {
+                ViewSetupHints = viewSetupHints,
+                Visibility = visibility,
+                Coloring = coloring,
+                Selection = components
             };
         }
 
-        public static VisualizationInfoComponents GetList_02()
+        public static Components GetViewpointComponents_02()
         {
-            return new VisualizationInfoComponents
+            var viewSetupHints = new ViewSetupHints
             {
-                DefaultVisibilityComponents = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_COMPONENTS,
-                DefaultVisibilityOpenings = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_OPENINGS,
-                DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
-                DefaultVisibilitySpaces = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACES,
-                Component = new List<Component>
+                OpeningsVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_OPENINGS,
+                SpaceBoundariesVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                SpacesVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_SPACES
+            };
+            var visibilityExceptions = GetComponentsList_01();
+            var visibility = new ComponentVisibility
+            {
+                DefaultVisibility = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_02_DEFAULT_VISIBILITY_COMPONENTS,
+                Exceptions = visibilityExceptions
+            };
+            var components = GetComponentsList_02();
+            var coloring = new List<ComponentColoringColor>
+            {
+                new ComponentColoringColor
                 {
-                    new Component
-                    {
-                        IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
-                        Selected = true
-                    },
-                    new Component
-                    {
-                        IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
-                        Selected = true
-                    }
+                    Component = GetComponentsList_03(),
+                    Color = "3498db"
                 }
+            };
+            return new Components
+            {
+                ViewSetupHints = viewSetupHints,
+                Visibility = visibility,
+                Coloring = coloring,
+                Selection = components
             };
         }
 
-        public static VisualizationInfoComponents GetList_03()
+        public static Components GetViewpointComponents_03()
         {
-            return new VisualizationInfoComponents
+            var viewSetupHints = new ViewSetupHints
             {
-                DefaultVisibilityComponents = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_COMPONENTS,
-                DefaultVisibilityOpenings = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_OPENINGS,
-                DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
-                DefaultVisibilitySpaces = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACES,
-                Component = new List<Component>
+                OpeningsVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_OPENINGS,
+                SpaceBoundariesVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                SpacesVisible = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_SPACES
+            };
+            var visibilityExceptions = GetComponentsList_01();
+            var visibility = new ComponentVisibility
+            {
+                DefaultVisibility = BcFv21TestCaseData.MAXIMIMUM_INFORMATION_VIEWPOINT_03_DEFAULT_VISIBILITY_COMPONENTS,
+                Exceptions = visibilityExceptions
+            };
+            var components = GetComponentsList_02();
+            var coloring = new List<ComponentColoringColor>
+            {
+                new ComponentColoringColor
                 {
-                    new Component
-                    {
-                        IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF",
-                        Visible = false
-                    },
-                    new Component
-                    {
-                        IfcGuid = "23Zwlpd71EyvHlH6OZ77nK",
-                        Visible = false
-                    },
-                    new Component
-                    {
-                        IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS",
-                        Visible = false
-                    },
-                    new Component
-                    {
-                        IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0",
-                        Visible = false
-                    }
+                    Component = GetComponentsList_03(),
+                    Color = "3498db"
                 }
+            };
+            return new Components
+            {
+                ViewSetupHints = viewSetupHints,
+                Visibility = visibility,
+                Coloring = coloring,
+                Selection = components
+            };
+        }
+
+        private static List<Component> GetComponentsList_01()
+        {
+            return new List<Component>
+            {
+                new Component {IfcGuid = "0Gl71cVurFn8bxAOox6M4X"},
+                new Component {IfcGuid = "23Zwlpd71EyvHlH6OZ77nK"},
+                new Component {IfcGuid = "3DvyPxGIn8qR0KDwbL_9r1"},
+                new Component {IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF"},
+                new Component {IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS"}
+            };
+        }
+
+        private static List<Component> GetComponentsList_02()
+        {
+            return new List<Component>
+            {
+                new Component {IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0"},
+                new Component {IfcGuid = "1jQQiGIAnFzxOUzrdmJYDS"},
+                new Component {IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF"},
+                new Component {IfcGuid = "23Zwlpd71EyvHlH6OZ77nK"},
+                new Component {IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS"}
+            };
+        }
+
+        private static List<Component> GetComponentsList_03()
+        {
+            return new List<Component>
+            {
+                new Component {IfcGuid = "0fdpeZZEX3FwJ7x0ox5kzF"},
+                new Component {IfcGuid = "23Zwlpd71EyvHlH6OZ77nK"},
+                new Component {IfcGuid = "1OpjQ1Nlv4sQuTxfUC_8zS"},
+                new Component {IfcGuid = "0cSRUx$EX1NRjqiKcYQ$a0"}
             };
         }
 

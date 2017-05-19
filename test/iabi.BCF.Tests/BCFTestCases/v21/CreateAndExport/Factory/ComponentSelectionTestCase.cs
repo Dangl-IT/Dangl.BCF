@@ -79,48 +79,25 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                         Z = 0.882332858610135
                     }
                 },
-                Components = new VisualizationInfoComponents
+                Components = new Components
                 {
-                    DefaultVisibilityComponents = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS,
-                    DefaultVisibilityOpenings = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS,
-                    DefaultVisibilitySpaceBoundaries = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
-                    DefaultVisibilitySpaces = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES,
-                    Component = new List<Component> { 
-                    new Component
+                    Selection = new List<Component>
                     {
-                        IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj",
-                        Selected = true
+                        new Component {IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj" },
+                        new Component {IfcGuid = "0AQJSsoeDDvwVqSNcwjy55" },
+                        new Component {IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC" }
                     },
-                    new Component
+                    ViewSetupHints = new ViewSetupHints
                     {
-                        IfcGuid = "0AQJSsoeDDvwVqSNcwjy55",
-                        Selected = true
+                        OpeningsVisible = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS,
+                        SpaceBoundariesVisible = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                        SpacesVisible = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES
                     },
-                    new Component
+                    Visibility = new ComponentVisibility
                     {
-                        IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC",
-                        Selected = true
+                        DefaultVisibility = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS
                     }
                 }
-}
-                //Components = new List<Component>
-                //{
-                //    new Component
-                //    {
-                //        IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj",
-                //        Selected = true
-                //    },
-                //    new Component
-                //    {
-                //        IfcGuid = "0AQJSsoeDDvwVqSNcwjy55",
-                //        Selected = true
-                //    },
-                //    new Component
-                //    {
-                //        IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC",
-                //        Selected = true
-                //    }
-                //}
             };
         }
     }

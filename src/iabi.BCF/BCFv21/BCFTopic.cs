@@ -5,18 +5,10 @@ using System.Collections.Specialized;
 using System.Linq;
 using iabi.BCF.BCFv21.Schemas;
 
-/*
- * Note:
- * Due to the missing GUID tag in the VisualizationInfo xsd schema, the VisualizationInfo class has a
- * partial extension defining a GUID to link actual Viewpoints (VisualizationInfo XML instances) with their
- * references in the Markup (Where a list of all viewpoints a topic references is kept)
- *
- */
-
 namespace iabi.BCF.BCFv21
 {
     /// <summary>
-    ///     Single BCFv2 topic container
+    ///     Single BCFv21 topic container
     /// </summary>
     public class BCFTopic : BindableBase
     {
@@ -52,7 +44,7 @@ namespace iabi.BCF.BCFv21
                     {
                         _markup.Topic.Guid = Guid.NewGuid().ToString();
                     }
-                    if (Markup?.Topic != null &&  _markup.Topic.CreationDate == default(DateTime))
+                    if (_markup?.Topic != null &&  _markup.Topic.CreationDate == default(DateTime))
                     {
                         _markup.Topic.CreationDate = DateTime.UtcNow;
                     }
