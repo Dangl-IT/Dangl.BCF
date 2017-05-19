@@ -1,5 +1,5 @@
 $testProjects = "iabi.BCF.Tests"
-$testFrameworks = "netcoreapp1.1"
+$testFrameworks = "netcoreapp1.1", "net461"
 
 # Get the most recent OpenCover NuGet package from the dotnet nuget packages
 $nugetOpenCoverPackage = Join-Path -Path $env:USERPROFILE -ChildPath "\.nuget\packages\OpenCover"

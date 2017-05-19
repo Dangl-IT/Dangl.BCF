@@ -2,7 +2,6 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "NETStandard.Library": "1.6.1",
     "xunit": "2.2.0-beta4-build3444",
     "iabi.BCF": "*",
     "OpenCover": {
@@ -29,10 +28,11 @@
           "Microsoft.NETCore.App": {
             "version": "1.1.0",
             "type": "platform"
-          }
+          },
+          "NETStandard.Library": "1.6.1"
         },
         "imports": "netstandard1.3"
-      }
-
+      },
+      "net461": { } 
   }
 }
