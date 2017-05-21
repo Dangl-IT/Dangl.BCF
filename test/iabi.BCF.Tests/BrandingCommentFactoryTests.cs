@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace iabi.BCF.Tests
@@ -31,7 +29,7 @@ namespace iabi.BCF.Tests
                 var commentText = BrandingCommentFactory.GetBrandingComment();
                 var currentDateTime = DateTime.Now;
                 var regexDateTime = @"\d\d\.\d\d\.\d\d\d\d \d\d:\d\d";
-                var regexMatch = System.Text.RegularExpressions.Regex.Match(commentText, regexDateTime);
+                var regexMatch = Regex.Match(commentText, regexDateTime);
                 Assert.True(regexMatch.Success);
                 var extractedDateTime = regexMatch.Value;
                 var parsedDateTime = DateTime.Parse(extractedDateTime);

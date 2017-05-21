@@ -32,11 +32,11 @@ namespace iabi.BCF.Converter
             }
             var ReturnObject = new APIContainer();
             // Get the project info
-            if (Input.BCFProject != null && Input.BCFProject.Project != null)
+            if (Input.BcfProject != null && Input.BcfProject.Project != null)
             {
                 ReturnObject.Project = new project_GET();
-                ReturnObject.Project.name = Input.BCFProject.Project.Name;
-                ReturnObject.Project.project_id = Input.BCFProject.Project.ProjectId;
+                ReturnObject.Project.name = Input.BcfProject.Project.Name;
+                ReturnObject.Project.project_id = Input.BcfProject.Project.ProjectId;
             }
             // Get the extensions
             if (Input.ProjectExtensions != null)

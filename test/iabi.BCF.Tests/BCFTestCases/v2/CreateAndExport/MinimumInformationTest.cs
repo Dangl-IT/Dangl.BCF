@@ -20,11 +20,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             if (CreatedContainer == null)
             {
-                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
+                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.MinimumInformation);
             }
             if (CreatedArchive == null)
             {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFv2TestCaseData.MinimumInformation_TestCaseName, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.MinimumInformation));
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv2TestCaseData.MINIMUM_INFORMATION_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.MinimumInformation));
             }
         }
 
@@ -43,25 +43,25 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckIfFilesPresent()
         {
-            var ExpectedFilesList = new[]
+            var expectedFilesList = new[]
             {
-                BCFv2TestCaseData.MinimumInformation_TopicGuid + "/markup.bcf",
+                BcFv2TestCaseData.MINIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf",
                 "bcf.version"
             };
 
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (!ExpectedFilesList.Contains(CurrentEntry.FullName))
+                if (!expectedFilesList.Contains(currentEntry.FullName))
                 {
-                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + currentEntry.FullName);
                 }
             }
 
-            foreach (var ExpectedFile in ExpectedFilesList)
+            foreach (var expectedFile in expectedFilesList)
             {
-                if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
+                if (CreatedArchive.Entries.All(curr => curr.FullName != expectedFile))
                 {
-                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + expectedFile);
                 }
             }
         }
@@ -69,96 +69,96 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.0";
-            var ExpectedDetailedVersion = "2.0";
-            var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
-            var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
+            var expectedVersionId = "2.0";
+            var expectedDetailedVersion = "2.0";
+            var versionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
+            var actualVersionId = versionXml.Attribute("VersionId").Value;
+            var actualDetailedVersion = ((XText) ((XElement) versionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement) VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.Equal(ExpectedVersionId, ActualVersionId);
-            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(versionXml.Nodes().Count() == 1 && ((XElement) versionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(expectedVersionId, actualVersionId);
+            Assert.Equal(expectedDetailedVersion, actualDetailedVersion);
         }
 
         [Fact]
         public void CheckMarkupOnlyHasTopicElement()
         {
-            var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv2TestCaseData.MinimumInformation_TopicGuid + "/markup.bcf");
-            Assert.True(MarkupXml.Nodes().Count() == 1 && MarkupXml.Nodes().OfType<XElement>().FirstOrDefault().Name.LocalName == "Topic");
+            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MINIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            Assert.True(markupXml.Nodes().Count() == 1 && markupXml.Nodes().OfType<XElement>().FirstOrDefault().Name.LocalName == "Topic");
         }
 
         [Fact]
         public void CheckTopicHasThreeSubElementsOfTypeXText()
         {
-            var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv2TestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
+            var topicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MINIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf").FirstNode as XElement;
 
-            var ChildNodesCount = TopicXml.Nodes().Count();
-            var ChildrenWithOnlyText = TopicXml.Nodes().OfType<XElement>().Where(Curr => Curr.Nodes().Count() == 1 && Curr.Nodes().OfType<XText>().Any()).Count();
+            var childNodesCount = topicXml.Nodes().Count();
+            var childrenWithOnlyText = topicXml.Nodes().OfType<XElement>().Where(curr => curr.Nodes().Count() == 1 && curr.Nodes().OfType<XText>().Any()).Count();
 
-            Assert.Equal(ChildNodesCount, ChildrenWithOnlyText);
+            Assert.Equal(childNodesCount, childrenWithOnlyText);
         }
 
         [Fact]
         public void TitleSet()
         {
-            var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv2TestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
-            var TitleXml = TopicXml.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "Title");
+            var topicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MINIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf").FirstNode as XElement;
+            var titleXml = topicXml.Nodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Title");
 
-            var Expected = "Minimum information BCFZip topic.";
-            var Actual = (TitleXml.FirstNode as XText).Value;
+            var expected = "Minimum information BCFZip topic.";
+            var actual = (titleXml.FirstNode as XText).Value;
 
-            Assert.Equal(Expected, Actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CreationDateSet()
         {
-            var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv2TestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
-            var CreationDateXml = TopicXml.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "CreationDate");
+            var topicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MINIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf").FirstNode as XElement;
+            var creationDateXml = topicXml.Nodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "CreationDate");
 
-            var Expected = "2015-07-15T13:12:42Z";
-            var Actual = (CreationDateXml.FirstNode as XText).Value;
+            var expected = "2015-07-15T13:12:42Z";
+            var actual = (creationDateXml.FirstNode as XText).Value;
 
-            Assert.Equal(Expected, Actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CreationAuthorSet()
         {
-            var TopicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv2TestCaseData.MinimumInformation_TopicGuid + "/markup.bcf").FirstNode as XElement;
-            var AuthorXml = TopicXml.Nodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "CreationAuthor");
+            var topicXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MINIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf").FirstNode as XElement;
+            var authorXml = topicXml.Nodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "CreationAuthor");
 
-            var Expected = "Developer@example.com";
-            var Actual = (AuthorXml.FirstNode as XText).Value;
+            var expected = "Developer@example.com";
+            var actual = (authorXml.FirstNode as XText).Value;
 
-            Assert.Equal(Expected, Actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void WriteReadAgainAndCompare()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv2Container.ReadStream(MemStream);
+                var readContainer = BCFv2Container.ReadStream(memStream);
 
-                var ReadMemStream = new MemoryStream();
-                ReadContainer.WriteStream(ReadMemStream);
-                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+                var readMemStream = new MemoryStream();
+                readContainer.WriteStream(readMemStream);
+                var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
             }
         }
 
         [Fact]
         public void CheckXmlBrandingCommentsArePresent()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+                CreatedContainer.WriteStream(memStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
     }

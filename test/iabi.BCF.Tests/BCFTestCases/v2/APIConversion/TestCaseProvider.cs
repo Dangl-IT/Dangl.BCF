@@ -11,22 +11,22 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.APIConversion
         public static IEnumerable<ContainerAndName> GetAllContainersFromTestCases()
         {
             // First all created test cases
-            foreach (var CurrentEnum in (TestCaseEnum[]) Enum.GetValues(typeof (TestCaseEnum)))
+            foreach (var currentEnum in (TestCaseEnum[]) Enum.GetValues(typeof (TestCaseEnum)))
             {
                 yield return new ContainerAndName
                 {
-                    Container = BCFTestCaseFactory.GetContainerByTestName(CurrentEnum),
-                    TestName = CurrentEnum.ToString()
+                    Container = BcfTestCaseFactory.GetContainerByTestName(currentEnum),
+                    TestName = currentEnum.ToString()
                 };
             }
 
             // Then all imported test cases
-            foreach (var CurrentEnum in (BCFv2ImportTestCases[]) Enum.GetValues(typeof (BCFv2ImportTestCases)))
+            foreach (var currentEnum in (BCFv2ImportTestCases[]) Enum.GetValues(typeof (BCFv2ImportTestCases)))
             {
                 yield return new ContainerAndName
                 {
-                    Container = TestCaseResourceFactory.GetImportTestCaseContainer(CurrentEnum),
-                    TestName = CurrentEnum.ToString()
+                    Container = TestCaseResourceFactory.GetImportTestCaseContainer(currentEnum),
+                    TestName = currentEnum.ToString()
                 };
             }
         }

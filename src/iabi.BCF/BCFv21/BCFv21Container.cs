@@ -15,19 +15,16 @@ namespace iabi.BCF.BCFv21
     /// </summary>
     public class BCFv21Container : BindableBase
     {
-        private ProjectExtension _BCFProject;
-        private Version _BCFVersionInfo;
-
-        private Dictionary<string, byte[]> _FileAttachments;
-
-        private ProjectExtensions _ProjectExtensions;
-
-        private ObservableCollection<BCFTopic> _Topics;
+        private ProjectExtension _bcfProject;
+        private Version _bcfVersionInfo;
+        private Dictionary<string, byte[]> _fileAttachments;
+        private ProjectExtensions _projectExtensions;
+        private ObservableCollection<BCFTopic> _topics;
 
         /// <summary>
         ///     Version information for the BCFv2. Read-Only
         /// </summary>
-        public Version BCFVersionInfo => _BCFVersionInfo ?? (_BCFVersionInfo = new Version
+        public Version BcfVersionInfo => _bcfVersionInfo ?? (_bcfVersionInfo = new Version
         {
             DetailedVersion = "2.1",
             VersionId = "2.1"
@@ -36,10 +33,10 @@ namespace iabi.BCF.BCFv21
         /// <summary>
         ///     BCF Project and project extensions information
         /// </summary>
-        public ProjectExtension BCFProject
+        public ProjectExtension BcfProject
         {
-            get { return _BCFProject; }
-            set { SetProperty(ref _BCFProject, value); }
+            get { return _bcfProject; }
+            set { SetProperty(ref _bcfProject, value); }
         }
 
         /// <summary>
@@ -47,26 +44,26 @@ namespace iabi.BCF.BCFv21
         /// </summary>
         public ProjectExtensions ProjectExtensions
         {
-            get { return _ProjectExtensions; }
+            get { return _projectExtensions; }
             set
             {
-                if (SetProperty(ref _ProjectExtensions, value))
+                if (SetProperty(ref _projectExtensions, value))
                 {
                     if (value == null)
                     {
-                        if (BCFProject == null)
+                        if (BcfProject == null)
                         {
-                            BCFProject = new ProjectExtension();
+                            BcfProject = new ProjectExtension();
                         }
-                        BCFProject.ExtensionSchema = null;
+                        BcfProject.ExtensionSchema = null;
                     }
                     else
                     {
-                        if (BCFProject == null)
+                        if (BcfProject == null)
                         {
-                            BCFProject = new ProjectExtension();
+                            BcfProject = new ProjectExtension();
                         }
-                        BCFProject.ExtensionSchema = "extensions.xsd";
+                        BcfProject.ExtensionSchema = "extensions.xsd";
                     }
                 }
             }
@@ -79,11 +76,11 @@ namespace iabi.BCF.BCFv21
         {
             get
             {
-                if (_Topics == null)
+                if (_topics == null)
                 {
-                    _Topics = new ObservableCollection<BCFTopic>();
+                    _topics = new ObservableCollection<BCFTopic>();
                 }
-                return _Topics;
+                return _topics;
             }
         }
 
@@ -94,159 +91,159 @@ namespace iabi.BCF.BCFv21
         {
             get
             {
-                if (_FileAttachments == null)
+                if (_fileAttachments == null)
                 {
-                    _FileAttachments = new Dictionary<string, byte[]>();
+                    _fileAttachments = new Dictionary<string, byte[]>();
                 }
-                return _FileAttachments;
+                return _fileAttachments;
             }
         }
 
         /// <summary>
         /// Returns the raw byte array of the attachment
         /// </summary>
-        /// <param name="Input"></param>
+        /// <param name="topicDocumentReference"></param>
         /// <returns></returns>
-        public byte[] GetAttachmentForDocumentReference(TopicDocumentReference Input)
+        public byte[] GetAttachmentForDocumentReference(TopicDocumentReference topicDocumentReference)
         {
-            if (Input.isExternal)
+            if (topicDocumentReference.isExternal)
             {
                 throw new ArgumentException("Reference is external");
             }
-            return FileAttachments[GetFilenameFromReference(Input.ReferencedDocument)];
+            return FileAttachments[GetFilenameFromReference(topicDocumentReference.ReferencedDocument)];
         }
 
         /// <summary>
         ///     Creates a BCFv2 zip archive
         /// </summary>
-        /// <param name="StreamToWrite"></param>
-        public void WriteStream(Stream StreamToWrite)
+        /// <param name="streamToWrite"></param>
+        public void WriteStream(Stream streamToWrite)
         {
-            using (var BCFZip = new ZipArchive(StreamToWrite, ZipArchiveMode.Create, true))
+            using (var bcfZip = new ZipArchive(streamToWrite, ZipArchiveMode.Create, true))
             {
                 // Write the version information
-                var VersionInformation = BCFZip.CreateEntry("bcf.version");
-                using (var VersionWriter = new StreamWriter(VersionInformation.Open()))
+                var versionInformation = bcfZip.CreateEntry("bcf.version");
+                using (var versionWriter = new StreamWriter(versionInformation.Open()))
                 {
-                    var serializedVersionInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BCFVersionInfo.Serialize());
-                    VersionWriter.Write(serializedVersionInfo);
+                    var serializedVersionInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BcfVersionInfo.Serialize());
+                    versionWriter.Write(serializedVersionInfo);
                 }
 
                 if (ProjectExtensions != null && !ProjectExtensions.IsEmpty())
                 {
-                    var ProjectInformation = BCFZip.CreateEntry("extensions.xsd");
-                    using (var ProjectInfoWriter = new StreamWriter(ProjectInformation.Open()))
+                    var projectInformation = bcfZip.CreateEntry("extensions.xsd");
+                    using (var projectInfoWriter = new StreamWriter(projectInformation.Open()))
                     {
                         var serializedExtensions = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(ProjectExtensions.WriteExtension());
-                        ProjectInfoWriter.Write(serializedExtensions);
+                        projectInfoWriter.Write(serializedExtensions);
                     }
-                    if (BCFProject == null)
+                    if (BcfProject == null)
                     {
-                        BCFProject = new ProjectExtension();
+                        BcfProject = new ProjectExtension();
                     }
-                    BCFProject.ExtensionSchema = "extensions.xsd";
+                    BcfProject.ExtensionSchema = "extensions.xsd";
                 }
                 // Write the project info if it is present
-                if (BCFProject != null)
+                if (BcfProject != null)
                 {
-                    var ProjectEntry = BCFZip.CreateEntry("project.bcfp");
-                    using (var ProjectInfoWriter = new StreamWriter(ProjectEntry.Open()))
+                    var projectEntry = bcfZip.CreateEntry("project.bcfp");
+                    using (var projectInfoWriter = new StreamWriter(projectEntry.Open()))
                     {
-                        var serializedProjectInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BCFProject.Serialize());
-                        ProjectInfoWriter.Write(serializedProjectInfo);
+                        var serializedProjectInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BcfProject.Serialize());
+                        projectInfoWriter.Write(serializedProjectInfo);
                     }
                 }
                 // Write file attachments
                 if (FileAttachments.Any())
                 {
-                    foreach (var CurrentAttachment in FileAttachments)
+                    foreach (var attachment in FileAttachments)
                     {
-                        var AttachmentEntry = BCFZip.CreateEntry(CurrentAttachment.Key);
-                        using (var AttachmentWriter = new BinaryWriter(AttachmentEntry.Open()))
+                        var attachmentEntry = bcfZip.CreateEntry(attachment.Key);
+                        using (var attachmentWriter = new BinaryWriter(attachmentEntry.Open()))
                         {
-                            AttachmentWriter.Write(CurrentAttachment.Value);
+                            attachmentWriter.Write(attachment.Value);
                         }
                     }
                 }
                 // Write an entry for each topic
-                foreach (var CurrentTopic in Topics)
+                foreach (var topic in Topics)
                 {
-                    if (CurrentTopic.Markup.Topic.CreationDate == default(DateTime))
+                    if (topic.Markup.Topic.CreationDate == default(DateTime))
                     {
-                        CurrentTopic.Markup.Topic.CreationDate = DateTime.UtcNow;
+                        topic.Markup.Topic.CreationDate = DateTime.UtcNow;
                     }
-                    if (string.IsNullOrWhiteSpace(CurrentTopic.Markup.Topic.Guid))
+                    if (string.IsNullOrWhiteSpace(topic.Markup.Topic.Guid))
                     {
-                        CurrentTopic.Markup.Topic.Guid = Guid.NewGuid().ToString();
+                        topic.Markup.Topic.Guid = Guid.NewGuid().ToString();
                     }
-                    if (CurrentTopic.Markup.Topic.ShouldSerializeBimSnippet())
+                    if (topic.Markup.Topic.ShouldSerializeBimSnippet())
                     {
                         // Write BIM Snippet if present in the file and internal
-                        if (!CurrentTopic.Markup.Topic.BimSnippet.isExternal)
+                        if (!topic.Markup.Topic.BimSnippet.isExternal)
                         {
-                            CurrentTopic.Markup.Topic.BimSnippet.isExternal = false;
-                            var BIMSnippetBinaryEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Topic.BimSnippet.Reference);
-                            using (var CurrentSnippetWriter = new BinaryWriter(BIMSnippetBinaryEntry.Open()))
+                            topic.Markup.Topic.BimSnippet.isExternal = false;
+                            var bimSnippetBinaryEntry = bcfZip.CreateEntry(topic.Markup.Topic.Guid + "/" + topic.Markup.Topic.BimSnippet.Reference);
+                            using (var snippetWriter = new BinaryWriter(bimSnippetBinaryEntry.Open()))
                             {
-                                if (CurrentTopic.SnippetData != null)
+                                if (topic.SnippetData != null)
                                 {
-                                    CurrentSnippetWriter.Write(CurrentTopic.SnippetData);
+                                    snippetWriter.Write(topic.SnippetData);
                                 }
                             }
                         }
                     }
-                    var CurrentTopicEntry = BCFZip.CreateEntry(CurrentTopic.Markup.Topic.Guid + "/" + "markup.bcf");
-                    for (var i = 0; i < CurrentTopic.Viewpoints.Count; i++)
+                    var topicEntry = bcfZip.CreateEntry(topic.Markup.Topic.Guid + "/" + "markup.bcf");
+                    for (var i = 0; i < topic.Viewpoints.Count; i++)
                     {
-                        if (CurrentTopic.ViewpointSnapshots.ContainsKey(CurrentTopic.Viewpoints[i].Guid))
+                        if (topic.ViewpointSnapshots.ContainsKey(topic.Viewpoints[i].Guid))
                         {
-                            CurrentTopic.Markup.Viewpoints[i].Snapshot = "Snapshot_" + CurrentTopic.Viewpoints[i].Guid + ".png";
+                            topic.Markup.Viewpoints[i].Snapshot = "Snapshot_" + topic.Viewpoints[i].Guid + ".png";
                         }
                     }
-                    using (var TopicWriter = new StreamWriter(CurrentTopicEntry.Open()))
+                    using (var topicWriter = new StreamWriter(topicEntry.Open()))
                     {
-                        var serializedTopic = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(CurrentTopic.Markup.Serialize());
-                        TopicWriter.Write(serializedTopic);
+                        var serializedTopic = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(topic.Markup.Serialize());
+                        topicWriter.Write(serializedTopic);
                     }
                     // Write viewpoints if present
-                    for (var i = 0; i < CurrentTopic.Viewpoints.Count; i++)
+                    for (var i = 0; i < topic.Viewpoints.Count; i++)
                     {
-                        var EntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Viewpoints[i].Viewpoint;
-                        var CurrentViewpoint = BCFZip.CreateEntry(EntryName);
+                        var entryName = topic.Markup.Topic.Guid + "/" + topic.Markup.Viewpoints[i].Viewpoint;
+                        var viewpoint = bcfZip.CreateEntry(entryName);
 
-                        using (var CurrentViewpointWriter = new StreamWriter(CurrentViewpoint.Open()))
+                        using (var viewpointWriter = new StreamWriter(viewpoint.Open()))
                         {
-                            if (CurrentTopic.Viewpoints[i].Bitmap.Count > 0)
+                            if (topic.Viewpoints[i].Bitmap.Count > 0)
                             {
-                                foreach (var CurrentBitmap in CurrentTopic.Viewpoints[i].Bitmap)
+                                foreach (var bitmap in topic.Viewpoints[i].Bitmap)
                                 {
-                                    CurrentBitmap.Reference = "Bitmap_" + Guid.NewGuid() + "." + (CurrentBitmap.Bitmap == Schemas.BitmapFormat.JPG ? "jpg" : "png");
+                                    bitmap.Reference = "Bitmap_" + Guid.NewGuid() + "." + (bitmap.Bitmap == Schemas.BitmapFormat.JPG ? "jpg" : "png");
                                 }
                             }
-                            var serializedViewpoint = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(CurrentTopic.Viewpoints[i].Serialize());
-                            CurrentViewpointWriter.Write(serializedViewpoint);
+                            var serializedViewpoint = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(topic.Viewpoints[i].Serialize());
+                            viewpointWriter.Write(serializedViewpoint);
                         }
                         // Write snapshot if present
-                        if (CurrentTopic.ViewpointSnapshots.ContainsKey(CurrentTopic.Viewpoints[i].Guid))
+                        if (topic.ViewpointSnapshots.ContainsKey(topic.Viewpoints[i].Guid))
                         {
-                            var SnapshotEntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Markup.Viewpoints[i].Snapshot;
-                            var CurrentViewpointSnapshot = BCFZip.CreateEntry(SnapshotEntryName);
-                            using (var CurrentViewpointSnapshotWriter = new BinaryWriter(CurrentViewpointSnapshot.Open()))
+                            var snapshotEntryName = topic.Markup.Topic.Guid + "/" + topic.Markup.Viewpoints[i].Snapshot;
+                            var viewpointSnapshot = bcfZip.CreateEntry(snapshotEntryName);
+                            using (var viewpointSnapshotWriter = new BinaryWriter(viewpointSnapshot.Open()))
                             {
-                                CurrentViewpointSnapshotWriter.Write(CurrentTopic.ViewpointSnapshots[CurrentTopic.Markup.Viewpoints[i].Guid]);
+                                viewpointSnapshotWriter.Write(topic.ViewpointSnapshots[topic.Markup.Viewpoints[i].Guid]);
                             }
                         }
                         // Write bitmaps if present
-                        if (CurrentTopic.ViewpointBitmaps.ContainsKey(CurrentTopic.Viewpoints[i]))
+                        if (topic.ViewpointBitmaps.ContainsKey(topic.Viewpoints[i]))
                         {
-                            for (var j = 0; j < CurrentTopic.ViewpointBitmaps[CurrentTopic.Viewpoints[i]].Count; j++)
+                            for (var j = 0; j < topic.ViewpointBitmaps[topic.Viewpoints[i]].Count; j++)
                             {
                                 // It's a little bit hacky still....
-                                var BitmapEntryName = CurrentTopic.Markup.Topic.Guid + "/" + CurrentTopic.Viewpoints[i].Bitmap[j].Reference;
-                                var CurrentViewpointSnapshot = BCFZip.CreateEntry(BitmapEntryName);
-                                using (var CurrentViewpointSnapshotWriter = new BinaryWriter(CurrentViewpointSnapshot.Open()))
+                                var bitmapEntryName = topic.Markup.Topic.Guid + "/" + topic.Viewpoints[i].Bitmap[j].Reference;
+                                var viewpointBitmapEntry = bcfZip.CreateEntry(bitmapEntryName);
+                                using (var viewpointBitmapWriter = new BinaryWriter(viewpointBitmapEntry.Open()))
                                 {
-                                    CurrentViewpointSnapshotWriter.Write(CurrentTopic.ViewpointBitmaps[CurrentTopic.Viewpoints[i]][j]);
+                                    viewpointBitmapWriter.Write(topic.ViewpointBitmaps[topic.Viewpoints[i]][j]);
                                 }
                             }
                         }
@@ -258,266 +255,267 @@ namespace iabi.BCF.BCFv21
         /// <summary>
         ///     Reads a BCFv2 zip archive
         /// </summary>
-        /// <param name="ZIPFileStream">The zip archive of the physical file</param>
+        /// <param name="zipFileStream">The zip archive of the physical file</param>
         /// <returns></returns>
-        public static BCFv21Container ReadStream(Stream ZIPFileStream)
+        public static BCFv21Container ReadStream(Stream zipFileStream)
         {
-            var ReturnObject = new BCFv21Container();
-            var FileToOpen = new ZipArchive(ZIPFileStream, ZipArchiveMode.Read);
+            var container = new BCFv21Container();
+            var bcfZipArchive = new ZipArchive(zipFileStream, ZipArchiveMode.Read);
             // Check if version info is compliant with this implementation (2.0)
-            var VersionEntry = FileToOpen.Entries.FirstOrDefault(Entry => string.Equals(Entry.FullName, "bcf.version", StringComparison.OrdinalIgnoreCase));
-            if (VersionEntry != null)
+            var versionEntry = bcfZipArchive.Entries.FirstOrDefault(e => string.Equals(e.FullName, "bcf.version", StringComparison.OrdinalIgnoreCase));
+            if (versionEntry != null)
             {
-                var ReadFileVersionInfo = Version.Deserialize(VersionEntry.Open());
-                if (ReadFileVersionInfo.VersionId != "2.1" || !ReadFileVersionInfo.DetailedVersion.Contains("2.1"))
+                var fileVersionInfo = Version.Deserialize(versionEntry.Open());
+                if (fileVersionInfo.VersionId != "2.1" || !fileVersionInfo.DetailedVersion.Contains("2.1"))
                 {
                     throw new NotSupportedException("BCFzip version");
                 }
             }
             // Get project info if present
-            if (FileToOpen.Entries.Any(Entry => Entry.FullName == "project.bcfp"))
+            if (bcfZipArchive.Entries.Any(e => e.FullName == "project.bcfp"))
             {
-                var DeserializedProject = ProjectExtension.Deserialize(FileToOpen.Entries.First(Entry => Entry.FullName == "project.bcfp").Open());
-                if (!(string.IsNullOrWhiteSpace(DeserializedProject.ExtensionSchema) && (DeserializedProject.Project == null || string.IsNullOrWhiteSpace(DeserializedProject.Project.Name) && string.IsNullOrWhiteSpace(DeserializedProject.Project.ProjectId))))
+                var deserializedProject = ProjectExtension.Deserialize(bcfZipArchive.Entries.First(Entry => Entry.FullName == "project.bcfp").Open());
+                if (!(string.IsNullOrWhiteSpace(deserializedProject.ExtensionSchema) && (deserializedProject.Project == null || string.IsNullOrWhiteSpace(deserializedProject.Project.Name) && string.IsNullOrWhiteSpace(deserializedProject.Project.ProjectId))))
                 {
-                    if (string.IsNullOrWhiteSpace(DeserializedProject.ExtensionSchema))
+                    if (string.IsNullOrWhiteSpace(deserializedProject.ExtensionSchema))
                     {
-                        DeserializedProject.ExtensionSchema = null;
+                        deserializedProject.ExtensionSchema = null;
                     }
-                    ReturnObject.BCFProject = DeserializedProject;
-                    if (!string.IsNullOrWhiteSpace(ReturnObject.BCFProject.ExtensionSchema) && FileToOpen.Entries.Any(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema))
+                    container.BcfProject = deserializedProject;
+                    if (!string.IsNullOrWhiteSpace(container.BcfProject.ExtensionSchema) && bcfZipArchive.Entries.Any(e => e.FullName == container.BcfProject.ExtensionSchema))
                     {
-                        using (var Rdr = new StreamReader(FileToOpen.Entries.First(Curr => Curr.FullName == ReturnObject.BCFProject.ExtensionSchema).Open()))
+                        using (var extensionsReader = new StreamReader(bcfZipArchive.Entries.First(e => e.FullName == container.BcfProject.ExtensionSchema).Open()))
                         {
-                            ReturnObject.ProjectExtensions = new ProjectExtensions(Rdr.ReadToEnd());
+                            container.ProjectExtensions = new ProjectExtensions(extensionsReader.ReadToEnd());
                         }
                     }
                 }
             }
             // Get each topic's GUID and read the topic
-            var TopicGUIDs = new List<string>();
-            foreach (var CurrentEntry in FileToOpen.Entries)
+            var topicIds = new List<string>();
+            foreach (var entry in bcfZipArchive.Entries)
             {
-                var CurrentTopicGUID = CurrentEntry.FullName;
-                if (Regex.IsMatch(CurrentTopicGUID, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}/markup.bcf\b"))
+                var topicId = entry.FullName;
+                if (Regex.IsMatch(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}/markup.bcf\b"))
                 {
-                    if (!TopicGUIDs.Contains(Regex.Match(CurrentTopicGUID, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value))
+                    if (!topicIds.Contains(Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value))
                     {
-                        ReturnObject.Topics.Add(ReadSingleTopic(FileToOpen, Regex.Match(CurrentTopicGUID, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value, ReturnObject));
+                        container.Topics.Add(ReadSingleTopic(bcfZipArchive, Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value, container));
                     }
+                    topicIds.Add(Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value);
                 }
             }
             // Check if there is no extension but a reference to it; delete the reference then
-            if (ReturnObject.ProjectExtensions == null && ReturnObject.BCFProject != null && !string.IsNullOrWhiteSpace(ReturnObject.BCFProject.ExtensionSchema))
+            if (container.ProjectExtensions == null && !string.IsNullOrWhiteSpace(container.BcfProject?.ExtensionSchema))
             {
-                ReturnObject.BCFProject.ExtensionSchema = null;
+                container.BcfProject.ExtensionSchema = null;
             }
-            return ReturnObject;
+            return container;
         }
 
         /// <summary>
         ///     Will take the current location within a <see cref="ZipArchive" /> and a relative location to that to output
         ///     the absolute location for the ZipArchive Entry.
         /// </summary>
-        /// <param name="CurrentPath">Position within the archive from which to start.</param>
-        /// <param name="RelativeReference">Relative to the given position.</param>
+        /// <param name="currentPath">Position within the archive from which to start.</param>
+        /// <param name="relativeReference">Relative to the given position.</param>
         /// <returns></returns>
-        public static string GetAbsolutePath(string CurrentPath, string RelativeReference)
+        public static string GetAbsolutePath(string currentPath, string relativeReference)
         {
-            if (string.IsNullOrWhiteSpace(CurrentPath + RelativeReference))
+            if (string.IsNullOrWhiteSpace(currentPath + relativeReference))
             {
                 return string.Empty;
             }
-            if (string.IsNullOrWhiteSpace(CurrentPath))
+            if (string.IsNullOrWhiteSpace(currentPath))
             {
-                return RelativeReference;
+                return relativeReference;
             }
-            if (string.IsNullOrWhiteSpace(RelativeReference))
+            if (string.IsNullOrWhiteSpace(relativeReference))
             {
-                return CurrentPath;
+                return currentPath;
             }
-            var PathSegments = CurrentPath.Split('/');
-            var ReferenceSegments = RelativeReference.Split('/');
-            var FullPathSegments = PathSegments.Concat(ReferenceSegments).Where(Curr => Curr != "/" && !string.IsNullOrWhiteSpace(Curr)).ToList();
-            for (var i = 0; i < FullPathSegments.Count; i++)
+            var pathSegments = currentPath.Split('/');
+            var referenceSegments = relativeReference.Split('/');
+            var fullPathSegments = pathSegments.Concat(referenceSegments).Where(s => s != "/" && !string.IsNullOrWhiteSpace(s)).ToList();
+            for (var i = 0; i < fullPathSegments.Count; i++)
             {
                 // Need to get one higher
-                if (FullPathSegments[i].Trim() == "..")
+                if (fullPathSegments[i].Trim() == "..")
                 {
-                    FullPathSegments.RemoveAt(i);
-                    FullPathSegments.RemoveAt(i - 1);
+                    fullPathSegments.RemoveAt(i);
+                    fullPathSegments.RemoveAt(i - 1);
                     i = i - 2;
                 }
             }
-            return string.Join("/", FullPathSegments);
+            return string.Join("/", fullPathSegments);
         }
 
         /// <summary>
         /// Returns just the filename portion of a file reference, e.g. "picture.jpg" for "C:\Pictures\picuture.jpg"
         /// </summary>
-        /// <param name="FileReference"></param>
+        /// <param name="fileReference"></param>
         /// <returns></returns>
-        public static string GetFilenameFromReference(string FileReference)
+        public static string GetFilenameFromReference(string fileReference)
         {
-            return string.IsNullOrWhiteSpace(FileReference) ? string.Empty : FileReference.Split('/').Last();
+            return string.IsNullOrWhiteSpace(fileReference) ? string.Empty : fileReference.Split('/').Last();
         }
 
         /// <summary>
         ///     Transforms an absolute path to a relative path from a given location
         /// </summary>
-        /// <param name="AbsolutePath"></param>
-        /// <param name="CurrentLocation">The location from which to make the relative path</param>
+        /// <param name="absolutePath"></param>
+        /// <param name="currentLocation">The location from which to make the relative path</param>
         /// <returns></returns>
-        public static string TransformToRelativePath(string AbsolutePath, string CurrentLocation)
+        public static string TransformToRelativePath(string absolutePath, string currentLocation)
         {
-            if (string.IsNullOrWhiteSpace(AbsolutePath))
+            if (string.IsNullOrWhiteSpace(absolutePath))
             {
                 return string.Empty;
             }
-            if (string.IsNullOrWhiteSpace(CurrentLocation))
+            if (string.IsNullOrWhiteSpace(currentLocation))
             {
-                return AbsolutePath;
+                return absolutePath;
             }
             // Nested within the current location
-            if (AbsolutePath.StartsWith(CurrentLocation))
+            if (absolutePath.StartsWith(currentLocation))
             {
-                return AbsolutePath.Substring(CurrentLocation.Length + 1);
+                return absolutePath.Substring(currentLocation.Length + 1);
             }
-            var AbsolutePathComponents = AbsolutePath.Split('/');
-            var CurrentLocComponents = CurrentLocation.Split('/');
+            var absolutePathComponents = absolutePath.Split('/');
+            var currentLocComponents = currentLocation.Split('/');
 
-            int Offset;
-            for (Offset = 0; Offset < CurrentLocComponents.Length; Offset++)
+            int offset;
+            for (offset = 0; offset < currentLocComponents.Length; offset++)
             {
-                if (AbsolutePathComponents[Offset] != CurrentLocComponents[Offset])
+                if (absolutePathComponents[offset] != currentLocComponents[offset])
                 {
                     break;
                 }
             }
-            var Result = string.Empty;
-            for (var i = 0; i < CurrentLocComponents.Length - Offset; i++)
+            var result = string.Empty;
+            for (var i = 0; i < currentLocComponents.Length - offset; i++)
             {
-                Result += "../";
+                result += "../";
             }
-            for (var i = Offset; i < AbsolutePathComponents.Length; i++)
+            for (var i = offset; i < absolutePathComponents.Length; i++)
             {
-                Result += AbsolutePathComponents[i] + "/";
+                result += absolutePathComponents[i] + "/";
             }
-            return Result.TrimEnd('/');
+            return result.TrimEnd('/');
         }
 
-        private static BCFTopic ReadSingleTopic(ZipArchive Archive, string TopicID, BCFv21Container Container)
+        private static BCFTopic ReadSingleTopic(ZipArchive archive, string topicId, BCFv21Container container)
         {
-            var ReturnObject = new BCFTopic();
+            var topic = new BCFTopic();
             // Get the markup
-            ReturnObject.Markup = Markup.Deserialize(Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + "markup.bcf").Open());
+            topic.Markup = Markup.Deserialize(archive.Entries.First(e => e.FullName == topicId + "/" + "markup.bcf").Open());
             // Check if any comments have a Viewpoint object without any value, then set it to null
-            foreach (var CurrentComment in ReturnObject.Markup.Comment.Where(Curr => Curr.ShouldSerializeViewpoint() && string.IsNullOrWhiteSpace(Curr.Viewpoint.Guid)))
+            foreach (var comment in topic.Markup.Comment.Where(c => c.ShouldSerializeViewpoint() && string.IsNullOrWhiteSpace(c.Viewpoint.Guid)))
             {
-                CurrentComment.Viewpoint = null;
+                comment.Viewpoint = null;
             }
-            if (ReturnObject.Markup.Topic.ShouldSerializeBimSnippet()  && !ReturnObject.Markup.Topic.BimSnippet.isExternal)
+            if (topic.Markup.Topic.ShouldSerializeBimSnippet()  && !topic.Markup.Topic.BimSnippet.isExternal)
             {
                 // Read the snippet
-                var SnippetPathInArchive = GetAbsolutePath(TopicID, ReturnObject.Markup.Topic.BimSnippet.Reference);
-                var Entry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == SnippetPathInArchive);
-                if (Entry == null)
+                var snippetPathInArchive = GetAbsolutePath(topicId, topic.Markup.Topic.BimSnippet.Reference);
+                var entry = archive.Entries.FirstOrDefault(Curr => Curr.FullName == snippetPathInArchive);
+                if (entry == null)
                 {
-                    ReturnObject.Markup.Topic.BimSnippet.isExternal = true;
+                    topic.Markup.Topic.BimSnippet.isExternal = true;
                 }
                 else
                 {
-                    using (var MemStream = new MemoryStream())
+                    using (var memStream = new MemoryStream())
                     {
-                        Entry.Open().CopyTo(MemStream);
-                        ReturnObject.SnippetData = MemStream.ToArray();
+                        entry.Open().CopyTo(memStream);
+                        topic.SnippetData = memStream.ToArray();
                     }
                 }
             }
             // See if any internal header files are referenced
-            if (ReturnObject.Markup.ShouldSerializeHeader() && ReturnObject.Markup.Header.Any(Curr => !Curr.isExternal))
+            if (topic.Markup.ShouldSerializeHeader() && topic.Markup.Header.Any(h => !h.isExternal))
             {
-                foreach (var InternalFile in ReturnObject.Markup.Header.Where(Curr => !Curr.isExternal))
+                foreach (var internalFile in topic.Markup.Header.Where(h => !h.isExternal))
                 {
-                    var FilePathInArchive = GetAbsolutePath(TopicID, InternalFile.Reference);
-                    var Entry = Archive.Entries.First(Curr => Curr.FullName == FilePathInArchive);
+                    var filePathInArchive = GetAbsolutePath(topicId, internalFile.Reference);
+                    var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
                     // Only append if not known already
-                    if (!Container.FileAttachments.ContainsKey(Entry.Name))
+                    if (!container.FileAttachments.ContainsKey(entry.Name))
                     {
-                        using (var MemStream = new MemoryStream())
+                        using (var memStream = new MemoryStream())
                         {
-                            Entry.Open().CopyTo(MemStream);
-                            Container.FileAttachments.Add(Entry.Name, MemStream.ToArray());
+                            entry.Open().CopyTo(memStream);
+                            container.FileAttachments.Add(entry.Name, memStream.ToArray());
                         }
                     }
                 }
             }
             // Get referenced documents
-            if (ReturnObject.Markup.Topic.ShouldSerializeDocumentReference() && ReturnObject.Markup.Topic.DocumentReference.Any(Curr => !Curr.isExternal))
+            if (topic.Markup.Topic.ShouldSerializeDocumentReference() && topic.Markup.Topic.DocumentReference.Any(d => !d.isExternal))
             {
-                foreach (var InternalDocument in ReturnObject.Markup.Topic.DocumentReference.Where(Curr => !Curr.isExternal))
+                foreach (var internalDocument in topic.Markup.Topic.DocumentReference.Where(d => !d.isExternal))
                 {
-                    var FilePathInArchive = GetAbsolutePath(TopicID, InternalDocument.ReferencedDocument);
-                    var Entry = Archive.Entries.First(Curr => Curr.FullName == FilePathInArchive);
+                    var filePathInArchive = GetAbsolutePath(topicId, internalDocument.ReferencedDocument);
+                    var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
                     // Only append if not known already
-                    if (!Container.FileAttachments.ContainsKey(Entry.Name))
+                    if (!container.FileAttachments.ContainsKey(entry.Name))
                     {
-                        using (var MemStream = new MemoryStream())
+                        using (var memStream = new MemoryStream())
                         {
-                            Entry.Open().CopyTo(MemStream);
-                            Container.FileAttachments.Add(Entry.Name, MemStream.ToArray());
+                            entry.Open().CopyTo(memStream);
+                            container.FileAttachments.Add(entry.Name, memStream.ToArray());
                         }
                     }
                 }
             }
             // Get viewpoints
-            for (var i = 0; i < ReturnObject.Markup.Viewpoints.Count; i++)
+            for (var i = 0; i < topic.Markup.Viewpoints.Count; i++)
             {
-                var DeserializedViewpoint = VisualizationInfo.Deserialize(Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Viewpoint).Open());
-                DeserializedViewpoint.Guid = ReturnObject.Markup.Viewpoints[i].Guid;
-                ReturnObject.Viewpoints.Add(DeserializedViewpoint);
+                var deserializedViewpoint = VisualizationInfo.Deserialize(archive.Entries.First(e => e.FullName == topicId + "/" + topic.Markup.Viewpoints[i].Viewpoint).Open());
+                deserializedViewpoint.Guid = topic.Markup.Viewpoints[i].Guid;
+                topic.Viewpoints.Add(deserializedViewpoint);
                 // Get viewpoint bitmaps if present
-                if (ReturnObject.Viewpoints[i].Bitmap.Count > 0)
+                if (topic.Viewpoints[i].Bitmap.Count > 0)
                 {
-                    foreach (var ViewpointBitmap in ReturnObject.Viewpoints[i].Bitmap)
+                    foreach (var viewpointBitmap in topic.Viewpoints[i].Bitmap)
                     {
-                        using (var BytesMemoryStream = new MemoryStream())
+                        using (var bytesMemoryStream = new MemoryStream())
                         {
-                            var BitmapPathInArchive = GetAbsolutePath(TopicID, ViewpointBitmap.Reference);
-                            var BitmapFileEntry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == BitmapPathInArchive);
-                            if (BitmapFileEntry == null)
+                            var bitmapPathInArchive = GetAbsolutePath(topicId, viewpointBitmap.Reference);
+                            var bitmapFileEntry = archive.Entries.FirstOrDefault(e => e.FullName == bitmapPathInArchive);
+                            if (bitmapFileEntry == null)
                             {
                                 // File entry was not found, possible because it was referenced with an absolute path
-                                BitmapPathInArchive = GetAbsolutePath(TopicID, TransformToRelativePath(ViewpointBitmap.Reference, TopicID));
-                                BitmapFileEntry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == BitmapPathInArchive);
-                                if (BitmapFileEntry != null)
+                                bitmapPathInArchive = GetAbsolutePath(topicId, TransformToRelativePath(viewpointBitmap.Reference, topicId));
+                                bitmapFileEntry = archive.Entries.FirstOrDefault(e => e.FullName == bitmapPathInArchive);
+                                if (bitmapFileEntry != null)
                                 {
-                                    ViewpointBitmap.Reference = TransformToRelativePath(ViewpointBitmap.Reference, TopicID);
+                                    viewpointBitmap.Reference = TransformToRelativePath(viewpointBitmap.Reference, topicId);
                                 }
                                 else
                                 {
-                                    throw new ArgumentNullException("BitmapFileEntry", "Could not locate bitmap file in archive");
+                                    throw new ArgumentNullException(nameof(bitmapFileEntry), "Could not locate bitmap file in archive");
                                 }
                             }
-                            BitmapFileEntry.Open().CopyTo(BytesMemoryStream);
-                            if (!ReturnObject.ViewpointBitmaps.ContainsKey(ReturnObject.Viewpoints[i]))
+                            bitmapFileEntry.Open().CopyTo(bytesMemoryStream);
+                            if (!topic.ViewpointBitmaps.ContainsKey(topic.Viewpoints[i]))
                             {
-                                ReturnObject.ViewpointBitmaps.Add(ReturnObject.Viewpoints[i], new List<byte[]>());
+                                topic.ViewpointBitmaps.Add(topic.Viewpoints[i], new List<byte[]>());
                             }
-                            ReturnObject.ViewpointBitmaps[ReturnObject.Viewpoints[i]].Add(BytesMemoryStream.ToArray());
+                            topic.ViewpointBitmaps[topic.Viewpoints[i]].Add(bytesMemoryStream.ToArray());
                         }
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(ReturnObject.Markup.Viewpoints[i].Snapshot))
+                if (!string.IsNullOrWhiteSpace(topic.Markup.Viewpoints[i].Snapshot))
                 {
-                    using (var BytesMemoryStream = new MemoryStream())
+                    using (var bytesMemoryStream = new MemoryStream())
                     {
-                        Archive.Entries.First(Entry => Entry.FullName == TopicID + "/" + ReturnObject.Markup.Viewpoints[i].Snapshot).Open().CopyTo(BytesMemoryStream);
-                        ReturnObject.AddOrUpdateSnapshot(ReturnObject.Viewpoints[i].Guid, BytesMemoryStream.ToArray());
+                        archive.Entries.First(e => e.FullName == topicId + "/" + topic.Markup.Viewpoints[i].Snapshot).Open().CopyTo(bytesMemoryStream);
+                        topic.AddOrUpdateSnapshot(topic.Viewpoints[i].Guid, bytesMemoryStream.ToArray());
                     }
                 }
             }
-            return ReturnObject;
+            return topic;
         }
     }
 }

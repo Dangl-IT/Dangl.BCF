@@ -10,86 +10,70 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
 {
     public static class TestUtilities
     {
-        //public static void CompareBCFv2Container(BCFv2Container Expected, BCFv2Container Actual)
-        //{
-        //    var Config = new KellermanSoftware.CompareNetObjects.ComparisonConfig();
-        //    Config.TreatStringEmptyAndNullTheSame = true;
-        //    Config.MembersToIgnore.Add("Index");
-        //    Config.MaxMillisecondsDateDifference = 2000;
-        //    var Comparator = new KellermanSoftware.CompareNetObjects.CompareLogic(Config);
-
-        //    var Comparison = Comparator.Compare(Expected, Actual);
-
-        //    Assert.True(Comparison.AreEqual, Comparison.DifferencesString);
-        //}
-
-        public static BimSnippet GetBimSnippetFromXml(XElement SnippetXml)
+        public static BimSnippet GetBimSnippetFromXml(XElement snippetXml)
         {
-            var Snippet = new BimSnippet();
-
-            Snippet.isExternal = SnippetXml.Attribute("isExternal") == null ? false : bool.Parse(SnippetXml.Attribute("isExternal").Value);
-            Snippet.Reference = SnippetXml.Descendants("Reference").FirstOrDefault().Value;
-            Snippet.ReferenceSchema = SnippetXml.Descendants("ReferenceSchema").FirstOrDefault().Value;
-            Snippet.SnippetType = SnippetXml.Attribute("SnippetType").Value;
-
-            return Snippet;
+            var snippet = new BimSnippet();
+            snippet.isExternal = snippetXml.Attribute("isExternal") == null ? false : bool.Parse(snippetXml.Attribute("isExternal").Value);
+            snippet.Reference = snippetXml.Descendants("Reference").FirstOrDefault().Value;
+            snippet.ReferenceSchema = snippetXml.Descendants("ReferenceSchema").FirstOrDefault().Value;
+            snippet.SnippetType = snippetXml.Attribute("SnippetType").Value;
+            return snippet;
         }
 
-        public static Comment GetCommentFromXml(XElement CommentXml)
+        public static Comment GetCommentFromXml(XElement commentXml)
         {
-            var Comment = new Comment();
-
-            Comment.Author = CommentXml.Descendants("Author").FirstOrDefault().Value;
-            Comment.Comment1 = CommentXml.Descendants("Comment").FirstOrDefault().Value;
-            Comment.Date = (DateTime) CommentXml.Descendants("Date").FirstOrDefault();
-            Comment.Guid = CommentXml.Attribute("Guid").Value;
-            Comment.ModifiedAuthor = CommentXml.Descendants("ModifiedAuthor").Any() ? CommentXml.Descendants("ModifiedAuthor").FirstOrDefault().Value : null;
-            if (CommentXml.Descendants("ModifiedDate").Any())
+            var comment = new Comment();
+            comment.Author = commentXml.Descendants("Author").FirstOrDefault().Value;
+            comment.Comment1 = commentXml.Descendants("Comment").FirstOrDefault().Value;
+            comment.Date = (DateTime) commentXml.Descendants("Date").FirstOrDefault();
+            comment.Guid = commentXml.Attribute("Guid").Value;
+            comment.ModifiedAuthor = commentXml.Descendants("ModifiedAuthor").Any() ? commentXml.Descendants("ModifiedAuthor").FirstOrDefault().Value : null;
+            if (commentXml.Descendants("ModifiedDate").Any())
             {
-                Comment.ModifiedDate = (DateTime) CommentXml.Descendants("ModifiedDate").FirstOrDefault();
+                comment.ModifiedDate = (DateTime) commentXml.Descendants("ModifiedDate").FirstOrDefault();
             }
-            Comment.ReplyToComment = CommentXml.Descendants("ReplyToComment").Any() ? new CommentReplyToComment {Guid = CommentXml.Descendants("ReplyToComment").FirstOrDefault().Attribute("Guid").Value} : null;
-            Comment.Status = CommentXml.Descendants("Status").FirstOrDefault().Value;
-            Comment.VerbalStatus = CommentXml.Descendants("VerbalStatus").FirstOrDefault().Value;
-            Comment.Viewpoint = CommentXml.Descendants("Viewpoint").Any() ? new CommentViewpoint {Guid = CommentXml.Descendants("Viewpoint").FirstOrDefault().Attribute("Guid").Value} : null;
+            comment.ReplyToComment = commentXml.Descendants("ReplyToComment").Any() ? new CommentReplyToComment {Guid = commentXml.Descendants("ReplyToComment").FirstOrDefault().Attribute("Guid").Value} : null;
+            comment.Status = commentXml.Descendants("Status").FirstOrDefault().Value;
+            comment.VerbalStatus = commentXml.Descendants("VerbalStatus").FirstOrDefault().Value;
+            comment.Viewpoint = commentXml.Descendants("Viewpoint").Any() ? new CommentViewpoint {Guid = commentXml.Descendants("Viewpoint").FirstOrDefault().Attribute("Guid").Value} : null;
 
-            return Comment;
+            return comment;
         }
 
-        public static PerspectiveCamera GetPerspectiveCameraObjectFromXml(XElement CameraXml)
+        public static PerspectiveCamera GetPerspectiveCameraObjectFromXml(XElement cameraXml)
         {
             return new PerspectiveCamera
             {
-                FieldOfView = double.Parse(CameraXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Name.LocalName == "FieldOfView").Value, CultureInfo.InvariantCulture),
+                FieldOfView = double.Parse(cameraXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "FieldOfView").Value, CultureInfo.InvariantCulture),
                 CameraDirection = new Direction
                 {
-                    X = double.Parse(CameraXml.Descendants("CameraDirection").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
-                    Y = double.Parse(CameraXml.Descendants("CameraDirection").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
-                    Z = double.Parse(CameraXml.Descendants("CameraDirection").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
+                    X = double.Parse(cameraXml.Descendants("CameraDirection").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
+                    Y = double.Parse(cameraXml.Descendants("CameraDirection").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
+                    Z = double.Parse(cameraXml.Descendants("CameraDirection").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
                 },
                 CameraUpVector = new Direction
                 {
-                    X = double.Parse(CameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
-                    Y = double.Parse(CameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
-                    Z = double.Parse(CameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
+                    X = double.Parse(cameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
+                    Y = double.Parse(cameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
+                    Z = double.Parse(cameraXml.Descendants("CameraUpVector").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
                 },
                 CameraViewPoint = new Point
                 {
-                    X = double.Parse(CameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
-                    Y = double.Parse(CameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
-                    Z = double.Parse(CameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
+                    X = double.Parse(cameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("X").First().Value, CultureInfo.InvariantCulture),
+                    Y = double.Parse(cameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("Y").First().Value, CultureInfo.InvariantCulture),
+                    Z = double.Parse(cameraXml.Descendants("CameraViewPoint").FirstOrDefault().Descendants("Z").First().Value, CultureInfo.InvariantCulture)
                 }
             };
         }
 
-        public static byte[] GetBinaryData(this byte[] ZipArchive, string AbsolutePath)
+        public static byte[] GetBinaryData(this byte[] zipArchive, string absolutePath)
         {
-            using (var Archive = new ZipArchive(new MemoryStream(ZipArchive), ZipArchiveMode.Read))
+            using (var archive = new ZipArchive(new MemoryStream(zipArchive), ZipArchiveMode.Read))
             {
-                var Entry = Archive.Entries.FirstOrDefault(Curr => Curr.FullName == AbsolutePath);
-                var MemStream = new MemoryStream();
-                Entry.Open().CopyTo(MemStream);
-                return MemStream.ToArray();
+                var entry = archive.Entries.FirstOrDefault(curr => curr.FullName == absolutePath);
+                var memStream = new MemoryStream();
+                entry.Open().CopyTo(memStream);
+                return memStream.ToArray();
             }
         }
     }

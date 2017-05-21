@@ -8,21 +8,21 @@ using Xunit;
 
 namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 {
-    public class PDFFileTest
+    public class PdfFileTest
     {
         public static BCFv21Container CreatedContainer;
 
         public static ZipArchive CreatedArchive;
 
-        public PDFFileTest()
+        public PdfFileTest()
         {
             if (CreatedContainer == null)
             {
-                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.PDFFile);
+                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.PdfFile);
             }
             if (CreatedArchive == null)
             {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFv21TestCaseData.PDFFile_TestCaseName, TestCaseResourceFactory.GetReadmeForV21(BcfTestCaseV21.PDFFile));
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv21TestCaseData.PDF_FILE_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV21(BcfTestCaseV21.PDFFile));
             }
         }
 
@@ -34,7 +34,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
                 {
                     "bcf.version",
                     "Requirements.pdf", // Attached PDF file
-                    BCFv21TestCaseData.PDFFile_TopicGuid + "/markup.bcf"
+                    BcFv21TestCaseData.PDF_FILE_TOPIC_GUID + "/markup.bcf"
                 };
             }
         }
@@ -54,11 +54,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFilesPresent()
         {
-            foreach (var ExpectedFile in ExpectedFiles)
+            foreach (var expectedFile in ExpectedFiles)
             {
-                if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
+                if (CreatedArchive.Entries.All(curr => curr.FullName != expectedFile))
                 {
-                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + expectedFile);
                 }
             }
         }
@@ -66,11 +66,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfNoAdditionalFilesPresent()
         {
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (!ExpectedFiles.Contains(CurrentEntry.FullName))
+                if (!ExpectedFiles.Contains(currentEntry.FullName))
                 {
-                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + currentEntry.FullName);
                 }
             }
         }
@@ -78,18 +78,18 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFilesAreAllValidXml()
         {
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (CurrentEntry.FullName.Contains(".bcfp")
-                    || CurrentEntry.FullName.Contains(".version")
-                    || CurrentEntry.FullName.Contains(".bcf")
-                    || CurrentEntry.FullName.Contains(".bcfv")
-                    || CurrentEntry.FullName.Contains(".xsd"))
+                if (currentEntry.FullName.Contains(".bcfp")
+                    || currentEntry.FullName.Contains(".version")
+                    || currentEntry.FullName.Contains(".bcf")
+                    || currentEntry.FullName.Contains(".bcfv")
+                    || currentEntry.FullName.Contains(".xsd"))
                 {
-                    using (var Rdr = new StreamReader(CurrentEntry.Open()))
+                    using (var rdr = new StreamReader(currentEntry.Open()))
                     {
-                        var Text = Rdr.ReadToEnd();
-                        var Xml = XElement.Parse(Text);
+                        var text = rdr.ReadToEnd();
+                        var xml = XElement.Parse(text);
                         // No exception no cry!
                     }
                 }
@@ -99,74 +99,74 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         [Fact]
         public void CheckIfFileDataIsEqual_PDFAttachment()
         {
-            var DataExpected = TestCaseResourceFactory.GetFileAttachment(FileAttachments.RequirementsPdf);
-            using (var MemStream = new MemoryStream())
+            var dataExpected = TestCaseResourceFactory.GetFileAttachment(FileAttachments.RequirementsPdf);
+            using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "Requirements.pdf").Open().CopyTo(MemStream);
-                var DataActual = MemStream.ToArray();
-                Assert.True(DataExpected.SequenceEqual(DataActual));
+                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == "Requirements.pdf").Open().CopyTo(memStream);
+                var dataActual = memStream.ToArray();
+                Assert.True(dataExpected.SequenceEqual(dataActual));
             }
         }
 
         [Fact]
         public void VersionTagCorrect()
         {
-            var ExpectedVersionId = "2.1";
-            var ExpectedDetailedVersion = "2.1";
-            var VersionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
-            var ActualVersionId = VersionXml.Attribute("VersionId").Value;
-            var ActualDetailedVersion = ((XText) ((XElement) VersionXml.FirstNode).FirstNode).Value;
+            var expectedVersionId = "2.1";
+            var expectedDetailedVersion = "2.1";
+            var versionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
+            var actualVersionId = versionXml.Attribute("VersionId").Value;
+            var actualDetailedVersion = ((XText) ((XElement) versionXml.FirstNode).FirstNode).Value;
 
-            Assert.True(VersionXml.Nodes().Count() == 1 && ((XElement) VersionXml.FirstNode).Name.LocalName == "DetailedVersion");
-            Assert.Equal(ExpectedVersionId, ActualVersionId);
-            Assert.Equal(ExpectedDetailedVersion, ActualDetailedVersion);
+            Assert.True(versionXml.Nodes().Count() == 1 && ((XElement) versionXml.FirstNode).Name.LocalName == "DetailedVersion");
+            Assert.Equal(expectedVersionId, actualVersionId);
+            Assert.Equal(expectedDetailedVersion, actualDetailedVersion);
         }
 
         [Fact]
         public void VerifySnippetNotPresent()
         {
-            var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.PDFFile_TopicGuid + "/markup.bcf");
-            var SnippetXml = MarkupXml.Descendants("BimSnippet").FirstOrDefault();
-            Assert.Null(SnippetXml);
+            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.PDF_FILE_TOPIC_GUID + "/markup.bcf");
+            var snippetXml = markupXml.Descendants("BimSnippet").FirstOrDefault();
+            Assert.Null(snippetXml);
         }
 
         [Fact]
         public void VeryfyDocumentReferenceSet()
         {
-            var MarkupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BCFv21TestCaseData.PDFFile_TopicGuid + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.PDF_FILE_TOPIC_GUID + "/markup.bcf");
 
-            var DocumentRefsXml = MarkupXml.Descendants("DocumentReference").First();
+            var documentRefsXml = markupXml.Descendants("DocumentReference").First();
 
-            Assert.NotNull(DocumentRefsXml);
-            Assert.Equal(DocumentRefsXml.Descendants("ReferencedDocument").First().Value, "../Requirements.pdf");
-            Assert.Equal(DocumentRefsXml.Descendants("Description").First().Value, "Project requirements (pdf)");
+            Assert.NotNull(documentRefsXml);
+            Assert.Equal(documentRefsXml.Descendants("ReferencedDocument").First().Value, "../Requirements.pdf");
+            Assert.Equal(documentRefsXml.Descendants("Description").First().Value, "Project requirements (pdf)");
         }
 
         [Fact]
         public void WriteReadAgainAndCompare()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv21Container.ReadStream(MemStream);
+                var readContainer = BCFv21Container.ReadStream(memStream);
 
-                var ReadMemStream = new MemoryStream();
-                ReadContainer.WriteStream(ReadMemStream);
-                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+                var readMemStream = new MemoryStream();
+                readContainer.WriteStream(readMemStream);
+                var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
             }
         }
 
         [Fact]
         public void CheckXmlBrandingCommentsArePresent()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+                CreatedContainer.WriteStream(memStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
     }

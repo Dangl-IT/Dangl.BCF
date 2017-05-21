@@ -4,27 +4,27 @@ using iabi.BCF.BCFv2.Schemas;
 
 namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
 {
-    public static class InternalBIMSnippetTestCase
+    public static class InternalBimSnippetTestCase
     {
         public static BCFv2Container CreateContainer()
         {
-            var Container = new BCFv2Container();
-            Container.Topics.Add(CreateTopic());
-            return Container;
+            var container = new BCFv2Container();
+            container.Topics.Add(CreateTopic());
+            return container;
         }
 
         public static BCFTopic CreateTopic()
         {
-            var ReturnTopic = new BCFTopic();
-            ReturnTopic.Markup = CreateMarkup();
-            ReturnTopic.SnippetData = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
-            return ReturnTopic;
+            var returnTopic = new BCFTopic();
+            returnTopic.Markup = CreateMarkup();
+            returnTopic.SnippetData = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
+            return returnTopic;
         }
 
         private static Markup CreateMarkup()
         {
-            var Markup = new Markup();
-            Markup.Topic = new Topic
+            var markup = new Markup();
+            markup.Topic = new Topic
             {
                 BimSnippet = new BimSnippet
                 {
@@ -36,11 +36,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory
                 CreationAuthor = "dangl@iabi.eu",
                 CreationDate = new DateTime(2015, 06, 21, 12, 00, 00, DateTimeKind.Utc),
                 Description = "This topic has an internal BIM Snippet reference",
-                Guid = BCFv2TestCaseData.InternalBIMSnippet_TopicGuid,
+                Guid = BcFv2TestCaseData.INTERNAL_BIM_SNIPPET_TOPIC_GUID,
                 Index = "0",
                 Title = "Internal BIM Snippet"
             };
-            return Markup;
+            return markup;
         }
     }
 }

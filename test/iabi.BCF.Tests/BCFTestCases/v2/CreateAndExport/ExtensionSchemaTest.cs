@@ -19,11 +19,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             if (CreatedContainer == null)
             {
-                CreatedContainer = BCFTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExtensionSchema);
+                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.ExtensionSchema);
             }
             if (CreatedArchive == null)
             {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BCFv2TestCaseData.ExtensionSchema_TestCaseName, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.ExtensionSchema));
+                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv2TestCaseData.EXTENSION_SCHEMA_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.ExtensionSchema));
             }
         }
 
@@ -42,27 +42,27 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckIfFilesPresent()
         {
-            var ExpectedFilesList = new[]
+            var expectedFilesList = new[]
             {
-                BCFv2TestCaseData.ExtensionSchema_TopicGuid + "/markup.bcf",
+                BcFv2TestCaseData.EXTENSION_SCHEMA_TOPIC_GUID + "/markup.bcf",
                 "project.bcfp",
                 "extensions.xsd",
                 "bcf.version"
             };
 
-            foreach (var CurrentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in CreatedArchive.Entries)
             {
-                if (!ExpectedFilesList.Contains(CurrentEntry.FullName))
+                if (!expectedFilesList.Contains(currentEntry.FullName))
                 {
-                    Assert.True(false, "Zip Archive should not contain entry " + CurrentEntry.FullName);
+                    Assert.True(false, "Zip Archive should not contain entry " + currentEntry.FullName);
                 }
             }
 
-            foreach (var ExpectedFile in ExpectedFilesList)
+            foreach (var expectedFile in expectedFilesList)
             {
-                if (CreatedArchive.Entries.All(Curr => Curr.FullName != ExpectedFile))
+                if (CreatedArchive.Entries.All(curr => curr.FullName != expectedFile))
                 {
-                    Assert.True(false, "Did not find expected file in archive: " + ExpectedFile);
+                    Assert.True(false, "Did not find expected file in archive: " + expectedFile);
                 }
             }
         }
@@ -70,29 +70,29 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckThatNoProjectWasWritten()
         {
-            var ProjectEntry = CreatedArchive.Entries.FirstOrDefault(Curr => Curr.FullName == "project.bcfp");
-            Assert.False(XmlUtilities.ElementNameInXml(ProjectEntry.Open(), "Project"));
+            var projectEntry = CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == "project.bcfp");
+            Assert.False(XmlUtilities.ElementNameInXml(projectEntry.Open(), "Project"));
         }
 
         [Fact]
         public void CheckThatExtensionsIsReferenced()
         {
-            var ProjectXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "project.bcfp");
-            Assert.True(ProjectXml.DescendantNodes().OfType<XElement>().Any(Curr =>
-                Curr.Name.LocalName == "ExtensionSchema" &&
-                Curr.DescendantNodes().Count() == 1
-                && Curr.DescendantNodes().First().NodeType == XmlNodeType.Text
-                && ((XText) Curr.DescendantNodes().First()).Value == "extensions.xsd"));
+            var projectXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "project.bcfp");
+            Assert.True(projectXml.DescendantNodes().OfType<XElement>().Any(curr =>
+                curr.Name.LocalName == "ExtensionSchema" &&
+                curr.DescendantNodes().Count() == 1
+                && curr.DescendantNodes().First().NodeType == XmlNodeType.Text
+                && ((XText) curr.DescendantNodes().First()).Value == "extensions.xsd"));
         }
 
         [Fact]
         public void CheckTopicTypes()
         {
-            var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
+            var extensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
 
-            var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicType"));
-            var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new[]
+            var restrictionBaseElement = extensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Attributes().Any(attr => attr.Name.LocalName == "name" && attr.Value == "TopicType"));
+            var values = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(curr => curr.Attribute("value").Value);
+            var expectedValues = new[]
             {
                 "Information",
                 "Warning",
@@ -100,151 +100,151 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
                 "Request"
             };
 
-            var AllTypesPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
-            var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.True(AllTypesPresent);
-            Assert.True(NothingSuperfluousPresent);
+            var allTypesPresent = expectedValues.All(curr => values.Contains(curr));
+            var nothingSuperfluousPresent = values.All(curr => expectedValues.Contains(curr));
+            Assert.True(allTypesPresent);
+            Assert.True(nothingSuperfluousPresent);
         }
 
         [Fact]
         public void CheckTopicStati()
         {
-            var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
+            var extensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
 
-            var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicStatus"));
-            var TopicStati = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var Values = new[]
+            var restrictionBaseElement = extensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Attributes().Any(attr => attr.Name.LocalName == "name" && attr.Value == "TopicStatus"));
+            var topicStati = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(curr => curr.Attribute("value").Value);
+            var values = new[]
             {
                 "Open",
                 "Closed",
                 "Reopened"
             };
 
-            var AllPresent = Values.All(Curr => TopicStati.Contains(Curr));
-            var NothingSuperfluousPresent = TopicStati.All(Curr => Values.Contains(Curr));
-            Assert.True(AllPresent);
-            Assert.True(NothingSuperfluousPresent);
+            var allPresent = values.All(curr => topicStati.Contains(curr));
+            var nothingSuperfluousPresent = topicStati.All(curr => values.Contains(curr));
+            Assert.True(allPresent);
+            Assert.True(nothingSuperfluousPresent);
         }
 
         [Fact]
         public void CheckTopicLabels()
         {
-            var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
+            var extensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
 
-            var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "TopicLabel"));
-            var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new[]
+            var restrictionBaseElement = extensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Attributes().Any(attr => attr.Name.LocalName == "name" && attr.Value == "TopicLabel"));
+            var values = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(curr => curr.Attribute("value").Value);
+            var expectedValues = new[]
             {
                 "Development",
                 "Architecture",
                 "MEP"
             };
 
-            var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
-            var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.True(AllPresent);
-            Assert.True(NothingSuperfluousPresent);
+            var allPresent = expectedValues.All(curr => values.Contains(curr));
+            var nothingSuperfluousPresent = values.All(curr => expectedValues.Contains(curr));
+            Assert.True(allPresent);
+            Assert.True(nothingSuperfluousPresent);
         }
 
         [Fact]
         public void CheckSnippetTypes()
         {
-            var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
+            var extensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
 
-            var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "SnippetType"));
-            var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new[]
+            var restrictionBaseElement = extensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Attributes().Any(attr => attr.Name.LocalName == "name" && attr.Value == "SnippetType"));
+            var values = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(curr => curr.Attribute("value").Value);
+            var expectedValues = new[]
             {
                 "IFC2X3",
                 "IFC4",
                 "JSON"
             };
 
-            var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
-            var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.True(AllPresent);
-            Assert.True(NothingSuperfluousPresent);
+            var allPresent = expectedValues.All(curr => values.Contains(curr));
+            var nothingSuperfluousPresent = values.All(curr => expectedValues.Contains(curr));
+            Assert.True(allPresent);
+            Assert.True(nothingSuperfluousPresent);
         }
 
         [Fact]
         public void CheckPriority()
         {
-            var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
+            var extensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
 
-            var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "Priority"));
-            var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new[]
+            var restrictionBaseElement = extensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Attributes().Any(attr => attr.Name.LocalName == "name" && attr.Value == "Priority"));
+            var values = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(curr => curr.Attribute("value").Value);
+            var expectedValues = new[]
             {
                 "Low",
                 "Medium",
                 "High"
             };
 
-            var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
-            var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.True(AllPresent);
-            Assert.True(NothingSuperfluousPresent);
+            var allPresent = expectedValues.All(curr => values.Contains(curr));
+            var nothingSuperfluousPresent = values.All(curr => expectedValues.Contains(curr));
+            Assert.True(allPresent);
+            Assert.True(nothingSuperfluousPresent);
         }
 
         [Fact]
         public void CheckUserIdType()
         {
-            var ExtensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
+            var extensionsXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "extensions.xsd");
 
-            var RestrictionBaseElement = ExtensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(Curr => Curr.Attributes().Any(Attr => Attr.Name.LocalName == "name" && Attr.Value == "UserIdType"));
-            var Values = RestrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(Curr => Curr.Attribute("value").Value);
-            var ExpectedValues = new[]
+            var restrictionBaseElement = extensionsXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Attributes().Any(attr => attr.Name.LocalName == "name" && attr.Value == "UserIdType"));
+            var values = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(curr => curr.Attribute("value").Value);
+            var expectedValues = new[]
             {
                 "Architect@example.com",
                 "MEPEngineer@example.com",
                 "Developer@example.com"
             };
 
-            var AllPresent = ExpectedValues.All(Curr => Values.Contains(Curr));
-            var NothingSuperfluousPresent = Values.All(Curr => ExpectedValues.Contains(Curr));
-            Assert.True(AllPresent);
-            Assert.True(NothingSuperfluousPresent);
+            var allPresent = expectedValues.All(curr => values.Contains(curr));
+            var nothingSuperfluousPresent = values.All(curr => expectedValues.Contains(curr));
+            Assert.True(allPresent);
+            Assert.True(nothingSuperfluousPresent);
         }
 
         [Fact]
         public void ReadExtensionSchema()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv2Container.ReadStream(MemStream);
+                var readContainer = BCFv2Container.ReadStream(memStream);
 
-                Assert.NotNull(ReadContainer.ProjectExtensions);
+                Assert.NotNull(readContainer.ProjectExtensions);
             }
         }
 
         [Fact]
         public void WriteReadAgainAndCompare()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                MemStream.Position = 0;
+                CreatedContainer.WriteStream(memStream);
+                memStream.Position = 0;
 
-                var ReadContainer = BCFv2Container.ReadStream(MemStream);
+                var readContainer = BCFv2Container.ReadStream(memStream);
 
-                var ReadMemStream = new MemoryStream();
-                ReadContainer.WriteStream(ReadMemStream);
-                var WrittenZipArchive = new ZipArchive(ReadMemStream);
+                var readMemStream = new MemoryStream();
+                readContainer.WriteStream(readMemStream);
+                var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, ReadContainer, CreatedArchive, WrittenZipArchive);
+                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
             }
         }
 
         [Fact]
         public void CheckXmlBrandingCommentsArePresent()
         {
-            using (var MemStream = new MemoryStream())
+            using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(MemStream);
-                CompareTool.CheckBrandingCommentPresenceInEveryFile(MemStream.ToArray());
+                CreatedContainer.WriteStream(memStream);
+                CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
     }

@@ -13,32 +13,22 @@ namespace iabi.BCF.Tests.BCFv2
         [Fact]
         public void AddViewpointWhenThereIsNoMarkupInstance()
         {
-            var Instance = new BCFTopic();
-
+            var bcfTopic = new BCFTopic();
             // Markup is empty
-            Assert.Null(Instance.Markup);
-
-            Instance.Viewpoints.Add(new VisualizationInfo());
-
+            Assert.Null(bcfTopic.Markup);
+            bcfTopic.Viewpoints.Add(new VisualizationInfo());
             // Viewpoint defined
-            Assert.NotNull(Instance.Markup);
-            Assert.Equal(Instance.Markup.Viewpoints.First().Guid, Instance.Viewpoints.First().GUID);
+            Assert.NotNull(bcfTopic.Markup);
+            Assert.Equal(bcfTopic.Markup.Viewpoints.First().Guid, bcfTopic.Viewpoints.First().GUID);
         }
 
         [Fact]
         public void AddviewpointSnapshotReferenceInMarkup()
         {
-            var Instance = new BCFTopic();
-            Instance.Viewpoints.Add(new VisualizationInfo());
-
-            Instance.AddOrUpdateSnapshot(Instance.Viewpoints.First().GUID, new byte[] {10, 11, 12, 13, 14, 15});
-
-            //System.Threading.Thread.Sleep(100);
-
-            var CreatedSnapshotReference = Instance.Markup.Viewpoints.FirstOrDefault().Snapshot;
-
-            //Assert.False(string.IsNullOrWhiteSpace(CreatedSnapshotReference), "Reference not created for viewpoint snapshot");
-            Assert.False(string.IsNullOrWhiteSpace(Instance.Markup.Viewpoints.FirstOrDefault().Snapshot), "Reference not created for viewpoint snapshot");
+            var bcfTopic = new BCFTopic();
+            bcfTopic.Viewpoints.Add(new VisualizationInfo());
+            bcfTopic.AddOrUpdateSnapshot(bcfTopic.Viewpoints.First().GUID, new byte[] {10, 11, 12, 13, 14, 15});
+            Assert.False(string.IsNullOrWhiteSpace(bcfTopic.Markup.Viewpoints.FirstOrDefault().Snapshot), "Reference not created for viewpoint snapshot");
         }
     }
 }

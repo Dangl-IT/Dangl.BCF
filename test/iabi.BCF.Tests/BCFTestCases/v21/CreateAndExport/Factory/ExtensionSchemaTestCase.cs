@@ -8,38 +8,38 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
     {
         public static BCFv21Container CreateContainer()
         {
-            var Container = new BCFv21Container();
-            Container.ProjectExtensions = new ProjectExtensions();
-            Container.ProjectExtensions.Priority.Add("Low");
-            Container.ProjectExtensions.Priority.Add("Medium");
-            Container.ProjectExtensions.Priority.Add("High");
-            Container.ProjectExtensions.SnippetType.Add("IFC2X3");
-            Container.ProjectExtensions.SnippetType.Add("IFC4");
-            Container.ProjectExtensions.SnippetType.Add("JSON");
-            Container.ProjectExtensions.TopicLabel.Add("Development");
-            Container.ProjectExtensions.TopicLabel.Add("Architecture");
-            Container.ProjectExtensions.TopicLabel.Add("MEP");
-            Container.ProjectExtensions.TopicStatus.Add("Open");
-            Container.ProjectExtensions.TopicStatus.Add("Closed");
-            Container.ProjectExtensions.TopicStatus.Add("Reopened");
-            Container.ProjectExtensions.TopicType.Add("Information");
-            Container.ProjectExtensions.TopicType.Add("Warning");
-            Container.ProjectExtensions.TopicType.Add("Error");
-            Container.ProjectExtensions.TopicType.Add("Request");
-            Container.ProjectExtensions.UserIdType.Add("Architect@example.com");
-            Container.ProjectExtensions.UserIdType.Add("MEPEngineer@example.com");
-            Container.ProjectExtensions.UserIdType.Add("Developer@example.com");
+            var container = new BCFv21Container();
+            container.ProjectExtensions = new ProjectExtensions();
+            container.ProjectExtensions.Priority.Add("Low");
+            container.ProjectExtensions.Priority.Add("Medium");
+            container.ProjectExtensions.Priority.Add("High");
+            container.ProjectExtensions.SnippetType.Add("IFC2X3");
+            container.ProjectExtensions.SnippetType.Add("IFC4");
+            container.ProjectExtensions.SnippetType.Add("JSON");
+            container.ProjectExtensions.TopicLabel.Add("Development");
+            container.ProjectExtensions.TopicLabel.Add("Architecture");
+            container.ProjectExtensions.TopicLabel.Add("MEP");
+            container.ProjectExtensions.TopicStatus.Add("Open");
+            container.ProjectExtensions.TopicStatus.Add("Closed");
+            container.ProjectExtensions.TopicStatus.Add("Reopened");
+            container.ProjectExtensions.TopicType.Add("Information");
+            container.ProjectExtensions.TopicType.Add("Warning");
+            container.ProjectExtensions.TopicType.Add("Error");
+            container.ProjectExtensions.TopicType.Add("Request");
+            container.ProjectExtensions.UserIdType.Add("Architect@example.com");
+            container.ProjectExtensions.UserIdType.Add("MEPEngineer@example.com");
+            container.ProjectExtensions.UserIdType.Add("Developer@example.com");
             // Add a single topic
-            Container.Topics.Add(new BCFTopic());
-            Container.Topics[0].Markup = new Markup();
-            Container.Topics[0].Markup.Topic = new Topic();
-            Container.Topics[0].Markup.Topic.Guid = BCFv21TestCaseData.ExtensionSchema_TopicGuid;
-            Container.Topics[0].Markup.Topic.CreationAuthor = "Developer@example.com";
-            Container.Topics[0].Markup.Topic.CreationDate = DateTime.UtcNow;
-            Container.Topics[0].Markup.Topic.Title = "Test case for checking extension schema within the BCFZip container.";
-            Container.Topics[0].Markup.Topic.TopicStatus = "Open";
-            Container.Topics[0].Markup.Topic.TopicType = "Information";
-            return Container;
+            container.Topics.Add(new BCFTopic());
+            container.Topics[0].Markup = new Markup();
+            container.Topics[0].Markup.Topic = new Topic();
+            container.Topics[0].Markup.Topic.Guid = BcFv21TestCaseData.EXTENSION_SCHEMA_TOPIC_GUID;
+            container.Topics[0].Markup.Topic.CreationAuthor = "Developer@example.com";
+            container.Topics[0].Markup.Topic.CreationDate = DateTime.UtcNow;
+            container.Topics[0].Markup.Topic.Title = "Test case for checking extension schema within the BCFZip container.";
+            container.Topics[0].Markup.Topic.TopicStatus = "Open";
+            container.Topics[0].Markup.Topic.TopicType = "Information";
+            return container;
         }
     }
 }

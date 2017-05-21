@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace iabi.BCF.BCFv21.Schemas
+﻿namespace iabi.BCF.BCFv21.Schemas
 {
     public partial class VisualizationInfo
     {

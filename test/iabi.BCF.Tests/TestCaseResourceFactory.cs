@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv21;
-
-// TODO ADD TESTS THAT ALL RESOURCES CAN BE RETRIEVED
 
 namespace iabi.BCF.Tests
 {
@@ -153,7 +148,6 @@ namespace iabi.BCF.Tests
 
     public enum CustomTestFilesv21
     {
-        
     }
 
     public enum BcfTestCaseV21

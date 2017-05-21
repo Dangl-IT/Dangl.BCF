@@ -5,26 +5,16 @@ using System.Collections.Specialized;
 using System.Linq;
 using iabi.BCF.BCFv21.Schemas;
 
-/*
- * Note:
- * Due to the missing GUID tag in the VisualizationInfo xsd schema, the VisualizationInfo class has a
- * partial extension defining a GUID to link actual Viewpoints (VisualizationInfo XML instances) with their
- * references in the Markup (Where a list of all viewpoints a topic references is kept)
- *
- */
-
 namespace iabi.BCF.BCFv21
 {
     /// <summary>
-    ///     Single BCFv2 topic container
+    ///     Single BCFv21 topic container
     /// </summary>
     public class BCFTopic : BindableBase
     {
-        private Markup _Markup;
+        private Markup _markup;
 
-        private Dictionary<VisualizationInfo, List<byte[]>> _ViewpointBitmaps;
-
-        private ObservableCollection<VisualizationInfo> _Viewpoints;
+        private ObservableCollection<VisualizationInfo> _viewpoints;
 
         /// <summary>
         ///     Public constructor. Will hook to the Viewpoints CollectionChanged event and automatically
@@ -45,18 +35,18 @@ namespace iabi.BCF.BCFv21
         /// </summary>
         public Markup Markup
         {
-            get { return _Markup; }
+            get { return _markup; }
             set
             {
-                if (SetProperty(ref _Markup, value))
+                if (SetProperty(ref _markup, value))
                 {
-                    if (_Markup?.Topic != null && string.IsNullOrWhiteSpace(_Markup?.Topic?.Guid))
+                    if (_markup?.Topic != null && string.IsNullOrWhiteSpace(_markup?.Topic?.Guid))
                     {
-                        _Markup.Topic.Guid = Guid.NewGuid().ToString();
+                        _markup.Topic.Guid = Guid.NewGuid().ToString();
                     }
-                    if (Markup?.Topic != null &&  _Markup.Topic.CreationDate == default(DateTime))
+                    if (_markup?.Topic != null &&  _markup.Topic.CreationDate == default(DateTime))
                     {
-                        _Markup.Topic.CreationDate = DateTime.UtcNow;
+                        _markup.Topic.CreationDate = DateTime.UtcNow;
                     }
                 }
             }
@@ -69,16 +59,16 @@ namespace iabi.BCF.BCFv21
         {
             get
             {
-                if (_Viewpoints == null)
+                if (_viewpoints == null)
                 {
-                    _Viewpoints = new ObservableCollection<VisualizationInfo>();
+                    _viewpoints = new ObservableCollection<VisualizationInfo>();
                 }
-                return _Viewpoints;
+                return _viewpoints;
             }
         }
 
 
-        private Dictionary<string, byte[]> _ViewpointSnapshots { get; set; }
+        private Dictionary<string, byte[]> _viewpointSnapshots { get; set; } = new Dictionary<string, byte[]>();
 
         /// <summary>
         ///     Links ViewpointGuid and Snapshot
@@ -87,11 +77,7 @@ namespace iabi.BCF.BCFv21
         {
             get
             {
-                if (_ViewpointSnapshots == null)
-                {
-                    _ViewpointSnapshots = new Dictionary<string, byte[]>();
-                }
-                return new ReadOnlyDictionary<string, byte[]>(_ViewpointSnapshots);
+                return new ReadOnlyDictionary<string, byte[]>(_viewpointSnapshots);
             }
         }
 
@@ -99,32 +85,21 @@ namespace iabi.BCF.BCFv21
         ///     Contains the byte arrays for the actual snapshots. Note: Not implementing property- or collection changed event
         ///     handlers.
         /// </summary>
-        public Dictionary<VisualizationInfo, List<byte[]>> ViewpointBitmaps
-        {
-            get
-            {
-                if (_ViewpointBitmaps == null)
-                {
-                    _ViewpointBitmaps = new Dictionary<VisualizationInfo, List<byte[]>>();
-                }
-                return _ViewpointBitmaps;
-            }
-            set { _ViewpointBitmaps = value; }
-        }
+        public Dictionary<VisualizationInfo, List<byte[]>> ViewpointBitmaps { get; set; } = new Dictionary<VisualizationInfo, List<byte[]>>();
 
         private void Viewpoints_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (var RemovedViewpoint in e.OldItems)
+                foreach (var removedViewpoint in e.OldItems)
                 {
                     // Remove snapshots
-                    if (ViewpointBitmaps.ContainsKey((VisualizationInfo) RemovedViewpoint))
+                    if (ViewpointBitmaps.ContainsKey((VisualizationInfo) removedViewpoint))
                     {
-                        ViewpointBitmaps.Remove((VisualizationInfo) RemovedViewpoint);
+                        ViewpointBitmaps.Remove((VisualizationInfo) removedViewpoint);
                     }
                     // Remove from markup
-                    Markup.Viewpoints.Remove(Markup.Viewpoints.First(OldViewpoint => OldViewpoint.Guid == ((VisualizationInfo) RemovedViewpoint).Guid));
+                    Markup.Viewpoints.Remove(Markup.Viewpoints.First(v => v.Guid == ((VisualizationInfo) removedViewpoint).Guid));
                 }
             }
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -133,21 +108,21 @@ namespace iabi.BCF.BCFv21
                 {
                     Markup = new Markup();
                 }
-                foreach (var AddedViewpoint in e.NewItems)
+                foreach (var addedViewpoint in e.NewItems)
                 {
                     // Add only if not already known (For example, when the viewpoint is already present in the markup but has not yet been physically loaded)
-                    if (Markup.Viewpoints.Any(KnownViewpoint => KnownViewpoint.Guid == ((VisualizationInfo) AddedViewpoint).Guid))
+                    if (Markup.Viewpoints.Any(v => v.Guid == ((VisualizationInfo) addedViewpoint).Guid))
                     {
                         // Already known, just make sure the viewpoint reference is set correctly.
-                        Markup.Viewpoints.First(KnownViewpoint => KnownViewpoint.Guid == ((VisualizationInfo) AddedViewpoint).Guid).Viewpoint = "Viewpoint_" + ((VisualizationInfo) AddedViewpoint).Guid + ".bcfv";
+                        Markup.Viewpoints.First(v => v.Guid == ((VisualizationInfo) addedViewpoint).Guid).Viewpoint = "Viewpoint_" + ((VisualizationInfo) addedViewpoint).Guid + ".bcfv";
                     }
                     else
                     {
                         // Add to markup, viewpoint is not previously known
                         Markup.Viewpoints.Add(new ViewPoint
                         {
-                            Guid = ((VisualizationInfo) AddedViewpoint).Guid,
-                            Viewpoint = "Viewpoint_" + ((VisualizationInfo) AddedViewpoint).Guid + ".bcfv"
+                            Guid = ((VisualizationInfo) addedViewpoint).Guid,
+                            Viewpoint = "Viewpoint_" + ((VisualizationInfo) addedViewpoint).Guid + ".bcfv"
                         });
                     }
                 }
@@ -166,31 +141,31 @@ namespace iabi.BCF.BCFv21
         /// <summary>
         /// Adds or updates a snapshots binary data
         /// </summary>
-        /// <param name="ViewpointGuid"></param>
-        /// <param name="SnapshotData"></param>
-        public void AddOrUpdateSnapshot(string ViewpointGuid, byte[] SnapshotData)
+        /// <param name="viewpointGuid"></param>
+        /// <param name="snapshotData"></param>
+        public void AddOrUpdateSnapshot(string viewpointGuid, byte[] snapshotData)
         {
-            if (ViewpointSnapshots.ContainsKey(ViewpointGuid))
+            if (ViewpointSnapshots.ContainsKey(viewpointGuid))
             {
-                _ViewpointSnapshots[ViewpointGuid] = SnapshotData;
+                _viewpointSnapshots[viewpointGuid] = snapshotData;
             }
             else
             {
-                _ViewpointSnapshots.Add(ViewpointGuid, SnapshotData);
+                _viewpointSnapshots.Add(viewpointGuid, snapshotData);
                 // Add in Markup
-                Markup.Viewpoints.First(Curr => Curr.Guid == ViewpointGuid).Snapshot = "Snapshot_" + ViewpointGuid + ".png";
+                Markup.Viewpoints.First(v => v.Guid == viewpointGuid).Snapshot = "Snapshot_" + viewpointGuid + ".png";
             }
         }
 
         /// <summary>
         /// Removes a snapshot from this topic
         /// </summary>
-        /// <param name="ViewpointGuid"></param>
-        public void RemoveSnapshot(string ViewpointGuid)
+        /// <param name="viewpointGuid"></param>
+        public void RemoveSnapshot(string viewpointGuid)
         {
-            if (ViewpointSnapshots.ContainsKey(ViewpointGuid))
+            if (ViewpointSnapshots.ContainsKey(viewpointGuid))
             {
-                _ViewpointSnapshots.Remove(ViewpointGuid);
+                _viewpointSnapshots.Remove(viewpointGuid);
             }
         }
     }

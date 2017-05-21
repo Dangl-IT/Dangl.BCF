@@ -24,47 +24,47 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         [Fact]
         public void CheckTopicCount()
         {
-            var Expected = 1;
-            var Actual = ReadContainer.Topics.Count;
-            Assert.Equal(Expected, Actual);
+            var expected = 1;
+            var actual = ReadContainer.Topics.Count;
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void CheckTopicGuid_01()
         {
-            var Expected = "79d7bbbc-3029-43bf-91fd-47ef0915e7ae";
-            var Actual = ReadContainer.Topics.Any(Curr => Curr.Markup.Topic.Guid == Expected);
-            Assert.True(Actual);
+            var expected = "79d7bbbc-3029-43bf-91fd-47ef0915e7ae";
+            var actual = ReadContainer.Topics.Any(curr => curr.Markup.Topic.Guid == expected);
+            Assert.True(actual);
         }
 
 
         [Fact]
         public void WriteOut()
         {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            Assert.NotNull(Data);
-            Assert.True(Data.Length > 0);
+            var memStream = new MemoryStream();
+            ReadContainer.WriteStream(memStream);
+            var data = memStream.ToArray();
+            Assert.NotNull(data);
+            Assert.True(data.Length > 0);
         }
 
         [Fact]
         public void WriteAndCompare()
         {
-            var MemStream = new MemoryStream();
-            ReadContainer.WriteStream(MemStream);
-            var Data = MemStream.ToArray();
-            CompareTool.CompareFiles(TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.VisibleSpaceAndRestOfModelVisible), Data);
+            var memStream = new MemoryStream();
+            ReadContainer.WriteStream(memStream);
+            var data = memStream.ToArray();
+            CompareTool.CompareFiles(TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.VisibleSpaceAndRestOfModelVisible), data);
         }
 
 
-        public class Topic_01
+        public class Topic01
         {
             public static BCFv2Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
-            public Topic_01()
+            public Topic01()
             {
                 if (ReadContainer == null)
                 {
@@ -72,7 +72,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 }
                 if (ReadTopic == null)
                 {
-                    ReadTopic = ReadContainer.Topics.FirstOrDefault(Curr => Curr.Markup.Topic.Guid == "79d7bbbc-3029-43bf-91fd-47ef0915e7ae");
+                    ReadTopic = ReadContainer.Topics.FirstOrDefault(curr => curr.Markup.Topic.Guid == "79d7bbbc-3029-43bf-91fd-47ef0915e7ae");
                 }
             }
 
@@ -85,22 +85,22 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void CheckCommentCount()
             {
-                var Expected = 1;
-                var Actual = ReadTopic.Markup.Comment.Count;
-                Assert.Equal(Expected, Actual);
+                var expected = 1;
+                var actual = ReadTopic.Markup.Comment.Count;
+                Assert.Equal(expected, actual);
             }
 
             [Fact]
             public void CheckCommentGuid_01()
             {
-                var Expected = "691ed8dc-0d52-498d-b2d3-d858a98b9a43";
-                Assert.True(ReadTopic.Markup.Comment.Any(Curr => Curr.Guid == Expected));
+                var expected = "691ed8dc-0d52-498d-b2d3-d858a98b9a43";
+                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
             }
 
             [Fact]
             public void NoCommentReferencesViewpoint()
             {
-                Assert.True(ReadTopic.Markup.Comment.All(Curr => !Curr.ShouldSerializeViewpoint()));
+                Assert.True(ReadTopic.Markup.Comment.All(curr => !curr.ShouldSerializeViewpoint()));
             }
 
             [Fact]
@@ -112,40 +112,40 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFileCorrect_01()
             {
-                var HeaderEntry = ReadTopic.Markup.Header.First();
+                var headerEntry = ReadTopic.Markup.Header.First();
 
-                Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), HeaderEntry.Date.ToUniversalTime());
-                Assert.Equal("C:\\e.ifc", HeaderEntry.Filename);
-                Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", HeaderEntry.IfcProject);
-                Assert.Equal(null, HeaderEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, HeaderEntry.isExternal);
-                Assert.Equal(null, HeaderEntry.Reference);
-                Assert.Equal(true, HeaderEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, HeaderEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), headerEntry.Date.ToUniversalTime());
+                Assert.Equal("C:\\e.ifc", headerEntry.Filename);
+                Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
+                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
+                Assert.Equal(true, headerEntry.isExternal);
+                Assert.Equal(null, headerEntry.Reference);
+                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
+                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]
             public void CheckViewpointCount_InMarkup()
             {
-                var Expected = 1;
-                var Actual = ReadTopic.Markup.Viewpoints.Count;
-                Assert.Equal(Expected, Actual);
+                var expected = 1;
+                var actual = ReadTopic.Markup.Viewpoints.Count;
+                Assert.Equal(expected, actual);
             }
 
             [Fact]
             public void CheckViewpointCount()
             {
-                var Expected = 1;
-                var Actual = ReadTopic.Viewpoints.Count;
-                Assert.Equal(Expected, Actual);
+                var expected = 1;
+                var actual = ReadTopic.Viewpoints.Count;
+                Assert.Equal(expected, actual);
             }
 
             [Fact]
             public void Viewpoint_CompareSnapshotBinary_01()
             {
-                var Expected = TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.VisibleSpaceAndRestOfModelVisible).GetBinaryData("79d7bbbc-3029-43bf-91fd-47ef0915e7ae/snapshot.png");
-                var Actual = ReadTopic.ViewpointSnapshots["756d6918-4ee9-4c88-9c74-b00c6c2410e5"];
-                Assert.True(Expected.SequenceEqual(Actual));
+                var expected = TestCaseResourceFactory.GetImportTestCase(BCFv2ImportTestCases.VisibleSpaceAndRestOfModelVisible).GetBinaryData("79d7bbbc-3029-43bf-91fd-47ef0915e7ae/snapshot.png");
+                var actual = ReadTopic.ViewpointSnapshots["756d6918-4ee9-4c88-9c74-b00c6c2410e5"];
+                Assert.True(expected.SequenceEqual(actual));
             }
         }
     }

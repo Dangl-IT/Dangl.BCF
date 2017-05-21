@@ -11,34 +11,34 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
     {
         public static BCFv21Container CreateContainer()
         {
-            var Container = new BCFv21Container();
-            Container.Topics.Add(CreateTopic());
-            Container.FileAttachments.Add("Estructura.ifc", TestCaseResourceFactory.GetIfcFile(IfcFiles.Estructura));
-            return Container;
+            var container = new BCFv21Container();
+            container.Topics.Add(CreateTopic());
+            container.FileAttachments.Add("Estructura.ifc", TestCaseResourceFactory.GetIfcFile(IfcFiles.Estructura));
+            return container;
         }
 
         public static BCFTopic CreateTopic()
         {
-            var ReturnTopic = new BCFTopic();
-            ReturnTopic.Markup = CreateMarkup();
-            ReturnTopic.Viewpoints.Add(CreateViewpoiont());
-            ReturnTopic.AddOrUpdateSnapshot(ReturnTopic.Viewpoints.Last().Guid, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.ComponentCollection_Snapshot_01));
-            return ReturnTopic;
+            var returnTopic = new BCFTopic();
+            returnTopic.Markup = CreateMarkup();
+            returnTopic.Viewpoints.Add(CreateViewpoiont());
+            returnTopic.AddOrUpdateSnapshot(returnTopic.Viewpoints.Last().Guid, TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.ComponentCollection_Snapshot_01));
+            return returnTopic;
         }
 
         private static Markup CreateMarkup()
         {
-            var Markup = new Markup();
-            Markup.Topic = new Topic
+            var markup = new Markup();
+            markup.Topic = new Topic
             {
                 CreationAuthor = "dangl@iabi.eu",
                 CreationDate = new DateTime(2015, 10, 16, 12, 13, 15, DateTimeKind.Utc),
                 Description = "This topic has three selected components (as shown in the snapshot). All other components should be displayed with their default settings.",
-                Guid = BCFv21TestCaseData.ComponentSelection_TopicGuid,
+                Guid = BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID,
                 Index = 0,
                 Title = "Component Selection"
             };
-            Markup.Header = new List<HeaderFile>
+            markup.Header = new List<HeaderFile>
             {
                 new HeaderFile
                 {
@@ -49,14 +49,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                     Reference = "../Estructura.ifc"
                 }
             };
-            return Markup;
+            return markup;
         }
 
         private static VisualizationInfo CreateViewpoiont()
         {
             return new VisualizationInfo
             {
-                Guid = BCFv21TestCaseData.ComponentSelection_ViewpointGuid,
+                Guid = BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID,
                 PerspectiveCamera = new PerspectiveCamera
                 {
                     FieldOfView = 60,
@@ -79,48 +79,25 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport.Factory
                         Z = 0.882332858610135
                     }
                 },
-                Components = new VisualizationInfoComponents
+                Components = new Components
                 {
-                    DefaultVisibilityComponents = BCFv21TestCaseData.ComponentSelection_DefaultVisibilityComponents,
-                    DefaultVisibilityOpenings = BCFv21TestCaseData.ComponentSelection_DefaultVisibilityOpenings,
-                    DefaultVisibilitySpaceBoundaries = BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaceBoundaries,
-                    DefaultVisibilitySpaces = BCFv21TestCaseData.ComponentSelection_DefaultVisibilitySpaces,
-                    Component = new List<Component> { 
-                    new Component
+                    Selection = new List<Component>
                     {
-                        IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj",
-                        Selected = true
+                        new Component {IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj" },
+                        new Component {IfcGuid = "0AQJSsoeDDvwVqSNcwjy55" },
+                        new Component {IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC" }
                     },
-                    new Component
+                    ViewSetupHints = new ViewSetupHints
                     {
-                        IfcGuid = "0AQJSsoeDDvwVqSNcwjy55",
-                        Selected = true
+                        OpeningsVisible = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_OPENINGS,
+                        SpaceBoundariesVisible = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACE_BOUNDARIES,
+                        SpacesVisible = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_SPACES
                     },
-                    new Component
+                    Visibility = new ComponentVisibility
                     {
-                        IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC",
-                        Selected = true
+                        DefaultVisibility = BcFv21TestCaseData.COMPONENT_SELECTION_DEFAULT_VISIBILITY_COMPONENTS
                     }
                 }
-}
-                //Components = new List<Component>
-                //{
-                //    new Component
-                //    {
-                //        IfcGuid = "1GU8BMEqHBQxVAbwRD$4Jj",
-                //        Selected = true
-                //    },
-                //    new Component
-                //    {
-                //        IfcGuid = "0AQJSsoeDDvwVqSNcwjy55",
-                //        Selected = true
-                //    },
-                //    new Component
-                //    {
-                //        IfcGuid = "3DOu_tSXP6evQgY8Ml4CtC",
-                //        Selected = true
-                //    }
-                //}
             };
         }
     }
