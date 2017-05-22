@@ -101,9 +101,23 @@ namespace iabi.BCF.Tests
             }
         }
 
+        public static byte[] GetImportTestCaseV21(BCFv21ImportTestCases testCase)
+        {
+            var resourcePath = $"{RESOURCE_NAMESPACE}.ImportTestCases.v21.{testCase}.bcf";
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return ConvertFromStream(resourceStream);
+            }
+        }
+
+        public static BCFv21Container GetImportTestCaseContainerV21(BCFv21ImportTestCases testCase)
+        {
+            return BCFv21Container.ReadStream(new MemoryStream(GetImportTestCaseV21(testCase)));
+        }
+
         public static BCFv21Container GetCustomTestContainerV21(CustomTestFilesv21 testFile)
         {
-            var resourcePath = $"{RESOURCE_NAMESPACE}.CustomTestFiles.v21.{testFile}.bcfzip";
+            var resourcePath = $"{RESOURCE_NAMESPACE}.CustomTestFiles.v21.{testFile}.bcf";
             using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
             {
                 return BCFv21Container.ReadStream(resourceStream);
@@ -212,5 +226,10 @@ namespace iabi.BCF.Tests
         UserAssignment,
         VisibleOpening,
         VisibleSpaceAndRestOfModelVisible
+    }
+
+    public enum BCFv21ImportTestCases
+    {
+        SingleInvisibleWall
     }
 }

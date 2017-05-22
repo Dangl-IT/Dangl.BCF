@@ -7,7 +7,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
 {
     public static class ZipArchiveFactory
     {
-        public const string FOLDERNAME = @"";
+        public const string FOLDERNAME = @"C:\Users\Dangl\Downloads\temp";
 
         public static ZipArchive ReturnAndWriteIfRequired(BCFv21Container container, string testCaseName, string readmeText)
         {
