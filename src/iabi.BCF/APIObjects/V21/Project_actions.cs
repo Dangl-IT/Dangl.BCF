@@ -8,12 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
-    public class Project_actions
+    public enum Project_actions
     {
+        Update,
+        CreateTopic,
+        CreateDocument
     }
 }

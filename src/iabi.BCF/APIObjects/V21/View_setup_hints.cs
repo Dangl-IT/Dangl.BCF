@@ -8,11 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
     public class View_setup_hints
     {
         

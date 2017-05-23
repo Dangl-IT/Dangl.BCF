@@ -8,29 +8,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.ComponentModel.DataAnnotations;
-    using System.Collections.Generic;
-    
-    
     public class Comment_event_GET
     {
         
-        private string _comment_guid;
+        private Guid _comment_guid;
         
-        private string _topic_guid;
+        private Guid _topic_guid;
         
-        private string _date;
+        private DateTime _date;
         
         private string _author;
         
         private List<Event_action> _actions;
         
         [Required()]
-        public virtual string Comment_guid
+        public virtual Guid Comment_guid
         {
             get
             {
@@ -43,7 +41,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual string Topic_guid
+        public virtual Guid Topic_guid
         {
             get
             {
@@ -56,7 +54,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual string Date
+        public virtual DateTime Date
         {
             get
             {

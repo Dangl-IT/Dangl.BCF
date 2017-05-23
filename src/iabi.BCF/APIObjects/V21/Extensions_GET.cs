@@ -8,30 +8,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.ComponentModel.DataAnnotations;
-    using System.Collections.Generic;
-    
-    
     public class Extensions_GET
     {
         
-        private object _topic_type;
+        private List<string> _topic_type;
         
-        private object _topic_status;
+        private List<string> _topic_status;
         
-        private object _topic_label;
+        private List<string> _topic_label;
         
-        private object _snippet_type;
+        private List<string> _snippet_type;
         
-        private object _priority;
+        private List<string> _priority;
         
-        private object _user_id_type;
+        private List<string> _user_id_type;
         
-        private object _stage;
+        private List<string> _stage;
         
         private List<Project_actions> _project_actions;
         
@@ -40,7 +37,7 @@ namespace generated
         private List<Comment_actions> _comment_actions;
         
         [Required()]
-        public virtual object Topic_type
+        public virtual List<string> Topic_type
         {
             get
             {
@@ -53,7 +50,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual object Topic_status
+        public virtual List<string> Topic_status
         {
             get
             {
@@ -66,7 +63,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual object Topic_label
+        public virtual List<string> Topic_label
         {
             get
             {
@@ -79,7 +76,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual object Snippet_type
+        public virtual List<string> Snippet_type
         {
             get
             {
@@ -92,7 +89,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual object Priority
+        public virtual List<string> Priority
         {
             get
             {
@@ -105,7 +102,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual object User_id_type
+        public virtual List<string> User_id_type
         {
             get
             {
@@ -118,7 +115,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual object Stage
+        public virtual List<string> Stage
         {
             get
             {

@@ -8,18 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     public class Event_action
     {
         
         private string _type;
         
-        private object _value;
+        private string _value;
         
         [Required()]
         public virtual string Type
@@ -34,7 +32,7 @@ namespace generated
             }
         }
         
-        public virtual object Value
+        public virtual string Value
         {
             get
             {

@@ -8,38 +8,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     public class Comment_GET
     {
         
-        private string _guid;
+        private Guid _guid;
         
-        private string _date;
+        private DateTime _date;
         
         private string _author;
         
         private string _comment;
+
+        private Guid _topic_guid;
+
+        private Guid? _viewpoint_guid;
+
+        private Guid? _reply_to_comment_guid;
         
-        private string _topic_guid;
+        private DateTime? _modified_date;
         
-        private object _viewpoint_guid;
+        private string _modified_author;
         
-        private object _reply_to_comment_guid;
-        
-        private object _modified_date;
-        
-        private object _modified_author;
-        
-        private object _authorization;
+        private Comment_authorization _authorization;
         
         [Required()]
-        public virtual string Guid
+        public virtual Guid Guid
         {
             get
             {
@@ -52,7 +50,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual string Date
+        public virtual DateTime Date
         {
             get
             {
@@ -91,7 +89,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual string Topic_guid
+        public virtual Guid Topic_guid
         {
             get
             {
@@ -103,7 +101,7 @@ namespace generated
             }
         }
         
-        public virtual object Viewpoint_guid
+        public virtual Guid? Viewpoint_guid
         {
             get
             {
@@ -115,7 +113,7 @@ namespace generated
             }
         }
         
-        public virtual object Reply_to_comment_guid
+        public virtual Guid? Reply_to_comment_guid
         {
             get
             {
@@ -127,7 +125,7 @@ namespace generated
             }
         }
         
-        public virtual object Modified_date
+        public virtual DateTime? Modified_date
         {
             get
             {
@@ -139,7 +137,7 @@ namespace generated
             }
         }
         
-        public virtual object Modified_author
+        public virtual string Modified_author
         {
             get
             {
@@ -151,7 +149,7 @@ namespace generated
             }
         }
         
-        public virtual object Authorization
+        public virtual Comment_authorization Authorization
         {
             get
             {

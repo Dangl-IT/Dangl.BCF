@@ -8,12 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
-    public class Topic_actions
+    public enum Topic_actions
     {
+        Update,
+        UpdateBimSnippet,
+        UpdateRelatedTopics,
+        UpdateDocumentServices,
+        UpdateFiles,
+        CreateComment,
+        CreateViewpoint
     }
 }

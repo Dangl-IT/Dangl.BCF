@@ -8,13 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     // Schema for single project GET, BCF REST API.
     public class Project_GET
     {
@@ -23,7 +20,7 @@ namespace generated
         
         private string _name;
         
-        private object _authorization;
+        private Project_authorization _authorization;
         
         [Required()]
         public virtual string Project_id
@@ -51,7 +48,7 @@ namespace generated
             }
         }
         
-        public virtual object Authorization
+        public virtual Project_authorization Authorization
         {
             get
             {

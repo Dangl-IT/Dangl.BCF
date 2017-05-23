@@ -8,19 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    
-    
     // Schema for selection GET, BCF REST API.
     public class Selection_GET
     {
         
-        private ComponentList _selection;
+        private List<Component> _selection;
         
-        public virtual ComponentList Selection
+        public virtual List<Component> Selection
         {
             get
             {

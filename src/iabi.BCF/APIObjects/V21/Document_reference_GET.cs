@@ -8,24 +8,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     // Schema for a single document reference GET, BCF REST API.
     public class Document_reference_GET
     {
         
-        private string _guid;
+        private Guid _guid;
         
-        private object _referenced_document;
+        private string _referenced_document;
         
-        private object _description;
+        private string _description;
         
         [Required()]
-        public virtual string Guid
+        public virtual Guid Guid
         {
             get
             {
@@ -37,7 +36,7 @@ namespace generated
             }
         }
         
-        public virtual object Referenced_document
+        public virtual string Referenced_document
         {
             get
             {
@@ -49,7 +48,7 @@ namespace generated
             }
         }
         
-        public virtual object Description
+        public virtual string Description
         {
             get
             {

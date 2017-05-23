@@ -8,54 +8,53 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     public class Topic_GET
     {
         
-        private string _guid;
+        private Guid _guid;
         
-        private object _topic_type;
+        private string _topic_type;
         
-        private object _topic_status;
+        private string _topic_status;
         
-        private object _reference_links;
+        private List<string> _reference_links;
         
         private string _title;
         
-        private object _priority;
+        private string _priority;
         
-        private object _index;
+        private int _index;
         
-        private object _labels;
+        private List<string> _labels;
         
-        private string _creation_date;
+        private DateTime _creation_date;
         
         private string _creation_author;
         
-        private string _modified_date;
+        private DateTime _modified_date;
         
-        private object _modified_author;
+        private string _modified_author;
         
-        private object _assigned_to;
+        private string _assigned_to;
         
-        private object _stage;
+        private string _stage;
         
-        private object _description;
+        private string _description;
         
         private Bim_snippet _bim_snippet;
         
-        private object _due_date;
+        private DateTime? _due_date;
         
-        private object _authorization;
+        private Topic_authorization _authorization;
         
         [Required()]
-        public virtual string Guid
+        public virtual Guid Guid
         {
             get
             {
@@ -67,7 +66,7 @@ namespace generated
             }
         }
         
-        public virtual object Topic_type
+        public virtual string Topic_type
         {
             get
             {
@@ -79,7 +78,7 @@ namespace generated
             }
         }
         
-        public virtual object Topic_status
+        public virtual string Topic_status
         {
             get
             {
@@ -91,7 +90,7 @@ namespace generated
             }
         }
         
-        public virtual object Reference_links
+        public virtual List<string> Reference_links
         {
             get
             {
@@ -116,7 +115,7 @@ namespace generated
             }
         }
         
-        public virtual object Priority
+        public virtual string Priority
         {
             get
             {
@@ -128,7 +127,7 @@ namespace generated
             }
         }
         
-        public virtual object Index
+        public virtual int Index
         {
             get
             {
@@ -140,7 +139,7 @@ namespace generated
             }
         }
         
-        public virtual object Labels
+        public virtual List<string> Labels
         {
             get
             {
@@ -153,7 +152,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual string Creation_date
+        public virtual DateTime Creation_date
         {
             get
             {
@@ -178,7 +177,7 @@ namespace generated
             }
         }
         
-        public virtual string Modified_date
+        public virtual DateTime Modified_date
         {
             get
             {
@@ -190,7 +189,7 @@ namespace generated
             }
         }
         
-        public virtual object Modified_author
+        public virtual string Modified_author
         {
             get
             {
@@ -202,7 +201,7 @@ namespace generated
             }
         }
         
-        public virtual object Assigned_to
+        public virtual string Assigned_to
         {
             get
             {
@@ -214,7 +213,7 @@ namespace generated
             }
         }
         
-        public virtual object Stage
+        public virtual string Stage
         {
             get
             {
@@ -226,7 +225,7 @@ namespace generated
             }
         }
         
-        public virtual object Description
+        public virtual string Description
         {
             get
             {
@@ -250,7 +249,7 @@ namespace generated
             }
         }
         
-        public virtual object Due_date
+        public virtual DateTime? Due_date
         {
             get
             {
@@ -262,7 +261,7 @@ namespace generated
             }
         }
         
-        public virtual object Authorization
+        public virtual Topic_authorization Authorization
         {
             get
             {
@@ -273,5 +272,10 @@ namespace generated
                 _authorization = value;
             }
         }
+    }
+
+    public class TopicAuthorization
+    {
+        public Topic_actions Topic_actions { get; set; }
     }
 }

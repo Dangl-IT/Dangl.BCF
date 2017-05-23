@@ -8,22 +8,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    
-    
     public class Components
     {
         
-        private ComponentList _selection;
+        private List<Component> _selection;
         
-        private object _coloring;
+        private List<Coloring> _coloring;
         
         private Visibility _visibility;
         
-        public virtual ComponentList Selection
+        public virtual List<Component> Selection
         {
             get
             {
@@ -35,7 +33,7 @@ namespace generated
             }
         }
         
-        public virtual object Coloring
+        public virtual List<Coloring> Coloring
         {
             get
             {

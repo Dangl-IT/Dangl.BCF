@@ -8,21 +8,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     public class Document_GET
     {
         
-        private string _guid;
+        private Guid _guid;
         
         private string _filename;
         
         [Required()]
-        public virtual string Guid
+        public virtual Guid Guid
         {
             get
             {

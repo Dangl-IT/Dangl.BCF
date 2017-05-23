@@ -8,14 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     // Schema for Versions
     public class Versions_GET
     {

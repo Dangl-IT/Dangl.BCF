@@ -8,25 +8,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
     public class File_PUT
     {
         
-        private object _ifc_project;
+        private string _ifc_project;
         
-        private object _ifc_spatial_structure_element;
+        private string _ifc_spatial_structure_element;
         
-        private object _file_name;
+        private string _file_name;
         
-        private object _date;
+        private DateTime _date;
         
-        private object _reference;
+        private string _reference;
         
-        public virtual object Ifc_project
+        public virtual string Ifc_project
         {
             get
             {
@@ -38,7 +37,7 @@ namespace generated
             }
         }
         
-        public virtual object Ifc_spatial_structure_element
+        public virtual string Ifc_spatial_structure_element
         {
             get
             {
@@ -50,7 +49,7 @@ namespace generated
             }
         }
         
-        public virtual object File_name
+        public virtual string File_name
         {
             get
             {
@@ -62,7 +61,7 @@ namespace generated
             }
         }
         
-        public virtual object Date
+        public virtual DateTime Date
         {
             get
             {
@@ -74,7 +73,7 @@ namespace generated
             }
         }
         
-        public virtual object Reference
+        public virtual string Reference
         {
             get
             {

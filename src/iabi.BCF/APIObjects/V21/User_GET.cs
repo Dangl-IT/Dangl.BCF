@@ -8,18 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     public class User_GET
     {
         
         private string _id;
         
-        private object _name;
+        private string _name;
         
         [Required()]
         public virtual string Id
@@ -34,7 +32,7 @@ namespace generated
             }
         }
         
-        public virtual object Name
+        public virtual string Name
         {
             get
             {

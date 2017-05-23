@@ -8,12 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    
-    
     public class Orthogonal_camera
     {
         

@@ -1,6 +1,6 @@
 namespace iabi.BCF.APIObjects.V21
 {
-    public enum Snapshot_type
+    public enum Bitmap_type
     {
         Jpg,
         Png,

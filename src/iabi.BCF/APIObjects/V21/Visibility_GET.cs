@@ -8,12 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    
-    
     // Schema for visibility GET, BCF REST API.
     public class Visibility_GET
     {

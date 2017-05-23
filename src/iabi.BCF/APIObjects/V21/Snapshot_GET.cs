@@ -8,12 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-
-
     public class Snapshot_GET
     {
+        public Snapshot_type Snapshot_type { get; set; }
     }
 }

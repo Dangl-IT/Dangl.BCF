@@ -8,12 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     // Schema for project PUT, BCF REST API.
     public class Project_PUT
     {

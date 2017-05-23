@@ -8,33 +8,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
     using System;
-    using generated;
     using System.ComponentModel.DataAnnotations;
-    
+    using System.Collections.Generic;
     
     public class Viewpoint_GET
     {
+        private int _index;
         
-        private object _index;
-        
-        private string _guid;
+        private Guid _guid;
         
         private Orthogonal_camera _orthogonal_camera;
         
         private Perspective_camera _perspective_camera;
         
-        private object _lines;
+        private List<Line> _lines;
         
-        private object _clipping_planes;
+        private List<Clipping_plane> _clipping_planes;
         
-        private object _bitmaps;
+        private List<Bitmap_GET> _bitmaps;
         
         private Snapshot_GET _snapshot;
         
-        public virtual object Index
+        public virtual int Index
         {
             get
             {
@@ -47,7 +45,7 @@ namespace generated
         }
         
         [Required()]
-        public virtual string Guid
+        public virtual Guid Guid
         {
             get
             {
@@ -83,7 +81,7 @@ namespace generated
             }
         }
         
-        public virtual object Lines
+        public virtual List<Line> Lines
         {
             get
             {
@@ -95,7 +93,7 @@ namespace generated
             }
         }
         
-        public virtual object Clipping_planes
+        public virtual List<Clipping_plane> Clipping_planes
         {
             get
             {
@@ -107,7 +105,7 @@ namespace generated
             }
         }
         
-        public virtual object Bitmaps
+        public virtual List<Bitmap_GET> Bitmaps
         {
             get
             {

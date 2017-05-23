@@ -8,81 +8,82 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace iabi.BCF.APIObjects.V21
 {
-    // Schema for a single file GET, BCF REST API.
-    public class File_GET
+    using System;
+    
+    public class Bitmap_POST
     {
         
-        private string _ifc_project;
+        private string _bitmap_data;
         
-        private string _ifc_spatial_structure_element;
+        private Location _location;
         
-        private string _file_name;
+        private Direction _normal;
         
-        private DateTime _date;
+        private Direction _up;
         
-        private string _reference;
-        
-        public virtual string Ifc_project
+        private float _height;
+
+        public Bitmap_type Bitmap_type { get; set; }
+
+        public virtual string Bitmap_data
         {
             get
             {
-                return _ifc_project;
+                return _bitmap_data;
             }
             set
             {
-                _ifc_project = value;
+                _bitmap_data = value;
             }
         }
         
-        public virtual string Ifc_spatial_structure_element
+        public virtual Location Location
         {
             get
             {
-                return _ifc_spatial_structure_element;
+                return _location;
             }
             set
             {
-                _ifc_spatial_structure_element = value;
+                _location = value;
             }
         }
         
-        public virtual string File_name
+        public virtual Direction Normal
         {
             get
             {
-                return _file_name;
+                return _normal;
             }
             set
             {
-                _file_name = value;
+                _normal = value;
             }
         }
         
-        public virtual DateTime Date
+        public virtual Direction Up
         {
             get
             {
-                return _date;
+                return _up;
             }
             set
             {
-                _date = value;
+                _up = value;
             }
         }
         
-        public virtual string Reference
+        public virtual float Height
         {
             get
             {
-                return _reference;
+                return _height;
             }
             set
             {
-                _reference = value;
+                _height = value;
             }
         }
     }

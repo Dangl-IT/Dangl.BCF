@@ -8,19 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    
-    
     // Schema for coloring GET, BCF REST API.
     public class Coloring_GET
     {
         
-        private object _coloring;
+        private List<Coloring> _coloring;
         
-        public virtual object Coloring
+        public virtual List<Coloring> Coloring
         {
             get
             {

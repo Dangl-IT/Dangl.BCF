@@ -8,20 +8,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     public class Comment_PUT
     {
         
         private string _comment;
         
-        private object _viewpoint_guid;
+        private Guid? _viewpoint_guid;
         
-        private object _reply_to_comment_guid;
+        private Guid? _reply_to_comment_guid;
         
         [Required()]
         public virtual string Comment
@@ -36,7 +35,7 @@ namespace generated
             }
         }
         
-        public virtual object Viewpoint_guid
+        public virtual Guid? Viewpoint_guid
         {
             get
             {
@@ -48,7 +47,7 @@ namespace generated
             }
         }
         
-        public virtual object Reply_to_comment_guid
+        public virtual Guid? Reply_to_comment_guid
         {
             get
             {

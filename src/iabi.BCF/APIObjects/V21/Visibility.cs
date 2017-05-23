@@ -8,18 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    
-    
     public class Visibility
     {
         
         private bool _default_visibility;
         
-        private ComponentList _exceptions;
+        private List<Component> _exceptions;
         
         private View_setup_hints _view_setup_hints;
         
@@ -40,7 +38,7 @@ namespace generated
             }
         }
         
-        public virtual ComponentList Exceptions
+        public virtual List<Component> Exceptions
         {
             get
             {

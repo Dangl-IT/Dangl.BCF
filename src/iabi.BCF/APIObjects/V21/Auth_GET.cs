@@ -8,25 +8,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
     public class Auth_GET
     {
         
-        private object _oauth2_auth_url;
+        private string _oauth2_auth_url;
         
-        private object _oauth2_token_url;
+        private string _oauth2_token_url;
         
-        private object _oauth2_dynamic_client_reg_url;
+        private string _oauth2_dynamic_client_reg_url;
         
-        private object _http_basic_supported;
+        private bool _http_basic_supported;
         
-        private object _supported_oauth2_flows;
+        private List<string> _supported_oauth2_flows;
         
-        public virtual object Oauth2_auth_url
+        public virtual string Oauth2_auth_url
         {
             get
             {
@@ -38,7 +37,7 @@ namespace generated
             }
         }
         
-        public virtual object Oauth2_token_url
+        public virtual string Oauth2_token_url
         {
             get
             {
@@ -50,7 +49,7 @@ namespace generated
             }
         }
         
-        public virtual object Oauth2_dynamic_client_reg_url
+        public virtual string Oauth2_dynamic_client_reg_url
         {
             get
             {
@@ -62,7 +61,7 @@ namespace generated
             }
         }
         
-        public virtual object Http_basic_supported
+        public virtual bool Http_basic_supported
         {
             get
             {
@@ -74,7 +73,7 @@ namespace generated
             }
         }
         
-        public virtual object Supported_oauth2_flows
+        public virtual List<string> Supported_oauth2_flows
         {
             get
             {

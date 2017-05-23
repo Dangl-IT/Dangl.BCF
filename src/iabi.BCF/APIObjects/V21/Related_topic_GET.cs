@@ -8,20 +8,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     // Schema for single related topic GET, BCF REST API.
     public class Related_topic_GET
     {
         
-        private string _related_topic_guid;
+        private Guid _related_topic_guid;
         
         [Required()]
-        public virtual string Related_topic_guid
+        public virtual Guid Related_topic_guid
         {
             get
             {

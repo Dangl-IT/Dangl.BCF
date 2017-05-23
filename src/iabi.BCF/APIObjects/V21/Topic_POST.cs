@@ -8,42 +8,41 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    using generated;
-    using System.ComponentModel.DataAnnotations;
-    
-    
     // Schema for topic POST, BCF REST API.
     public class Topic_POST
     {
         
-        private object _topic_type;
+        private string _topic_type;
         
-        private object _topic_status;
+        private string _topic_status;
         
-        private object _reference_links;
+        private List<string> _reference_links;
         
         private string _title;
         
-        private object _priority;
+        private string _priority;
         
-        private object _index;
+        private int _index;
         
-        private object _labels;
+        private List<string> _labels;
         
-        private object _assigned_to;
+        private string _assigned_to;
         
-        private object _stage;
+        private string _stage;
         
-        private object _description;
+        private string _description;
         
         private Bim_snippet _bim_snippet;
         
-        private object _due_date;
+        private DateTime _due_date;
         
-        public virtual object Topic_type
+        public virtual string Topic_type
         {
             get
             {
@@ -55,7 +54,7 @@ namespace generated
             }
         }
         
-        public virtual object Topic_status
+        public virtual string Topic_status
         {
             get
             {
@@ -67,7 +66,7 @@ namespace generated
             }
         }
         
-        public virtual object Reference_links
+        public virtual List<string> Reference_links
         {
             get
             {
@@ -92,7 +91,7 @@ namespace generated
             }
         }
         
-        public virtual object Priority
+        public virtual string Priority
         {
             get
             {
@@ -104,7 +103,7 @@ namespace generated
             }
         }
         
-        public virtual object Index
+        public virtual int Index
         {
             get
             {
@@ -116,7 +115,7 @@ namespace generated
             }
         }
         
-        public virtual object Labels
+        public virtual List<string> Labels
         {
             get
             {
@@ -128,7 +127,7 @@ namespace generated
             }
         }
         
-        public virtual object Assigned_to
+        public virtual string Assigned_to
         {
             get
             {
@@ -140,7 +139,7 @@ namespace generated
             }
         }
         
-        public virtual object Stage
+        public virtual string Stage
         {
             get
             {
@@ -152,7 +151,7 @@ namespace generated
             }
         }
         
-        public virtual object Description
+        public virtual string Description
         {
             get
             {
@@ -176,7 +175,7 @@ namespace generated
             }
         }
         
-        public virtual object Due_date
+        public virtual DateTime Due_date
         {
             get
             {

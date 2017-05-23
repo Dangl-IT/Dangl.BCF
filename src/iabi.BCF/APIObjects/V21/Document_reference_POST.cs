@@ -8,19 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
     public class Document_reference_POST
     {
         
-        private object _referenced_document;
+        private string _referenced_document;
         
-        private object _description;
+        private string _description;
         
-        public virtual object Referenced_document
+        public virtual string Referenced_document
         {
             get
             {
@@ -32,7 +29,7 @@ namespace generated
             }
         }
         
-        public virtual object Description
+        public virtual string Description
         {
             get
             {

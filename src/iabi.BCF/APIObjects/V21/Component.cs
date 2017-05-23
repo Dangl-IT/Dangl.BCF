@@ -8,21 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace generated
+namespace iabi.BCF.APIObjects.V21
 {
-    using System;
-    
-    
     public class Component
     {
         
-        private object _ifc_guid;
+        private string _ifc_guid;
         
-        private object _originating_system;
+        private string _originating_system;
         
-        private object _authoring_tool_id;
+        private string _authoring_tool_id;
         
-        public virtual object Ifc_guid
+        public virtual string Ifc_guid
         {
             get
             {
@@ -34,7 +31,7 @@ namespace generated
             }
         }
         
-        public virtual object Originating_system
+        public virtual string Originating_system
         {
             get
             {
@@ -46,7 +43,7 @@ namespace generated
             }
         }
         
-        public virtual object Authoring_tool_id
+        public virtual string Authoring_tool_id
         {
             get
             {
