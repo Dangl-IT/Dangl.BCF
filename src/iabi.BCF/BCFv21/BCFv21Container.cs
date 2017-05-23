@@ -261,7 +261,7 @@ namespace iabi.BCF.BCFv21
         {
             var container = new BCFv21Container();
             var bcfZipArchive = new ZipArchive(zipFileStream, ZipArchiveMode.Read);
-            // Check if version info is compliant with this implementation (2.0)
+            // Check if version info is compliant with this implementation (2.1)
             var versionEntry = bcfZipArchive.Entries.FirstOrDefault(e => string.Equals(e.FullName, "bcf.version", StringComparison.OrdinalIgnoreCase));
             if (versionEntry != null)
             {

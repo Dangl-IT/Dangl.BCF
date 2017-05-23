@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using iabi.BCF.APIObjects.Extensions;
-using iabi.BCF.APIObjects.Project;
+using iabi.BCF.APIObjects.V10.Extensions;
+using iabi.BCF.APIObjects.V10.Project;
 
 namespace iabi.BCF.Converter
 {

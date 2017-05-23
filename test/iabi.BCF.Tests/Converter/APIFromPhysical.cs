@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using iabi.BCF.APIObjects.Extensions;
+using iabi.BCF.APIObjects.V10.Extensions;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Converter;
