@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using iabi.BCF.APIObjects.Comment;
-using iabi.BCF.APIObjects.Component;
-using iabi.BCF.APIObjects.DocumentReference;
-using iabi.BCF.APIObjects.Extensions;
-using iabi.BCF.APIObjects.File;
-using iabi.BCF.APIObjects.Project;
-using iabi.BCF.APIObjects.RelatedTopic;
-using iabi.BCF.APIObjects.Topic;
-using iabi.BCF.APIObjects.Viewpoint;
-using iabi.BCF.APIObjects.Viewpoint.Components;
+using iabi.BCF.APIObjects.V10.Comment;
+using iabi.BCF.APIObjects.V10.Component;
+using iabi.BCF.APIObjects.V10.DocumentReference;
+using iabi.BCF.APIObjects.V10.Extensions;
+using iabi.BCF.APIObjects.V10.File;
+using iabi.BCF.APIObjects.V10.Project;
+using iabi.BCF.APIObjects.V10.RelatedTopic;
+using iabi.BCF.APIObjects.V10.Topic;
+using iabi.BCF.APIObjects.V10.Viewpoint;
+using iabi.BCF.APIObjects.V10.Viewpoint.Components;
 using iabi.BCF.BCFv2;
 using iabi.BCF.BCFv2.Schemas;
 

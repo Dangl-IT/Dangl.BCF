@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using iabi.BCF.APIObjects.Comment;
-using iabi.BCF.APIObjects.DocumentReference;
-using iabi.BCF.APIObjects.File;
-using iabi.BCF.APIObjects.RelatedTopic;
-using iabi.BCF.APIObjects.Topic;
+using iabi.BCF.APIObjects.V10.Comment;
+using iabi.BCF.APIObjects.V10.DocumentReference;
+using iabi.BCF.APIObjects.V10.File;
+using iabi.BCF.APIObjects.V10.RelatedTopic;
+using iabi.BCF.APIObjects.V10.Topic;
 
 namespace iabi.BCF.Converter
 {
