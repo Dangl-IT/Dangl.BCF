@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using iabi.BCF.APIObjects.V10.Extensions;
+using Xunit;
 
 namespace iabi.BCF.Tests.APIObjects.Extensions
 {

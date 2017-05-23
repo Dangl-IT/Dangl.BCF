@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using iabi.BCF.APIObjects.V10.Component;
+using iabi.BCF.APIObjects.V10.Viewpoint;
 using iabi.BCF.Converter;
 using Xunit;
 
