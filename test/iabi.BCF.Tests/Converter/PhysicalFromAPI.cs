@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+using iabi.BCF.APIObjects.V10.Comment;
+using iabi.BCF.APIObjects.V10.Extensions;
+using iabi.BCF.APIObjects.V10.Topic;
+using iabi.BCF.APIObjects.V10.Viewpoint;
 using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Converter;
 using Xunit;
