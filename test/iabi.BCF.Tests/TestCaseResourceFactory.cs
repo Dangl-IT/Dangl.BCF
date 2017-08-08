@@ -230,6 +230,12 @@ namespace iabi.BCF.Tests
 
     public enum BCFv21ImportTestCases
     {
-        SingleInvisibleWall
+        AllComponentsAndSpacesVisible,
+        RelatedTopicsWithBothTopicsInSameFile,
+        RelatedTopicsWithOtherTopicMissing,
+        SingleInvisibleWall,
+        SingleVisibleSpace,
+        SingleVisibleWall,
+        UserAssignment
     }
 }
