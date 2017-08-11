@@ -10,24 +10,23 @@ $latestCoberturaConverter = Join-Path -Path (Get-ChildItem -Path $nugetCobertura
 
 $testRuns = 1;
 foreach ($testProject in $testProjects) {
-    foreach ($testFramework in $testFrameworks) {
-        # Arguments for running dotnet
-        $dotnetArguments = "test", "`"`"$PSScriptRoot\test\$testProject`"`"", "-f $testFramework", "-xml testResult_$testRuns.testresults"
+    # Arguments for running dotnet
+    $dotnetArguments = "xunit", "-xml \""$PSScriptRoot\testresult_$testRuns.testresults\"""
 
-        "Running tests with OpenCover"
-        & $latestOpenCover `
-            -register:user `
-            -target:dotnet.exe `
-            "-targetargs:$dotnetArguments" `
-            -returntargetcode `
-            -output:"$PSScriptRoot\OpenCover.coverageresults" `
-            -mergeoutput `
-            -oldStyle `
-            -excludebyattribute:System.CodeDom.Compiler.GeneratedCodeAttribute `
-            "-filter:+[iabi.BCF]* -[*.Tests]* -[*.Tests.*]*"
+    "Running tests with OpenCover"
+    & $latestOpenCover `
+        -register:user `
+        -target:dotnet.exe `
+        "-targetargs:$dotnetArguments" `
+        -targetdir:$PSScriptRoot\test\$testProject `
+        -returntargetcode `
+        -output:"$PSScriptRoot\OpenCover.coverageresults" `
+        -mergeoutput `
+        -oldStyle `
+        -excludebyattribute:System.CodeDom.Compiler.GeneratedCodeAttribute `
+        "-filter:+[iabi.BCF]* -[*.Tests]* -[*.Tests.*]*"
 
-        $testRuns++
-    }
+    $testRuns++
 }
 
 "Converting coverage reports to Cobertura format"

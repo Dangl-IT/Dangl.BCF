@@ -1,23 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3D16CD1A-0E43-4600-B5F6-FCC2E2D87D71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{591193A1-C40A-4386-B4BA-3B8AEBA0B75B}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		LICENCE.md = LICENCE.md
 		README.md = README.md
 		TestsAndCoverage.ps1 = TestsAndCoverage.ps1
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "iabi.BCF", "src\iabi.BCF\iabi.BCF.xproj", "{DCA85189-B152-45F3-9364-69E802BEC5BA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1AC47211-5FEC-42C8-AE84-ABD40C4304BE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "iabi.BCF.Tests", "test\iabi.BCF.Tests\iabi.BCF.Tests.xproj", "{AFC20431-C895-4737-A7F3-9872642E34C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iabi.BCF", "src\iabi.BCF\iabi.BCF.csproj", "{DCA85189-B152-45F3-9364-69E802BEC5BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iabi.BCF.Tests", "test\iabi.BCF.Tests\iabi.BCF.Tests.csproj", "{AFC20431-C895-4737-A7F3-9872642E34C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
