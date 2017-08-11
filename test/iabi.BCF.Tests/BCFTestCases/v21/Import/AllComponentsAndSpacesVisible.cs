@@ -8,7 +8,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
     public class AllComponentsAndSpacesVisible
     {
         public BCFv21Container ReadContainer;
-        // TODO WRITE TESTS FOR THIS TESTCASE
+
         public AllComponentsAndSpacesVisible()
         {
             ReadContainer = TestCaseResourceFactory.GetImportTestCaseContainerV21(BCFv21ImportTestCases.AllComponentsAndSpacesVisible);
