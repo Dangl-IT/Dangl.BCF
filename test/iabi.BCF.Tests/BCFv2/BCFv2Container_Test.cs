@@ -581,7 +581,7 @@ namespace iabi.BCF.Tests.BCFv2
                     memStream.Position = 0;
                     var readAgain = BCFv2Container.ReadStream(memStream);
                     Assert.False(string.IsNullOrWhiteSpace(readAgain.Topics.First().Markup.Viewpoints.First().Viewpoint));
-                    Assert.NotNull(readAgain.Topics.First().ViewpointSnapshots.FirstOrDefault());
+                    Assert.True(readAgain.Topics.First().ViewpointSnapshots.Any());
                 }
             }
         }

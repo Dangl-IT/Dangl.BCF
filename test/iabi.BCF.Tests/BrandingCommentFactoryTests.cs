@@ -20,7 +20,7 @@ namespace iabi.BCF.Tests
                 // Just making sure that it's not reporting a "1.0.0.0" version for the assembly. Probably a little too eager this test=)
                 Assert.False(expectedVersion.Major == 1 && expectedVersion.Minor == 0 && expectedVersion.Build == 0);
                 var expectedVersionString = $"V{expectedVersion.Major}.{expectedVersion.Minor}.{expectedVersion.Revision}";
-                Assert.True(commentText.Contains(expectedVersionString));
+                Assert.Contains(expectedVersionString, commentText);
             }
 
             [Fact]
@@ -42,7 +42,7 @@ namespace iabi.BCF.Tests
             public void HasCorrectUrl()
             {
                 var commentText = BrandingCommentFactory.GetBrandingComment();
-                Assert.True(commentText.Contains(BrandingCommentFactory.IABI_BRANDING_URL));
+                Assert.Contains(BrandingCommentFactory.IABI_BRANDING_URL, commentText);
             }
 
             [Fact]
@@ -55,8 +55,8 @@ namespace iabi.BCF.Tests
             public void HasCorrectText()
             {
                 var commentText = BrandingCommentFactory.GetBrandingComment();
-                Assert.True(commentText.StartsWith("Created with the iabi.BCF library, V"));
-                Assert.True(commentText.EndsWith($". Visit {BrandingCommentFactory.IABI_BRANDING_URL} to find out more."));
+                Assert.StartsWith("Created with the iabi.BCF library, V", commentText);
+                Assert.EndsWith($". Visit {BrandingCommentFactory.IABI_BRANDING_URL} to find out more.", commentText);
             }
         }
 

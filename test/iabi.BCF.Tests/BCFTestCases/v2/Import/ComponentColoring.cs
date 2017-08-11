@@ -112,9 +112,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             Assert.True(new byte[] {255, 0, 255, 0}.SequenceEqual(component.Color));
             Assert.Equal("1mrgg_O_bBBv_tvdtVwK59", component.IfcGuid);
             Assert.Equal("Allplan", component.OriginatingSystem);
-            Assert.Equal(false, component.Selected);
-            Assert.Equal(true, component.SelectedSpecified);
-            Assert.Equal(true, component.Visible);
+            Assert.False(component.Selected);
+            Assert.True(component.SelectedSpecified);
+            Assert.True(component.Visible);
         }
 
 

@@ -164,9 +164,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 Assert.Null(component.Color);
                 Assert.Equal("0hm_TZ7fj2wQv5AxxV1KqF", component.IfcGuid);
                 Assert.False(component.ShouldSerializeOriginatingSystem());
-                Assert.Equal(true, component.Selected);
-                Assert.Equal(true, component.SelectedSpecified);
-                Assert.Equal(false, component.Visible);
+                Assert.True(component.Selected);
+                Assert.True(component.SelectedSpecified);
+                Assert.False(component.Visible);
             }
         }
     }

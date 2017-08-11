@@ -152,13 +152,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), headerEntry.Date.ToUniversalTime());
                 Assert.Equal("C:\\e.ifc", headerEntry.Filename);
                 Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
-                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, headerEntry.isExternal);
-                Assert.Equal(null, headerEntry.Reference);
-                Assert.Equal(true, headerEntry.ShouldSerializeDate());
-                Assert.Equal(true, headerEntry.ShouldSerializeFilename());
-                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Null(headerEntry.IfcSpatialStructureElement);
+                Assert.True(headerEntry.isExternal);
+                Assert.Null(headerEntry.Reference);
+                Assert.True(headerEntry.ShouldSerializeDate());
+                Assert.True(headerEntry.ShouldSerializeFilename());
+                Assert.True(headerEntry.ShouldSerializeIfcProject());
+                Assert.False(headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]

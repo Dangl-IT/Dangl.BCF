@@ -403,31 +403,31 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
 
             // #1
             Assert.Equal("0Gl71cVurFn8bxAOox6M4X", components[0].IfcGuid);
-            Assert.Equal(true, components[0].Selected);
+            Assert.True(components[0].Selected);
 
             // #2
             Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", components[1].IfcGuid);
-            Assert.Equal(true, components[1].Selected);
+            Assert.True(components[1].Selected);
 
             // #3
             Assert.Equal("3DvyPxGIn8qR0KDwbL_9r1", components[2].IfcGuid);
-            Assert.Equal(true, components[2].Selected);
+            Assert.True(components[2].Selected);
 
             // #4
             Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", components[3].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            Assert.True(components[3].Selected);
 
             // #5
             Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", components[4].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            Assert.True(components[3].Selected);
 
             // #6
             Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", components[5].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            Assert.True(components[3].Selected);
 
             // #7
             Assert.Equal("1jQQiGIAnFzxOUzrdmJYDS", components[6].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            Assert.True(components[3].Selected);
         }
 
         [Fact]
@@ -449,19 +449,19 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
 
             // #1
             Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", components[0].IfcGuid);
-            Assert.Equal(true, components[0].Selected);
+            Assert.True(components[0].Selected);
 
             // #2
             Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", components[1].IfcGuid);
-            Assert.Equal(true, components[1].Selected);
+            Assert.True(components[1].Selected);
 
             // #3
             Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", components[2].IfcGuid);
-            Assert.Equal(true, components[2].Selected);
+            Assert.True(components[2].Selected);
 
             // #4
             Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", components[3].IfcGuid);
-            Assert.Equal(true, components[3].Selected);
+            Assert.True(components[3].Selected);
         }
 
         [Fact]
@@ -483,19 +483,19 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
 
             // #1
             Assert.Equal("0fdpeZZEX3FwJ7x0ox5kzF", components[0].IfcGuid);
-            Assert.Equal(false, components[0].Visible);
+            Assert.False(components[0].Visible);
 
             // #2
             Assert.Equal("23Zwlpd71EyvHlH6OZ77nK", components[1].IfcGuid);
-            Assert.Equal(false, components[1].Visible);
+            Assert.False(components[1].Visible);
 
             // #3
             Assert.Equal("1OpjQ1Nlv4sQuTxfUC_8zS", components[2].IfcGuid);
-            Assert.Equal(false, components[2].Visible);
+            Assert.False(components[2].Visible);
 
             // #4
             Assert.Equal("0cSRUx$EX1NRjqiKcYQ$a0", components[3].IfcGuid);
-            Assert.Equal(false, components[3].Visible);
+            Assert.False(components[3].Visible);
         }
 
         [Fact]

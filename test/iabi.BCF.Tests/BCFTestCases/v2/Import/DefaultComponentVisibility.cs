@@ -116,15 +116,15 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             {
                 var headerEntry = ReadTopic.Markup.Header.First();
 
-                Assert.Equal(false, headerEntry.DateSpecified);
+                Assert.False(headerEntry.DateSpecified);
                 Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
-                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, headerEntry.isExternal);
-                Assert.Equal(null, headerEntry.Reference);
-                Assert.Equal(true, headerEntry.ShouldSerializeDate());
-                Assert.Equal(false, headerEntry.ShouldSerializeFilename());
-                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Null(headerEntry.IfcSpatialStructureElement);
+                Assert.True(headerEntry.isExternal);
+                Assert.Null(headerEntry.Reference);
+                Assert.True(headerEntry.ShouldSerializeDate());
+                Assert.False(headerEntry.ShouldSerializeFilename());
+                Assert.True(headerEntry.ShouldSerializeIfcProject());
+                Assert.False(headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]
@@ -180,9 +180,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 Assert.Null(component.Color);
                 Assert.Equal("1E8YkwPMfB$h99jtn_uAjI", component.IfcGuid);
                 Assert.False(component.ShouldSerializeOriginatingSystem());
-                Assert.Equal(true, component.Selected);
-                Assert.Equal(true, component.SelectedSpecified);
-                Assert.Equal(true, component.Visible);
+                Assert.True(component.Selected);
+                Assert.True(component.SelectedSpecified);
+                Assert.True(component.Visible);
             }
         }
     }

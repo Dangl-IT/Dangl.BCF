@@ -44,8 +44,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
                             var bcfToolsVersion = typeof(BrandingCommentFactory).GetTypeInfo().Assembly.GetName().Version;
                             var expectedStart = $"Created with the iabi.BCF library, V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision} at ";
                             var expectedEnd = $". Visit {BrandingCommentFactory.IABI_BRANDING_URL} to find out more.";
-                            Assert.True(readXml.Contains("<!--" + expectedStart));
-                            Assert.True(readXml.Contains(expectedEnd + "-->"));
+                            Assert.Contains("<!--" + expectedStart, readXml);
+                            Assert.Contains(expectedEnd + "-->", readXml);
                         }
                     }
                 }
@@ -150,7 +150,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             {
                 if (expectedContainer.BcfVersionInfo.VersionId.Contains("2.1"))
                 {
-                    Assert.True(actualContainer.BcfVersionInfo.VersionId.Contains("2.1"));
+                    Assert.Contains("2.1", actualContainer.BcfVersionInfo.VersionId);
                 }
                 else
                 {

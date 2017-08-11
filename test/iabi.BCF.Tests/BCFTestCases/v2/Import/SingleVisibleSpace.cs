@@ -115,14 +115,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void Markup_HeaderFileCorrect_01()
             {
                 var headerEntry = ReadTopic.Markup.Header.First();
-                Assert.Equal(false, headerEntry.DateSpecified);
+                Assert.False(headerEntry.DateSpecified);
                 Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
-                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, headerEntry.isExternal);
-                Assert.Equal(null, headerEntry.Reference);
-                Assert.Equal(false, headerEntry.ShouldSerializeFilename());
-                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Null(headerEntry.IfcSpatialStructureElement);
+                Assert.True(headerEntry.isExternal);
+                Assert.Null(headerEntry.Reference);
+                Assert.False(headerEntry.ShouldSerializeFilename());
+                Assert.True(headerEntry.ShouldSerializeIfcProject());
+                Assert.False(headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]

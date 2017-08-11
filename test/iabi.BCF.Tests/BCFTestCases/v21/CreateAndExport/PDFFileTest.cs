@@ -138,8 +138,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             var documentRefsXml = markupXml.Descendants("DocumentReference").First();
 
             Assert.NotNull(documentRefsXml);
-            Assert.Equal(documentRefsXml.Descendants("ReferencedDocument").First().Value, "../Requirements.pdf");
-            Assert.Equal(documentRefsXml.Descendants("Description").First().Value, "Project requirements (pdf)");
+            Assert.Equal("../Requirements.pdf", documentRefsXml.Descendants("ReferencedDocument").First().Value);
+            Assert.Equal("Project requirements (pdf)", documentRefsXml.Descendants("Description").First().Value);
         }
 
         [Fact]
