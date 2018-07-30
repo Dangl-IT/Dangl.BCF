@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
     <AssemblyName>iabi.BCF.Tests</AssemblyName>
     <PackageId>iabi.BCF.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -25,9 +25,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-    <PackageReference Include="OpenCover" Version="4.6.519">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="OpenCoverToCoberturaConverter" Version="0.3.3">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
