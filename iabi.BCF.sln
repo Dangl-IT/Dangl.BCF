@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		LICENCE.md = LICENCE.md
 		README.md = README.md
-		TestsAndCoverage.ps1 = TestsAndCoverage.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1AC47211-5FEC-42C8-AE84-ABD40C4304BE}"
@@ -43,5 +42,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DCA85189-B152-45F3-9364-69E802BEC5BA} = {3D16CD1A-0E43-4600-B5F6-FCC2E2D87D71}
 		{AFC20431-C895-4737-A7F3-9872642E34C2} = {1AC47211-5FEC-42C8-AE84-ABD40C4304BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F6222C0-8C2D-4971-9387-AA9F437B5ED1}
 	EndGlobalSection
 EndGlobal
