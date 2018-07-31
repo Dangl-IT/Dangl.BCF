@@ -271,7 +271,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
             foreach (var expectedTopic in expectedContainer.Topics)
             {
                 // Make sure topic is present only one
-                Assert.Equal(1, actualContainer.Topics.Where(curr => curr.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid).Count());
+                Assert.Single(actualContainer.Topics.Where(curr => curr.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid));
                 var actualTopic = actualContainer.Topics.FirstOrDefault(curr => curr.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid);
                 CompareSingleTopic(expectedTopic, actualTopic, expectedArchive, actualArchive, originatesFromApiConversion);
             }
@@ -420,7 +420,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2
                 Assert.Equal(expectedTopic.Labels.Count, actualTopic.Labels.Count);
                 foreach (var expectedLabel in expectedTopic.Labels)
                 {
-                    Assert.True(actualTopic.Labels.Contains(expectedLabel));
+                    Assert.Contains(expectedLabel, actualTopic.Labels);
                 }
             }
 

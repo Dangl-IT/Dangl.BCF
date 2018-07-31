@@ -86,7 +86,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
             var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv21TestCaseData.COMPONENT_SELECTION_TOPIC_GUID + "/markup.bcf");
             var viewpointsElement = markupXml.Descendants().OfType<XElement>()
                 .Where(element => element.Name.LocalName == "Viewpoints");
-            Assert.Equal(1, viewpointsElement.Count());
+            Assert.Single(viewpointsElement);
             Assert.Equal(BcFv21TestCaseData.COMPONENT_SELECTION_VIEWPOINT_GUID, viewpointsElement.First().Attributes().First(attribute => attribute.Name.LocalName == "Guid").Value);
         }
 

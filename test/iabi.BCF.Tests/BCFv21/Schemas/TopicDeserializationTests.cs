@@ -18,7 +18,7 @@ namespace iabi.BCF.Tests.BCFv21.Schemas
     </Topic>";
             var deserializedTopic = BCF.BCFv21.Schemas.Topic.Deserialize(xmlTopic);
             Assert.True(deserializedTopic.ShouldSerializeRelatedTopic());
-            Assert.Equal(1, deserializedTopic.RelatedTopic.Count);
+            Assert.Single(deserializedTopic.RelatedTopic);
             Assert.Equal("c69c8879-bd4a-4182-a759-f3c8c5b47c94", deserializedTopic.RelatedTopic.First().Guid);
         }
     }

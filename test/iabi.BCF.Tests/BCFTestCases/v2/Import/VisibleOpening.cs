@@ -94,7 +94,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "2143a906-d693-4c2b-8970-619d01c28a97";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -106,7 +106,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]

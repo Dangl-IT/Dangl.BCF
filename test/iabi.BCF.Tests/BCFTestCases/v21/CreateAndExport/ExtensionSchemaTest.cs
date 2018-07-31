@@ -78,11 +78,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.CreateAndExport
         public void CheckThatExtensionsIsReferenced()
         {
             var projectXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "project.bcfp");
-            Assert.True(projectXml.DescendantNodes().OfType<XElement>().Any(curr =>
+            Assert.Contains(projectXml.DescendantNodes().OfType<XElement>(), curr =>
                 curr.Name.LocalName == "ExtensionSchema" &&
                 curr.DescendantNodes().Count() == 1
                 && curr.DescendantNodes().First().NodeType == XmlNodeType.Text
-                && ((XText) curr.DescendantNodes().First()).Value == "extensions.xsd"));
+                && ((XText) curr.DescendantNodes().First()).Value == "extensions.xsd");
         }
 
         [Fact]

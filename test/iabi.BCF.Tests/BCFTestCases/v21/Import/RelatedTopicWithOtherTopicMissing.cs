@@ -84,7 +84,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
             [Fact]
             public void CheckRelatedTopic()
             {
-                Assert.Equal(1, ReadTopic.Markup.Topic.RelatedTopic.Count);
+                Assert.Single(ReadTopic.Markup.Topic.RelatedTopic);
                 Assert.Equal("c69c8879-bd4a-4182-a759-f3c8c5b47c94", ReadTopic.Markup.Topic.RelatedTopic.First().Guid);
             }
 
@@ -100,14 +100,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "7269cc66-6412-49ef-9ef2-7a116f98c866";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_02()
             {
                 var expected = "da5306a4-b02c-43f9-aeba-602bc4db925a";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]

@@ -264,21 +264,21 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         public void Viewpoint_01_NoOrthogonalCameraSet()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
-            Assert.False(viewpointXml.DescendantNodes().OfType<XElement>().Any(curr => curr.Name.LocalName == "OrthogonalCamera"));
+            Assert.DoesNotContain(viewpointXml.DescendantNodes().OfType<XElement>(), curr => curr.Name.LocalName == "OrthogonalCamera");
         }
 
         [Fact]
         public void Viewpoint_02_NoOrthogonalCameraSet()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
-            Assert.False(viewpointXml.DescendantNodes().OfType<XElement>().Any(curr => curr.Name.LocalName == "OrthogonalCamera"));
+            Assert.DoesNotContain(viewpointXml.DescendantNodes().OfType<XElement>(), curr => curr.Name.LocalName == "OrthogonalCamera");
         }
 
         [Fact]
         public void Viewpoint_03_NoOrthogonalCameraSet()
         {
             var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
-            Assert.False(viewpointXml.DescendantNodes().OfType<XElement>().Any(curr => curr.Name.LocalName == "OrthogonalCamera"));
+            Assert.DoesNotContain(viewpointXml.DescendantNodes().OfType<XElement>(), curr => curr.Name.LocalName == "OrthogonalCamera");
         }
 
         [Fact]

@@ -94,42 +94,42 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "2d80a5da-2296-47fc-9fe5-a60b5a02cfb3";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_02()
             {
                 var expected = "55f6b17c-2c02-4e0e-99de-64c5f1f255c3";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_03()
             {
                 var expected = "e244a1ee-1972-45e3-b919-5ab5002f96ce";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_04()
             {
                 var expected = "992a3421-a60b-4594-864b-583feaed9d16";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_05()
             {
                 var expected = "12fdc962-6ce8-4494-8224-56642068c84f";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_06()
             {
                 var expected = "ab78330d-c14d-4ca6-9cbb-662be812c9b1";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -141,7 +141,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -243,7 +243,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]
@@ -255,7 +255,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_LinesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Lines.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Lines);
             }
         }
     }

@@ -93,7 +93,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -156,7 +156,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Single(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]

@@ -99,7 +99,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "7a02a14b-5c22-433c-b98c-ac5b9153a62b";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]

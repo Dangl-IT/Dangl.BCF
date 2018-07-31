@@ -121,7 +121,7 @@ namespace iabi.BCF.Tests.Converter
                 APIContainerInstance.Topics.Add(new TopicContainer());
                 APIContainerInstance.Topics.First().Viewpoints.Add(new ViewpointContainer());
 
-                Assert.Throws(typeof (ArgumentNullException), () => { var ReadContainer = BCF.Converter.PhysicalFromApi.Convert(APIContainerInstance); });
+                Assert.Throws<ArgumentNullException>(() => { var ReadContainer = BCF.Converter.PhysicalFromApi.Convert(APIContainerInstance); });
             }
         }
 

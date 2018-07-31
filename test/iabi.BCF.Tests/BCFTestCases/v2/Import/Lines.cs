@@ -114,13 +114,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "ec54ee6d-3ed0-45d8-8c80-398f9f8d80da";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -182,7 +182,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]

@@ -93,14 +93,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "a6d6a846-4bdf-497f-a0a1-a4049ccdd6eb";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_02()
             {
                 var expected = "b5595959-2956-48a8-acbc-fcdd47f78c93";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -123,7 +123,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Markup.Header.Count);
+                Assert.Empty(ReadTopic.Markup.Header);
             }
 
             [Fact]

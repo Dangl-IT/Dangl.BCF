@@ -40,7 +40,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         public void CheckCommentGuid_01()
         {
             var expected = "fc72d354-8534-44b4-9686-f7b9c4a19adf";
-            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(curr => curr.Guid == expected));
+            Assert.Contains(ReadContainer.Topics.First().Markup.Comment, curr => curr.Guid == expected);
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         [Fact]
         public void Viewpoint_ComponentsCountCorrect()
         {
-            Assert.Equal(1, ReadContainer.Topics.First().Viewpoints.First().Components.Count);
+            Assert.Single(ReadContainer.Topics.First().Viewpoints.First().Components);
         }
 
         [Fact]

@@ -103,14 +103,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "4ad2c5e2-f7f1-4b6f-a2c7-5b4f93895e8e";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void CheckCommentGuid_02()
             {
                 var expected = "5d1463e3-c6b1-4867-9b32-046461e81bb5";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]

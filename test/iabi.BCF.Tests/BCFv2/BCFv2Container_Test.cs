@@ -114,7 +114,7 @@ namespace iabi.BCF.Tests.BCFv2
                 var container = new BCFv2Container();
                 var docRef = new TopicDocumentReferences();
                 docRef.isExternal = true;
-                Assert.Throws(typeof (ArgumentException), () => { var data = container.GetAttachmentForDocumentReference(docRef); });
+                Assert.Throws<ArgumentException>(() => { var data = container.GetAttachmentForDocumentReference(docRef); });
             }
 
             [Fact]
@@ -374,7 +374,7 @@ namespace iabi.BCF.Tests.BCFv2
             [Fact]
             public void Combine_06()
             {
-                Assert.Throws(typeof (ArgumentOutOfRangeException), () => { var created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg"); });
+                Assert.Throws<ArgumentOutOfRangeException>(() => { var created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg"); });
             }
 
             [Fact]
