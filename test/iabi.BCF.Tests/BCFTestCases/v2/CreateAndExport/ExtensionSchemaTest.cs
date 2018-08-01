@@ -28,6 +28,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(CreatedContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ContainerPresent()
         {
             Assert.NotNull(CreatedContainer);
