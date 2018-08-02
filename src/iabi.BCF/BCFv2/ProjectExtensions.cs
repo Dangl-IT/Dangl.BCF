@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace iabi.BCF.BCFv2.Schemas
+namespace iabi.BCF.BCFv2
 {
     /// <summary>
     /// Container for the project extensions schema. This schema is basically just having lists of allowed property values within a project

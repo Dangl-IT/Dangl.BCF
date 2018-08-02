@@ -44,8 +44,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
                             var bcfToolsVersion = typeof(BrandingCommentFactory).GetTypeInfo().Assembly.GetName().Version;
                             var expectedStart = $"Created with the iabi.BCF library, V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision} at ";
                             var expectedEnd = $". Visit {BrandingCommentFactory.IABI_BRANDING_URL} to find out more.";
-                            Assert.True(readXml.Contains("<!--" + expectedStart));
-                            Assert.True(readXml.Contains(expectedEnd + "-->"));
+                            Assert.Contains("<!--" + expectedStart, readXml);
+                            Assert.Contains(expectedEnd + "-->", readXml);
                         }
                     }
                 }
@@ -150,7 +150,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             {
                 if (expectedContainer.BcfVersionInfo.VersionId.Contains("2.1"))
                 {
-                    Assert.True(actualContainer.BcfVersionInfo.VersionId.Contains("2.1"));
+                    Assert.Contains("2.1", actualContainer.BcfVersionInfo.VersionId);
                 }
                 else
                 {
@@ -280,7 +280,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             foreach (var expectedTopic in expectedContainer.Topics)
             {
                 // Make sure topic is present only one
-                Assert.Equal(1, actualContainer.Topics.Where(t => t.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid).Count());
+                Assert.Single(actualContainer.Topics.Where(t => t.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid));
                 var actualTopic = actualContainer.Topics.FirstOrDefault(t => t.Markup.Topic.Guid == expectedTopic.Markup.Topic.Guid);
                 CompareSingleTopic(expectedTopic, actualTopic, expectedArchive, actualArchive, originatesFromApiConversion);
             }
@@ -429,7 +429,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
                 Assert.Equal(expectedTopic.Labels.Count, actualTopic.Labels.Count);
                 foreach (var expectedLabel in expectedTopic.Labels)
                 {
-                    Assert.True(actualTopic.Labels.Contains(expectedLabel));
+                    Assert.Contains(expectedLabel, actualTopic.Labels);
                 }
             }
 

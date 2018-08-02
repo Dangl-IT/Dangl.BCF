@@ -28,6 +28,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(CreatedContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ContainerPresent()
         {
             Assert.NotNull(CreatedContainer);
@@ -78,11 +86,11 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         public void CheckThatExtensionsIsReferenced()
         {
             var projectXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "project.bcfp");
-            Assert.True(projectXml.DescendantNodes().OfType<XElement>().Any(curr =>
+            Assert.Contains(projectXml.DescendantNodes().OfType<XElement>(), curr =>
                 curr.Name.LocalName == "ExtensionSchema" &&
                 curr.DescendantNodes().Count() == 1
                 && curr.DescendantNodes().First().NodeType == XmlNodeType.Text
-                && ((XText) curr.DescendantNodes().First()).Value == "extensions.xsd"));
+                && ((XText) curr.DescendantNodes().First()).Value == "extensions.xsd");
         }
 
         [Fact]

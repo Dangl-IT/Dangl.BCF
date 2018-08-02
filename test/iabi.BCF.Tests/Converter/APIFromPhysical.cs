@@ -531,7 +531,7 @@ namespace iabi.BCF.Tests.Converter
             {
                 foreach (var CurrentXmlFile in CreatedContainer.FileAttachments)
                 {
-                    Assert.True(CreatedAPIContainer.FileAttachments.Any(Curr => Curr.Value.SequenceEqual(CurrentXmlFile.Value)));
+                    Assert.Contains(CreatedAPIContainer.FileAttachments, Curr => Curr.Value.SequenceEqual(CurrentXmlFile.Value));
                 }
             }
 

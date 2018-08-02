@@ -4,7 +4,7 @@ using iabi.BCF.APIObjects.V10.Comment;
 using iabi.BCF.APIObjects.V10.Extensions;
 using iabi.BCF.APIObjects.V10.Topic;
 using iabi.BCF.APIObjects.V10.Viewpoint;
-using iabi.BCF.BCFv2.Schemas;
+using iabi.BCF.BCFv2;
 using iabi.BCF.Converter;
 using Xunit;
 
@@ -121,7 +121,7 @@ namespace iabi.BCF.Tests.Converter
                 APIContainerInstance.Topics.Add(new TopicContainer());
                 APIContainerInstance.Topics.First().Viewpoints.Add(new ViewpointContainer());
 
-                Assert.Throws(typeof (ArgumentNullException), () => { var ReadContainer = BCF.Converter.PhysicalFromApi.Convert(APIContainerInstance); });
+                Assert.Throws<ArgumentNullException>(() => { var ReadContainer = BCF.Converter.PhysicalFromApi.Convert(APIContainerInstance); });
             }
         }
 

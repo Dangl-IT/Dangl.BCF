@@ -8,8 +8,6 @@ using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory;
 using Xunit;
 
-// TODO ADD ALL TESTS FROM THIS FOLDER TO BCFv2.1
-
 namespace iabi.BCF.Tests.BCFv2
 {
     public class BcFv2ContainerTest
@@ -114,7 +112,7 @@ namespace iabi.BCF.Tests.BCFv2
                 var container = new BCFv2Container();
                 var docRef = new TopicDocumentReferences();
                 docRef.isExternal = true;
-                Assert.Throws(typeof (ArgumentException), () => { var data = container.GetAttachmentForDocumentReference(docRef); });
+                Assert.Throws<ArgumentException>(() => { var data = container.GetAttachmentForDocumentReference(docRef); });
             }
 
             [Fact]
@@ -374,7 +372,7 @@ namespace iabi.BCF.Tests.BCFv2
             [Fact]
             public void Combine_06()
             {
-                Assert.Throws(typeof (ArgumentOutOfRangeException), () => { var created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg"); });
+                Assert.Throws<ArgumentOutOfRangeException>(() => { var created = BCFv2Container.GetAbsolutePath("123456", "../../example.jpg"); });
             }
 
             [Fact]
@@ -581,7 +579,7 @@ namespace iabi.BCF.Tests.BCFv2
                     memStream.Position = 0;
                     var readAgain = BCFv2Container.ReadStream(memStream);
                     Assert.False(string.IsNullOrWhiteSpace(readAgain.Topics.First().Markup.Viewpoints.First().Viewpoint));
-                    Assert.NotNull(readAgain.Topics.First().ViewpointSnapshots.FirstOrDefault());
+                    Assert.True(readAgain.Topics.First().ViewpointSnapshots.Any());
                 }
             }
         }

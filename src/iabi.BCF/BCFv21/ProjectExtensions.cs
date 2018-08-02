@@ -4,8 +4,6 @@ using System.Linq;
 using System.Xml.Linq;
 using System.IO;
 
-// TODO SYNC THIS FILES LOCATION WITH THE ONE FOR V2
-
 namespace iabi.BCF.BCFv21
 {
     public class ProjectExtensions
@@ -25,42 +23,38 @@ namespace iabi.BCF.BCFv21
         public ProjectExtensions(string schemaString)
         {
             var schemaXml = XElement.Parse(schemaString);
+            var topicTypeRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "TopicType");
+            TopicType = GetRestrictionValues(topicTypeRestrictionBaseElement);
+            var topicStatusRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "TopicStatus");
+            TopicStatus = GetRestrictionValues(topicStatusRestrictionBaseElement);
+            var topicLabelRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "TopicLabel");
+            TopicLabel = GetRestrictionValues(topicLabelRestrictionBaseElement);
+            var snippetTypeRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "SnippetType");
+            SnippetType = GetRestrictionValues(snippetTypeRestrictionBaseElement);
+            var priorityRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "Priority");
+            Priority = GetRestrictionValues(priorityRestrictionBaseElement);
+            var userIdTypeRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "UserIdType");
+            UserIdType = GetRestrictionValues(userIdTypeRestrictionBaseElement);
+            var stageRestrictionBaseElement = GetRestrictionBasElement(schemaXml, "Stage");
+            Stage = GetRestrictionValues(stageRestrictionBaseElement);
+        }
 
-            var restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "TopicType"));
-            if (restrictionBaseElement != null)
+        private XElement GetRestrictionBasElement(XElement root, string name)
+        {
+            var restrictionBaseElement = root.DescendantNodes()
+                .OfType<XElement>()
+                .FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == name));
+            return restrictionBaseElement;
+        }
+
+        private List<string> GetRestrictionValues(XElement restrictionBaseElement)
+        {
+            if (restrictionBaseElement == null)
             {
-                TopicType = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
+                return null;
             }
-            restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "TopicStatus"));
-            if (restrictionBaseElement != null)
-            {
-                TopicStatus = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
-            }
-            restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "TopicLabel"));
-            if (restrictionBaseElement != null)
-            {
-                TopicLabel = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
-            }
-            restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "SnippetType"));
-            if (restrictionBaseElement != null)
-            {
-                SnippetType = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
-            }
-            restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "Priority"));
-            if (restrictionBaseElement != null)
-            {
-                Priority = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
-            }
-            restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "UserIdType"));
-            if (restrictionBaseElement != null)
-            {
-                UserIdType = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
-            }
-            restrictionBaseElement = schemaXml.DescendantNodes().OfType<XElement>().FirstOrDefault(e => e.Attributes().Any(a => a.Name.LocalName == "name" && a.Value == "Stage"));
-            if (restrictionBaseElement != null)
-            {
-                Stage = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
-            }
+            var restrictionValues = restrictionBaseElement.Nodes().OfType<XElement>().First().Nodes().OfType<XElement>().Select(e => e.Attribute("value").Value).ToList();
+            return restrictionValues;
         }
 
         /// <summary>

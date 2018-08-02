@@ -40,6 +40,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(CreatedContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ContainerPresent()
         {
             Assert.NotNull(CreatedContainer);
@@ -138,8 +146,8 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var documentRefsXml = markupXml.Descendants("DocumentReferences").First();
 
             Assert.NotNull(documentRefsXml);
-            Assert.Equal(documentRefsXml.Descendants("ReferencedDocument").First().Value, "../Requirements.pdf");
-            Assert.Equal(documentRefsXml.Descendants("Description").First().Value, "Project requirements (pdf)");
+            Assert.Equal("../Requirements.pdf", documentRefsXml.Descendants("ReferencedDocument").First().Value);
+            Assert.Equal("Project requirements (pdf)", documentRefsXml.Descendants("Description").First().Value);
         }
 
         [Fact]

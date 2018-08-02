@@ -15,6 +15,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(ReadContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);
@@ -40,21 +48,21 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         public void CheckCommentGuid_01()
         {
             var expected = "ab0016e8-016c-4bdb-a19f-a1b4957734b1";
-            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(curr => curr.Guid == expected));
+            Assert.Contains(ReadContainer.Topics.First().Markup.Comment, curr => curr.Guid == expected);
         }
 
         [Fact]
         public void CheckCommentGuid_02()
         {
             var expected = "3d56f8d1-149a-4cb5-86df-ec3049648169";
-            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(curr => curr.Guid == expected));
+            Assert.Contains(ReadContainer.Topics.First().Markup.Comment, curr => curr.Guid == expected);
         }
 
         [Fact]
         public void CheckCommentGuid_03()
         {
             var expected = "987dbb75-2d91-4c81-8a3c-aabeb5547f09";
-            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(curr => curr.Guid == expected));
+            Assert.Contains(ReadContainer.Topics.First().Markup.Comment, curr => curr.Guid == expected);
         }
 
         [Fact]

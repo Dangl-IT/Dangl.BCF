@@ -15,6 +15,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(ReadContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);
@@ -118,7 +126,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "88f24705-2785-4928-8d82-56bb998c91b9";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -133,7 +141,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Markup.Header.Count);
+                Assert.Empty(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -178,7 +186,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]
@@ -190,7 +198,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_LinesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Lines.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Lines);
             }
         }
 
@@ -231,7 +239,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "a3e4a0d7-49ed-4a9b-93d6-1f99266417c3";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -246,7 +254,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Markup.Header.Count);
+                Assert.Empty(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -291,7 +299,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]
@@ -303,7 +311,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_LinesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Lines.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Lines);
             }
         }
 
@@ -344,7 +352,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "1e7bc348-8807-4d4a-bdbd-fab6761076a1";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -359,7 +367,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Markup.Header.Count);
+                Assert.Empty(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -404,7 +412,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]
@@ -416,7 +424,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_LinesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Lines.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Lines);
             }
         }
     }

@@ -16,6 +16,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(ReadContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);
@@ -110,13 +118,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "8124dadb-2470-4cda-b010-d5a75c77bb64";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -125,16 +133,16 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 var headerEntry = ReadTopic.Markup.Header.First();
 
                 Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), headerEntry.Date.ToUniversalTime());
-                Assert.Equal(true, headerEntry.DateSpecified);
+                Assert.True(headerEntry.DateSpecified);
                 Assert.Equal("C:\\e.ifc", headerEntry.Filename);
                 Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
-                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, headerEntry.isExternal);
-                Assert.Equal(null, headerEntry.Reference);
-                Assert.Equal(true, headerEntry.ShouldSerializeDate());
-                Assert.Equal(true, headerEntry.ShouldSerializeFilename());
-                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Null(headerEntry.IfcSpatialStructureElement);
+                Assert.True(headerEntry.isExternal);
+                Assert.Null(headerEntry.Reference);
+                Assert.True(headerEntry.ShouldSerializeDate());
+                Assert.True(headerEntry.ShouldSerializeFilename());
+                Assert.True(headerEntry.ShouldSerializeIfcProject());
+                Assert.False(headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]
@@ -187,7 +195,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Single(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]
@@ -198,9 +206,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 Assert.Null(component.Color);
                 Assert.Equal("14rw$C3xD3ZeUJL3YaqCEK", component.IfcGuid);
                 Assert.Equal("Allplan", component.OriginatingSystem);
-                Assert.Equal(false, component.Selected);
-                Assert.Equal(true, component.SelectedSpecified);
-                Assert.Equal(true, component.Visible);
+                Assert.False(component.Selected);
+                Assert.True(component.SelectedSpecified);
+                Assert.True(component.Visible);
             }
         }
 
@@ -241,7 +249,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "c7548286-b8cc-4f00-8dad-401e50d23921";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -262,7 +270,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -271,16 +279,16 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 var headerEntry = ReadTopic.Markup.Header.First();
 
                 Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), headerEntry.Date.ToUniversalTime());
-                Assert.Equal(true, headerEntry.DateSpecified);
+                Assert.True(headerEntry.DateSpecified);
                 Assert.Equal("C:\\e.ifc", headerEntry.Filename);
                 Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
-                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, headerEntry.isExternal);
-                Assert.Equal(null, headerEntry.Reference);
-                Assert.Equal(true, headerEntry.ShouldSerializeDate());
-                Assert.Equal(true, headerEntry.ShouldSerializeFilename());
-                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Null(headerEntry.IfcSpatialStructureElement);
+                Assert.True(headerEntry.isExternal);
+                Assert.Null(headerEntry.Reference);
+                Assert.True(headerEntry.ShouldSerializeDate());
+                Assert.True(headerEntry.ShouldSerializeFilename());
+                Assert.True(headerEntry.ShouldSerializeIfcProject());
+                Assert.False(headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]
@@ -358,13 +366,13 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "e0b7a3d5-75c6-4a7e-a25e-54cd699d4f0e";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void Markup_HeaderFilesCountCorrect()
             {
-                Assert.Equal(1, ReadTopic.Markup.Header.Count);
+                Assert.Single(ReadTopic.Markup.Header);
             }
 
             [Fact]
@@ -373,16 +381,16 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
                 var headerEntry = ReadTopic.Markup.Header.First();
 
                 Assert.Equal(new DateTime(2015, 06, 09, 06, 39, 06), headerEntry.Date.ToUniversalTime());
-                Assert.Equal(true, headerEntry.DateSpecified);
+                Assert.True(headerEntry.DateSpecified);
                 Assert.Equal("C:\\e.ifc", headerEntry.Filename);
                 Assert.Equal("2SugUv4EX5LAhcVpDp2dUH", headerEntry.IfcProject);
-                Assert.Equal(null, headerEntry.IfcSpatialStructureElement);
-                Assert.Equal(true, headerEntry.isExternal);
-                Assert.Equal(null, headerEntry.Reference);
-                Assert.Equal(true, headerEntry.ShouldSerializeDate());
-                Assert.Equal(true, headerEntry.ShouldSerializeFilename());
-                Assert.Equal(true, headerEntry.ShouldSerializeIfcProject());
-                Assert.Equal(false, headerEntry.ShouldSerializeIfcSpatialStructureElement());
+                Assert.Null(headerEntry.IfcSpatialStructureElement);
+                Assert.True(headerEntry.isExternal);
+                Assert.Null(headerEntry.Reference);
+                Assert.True(headerEntry.ShouldSerializeDate());
+                Assert.True(headerEntry.ShouldSerializeFilename());
+                Assert.True(headerEntry.ShouldSerializeIfcProject());
+                Assert.False(headerEntry.ShouldSerializeIfcSpatialStructureElement());
             }
 
             [Fact]

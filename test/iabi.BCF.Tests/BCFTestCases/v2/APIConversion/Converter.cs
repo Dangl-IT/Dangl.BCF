@@ -1,14 +1,15 @@
 ﻿using System.Linq;
 using iabi.BCF.Converter;
 using Xunit;
+using System.Collections.Generic;
 
 namespace iabi.BCF.Tests.BCFTestCases.v2.APIConversion
 {
     public class Converter
     {
-        private static object[] _testCasesContainer;
+        private static IEnumerable<object[]> _testCasesContainer;
 
-        public static object[] TestCasesContainer
+        public static IEnumerable<object[]> TestCasesContainer
         {
             get { return _testCasesContainer ?? (_testCasesContainer = TestCaseProvider.GetAllContainersFromTestCases().Select(container => new[] {container}).ToArray()); }
         }

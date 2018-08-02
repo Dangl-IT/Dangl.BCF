@@ -16,6 +16,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(ReadContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);
@@ -94,7 +102,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             public void CheckCommentGuid_01()
             {
                 var expected = "4b181afe-c628-4516-9c19-b0dce3a49a47";
-                Assert.True(ReadTopic.Markup.Comment.Any(curr => curr.Guid == expected));
+                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
             }
 
             [Fact]
@@ -180,7 +188,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_ComponentsCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Components.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Components);
             }
 
             [Fact]
@@ -192,7 +200,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             [Fact]
             public void Viewpoint_LinesCountCorrect()
             {
-                Assert.Equal(0, ReadTopic.Viewpoints.First().Lines.Count);
+                Assert.Empty(ReadTopic.Viewpoints.First().Lines);
             }
         }
     }

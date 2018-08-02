@@ -15,6 +15,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV21Container()
+        {
+            var converter = new iabi.BCF.Converter.V2ToV21(ReadContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);
@@ -40,7 +48,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         public void CheckCommentGuid_01()
         {
             var expected = "fc72d354-8534-44b4-9686-f7b9c4a19adf";
-            Assert.True(ReadContainer.Topics.First().Markup.Comment.Any(curr => curr.Guid == expected));
+            Assert.Contains(ReadContainer.Topics.First().Markup.Comment, curr => curr.Guid == expected);
         }
 
         [Fact]
@@ -101,7 +109,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
         [Fact]
         public void Viewpoint_ComponentsCountCorrect()
         {
-            Assert.Equal(1, ReadContainer.Topics.First().Viewpoints.First().Components.Count);
+            Assert.Single(ReadContainer.Topics.First().Viewpoints.First().Components);
         }
 
         [Fact]
@@ -112,9 +120,9 @@ namespace iabi.BCF.Tests.BCFTestCases.v2.Import
             Assert.True(new byte[] {255, 0, 255, 0}.SequenceEqual(component.Color));
             Assert.Equal("1mrgg_O_bBBv_tvdtVwK59", component.IfcGuid);
             Assert.Equal("Allplan", component.OriginatingSystem);
-            Assert.Equal(false, component.Selected);
-            Assert.Equal(true, component.SelectedSpecified);
-            Assert.Equal(true, component.Visible);
+            Assert.False(component.Selected);
+            Assert.True(component.SelectedSpecified);
+            Assert.True(component.Visible);
         }
 
 
