@@ -8,8 +8,6 @@ using iabi.BCF.BCFv2.Schemas;
 using iabi.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory;
 using Xunit;
 
-// TODO ADD ALL TESTS FROM THIS FOLDER TO BCFv2.1
-
 namespace iabi.BCF.Tests.BCFv2
 {
     public class BcFv2ContainerTest
