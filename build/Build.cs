@@ -1,34 +1,26 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Nuke.CoberturaConverter;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using static Nuke.Common.EnvironmentInfo;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.CoberturaConverter.CoberturaConverterTasks;
+using static Nuke.Common.Tools.Git.GitTasks;
 
 class Build : NukeBuild
 {
-    // Console application entry point. Also defines the default target.
     public static int Main() => Execute<Build>(x => x.Compile);
 
-    // Auto-injection fields:
+    [GitVersion] readonly GitVersion GitVersion;
+    [GitRepository] readonly GitRepository GitRepository;
 
-    // [GitVersion] readonly GitVersion GitVersion;
-    // Semantic versioning. Must have 'GitVersion.CommandLine' referenced.
-
-    // [GitRepository] readonly GitRepository GitRepository;
-    // Parses origin, branch name and head from git config.
-
-    // [Parameter] readonly string MyGetApiKey;
-    // Returns command-line arguments and environment variables.
-
-    // [Solution] readonly Solution Solution;
-    // Provides access to the structure of the solution.
+    [Parameter] readonly string ProGetSource;
+    [Parameter] readonly string ProGetApiKey;
 
     Target Clean => _ => _
         .Executes(() =>
@@ -48,7 +40,16 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            DotNetBuild(s => DefaultDotNetBuild);
+            DotNetBuild(s => DefaultDotNetBuild
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetAssemblyVersion($"{GitVersion.Major}.{GitVersion.Minor}.{GitVersion.Patch}.0"));
+        });
+
+    Target Pack => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            DotNetPack(s => DefaultDotNetPack);
         });
 
     Target Coverage => _ => _
@@ -75,5 +76,28 @@ class Build : NukeBuild
             await OpenCoverToCobertura(x => x
                 .SetInputFile(OutputDirectory / "OpenCover.coverageresults")
                 .SetOutputFile(OutputDirectory / "Cobertura.coverageresults"));
+        });
+
+    Target Push => _ => _
+        .DependsOn(Pack)
+        .Requires(() => ProGetSource)
+        .Requires(() => ProGetApiKey)
+        .Executes(() =>
+        {
+            GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
+                .Where(x => !x.EndsWith("symbols.nupkg"))
+                .ForEach(x =>
+                {
+                    DotNetNuGetPush(s => s
+                        .SetTargetPath(x)
+                        .SetSource(ProGetSource)
+                        .SetApiKey(ProGetApiKey));
+
+                    if (GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
+                    {
+                        Git($"tag {GitVersion.NuGetVersion}");
+                        Git("push --tags");
+                    }
+                });
         });
 }
