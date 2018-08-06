@@ -124,7 +124,7 @@ namespace iabi.BCF.Tests
             }
         }
 
-        private static Stream GetResourceStreamFromResourcePath(string resourcePath)
+        public static Stream GetResourceStreamFromResourcePath(string resourcePath)
         {
             var assembly = typeof(TestCaseResourceFactory).GetTypeInfo().Assembly;
             var resourceStream = assembly.GetManifestResourceStream(resourcePath);
