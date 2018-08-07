@@ -437,6 +437,10 @@ namespace iabi.BCF.BCFv21
             {
                 foreach (var internalFile in topic.Markup.Header.Where(h => !h.isExternal))
                 {
+                    if (internalFile.Reference == null)
+                    {
+                        continue;
+                    }
                     var filePathInArchive = GetAbsolutePath(topicId, internalFile.Reference);
                     var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
                     // Only append if not known already
