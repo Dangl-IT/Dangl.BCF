@@ -230,7 +230,7 @@ namespace iabi.BCF.Converter
         {
             var ReturnObject = new component_GET();
             ReturnObject.authoring_tool_id = GivenComponent.AuthoringToolId;
-            ReturnObject.color = GivenComponent.Color == null ? null : BitConverter.ToString(GivenComponent.Color).Replace("-", "");
+            ReturnObject.color = GivenComponent.Color.ToRgbHexColorString();
             ReturnObject.ifc_guid = GivenComponent.IfcGuid;
             ReturnObject.originating_system = GivenComponent.OriginatingSystem;
             ReturnObject.selected = GivenComponent.SelectedSpecified && GivenComponent.Selected;

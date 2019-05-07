@@ -504,7 +504,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             Assert.Equal(expectedComment.ModifiedDate, actualComment.ModifiedDate);
             Assert.Equal(expectedComment.ModifiedDateSpecified, actualComment.ModifiedDateSpecified);
 
-            if (expectedComment.ShouldSerializeViewpoint())
+            if (expectedComment.ShouldSerializeViewpoint() && expectedComment.Viewpoint.Guid != null)
             {
                 Assert.True(actualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
                 Assert.Equal(expectedComment.Viewpoint.Guid, actualComment.Viewpoint.Guid);

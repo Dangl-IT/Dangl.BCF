@@ -1,28 +1,28 @@
-﻿using System;
+﻿using iabi.BCF.BCFv2;
 using System.Collections.Generic;
 using System.Linq;
-using iabi.BCF.BCFv21;
 
 namespace iabi.BCF.Converter
 {
-    public class V2ToV21
+    public class V21ToV2
     {
-        private readonly BCFv2.BCFv2Container _source;
-        private BCFv21Container _destination;
+        private readonly BCFv21.BCFv21Container _source;
+        private BCFv2Container _destination;
 
-        public V2ToV21(BCFv2.BCFv2Container source)
+        public V21ToV2(BCFv21.BCFv21Container source)
         {
             _source = source;
         }
 
-        public BCFv21.BCFv21Container Convert()
+        // TODO ADD ROUNDTRIP TESTS TO INTEGRATION TESTS
+        public BCFv2Container Convert()
         {
             if (_destination != null)
             {
                 return _destination;
             }
 
-            _destination = new BCFv21Container();
+            _destination = new BCFv2Container();
 
             GetBcfProject();
             GetFileAttachments();
@@ -32,16 +32,17 @@ namespace iabi.BCF.Converter
             return _destination;
         }
 
+
         private void GetBcfProject()
         {
-            _destination.BcfProject = new BCFv21.Schemas.ProjectExtension
+            _destination.BcfProject = new BCFv2.Schemas.ProjectExtension
             {
                 ExtensionSchema = _source.BcfProject?.ExtensionSchema
             };
 
             if (_source.BcfProject?.ShouldSerializeProject() == true)
             {
-                _destination.BcfProject.Project = new BCFv21.Schemas.Project
+                _destination.BcfProject.Project = new BCFv2.Schemas.Project
                 {
                     Name = _source.BcfProject.Project.Name,
                     ProjectId = _source.BcfProject.Project.ProjectId
@@ -108,9 +109,9 @@ namespace iabi.BCF.Converter
             }
         }
 
-        private void GetSingleTopic(BCFv2.BCFTopic sourceTopic)
+        private void GetSingleTopic(BCFv21.BCFTopic sourceTopic)
         {
-            var topic = new BCFv21.BCFTopic();
+            var topic = new BCFv2.BCFTopic();
 
             topic.SnippetData = sourceTopic.SnippetData;
 
@@ -121,14 +122,14 @@ namespace iabi.BCF.Converter
             _destination.Topics.Add(topic);
         }
 
-        private BCFv21.Schemas.Markup GetMarkup(BCFv2.BCFTopic sourceTopic)
+        private BCFv2.Schemas.Markup GetMarkup(BCFv21.BCFTopic sourceTopic)
         {
             if (sourceTopic.Markup == null)
             {
                 return null;
             }
 
-            var markup = new BCFv21.Schemas.Markup();
+            var markup = new BCFv2.Schemas.Markup();
 
             GetMarkupHeader(markup, sourceTopic);
             GetMarkupComment(markup, sourceTopic);
@@ -138,7 +139,7 @@ namespace iabi.BCF.Converter
             return markup;
         }
 
-        private void GetMarkupHeader(BCFv21.Schemas.Markup markup, BCFv2.BCFTopic sourceTopic)
+        private void GetMarkupHeader(BCFv2.Schemas.Markup markup, BCFv21.BCFTopic sourceTopic)
         {
             if (!sourceTopic.Markup.ShouldSerializeHeader())
             {
@@ -146,7 +147,7 @@ namespace iabi.BCF.Converter
             }
 
             markup.Header = sourceTopic.Markup.Header
-                .Select(source => new BCFv21.Schemas.HeaderFile
+                .Select(source => new BCFv2.Schemas.HeaderFile
                 {
                     Date = source.Date,
                     Filename = source.Filename,
@@ -158,7 +159,7 @@ namespace iabi.BCF.Converter
                 .ToList();
         }
 
-        private void GetMarkupComment(BCFv21.Schemas.Markup markup, BCFv2.BCFTopic sourceTopic)
+        private void GetMarkupComment(BCFv2.Schemas.Markup markup, BCFv21.BCFTopic sourceTopic)
         {
             if (!sourceTopic.Markup.ShouldSerializeComment())
             {
@@ -166,7 +167,7 @@ namespace iabi.BCF.Converter
             }
 
             markup.Comment = sourceTopic.Markup.Comment
-                .Select(source => new BCFv21.Schemas.Comment
+                .Select(source => new BCFv2.Schemas.Comment
                 {
                     Author = source.Author,
                     Comment1 = source.Comment1,
@@ -176,15 +177,15 @@ namespace iabi.BCF.Converter
                     ModifiedDate = source.ModifiedDate,
                     Viewpoint = source.Viewpoint == null
                                 ? null
-                                : new BCFv21.Schemas.CommentViewpoint
-                        {
-                            Guid = source.Viewpoint.Guid
-                        }
+                                : new BCFv2.Schemas.CommentViewpoint
+                                {
+                                    Guid = source.Viewpoint.Guid
+                                }
                 })
                 .ToList();
         }
 
-        private void GetMarkupTopic(BCFv21.Schemas.Markup markup, BCFv2.BCFTopic sourceTopic)
+        private void GetMarkupTopic(BCFv2.Schemas.Markup markup, BCFv21.BCFTopic sourceTopic)
         {
             if (!sourceTopic.Markup.ShouldSerializeTopic())
             {
@@ -193,10 +194,10 @@ namespace iabi.BCF.Converter
 
             var srcTopic = sourceTopic.Markup.Topic;
 
-            markup.Topic = new BCFv21.Schemas.Topic();
+            markup.Topic = new BCFv2.Schemas.Topic();
 
             {
-                
+
                 if (srcTopic.ShouldSerializeAssignedTo())
                 {
                     markup.Topic.AssignedTo = srcTopic.AssignedTo;
@@ -205,7 +206,7 @@ namespace iabi.BCF.Converter
                 {
                     markup.Topic.BimSnippet = srcTopic.BimSnippet == null
                         ? null
-                        : new BCFv21.Schemas.BimSnippet
+                        : new BCFv2.Schemas.BimSnippet
                         {
                             isExternal = srcTopic.BimSnippet.isExternal,
                             Reference = srcTopic.BimSnippet.Reference,
@@ -225,10 +226,11 @@ namespace iabi.BCF.Converter
                 {
                     markup.Topic.Description = srcTopic.Description;
                 }
-                if (srcTopic.ShouldSerializeDocumentReferences())
+
+                if (srcTopic.ShouldSerializeDocumentReference())
                 {
-                    markup.Topic.DocumentReference = srcTopic.DocumentReferences?
-                        .Select(src => new BCFv21.Schemas.TopicDocumentReference
+                    markup.Topic.DocumentReferences = srcTopic.DocumentReference
+                        .Select(src => new BCFv2.Schemas.TopicDocumentReferences
                         {
                             Description = src.Description,
                             Guid = src.Guid,
@@ -257,18 +259,18 @@ namespace iabi.BCF.Converter
                 {
                     markup.Topic.Priority = srcTopic.Priority;
                 }
-                if (srcTopic.ShouldSerializeReferenceLink())
+                if (srcTopic.ShouldSerializeReferenceLink() && srcTopic.ReferenceLink.Any())
                 {
-                    markup.Topic.ReferenceLink = srcTopic.ReferenceLink == null ? null : new List<string> {srcTopic.ReferenceLink};
+                    markup.Topic.ReferenceLink = srcTopic.ReferenceLink.First();
                 }
                 if (srcTopic.ShouldSerializeTitle())
                 {
                     markup.Topic.Title = srcTopic.Title;
                 }
-                if (srcTopic.ShouldSerializeRelatedTopics())
+                if (srcTopic.ShouldSerializeRelatedTopic())
                 {
-                    markup.Topic.RelatedTopic = srcTopic.RelatedTopics?
-                        .Select(src => new BCFv21.Schemas.TopicRelatedTopic
+                    markup.Topic.RelatedTopics = srcTopic.RelatedTopic?
+                        .Select(src => new BCFv2.Schemas.TopicRelatedTopics
                         {
                             Guid = src.Guid
                         })
@@ -285,25 +287,27 @@ namespace iabi.BCF.Converter
             };
         }
 
-        private void GetMarkupViewpoints(BCFv21.Schemas.Markup markup, BCFv2.BCFTopic sourceTopic)
+        private void GetMarkupViewpoints(BCFv2.Schemas.Markup markup, BCFv21.BCFTopic sourceTopic)
         {
             if (!sourceTopic.Markup.ShouldSerializeViewpoints())
             {
                 return;
             }
 
+            // The source viewpoints have an 'Index' property that could be used
+            // for ordering. However, this isn't often used in practice, so it's
+            // safer to simply use the same ordering as in the original input file
             markup.Viewpoints = sourceTopic.Markup.Viewpoints
-                .Select((source, index) => new BCFv21.Schemas.ViewPoint
+                .Select((source, index) => new BCFv2.Schemas.ViewPoint
                 {
                     Guid = source.Guid,
-                    Index = index,
                     Snapshot = source.Snapshot,
                     Viewpoint = source.Viewpoint
                 })
                 .ToList();
         }
 
-        private void GetTopicViewpoints(BCFv21.BCFTopic topic, BCFv2.BCFTopic sourceTopic)
+        private void GetTopicViewpoints(BCFv2.BCFTopic topic, BCFv21.BCFTopic sourceTopic)
         {
             if (sourceTopic.Viewpoints?.Any() != true)
             {
@@ -319,7 +323,7 @@ namespace iabi.BCF.Converter
             {
                 foreach (var sourceBitmap in sourceTopic.ViewpointBitmaps)
                 {
-                    topic.ViewpointBitmaps.Add(topic.Viewpoints.Single(vp => vp.Guid == sourceBitmap.Key.GUID), sourceBitmap.Value.ToList());
+                    topic.ViewpointBitmaps.Add(topic.Viewpoints.Single(vp => vp.GUID == sourceBitmap.Key.Guid), sourceBitmap.Value.ToList());
                 }
             }
 
@@ -332,23 +336,23 @@ namespace iabi.BCF.Converter
             }
         }
 
-        private void GetSingleTopicViewpoint(BCFv21.BCFTopic topic, BCFv2.Schemas.VisualizationInfo sourceViewpoint)
+        private void GetSingleTopicViewpoint(BCFv2.BCFTopic topic, BCFv21.Schemas.VisualizationInfo sourceViewpoint)
         {
-            var viewpoint = new BCFv21.Schemas.VisualizationInfo();
+            var viewpoint = new BCFv2.Schemas.VisualizationInfo();
 
-            if (sourceViewpoint.ShouldSerializeBitmaps())
+            if (sourceViewpoint.ShouldSerializeBitmap())
             {
-                viewpoint.Bitmap = sourceViewpoint.Bitmaps
-                    .Select(bitmap => new BCFv21.Schemas.VisualizationInfoBitmap
+                viewpoint.Bitmaps = sourceViewpoint.Bitmap
+                    .Select(bitmap => new BCFv2.Schemas.VisualizationInfoBitmaps
                     {
                         Height = bitmap.Height,
-                        Location = GetV21PointFromV2(bitmap.Location),
-                        Normal = GetV21DirectionFromV2(bitmap.Normal),
-                        Up = GetV21DirectionFromV2(bitmap.Up),
+                        Location = GetV2PointFromV21(bitmap.Location),
+                        Normal = GetV2DirectionFromV21(bitmap.Normal),
+                        Up = GetV2DirectionFromV21(bitmap.Up),
                         Reference = bitmap.Reference,
-                        Bitmap = bitmap.Bitmap == BCFv2.Schemas.BitmapFormat.JPG
-                                ? BCFv21.Schemas.BitmapFormat.JPG
-                                : BCFv21.Schemas.BitmapFormat.PNG
+                        Bitmap = bitmap.Bitmap == BCFv21.Schemas.BitmapFormat.JPG
+                                ? BCFv2.Schemas.BitmapFormat.JPG
+                                : BCFv2.Schemas.BitmapFormat.PNG
                     })
                     .ToList();
             }
@@ -356,10 +360,10 @@ namespace iabi.BCF.Converter
             if (sourceViewpoint.ShouldSerializeClippingPlanes())
             {
                 viewpoint.ClippingPlanes = sourceViewpoint.ClippingPlanes
-                    .Select(plane => new BCFv21.Schemas.ClippingPlane
+                    .Select(plane => new BCFv2.Schemas.ClippingPlane
                     {
-                        Direction = GetV21DirectionFromV2(plane.Direction),
-                        Location = GetV21PointFromV2(plane.Location)
+                        Direction = GetV2DirectionFromV21(plane.Direction),
+                        Location = GetV2PointFromV21(plane.Location)
                     })
                     .ToList();
             }
@@ -372,88 +376,107 @@ namespace iabi.BCF.Converter
             if (sourceViewpoint.ShouldSerializeLines())
             {
                 viewpoint.Lines = sourceViewpoint.Lines
-                    .Select(line => new BCFv21.Schemas.Line
+                    .Select(line => new BCFv2.Schemas.Line
                     {
-                        EndPoint = GetV21PointFromV2(line.EndPoint),
-                        StartPoint = GetV21PointFromV2(line.StartPoint)
+                        EndPoint = GetV2PointFromV21(line.EndPoint),
+                        StartPoint = GetV2PointFromV21(line.StartPoint)
                     })
                     .ToList();
             }
 
             if (sourceViewpoint.ShouldSerializeOrthogonalCamera())
             {
-                viewpoint.OrthogonalCamera = new BCFv21.Schemas.OrthogonalCamera
+                viewpoint.OrthogonalCamera = new BCFv2.Schemas.OrthogonalCamera
                 {
-                    CameraDirection = GetV21DirectionFromV2(sourceViewpoint.OrthogonalCamera.CameraDirection),
-                    CameraUpVector = GetV21DirectionFromV2(sourceViewpoint.OrthogonalCamera.CameraUpVector),
-                    CameraViewPoint = GetV21PointFromV2(sourceViewpoint.OrthogonalCamera.CameraViewPoint),
+                    CameraDirection = GetV2DirectionFromV21(sourceViewpoint.OrthogonalCamera.CameraDirection),
+                    CameraUpVector = GetV2DirectionFromV21(sourceViewpoint.OrthogonalCamera.CameraUpVector),
+                    CameraViewPoint = GetV2PointFromV21(sourceViewpoint.OrthogonalCamera.CameraViewPoint),
                     ViewToWorldScale = sourceViewpoint.OrthogonalCamera.ViewToWorldScale
                 };
             }
 
             if (sourceViewpoint.ShouldSerializePerspectiveCamera())
             {
-                viewpoint.PerspectiveCamera = new BCFv21.Schemas.PerspectiveCamera
+                viewpoint.PerspectiveCamera = new BCFv2.Schemas.PerspectiveCamera
                 {
-                    CameraDirection = GetV21DirectionFromV2(sourceViewpoint.PerspectiveCamera.CameraDirection),
-                    CameraUpVector = GetV21DirectionFromV2(sourceViewpoint.PerspectiveCamera.CameraUpVector),
-                    CameraViewPoint = GetV21PointFromV2(sourceViewpoint.PerspectiveCamera.CameraViewPoint),
+                    CameraDirection = GetV2DirectionFromV21(sourceViewpoint.PerspectiveCamera.CameraDirection),
+                    CameraUpVector = GetV2DirectionFromV21(sourceViewpoint.PerspectiveCamera.CameraUpVector),
+                    CameraViewPoint = GetV2PointFromV21(sourceViewpoint.PerspectiveCamera.CameraViewPoint),
                     FieldOfView = sourceViewpoint.PerspectiveCamera.FieldOfView
                 };
             }
 
-            viewpoint.Guid = sourceViewpoint.GUID;
+            viewpoint.GUID = sourceViewpoint.Guid;
 
             topic.Viewpoints.Add(viewpoint);
         }
 
-        private static BCFv21.Schemas.Components GetComponentsForViewpoint(BCFv2.Schemas.VisualizationInfo sourceViewpoint)
+        private static List<BCFv2.Schemas.Component> GetComponentsForViewpoint(BCFv21.Schemas.VisualizationInfo sourceViewpoint)
         {
-            return new BCFv21.Schemas.Components
+            var components = new List<BCFv2.Schemas.Component>();
+
+            // The 'ViewSetupHints' property is ignored
+
+            if (!sourceViewpoint.ShouldSerializeComponents())
             {
-                Coloring = sourceViewpoint.Components
-                    .Where(comp => comp.Color != null)
-                    .GroupBy(comp => comp.Color.ToRgbHexColorString())
-                    .Select(comp => new BCFv21.Schemas.ComponentColoringColor
+                return components;
+            }
+
+            if (sourceViewpoint.Components.ShouldSerializeColoring())
+            {
+                var srcColoring = sourceViewpoint.Components.Coloring;
+                foreach (var srcColor in srcColoring)
+                {
+                    if (srcColor.ShouldSerializeComponent())
                     {
-                        Color = comp.Key,
-                        Component = comp.Select(c => new BCFv21.Schemas.Component
+                        components.AddRange(srcColor.Component.Select(c => new BCFv2.Schemas.Component
                         {
                             AuthoringToolId = c.AuthoringToolId,
+                            Color = srcColor.Color.ToByteArrayFromHexRgbColor(),
                             IfcGuid = c.IfcGuid,
-                            OriginatingSystem = c.OriginatingSystem
-                        })
-                        .ToList()
-                    })
-                    .ToList(),
-                Selection = sourceViewpoint.Components
-                    .Where(comp => comp.ShouldSerializeSelected() && comp.Selected)
-                    .Select(comp => new BCFv21.Schemas.Component
-                    {
-                        AuthoringToolId = comp.AuthoringToolId,
-                        IfcGuid = comp.IfcGuid,
-                        OriginatingSystem = comp.OriginatingSystem
-                    })
-                    .ToList(),
-                Visibility = new BCFv21.Schemas.ComponentVisibility
-                {
-                    DefaultVisibility = true,
-                    Exceptions = sourceViewpoint.Components
-                        .Where(comp => comp.ShouldSerializeVisible() && !comp.Visible)
-                        .Select(comp => new BCFv21.Schemas.Component
-                        {
-                            AuthoringToolId = comp.AuthoringToolId,
-                            IfcGuid = comp.IfcGuid,
-                            OriginatingSystem = comp.OriginatingSystem
-                        })
-                        .ToList()
+                            OriginatingSystem = c.OriginatingSystem,
+                            Visible = true,
+                            Selected = false
+                        }));
+                    }
                 }
-            };
+            }
+
+            if (sourceViewpoint.Components.ShouldSerializeSelection())
+            {
+                var srcSelection = sourceViewpoint.Components.Selection;
+                components.AddRange(srcSelection.Select(s => new BCFv2.Schemas.Component
+                {
+                    AuthoringToolId = s.AuthoringToolId,
+                    IfcGuid = s.IfcGuid,
+                    OriginatingSystem = s.OriginatingSystem,
+                    Selected = true,
+                    Visible = true
+                }));
+            }
+
+            if (sourceViewpoint.Components.ShouldSerializeVisibility())
+            {
+                var srcVisibility = sourceViewpoint.Components.Visibility;
+                if (srcVisibility.DefaultVisibility && srcVisibility.ShouldSerializeExceptions())
+                {
+                    components.AddRange(srcVisibility.Exceptions.Select(e => new BCFv2.Schemas.Component
+                    {
+                        AuthoringToolId = e.AuthoringToolId,
+                        IfcGuid = e.IfcGuid,
+                        OriginatingSystem = e.OriginatingSystem,
+                        Visible = true,
+                        Selected = false
+                    }));
+                }
+            }
+
+            return components;
         }
 
-        private static BCFv21.Schemas.Point GetV21PointFromV2(BCFv2.Schemas.Point source)
+        private static BCFv2.Schemas.Point GetV2PointFromV21(BCFv21.Schemas.Point source)
         {
-            return new BCFv21.Schemas.Point
+            return new BCFv2.Schemas.Point
             {
                 X = source.X,
                 Y = source.Y,
@@ -461,9 +484,9 @@ namespace iabi.BCF.Converter
             };
         }
 
-        private static BCFv21.Schemas.Direction GetV21DirectionFromV2(BCFv2.Schemas.Direction source)
+        private static BCFv2.Schemas.Direction GetV2DirectionFromV21(BCFv21.Schemas.Direction source)
         {
-            return new BCFv21.Schemas.Direction
+            return new BCFv2.Schemas.Direction
             {
                 X = source.X,
                 Y = source.Y,
