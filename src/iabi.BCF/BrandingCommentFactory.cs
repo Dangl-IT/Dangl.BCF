@@ -11,9 +11,7 @@ namespace iabi.BCF
 
         public static string GetBrandingComment()
         {
-            var bcfToolsVersion = typeof(BrandingCommentFactory).GetTypeInfo().Assembly.GetName().Version;
-            string version = $"V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision}";
-            return $"Created with the iabi.BCF library, {version} at {DateTime.Now:dd.MM.yyyy HH:mm}. Visit {IABI_BRANDING_URL} to find out more.";
+            return $"Created with the iabi.BCF library, Version {FileVersionProvider.NuGetVersion} at {DateTime.Now:dd.MM.yyyy HH:mm}. Visit {IABI_BRANDING_URL} to find out more.";
         }
 
         public static string AppendBrandingCommentToTopLevelXml(string xmlInput)

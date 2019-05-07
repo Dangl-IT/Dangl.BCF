@@ -14,12 +14,7 @@ namespace iabi.BCF.Tests
             public void HasCorrectVersion()
             {
                 var commentText = BrandingCommentFactory.GetBrandingComment();
-                var expectedVersion = typeof(BrandingCommentFactoryTests).GetTypeInfo().Assembly.GetReferencedAssemblies()
-                    .First(loadedAssembly => loadedAssembly.Name == "iabi.BCF")
-                    .Version;
-                // Just making sure that it's not reporting a "1.0.0.0" version for the assembly. Probably a little too eager this test=)
-                Assert.False(expectedVersion.Major == 1 && expectedVersion.Minor == 0 && expectedVersion.Build == 0);
-                var expectedVersionString = $"V{expectedVersion.Major}.{expectedVersion.Minor}.{expectedVersion.Revision}";
+                var expectedVersionString = FileVersionProvider.NuGetVersion;
                 Assert.Contains(expectedVersionString, commentText);
             }
 
