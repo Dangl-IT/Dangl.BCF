@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>1.2.1</VersionPrefix>
-    <TargetFrameworks>net461;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net461;netstandard1.3;netstandard2.0</TargetFrameworks>
     <AssemblyName>iabi.BCF</AssemblyName>
     <PackageId>iabi.BCF</PackageId>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.3' ">1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <PackageIconUrl>http://iabi.eu/wp-content/uploads/2014/10/Favicon_iabi.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -20,7 +20,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.IO.Compression" />

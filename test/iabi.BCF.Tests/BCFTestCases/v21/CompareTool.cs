@@ -42,7 +42,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
                         {
                             var readXml = streamReader.ReadToEnd();
                             var bcfToolsVersion = typeof(BrandingCommentFactory).GetTypeInfo().Assembly.GetName().Version;
-                            var expectedStart = $"Created with the iabi.BCF library, V{bcfToolsVersion.Major}.{bcfToolsVersion.Minor}.{bcfToolsVersion.Revision} at ";
+                            var expectedStart = $"Created with the iabi.BCF library, Version {FileVersionProvider.NuGetVersion} at ";
                             var expectedEnd = $". Visit {BrandingCommentFactory.IABI_BRANDING_URL} to find out more.";
                             Assert.Contains("<!--" + expectedStart, readXml);
                             Assert.Contains(expectedEnd + "-->", readXml);
@@ -504,7 +504,7 @@ namespace iabi.BCF.Tests.BCFTestCases.v21
             Assert.Equal(expectedComment.ModifiedDate, actualComment.ModifiedDate);
             Assert.Equal(expectedComment.ModifiedDateSpecified, actualComment.ModifiedDateSpecified);
 
-            if (expectedComment.ShouldSerializeViewpoint())
+            if (expectedComment.ShouldSerializeViewpoint() && expectedComment.Viewpoint.Guid != null)
             {
                 Assert.True(actualComment.ShouldSerializeViewpoint(), "No match in comment: Viewpoint");
                 Assert.Equal(expectedComment.Viewpoint.Guid, actualComment.Viewpoint.Guid);

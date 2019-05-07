@@ -15,6 +15,14 @@ namespace iabi.BCF.Tests.BCFTestCases.v21.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV2Container()
+        {
+            var converter = new iabi.BCF.Converter.V21ToV2(ReadContainer);
+            var downgradedContainer = converter.Convert();
+            Assert.NotNull(downgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);
