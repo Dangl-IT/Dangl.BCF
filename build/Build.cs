@@ -71,8 +71,9 @@ class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(async () =>
         {
+            var dotNetPath = ToolPathResolver.GetPathExecutable("dotnet.exe");
             OpenConver($"-register:user " +
-                $"-target:dotnet.exe " +
+                $"-target:\"{dotNetPath}\" " +
                 $"-targetargs:\"{$"test --no-build --test-adapter-path:. --logger:xunit;LogFilePath=\"{OutputDirectory / "testresult.xml"}\""}\" " +
                 $"-targetdir:\"{RootDirectory / "test" / "iabi.BCF.Tests"}\" " +
                 $"-returntargetcode " +
