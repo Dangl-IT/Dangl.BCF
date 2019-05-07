@@ -64,7 +64,10 @@ class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            DotNetPack(s => s.SetOutputDirectory(OutputDirectory));
+            DotNetPack(s => s
+                .SetVersion(GitVersion.NuGetVersion)
+                .SetOutputDirectory(OutputDirectory)
+                .EnableNoBuild());
         });
 
     Target Coverage => _ => _
