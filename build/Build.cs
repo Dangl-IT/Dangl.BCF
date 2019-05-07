@@ -67,6 +67,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetPack(s => s
+                .SetConfiguration(Configuration)
                 .SetVersion(GitVersion.NuGetVersion)
                 .SetOutputDirectory(OutputDirectory)
                 .EnableNoBuild());
