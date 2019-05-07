@@ -12,6 +12,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.CoberturaConverter.CoberturaConverterTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using Nuke.Common.ProjectModel;
+using System.IO;
 
 class Build : NukeBuild
 {
@@ -29,7 +30,8 @@ class Build : NukeBuild
     [Parameter] readonly string ProGetSource;
     [Parameter] readonly string ProGetApiKey;
 
-    [PackageExecutable("OpenCover", "tools/OpenCover.Console.exe")] Tool OpenConver;
+    [PackageExecutable("JetBrains.dotCover.CommandLineTools", "tools/dotCover.exe")] Tool DotCover;
+    [PackageExecutable("ReportGenerator", "tools/ReportGenerator.exe")] Tool ReportGenerator;
 
     Target Clean => _ => _
         .Executes(() =>
@@ -74,21 +76,44 @@ class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(async () =>
         {
-            var dotNetPath = ToolPathResolver.GetPathExecutable("dotnet.exe");
-            OpenConver($"-register:user " +
-                $"-target:\"{dotNetPath}\" " +
-                $"-targetargs:\"{$"test --no-build --test-adapter-path:. --logger:xunit;LogFilePath=\"{OutputDirectory / "testresult.xml"}\""}\" " +
-                $"-targetdir:\"{RootDirectory / "test" / "iabi.BCF.Tests"}\" " +
-                $"-returntargetcode " +
-                $"-output:{OutputDirectory / "OpenCover.coverageresults"} " +
-                $"-mergeoutput " +
-                $"-oldStyle " +
-                $"-excludebyattribute:System.CodeDom.Compiler.GeneratedCodeAttribute " +
-                $"\"-filter:+[iabi.BCF]* -[*.Tests]* -[*.Tests.*]*\"");
+            var testProjects = new[]
+            {
+                RootDirectory / "test" / "iabi.BCF.Tests"
+            };
+            var dotnetPath = ToolPathResolver.GetPathExecutable("dotnet");
 
-            await OpenCoverToCobertura(x => x
-                .SetInputFile(OutputDirectory / "OpenCover.coverageresults")
-                .SetOutputFile(OutputDirectory / "Cobertura.coverageresults"));
+            for (var i = 0; i < testProjects.Length; i++)
+            {
+                var testProject = testProjects[i];
+
+                /* DotCover */
+                var projectName = Path.GetFileName(testProject);
+                var snapshotIndex = i;
+
+                DotCover($"cover /TargetExecutable=\"{dotnetPath}\" /TargetWorkingDir=\"{testProject}\" " +
+                    $"/TargetArguments=\"test --no-build --test-adapter-path:. \\\"--logger:xunit;LogFilePath={OutputDirectory / projectName}_testresults.xml\\\"\" " +
+                    "/Filters=\"+:iabi.BCF*;-:*Tests*\" " +
+                    "/AttributeFilters=\"System.CodeDom.Compiler.GeneratedCodeAttribute\" " +
+                    $"/Output=\"{OutputDirectory / $"coverage{snapshotIndex:00}.snapshot"}\"");
+            }
+
+            var snapshots = testProjects.Select((t, i) => OutputDirectory / $"coverage{i:00}.snapshot")
+                .Select(p => p.ToString())
+                .Aggregate((c, n) => c + ";" + n);
+
+            DotCover($"merge /Source=\"{snapshots}\" /Output=\"{OutputDirectory / "coverage.snapshot"}\"");
+
+            DotCover($"report /Source=\"{OutputDirectory / "coverage.snapshot"}\" /Output=\"{OutputDirectory / "coverage.xml"}\" /ReportType=\"DetailedXML\"");
+
+            ReportGenerator($"-reports:\"{OutputDirectory / "coverage.xml"}\" -targetdir:\"{OutputDirectory / "CoverageReport"}\"");
+
+            // This is the report in Cobertura format that integrates so nice in Jenkins
+            // dashboard and allows to extract more metrics and set build health based
+            // on coverage readings
+            await DotCoverToCobertura(s => s
+                    .SetInputFile(OutputDirectory / "coverage.xml")
+                    .SetOutputFile(OutputDirectory / "cobertura_coverage.xml"))
+                .ConfigureAwait(false);
         });
 
     Target Push => _ => _
