@@ -11,12 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\**\*" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Resources\Regression\SophieV20.bcfzip" />
-    <None Remove="Resources\Regression\SophieV21.bcf" />
+    <EmbeddedResource Include="Resources\**/*" />
   </ItemGroup>
 
   <ItemGroup>
