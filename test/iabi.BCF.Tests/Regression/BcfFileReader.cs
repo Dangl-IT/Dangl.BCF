@@ -26,5 +26,15 @@ namespace iabi.BCF.Tests.Regression
                 Assert.NotNull(container);
             }
         }
+
+        [Fact]
+        public void CanReadOpenProjectPlayground20190510()
+        {
+            using (var bcfStream = TestCaseResourceFactory.GetResourceStreamFromResourcePath("iabi.BCF.Tests.Resources.Regression.OpenProjectPlayground_20190510.bcf"))
+            {
+                var container = BCF.BCFv21.BCFv21Container.ReadStream(bcfStream);
+                Assert.NotNull(container);
+            }
+        }
     }
 }

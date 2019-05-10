@@ -442,9 +442,9 @@ namespace iabi.BCF.BCFv21
                         continue;
                     }
                     var filePathInArchive = GetAbsolutePath(topicId, internalFile.Reference);
-                    var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
-                    // Only append if not known already
-                    if (!container.FileAttachments.ContainsKey(entry.Name))
+                    var entry = archive.Entries.FirstOrDefault(e => e.FullName == filePathInArchive);
+                    // Only append if not known already and the file is actually present
+                    if (entry != null && !container.FileAttachments.ContainsKey(entry.Name))
                     {
                         using (var memStream = new MemoryStream())
                         {
@@ -460,9 +460,9 @@ namespace iabi.BCF.BCFv21
                 foreach (var internalDocument in topic.Markup.Topic.DocumentReference.Where(d => !d.isExternal))
                 {
                     var filePathInArchive = GetAbsolutePath(topicId, internalDocument.ReferencedDocument);
-                    var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
-                    // Only append if not known already
-                    if (!container.FileAttachments.ContainsKey(entry.Name))
+                    var entry = archive.Entries.FirstOrDefault(e => e.FullName == filePathInArchive);
+                    // Only append if not known already and the file is actually present
+                    if (entry != null && !container.FileAttachments.ContainsKey(entry.Name))
                     {
                         using (var memStream = new MemoryStream())
                         {
