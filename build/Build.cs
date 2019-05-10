@@ -30,6 +30,7 @@ class Build : NukeBuild
 
     [Parameter] readonly string ProGetSource;
     [Parameter] readonly string ProGetApiKey;
+    [Parameter] readonly string NuGetApiKey;
 
     [PackageExecutable("JetBrains.dotCover.CommandLineTools", "tools/dotCover.exe")] Tool DotCover;
     [PackageExecutable("ReportGenerator", "tools/ReportGenerator.exe")] Tool ReportGenerator;
@@ -148,6 +149,7 @@ namespace iabi.BCF
         .DependsOn(Pack)
         .Requires(() => ProGetSource)
         .Requires(() => ProGetApiKey)
+        .Requires(() => NuGetApiKey)
         .Executes(() =>
         {
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
@@ -163,6 +165,11 @@ namespace iabi.BCF
                     {
                         Git($"tag {GitVersion.NuGetVersion}");
                         Git("push --tags");
+
+                        DotNetNuGetPush(s => s
+                           .SetTargetPath(x)
+                           .SetSource("https://api.nuget.org/v3/index.json")
+                           .SetApiKey(NuGetApiKey));
                     }
                 });
         });

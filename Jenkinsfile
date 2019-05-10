@@ -8,6 +8,7 @@ pipeline {
     environment {
         ProGetSource = 'https://proget.iabi.biz/nuget/Default'
         ProGetApiKey = credentials('ProGetApiKey')
+		NuGetApiKey = credentials('NuGetApiKeyIabiBcf')
     }
     stages {
        stage ('Test') {
