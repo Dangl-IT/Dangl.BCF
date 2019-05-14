@@ -439,9 +439,9 @@ namespace iabi.BCF.BCFv2
                 foreach (var internalFile in topic.Markup.Header.Where(h => !h.isExternal))
                 {
                     var filePathInArchive = GetAbsolutePath(topicId, internalFile.Reference);
-                    var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
-                    // Only append if not known already
-                    if (!container.FileAttachments.ContainsKey(entry.Name))
+                    var entry = archive.Entries.FirstOrDefault(e => e.FullName == filePathInArchive);
+                    // Only append if not known already and file is present
+                    if (entry != null && !container.FileAttachments.ContainsKey(entry.Name))
                     {
                         using (var memStream = new MemoryStream())
                         {
@@ -457,9 +457,9 @@ namespace iabi.BCF.BCFv2
                 foreach (var internalDocument in topic.Markup.Topic.DocumentReferences.Where(d => !d.isExternal))
                 {
                     var filePathInArchive = GetAbsolutePath(topicId, internalDocument.ReferencedDocument);
-                    var entry = archive.Entries.First(e => e.FullName == filePathInArchive);
-                    // Only append if not known already
-                    if (!container.FileAttachments.ContainsKey(entry.Name))
+                    var entry = archive.Entries.FirstOrDefault(e => e.FullName == filePathInArchive);
+                    // Only append if not known already and file is present
+                    if (entry != null && !container.FileAttachments.ContainsKey(entry.Name))
                     {
                         using (var memStream = new MemoryStream())
                         {
