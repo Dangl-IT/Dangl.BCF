@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
       - name: Coverage
-        run: ./build.ps1 Coverage
+        run: ./build.ps1 Coverage -Configuration Debug
       - name: Archive Coverage Report
         uses: actions/upload-artifact@v2
         with:
