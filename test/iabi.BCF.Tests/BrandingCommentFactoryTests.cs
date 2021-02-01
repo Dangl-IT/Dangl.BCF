@@ -29,7 +29,7 @@ namespace iabi.BCF.Tests
                 var extractedDateTime = regexMatch.Value;
                 var parsedDateTime = DateTime.Parse(extractedDateTime);
                 var timeDifference = Math.Abs((currentDateTime - parsedDateTime).TotalSeconds);
-                Assert.True(timeDifference < 600);  // should be within ten minutes of eachother, accounts for slow CI server environments
+                Assert.True(timeDifference < 600, $"Time difference is {timeDifference} seconds, current time: {currentDateTime:dd.MM.yyyy HH:mm}, actual: {parsedDateTime:dd.MM.yyyy HH:mm}");  // should be within ten minutes of eachother, accounts for slow CI server environments
                                                     // and the fact that the actual date is only given with minutes and has no seconds part
             }
 
