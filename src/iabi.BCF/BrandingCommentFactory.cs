@@ -7,11 +7,11 @@ namespace iabi.BCF
 {
     public class BrandingCommentFactory
     {
-        public const string IABI_BRANDING_URL = "http://iabi.eu";
+        public const string IABI_BRANDING_URL = "https://iabi.eu";
 
         public static string GetBrandingComment()
         {
-            return $"Created with the iabi.BCF library, Version {FileVersionProvider.NuGetVersion} at {DateTime.Now:dd.MM.yyyy HH:mm}. Visit {IABI_BRANDING_URL} to find out more.";
+            return $"Created with the iabi.BCF library, Version {FileVersionProvider.NuGetVersion} at {DateTime.UtcNow:dd.MM.yyyy HH:mm}. Visit {IABI_BRANDING_URL} to find out more.";
         }
 
         public static string AppendBrandingCommentToTopLevelXml(string xmlInput)
