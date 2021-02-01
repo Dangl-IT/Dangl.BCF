@@ -185,7 +185,7 @@ namespace iabi.BCF
         .DependsOn(Push)
         .Requires(() => GitHubAuthenticationToken)
         .OnlyWhenDynamic(() => GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
-        .Executes<Task>(async () =>
+        .Executes(async () =>
         {
             var releaseTag = $"v{GitVersion.MajorMinorPatch}";
 
