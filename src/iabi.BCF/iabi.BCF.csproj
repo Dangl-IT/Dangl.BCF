@@ -10,6 +10,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <PackageIconUrl>http://iabi.eu/wp-content/uploads/2014/10/Favicon_iabi.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/iabiev/iabi.BCF</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

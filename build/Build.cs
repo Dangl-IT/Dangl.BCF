@@ -1,19 +1,25 @@
-﻿using System.Linq;
-using Nuke.CoberturaConverter;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Nuke.Common;
 using Nuke.Common.Git;
+using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
+using Nuke.GitHub;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.CoberturaConverter.CoberturaConverterTasks;
-using static Nuke.Common.Tools.Git.GitTasks;
-using Nuke.Common.ProjectModel;
-using System.IO;
+using static Nuke.GitHub.ChangeLogExtensions;
+using static Nuke.GitHub.GitHubTasks;
+using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.IO.TextTasks;
+using System.IO;
+using Nuke.CoberturaConverter;
+using static Nuke.CoberturaConverter.CoberturaConverterTasks;
 
 class Build : NukeBuild
 {
@@ -22,18 +28,19 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [GitVersion] readonly GitVersion GitVersion;
+    [GitVersion(Framework = "netcoreapp3.1")] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
 
     [Solution] readonly Solution Solution;
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    AbsolutePath ChangeLogFile => RootDirectory / "CHANGELOG.md";
 
-    [Parameter] readonly string ProGetSource;
-    [Parameter] readonly string ProGetApiKey;
+    [Parameter] readonly string IabiGitHubPackageSource = "https://nuget.pkg.github.com/iabiev/index.json";
+    [Parameter] readonly string IabiGitHubPackageApiKey;
+    [Parameter] readonly string GitHubAuthenticationToken;
     [Parameter] readonly string NuGetApiKey;
 
     [PackageExecutable("JetBrains.dotCover.CommandLineTools", "tools/dotCover.exe")] Tool DotCover;
-    [PackageExecutable("ReportGenerator", "tools/ReportGenerator.exe")] Tool ReportGenerator;
 
     Target Clean => _ => _
         .Executes(() =>
@@ -60,8 +67,8 @@ class Build : NukeBuild
             DotNetBuild(s => s
                .SetProjectFile(Solution)
                .SetConfiguration(Configuration)
-               .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-               .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+               .SetAssemblyVersion(GitVersion.AssemblySemVer)
+               .SetFileVersion(GitVersion.AssemblySemVer)
                .SetInformationalVersion(GitVersion.InformationalVersion)
                .EnableNoRestore());
         });
@@ -94,10 +101,16 @@ namespace iabi.BCF
         .DependsOn(Compile)
         .Executes(() =>
         {
+            var changeLog = GetCompleteChangeLog(ChangeLogFile)
+                .EscapeStringPropertyForMsBuild();
+
             DotNetPack(s => s
+                .SetPackageReleaseNotes(changeLog)
                 .SetConfiguration(Configuration)
                 .SetVersion(GitVersion.NuGetVersion)
                 .SetOutputDirectory(OutputDirectory)
+                .SetDescription("iabi.BCF")
+                .SetTitle("iabi.BCF")
                 .EnableNoBuild());
         });
 
@@ -134,11 +147,6 @@ namespace iabi.BCF
 
             DotCover($"report /Source=\"{OutputDirectory / "coverage.snapshot"}\" /Output=\"{OutputDirectory / "coverage.xml"}\" /ReportType=\"DetailedXML\"");
 
-            ReportGenerator($"-reports:\"{OutputDirectory / "coverage.xml"}\" -targetdir:\"{OutputDirectory / "CoverageReport"}\"");
-
-            // This is the report in Cobertura format that integrates so nice in Jenkins
-            // dashboard and allows to extract more metrics and set build health based
-            // on coverage readings
             await DotCoverToCobertura(s => s
                     .SetInputFile(OutputDirectory / "coverage.xml")
                     .SetOutputFile(OutputDirectory / "cobertura_coverage.xml"))
@@ -147,8 +155,8 @@ namespace iabi.BCF
 
     Target Push => _ => _
         .DependsOn(Pack)
-        .Requires(() => ProGetSource)
-        .Requires(() => ProGetApiKey)
+        .Requires(() => IabiGitHubPackageSource)
+        .Requires(() => IabiGitHubPackageApiKey)
         .Requires(() => NuGetApiKey)
         .Executes(() =>
         {
@@ -158,19 +166,42 @@ namespace iabi.BCF
                 {
                     DotNetNuGetPush(s => s
                         .SetTargetPath(x)
-                        .SetSource(ProGetSource)
-                        .SetApiKey(ProGetApiKey));
+                        .SetSource(IabiGitHubPackageSource)
+                        .SetApiKey(IabiGitHubPackageApiKey));
 
                     if (GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
                     {
-                        Git($"tag {GitVersion.NuGetVersion}");
-                        Git("push --tags");
-
                         DotNetNuGetPush(s => s
                            .SetTargetPath(x)
                            .SetSource("https://api.nuget.org/v3/index.json")
                            .SetApiKey(NuGetApiKey));
                     }
                 });
+        });
+
+    Target PublishGitHubRelease => _ => _
+        .DependsOn(Push)
+        .Requires(() => GitHubAuthenticationToken)
+        .OnlyWhenDynamic(() => GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
+        .Executes<Task>(async () =>
+        {
+            var releaseTag = $"v{GitVersion.MajorMinorPatch}";
+
+            var changeLogSectionEntries = ExtractChangelogSectionNotes(ChangeLogFile);
+            var latestChangeLog = changeLogSectionEntries
+                .Aggregate((c, n) => c + Environment.NewLine + n);
+            var completeChangeLog = $"## {releaseTag}" + Environment.NewLine + latestChangeLog;
+
+            var repositoryInfo = GetGitHubRepositoryInfo(GitRepository);
+            var nuGetPackages = GlobFiles(OutputDirectory, "*.nupkg").NotEmpty().ToArray();
+
+            await PublishRelease(x => x
+                .SetArtifactPaths(nuGetPackages)
+                .SetCommitSha(GitVersion.Sha)
+                .SetReleaseNotes(completeChangeLog)
+                .SetRepositoryName(repositoryInfo.repositoryName)
+                .SetRepositoryOwner(repositoryInfo.gitHubOwner)
+                .SetTag(releaseTag)
+                .SetToken(GitHubAuthenticationToken));
         });
 }

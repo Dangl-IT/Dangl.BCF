@@ -1,0 +1,24 @@
+name: continuous
+
+on: [push]
+
+jobs:
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
+    env:
+        IabiGitHubPackageApiKey: ${{ secrets.GITHUB_TOKEN }}
+        GitHubAuthenticationToken: ${{ secrets.GITHUB_TOKEN }}
+        NuGetApiKey: ${{ secrets.NUGETAPIKEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Coverage
+        run: ./build.ps1 Coverage -Configuration Debug
+      - name: Archive Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: output/cobertura_coverage.xml
+      - name: Push+PublishGitHubRelease
+        run: ./build.ps1 Push+PublishGitHubRelease

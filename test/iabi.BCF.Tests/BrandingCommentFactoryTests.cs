@@ -22,14 +22,19 @@ namespace iabi.BCF.Tests
             public void HasCorrectTimestamp()
             {
                 var commentText = BrandingCommentFactory.GetBrandingComment();
-                var currentDateTime = DateTime.Now;
+                var currentDateTime = DateTime.UtcNow;
                 var regexDateTime = @"\d\d\.\d\d\.\d\d\d\d \d\d:\d\d";
                 var regexMatch = Regex.Match(commentText, regexDateTime);
-                Assert.True(regexMatch.Success);
+                Assert.True(regexMatch.Success, $"Failed to find a timestamp in: \"{commentText}\"");
                 var extractedDateTime = regexMatch.Value;
-                var parsedDateTime = DateTime.Parse(extractedDateTime);
+                var day = int.Parse(extractedDateTime.Substring(0, 2));
+                var month = int.Parse(extractedDateTime.Substring(3, 2));
+                var year = int.Parse(extractedDateTime.Substring(6, 4));
+                var hour = int.Parse(extractedDateTime.Substring(11, 2));
+                var minute = int.Parse(extractedDateTime.Substring(14, 2));
+                var parsedDateTime = new DateTime(year, month, day, hour, minute, 0, DateTimeKind.Utc);
                 var timeDifference = Math.Abs((currentDateTime - parsedDateTime).TotalSeconds);
-                Assert.True(timeDifference < 120);  // should be within two minutes of eachother, accounts for slow CI server environments
+                Assert.True(timeDifference < 600, $"Time difference is {timeDifference} seconds, current time: {currentDateTime:dd.MM.yyyy HH:mm}, actual: {parsedDateTime:dd.MM.yyyy HH:mm}");  // should be within ten minutes of eachother, accounts for slow CI server environments
                                                     // and the fact that the actual date is only given with minutes and has no seconds part
             }
 
