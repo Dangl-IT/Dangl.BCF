@@ -25,7 +25,7 @@ namespace iabi.BCF.Tests
                 var currentDateTime = DateTime.UtcNow;
                 var regexDateTime = @"\d\d\.\d\d\.\d\d\d\d \d\d:\d\d";
                 var regexMatch = Regex.Match(commentText, regexDateTime);
-                Assert.True(regexMatch.Success);
+                Assert.True(regexMatch.Success, $"Failed to find a timestamp in: \"{commentText}\"");
                 var extractedDateTime = regexMatch.Value;
                 var parsedDateTime = DateTime.Parse(extractedDateTime);
                 var timeDifference = Math.Abs((currentDateTime - parsedDateTime).TotalSeconds);
