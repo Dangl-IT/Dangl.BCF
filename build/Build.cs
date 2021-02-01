@@ -41,7 +41,6 @@ class Build : NukeBuild
     [Parameter] readonly string NuGetApiKey;
 
     [PackageExecutable("JetBrains.dotCover.CommandLineTools", "tools/dotCover.exe")] Tool DotCover;
-    [PackageExecutable("ReportGenerator", "tools/ReportGenerator.exe")] Tool ReportGenerator;
 
     Target Clean => _ => _
         .Executes(() =>
