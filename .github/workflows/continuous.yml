@@ -1,0 +1,19 @@
+name: continuous
+
+on: [push]
+
+jobs:
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
+    env:
+        IabiGitHubPackageApiKey: ${{ secrets.GITHUB_TOKEN }}
+        GitHubAuthenticationToken: ${{ secrets.GITHUB_TOKEN }}
+        NuGetApiKey: ${{ secrets.NUGETAPIKEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Coverage
+        run: ./build.ps1 Coverage
+      - name: Push+PublishGitHubRelease
+        run: ./build.ps1 Push+PublishGitHubRelease

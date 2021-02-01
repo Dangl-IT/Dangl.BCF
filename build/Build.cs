@@ -1,19 +1,29 @@
-﻿using System.Linq;
-using Nuke.CoberturaConverter;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Nuke.Common;
+using Nuke.Common.CI;
+using Nuke.Common.Execution;
 using Nuke.Common.Git;
+using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
+using Nuke.GitHub;
+using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
+using static Nuke.GitHub.ChangeLogExtensions;
+using static Nuke.GitHub.GitHubTasks;
+using static Nuke.Common.ChangeLog.ChangelogTasks;
+using static Nuke.Common.IO.TextTasks;
+using System.IO;
+using Nuke.CoberturaConverter;
 using static Nuke.CoberturaConverter.CoberturaConverterTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
-using Nuke.Common.ProjectModel;
-using System.IO;
-using static Nuke.Common.IO.TextTasks;
 
 class Build : NukeBuild
 {
@@ -27,9 +37,11 @@ class Build : NukeBuild
 
     [Solution] readonly Solution Solution;
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    AbsolutePath ChangeLogFile => RootDirectory / "CHANGELOG.md";
 
-    [Parameter] readonly string ProGetSource;
-    [Parameter] readonly string ProGetApiKey;
+    [Parameter] readonly string IabiGitHubPackageSource = "https://nuget.pkg.github.com/iabiev/index.json";
+    [Parameter] readonly string IabiGitHubPackageApiKey;
+    [Parameter] readonly string GitHubAuthenticationToken;
     [Parameter] readonly string NuGetApiKey;
 
     [PackageExecutable("JetBrains.dotCover.CommandLineTools", "tools/dotCover.exe")] Tool DotCover;
@@ -60,8 +72,8 @@ class Build : NukeBuild
             DotNetBuild(s => s
                .SetProjectFile(Solution)
                .SetConfiguration(Configuration)
-               .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-               .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+               .SetAssemblyVersion(GitVersion.AssemblySemVer)
+               .SetFileVersion(GitVersion.AssemblySemVer)
                .SetInformationalVersion(GitVersion.InformationalVersion)
                .EnableNoRestore());
         });
@@ -94,10 +106,16 @@ namespace iabi.BCF
         .DependsOn(Compile)
         .Executes(() =>
         {
+            var changeLog = GetCompleteChangeLog(ChangeLogFile)
+                .EscapeStringPropertyForMsBuild();
+
             DotNetPack(s => s
+                .SetPackageReleaseNotes(changeLog)
                 .SetConfiguration(Configuration)
                 .SetVersion(GitVersion.NuGetVersion)
                 .SetOutputDirectory(OutputDirectory)
+                .SetDescription("iabi.BCF")
+                .SetTitle("iabi.BCF")
                 .EnableNoBuild());
         });
 
@@ -147,8 +165,8 @@ namespace iabi.BCF
 
     Target Push => _ => _
         .DependsOn(Pack)
-        .Requires(() => ProGetSource)
-        .Requires(() => ProGetApiKey)
+        .Requires(() => IabiGitHubPackageSource)
+        .Requires(() => IabiGitHubPackageApiKey)
         .Requires(() => NuGetApiKey)
         .Executes(() =>
         {
@@ -158,19 +176,42 @@ namespace iabi.BCF
                 {
                     DotNetNuGetPush(s => s
                         .SetTargetPath(x)
-                        .SetSource(ProGetSource)
-                        .SetApiKey(ProGetApiKey));
+                        .SetSource(IabiGitHubPackageSource)
+                        .SetApiKey(IabiGitHubPackageApiKey));
 
                     if (GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
                     {
-                        Git($"tag {GitVersion.NuGetVersion}");
-                        Git("push --tags");
-
                         DotNetNuGetPush(s => s
                            .SetTargetPath(x)
                            .SetSource("https://api.nuget.org/v3/index.json")
                            .SetApiKey(NuGetApiKey));
                     }
                 });
+        });
+
+    Target PublishGitHubRelease => _ => _
+        .DependsOn(Push)
+        .Requires(() => GitHubAuthenticationToken)
+        .OnlyWhenDynamic(() => GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
+        .Executes<Task>(async () =>
+        {
+            var releaseTag = $"v{GitVersion.MajorMinorPatch}";
+
+            var changeLogSectionEntries = ExtractChangelogSectionNotes(ChangeLogFile);
+            var latestChangeLog = changeLogSectionEntries
+                .Aggregate((c, n) => c + Environment.NewLine + n);
+            var completeChangeLog = $"## {releaseTag}" + Environment.NewLine + latestChangeLog;
+
+            var repositoryInfo = GetGitHubRepositoryInfo(GitRepository);
+            var nuGetPackages = GlobFiles(OutputDirectory, "*.nupkg").NotEmpty().ToArray();
+
+            await PublishRelease(x => x
+                .SetArtifactPaths(nuGetPackages)
+                .SetCommitSha(GitVersion.Sha)
+                .SetReleaseNotes(completeChangeLog)
+                .SetRepositoryName(repositoryInfo.repositoryName)
+                .SetRepositoryOwner(repositoryInfo.gitHubOwner)
+                .SetTag(releaseTag)
+                .SetToken(GitHubAuthenticationToken));
         });
 }
