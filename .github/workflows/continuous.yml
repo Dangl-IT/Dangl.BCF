@@ -15,5 +15,10 @@ jobs:
         uses: actions/checkout@v1
       - name: Coverage
         run: ./build.ps1 Coverage
+      - name: Archive Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: output/cobertura_coverage.xml
       - name: Push+PublishGitHubRelease
         run: ./build.ps1 Push+PublishGitHubRelease

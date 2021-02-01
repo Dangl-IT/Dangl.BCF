@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Nuke.Common;
-using Nuke.Common.CI;
-using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -12,7 +10,6 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -23,7 +20,6 @@ using static Nuke.Common.IO.TextTasks;
 using System.IO;
 using Nuke.CoberturaConverter;
 using static Nuke.CoberturaConverter.CoberturaConverterTasks;
-using static Nuke.Common.Tools.Git.GitTasks;
 
 class Build : NukeBuild
 {
@@ -152,11 +148,6 @@ namespace iabi.BCF
 
             DotCover($"report /Source=\"{OutputDirectory / "coverage.snapshot"}\" /Output=\"{OutputDirectory / "coverage.xml"}\" /ReportType=\"DetailedXML\"");
 
-            ReportGenerator($"-reports:\"{OutputDirectory / "coverage.xml"}\" -targetdir:\"{OutputDirectory / "CoverageReport"}\"");
-
-            // This is the report in Cobertura format that integrates so nice in Jenkins
-            // dashboard and allows to extract more metrics and set build health based
-            // on coverage readings
             await DotCoverToCobertura(s => s
                     .SetInputFile(OutputDirectory / "coverage.xml")
                     .SetOutputFile(OutputDirectory / "cobertura_coverage.xml"))

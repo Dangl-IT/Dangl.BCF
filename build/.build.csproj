@@ -17,7 +17,6 @@
     <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2019.1.1">
       <ExcludeAssets>All</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="ReportGenerator" Version="4.1.4" />
   </ItemGroup>
 
   <ItemGroup>
