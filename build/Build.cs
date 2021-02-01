@@ -166,6 +166,7 @@ namespace iabi.BCF
                 {
                     DotNetNuGetPush(s => s
                         .SetTargetPath(x)
+                        .SetSkipDuplicate(true)
                         .SetSource(IabiGitHubPackageSource)
                         .SetApiKey(IabiGitHubPackageApiKey));
 
@@ -174,6 +175,7 @@ namespace iabi.BCF
                         DotNetNuGetPush(s => s
                            .SetTargetPath(x)
                            .SetSource("https://api.nuget.org/v3/index.json")
+                           .SetSkipDuplicate(true)
                            .SetApiKey(NuGetApiKey));
                     }
                 });
