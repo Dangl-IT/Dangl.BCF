@@ -11,8 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Dangl.Nuke.CoberturaConverter" Version="2.0.0" />
-	<PackageReference Include="Nuke.GitHub" Version="2.0.0" />
-	<PackageDownload Include="GitVersion.Tool" Version="[5.5.1]" />
+    <PackageReference Include="Nuke.GitHub" Version="2.0.0" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.5.1]" />
     <PackageReference Include="Nuke.Common" Version="5.0.2" />
     <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2020.3.2">
       <ExcludeAssets>All</ExcludeAssets>
@@ -23,5 +23,4 @@
     <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
     <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
   </ItemGroup>
-
 </Project>
