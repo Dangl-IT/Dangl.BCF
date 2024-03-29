@@ -19,21 +19,14 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
 
     public class MaximumInformationTest
     {
-        public static BCFv2Container CreatedContainer;
+        private BCFv2Container _createdContainer;
 
-        public static ZipArchive CreatedArchive;
+        private ZipArchive _createdArchive;
 
         public MaximumInformationTest()
         {
-            if (CreatedContainer == null)
-            {
-                CreatedContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
-            }
-
-            if (CreatedArchive == null)
-            {
-                CreatedArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(CreatedContainer, BcFv2TestCaseData.MAXIMUM_INFORMATION_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.MaximumInformation));
-            }
+            _createdContainer = BcfTestCaseFactory.GetContainerByTestName(TestCaseEnum.MaximumInformation);
+            _createdArchive = ZipArchiveFactory.ReturnAndWriteIfRequired(_createdContainer, BcFv2TestCaseData.MAXIMUM_INFORMATION_TEST_CASE_NAME, TestCaseResourceFactory.GetReadmeForV2(BcfTestCaseV2.MaximumInformation));
         }
 
         public string[] ExpectedFiles
@@ -63,7 +56,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CanConverterToBcfV21Container()
         {
-            var converter = new Dangl.BCF.Converter.V2ToV21(CreatedContainer);
+            var converter = new Dangl.BCF.Converter.V2ToV21(_createdContainer);
             var upgradedContainer = converter.Convert();
             Assert.NotNull(upgradedContainer);
         }
@@ -71,13 +64,13 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void ContainerPresent()
         {
-            Assert.NotNull(CreatedContainer);
+            Assert.NotNull(_createdContainer);
         }
 
         [Fact]
         public void ZipPresent()
         {
-            Assert.NotNull(CreatedArchive);
+            Assert.NotNull(_createdArchive);
         }
 
         [Fact]
@@ -85,7 +78,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             foreach (var expectedFile in ExpectedFiles)
             {
-                if (CreatedArchive.Entries.All(curr => curr.FullName != expectedFile))
+                if (_createdArchive.Entries.All(curr => curr.FullName != expectedFile))
                 {
                     Assert.True(false, "Did not find expected file in archive: " + expectedFile);
                 }
@@ -95,7 +88,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckIfNoAdditionalFilesPresent()
         {
-            foreach (var currentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in _createdArchive.Entries)
             {
                 if (!ExpectedFiles.Contains(currentEntry.FullName))
                 {
@@ -107,7 +100,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckIfFilesAreAllValidXml()
         {
-            foreach (var currentEntry in CreatedArchive.Entries)
+            foreach (var currentEntry in _createdArchive.Entries)
             {
                 if (currentEntry.FullName.Contains(".bcfp")
                     || currentEntry.FullName.Contains(".version")
@@ -131,7 +124,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var dataExpected = TestCaseResourceFactory.GetFileAttachment(FileAttachments.JsonElement);
             using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/JsonElement.json").Open().CopyTo(memStream);
+                _createdArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/JsonElement.json").Open().CopyTo(memStream);
                 var dataActual = memStream.ToArray();
                 Assert.True(dataExpected.SequenceEqual(dataActual));
             }
@@ -143,7 +136,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var dataExpected = TestCaseResourceFactory.GetIfcFile(IfcFiles.IfcPile);
             using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == "IfcPile_01.ifc").Open().CopyTo(memStream);
+                _createdArchive.Entries.FirstOrDefault(curr => curr.FullName == "IfcPile_01.ifc").Open().CopyTo(memStream);
                 var dataActual = memStream.ToArray();
                 Assert.True(dataExpected.SequenceEqual(dataActual));
             }
@@ -155,7 +148,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var dataExpected = TestCaseResourceFactory.GetFileAttachment(FileAttachments.MarkupSchemaV2);
             using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == "markup.xsd").Open().CopyTo(memStream);
+                _createdArchive.Entries.FirstOrDefault(curr => curr.FullName == "markup.xsd").Open().CopyTo(memStream);
                 var dataActual = memStream.ToArray();
                 Assert.True(dataExpected.SequenceEqual(dataActual));
             }
@@ -167,7 +160,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var dataExpected = TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_01);
             using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Snapshot_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".png").Open().CopyTo(memStream);
+                _createdArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Snapshot_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".png").Open().CopyTo(memStream);
                 var dataActual = memStream.ToArray();
                 Assert.True(dataExpected.SequenceEqual(dataActual));
             }
@@ -179,7 +172,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var dataExpected = TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_02);
             using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Snapshot_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".png").Open().CopyTo(memStream);
+                _createdArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Snapshot_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".png").Open().CopyTo(memStream);
                 var dataActual = memStream.ToArray();
                 Assert.True(dataExpected.SequenceEqual(dataActual));
             }
@@ -191,7 +184,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
             var dataExpected = TestCaseResourceFactory.GetViewpointSnapshot(ViewpointSnapshots.MaximumInfo_Snapshot_03);
             using (var memStream = new MemoryStream())
             {
-                CreatedArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Snapshot_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".png").Open().CopyTo(memStream);
+                _createdArchive.Entries.FirstOrDefault(curr => curr.FullName == BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Snapshot_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".png").Open().CopyTo(memStream);
                 var dataActual = memStream.ToArray();
                 Assert.True(dataExpected.SequenceEqual(dataActual));
             }
@@ -202,7 +195,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             var expectedVersionId = "2.0";
             var expectedDetailedVersion = "2.0";
-            var versionXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, "bcf.version");
+            var versionXml = XmlUtilities.GetElementFromZipFile(_createdArchive, "bcf.version");
             var actualVersionId = versionXml.Attribute("VersionId").Value;
             var actualDetailedVersion = ((XText) ((XElement) versionXml.FirstNode).FirstNode).Value;
 
@@ -214,7 +207,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_01_InMarkupSet()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
 
             var viewpointElement = markupXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Viewpoints" && curr.Attribute("Guid").Value == BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01);
 
@@ -233,7 +226,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_02_InMarkupSet()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
 
             var viewpointElement = markupXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Viewpoints" && curr.Attribute("Guid").Value == BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02);
 
@@ -252,7 +245,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_03_InMarkupSet()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
 
             var viewpointElement = markupXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Viewpoints" && curr.Attribute("Guid").Value == BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03);
 
@@ -271,28 +264,28 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_01_NoOrthogonalCameraSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
             Assert.DoesNotContain(viewpointXml.DescendantNodes().OfType<XElement>(), curr => curr.Name.LocalName == "OrthogonalCamera");
         }
 
         [Fact]
         public void Viewpoint_02_NoOrthogonalCameraSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
             Assert.DoesNotContain(viewpointXml.DescendantNodes().OfType<XElement>(), curr => curr.Name.LocalName == "OrthogonalCamera");
         }
 
         [Fact]
         public void Viewpoint_03_NoOrthogonalCameraSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
             Assert.DoesNotContain(viewpointXml.DescendantNodes().OfType<XElement>(), curr => curr.Name.LocalName == "OrthogonalCamera");
         }
 
         [Fact]
         public void Viewpoint_01_PerspectiveCameraSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
             var cameraXml = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "PerspectiveCamera");
             Assert.NotNull(cameraXml);
         }
@@ -300,7 +293,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_02_PerspectiveCameraSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
             var cameraXml = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "PerspectiveCamera");
             Assert.NotNull(cameraXml);
         }
@@ -308,7 +301,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_03_PerspectiveCameraSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
             var cameraXml = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "PerspectiveCamera");
             Assert.NotNull(cameraXml);
         }
@@ -316,7 +309,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_01_ClippingPlanesSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
             var planes = viewpointXml.Descendants("ClippingPlanes").FirstOrDefault().Descendants("ClippingPlane").Select(curr => new
             {
                 Location = new
@@ -355,7 +348,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_01_LinesSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
 
             var lines = viewpointXml.Descendants("Lines").FirstOrDefault().Descendants("Line").Select(curr => new
             {
@@ -395,7 +388,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_01_ComponentsSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Components")
                 .Nodes().OfType<XElement>().Where(curr => curr.Name.LocalName == "Component")
@@ -441,7 +434,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_02_ComponentsSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Components")
                 .Nodes().OfType<XElement>().Where(curr => curr.Name.LocalName == "Component")
@@ -475,7 +468,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_03_ComponentsSet()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
 
             var components = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "Components")
                 .Nodes().OfType<XElement>().Where(curr => curr.Name.LocalName == "Component")
@@ -509,7 +502,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_01_PerspectiveCameraCorrect()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_01 + ".bcfv");
             var cameraXml = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "PerspectiveCamera");
             var cameraActual = TestUtilities.GetPerspectiveCameraObjectFromXml(cameraXml);
             var cameraExpected = MaximumInformationTestCase.GetCamera_01();
@@ -519,7 +512,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_02_PerspectiveCameraCorrect()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_02 + ".bcfv");
             var cameraXml = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "PerspectiveCamera");
             var cameraActual = TestUtilities.GetPerspectiveCameraObjectFromXml(cameraXml);
             var cameraExpected = MaximumInformationTestCase.GetCamera_02();
@@ -529,7 +522,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void Viewpoint_03_PerspectiveCameraCorrect()
         {
-            var viewpointXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
+            var viewpointXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/Viewpoint_" + BcFv2TestCaseData.MAXIMUM_INFORMATION_VIEWPOINT_GUID_03 + ".bcfv");
             var cameraXml = viewpointXml.DescendantNodes().OfType<XElement>().FirstOrDefault(curr => curr.Name.LocalName == "PerspectiveCamera");
             var cameraActual = TestUtilities.GetPerspectiveCameraObjectFromXml(cameraXml);
             var cameraExpected = MaximumInformationTestCase.GetCamera_03();
@@ -539,14 +532,14 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifyCountOfComments()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             Assert.Equal(4, markupXml.Descendants("Comment").Where(curr => curr.Parent.Name.LocalName != "Comment").Count());
         }
 
         [Fact]
         public void VerifyCommentCorrect_01()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var commentExpected = MaximumInformationTestCase.CreateComments().ToList()[0];
             var commentActual = TestUtilities.GetCommentFromXml(markupXml.Descendants("Comment").Where(curr => curr.Parent.Name.LocalName != "Comment").ToList()[0]);
             TopicsCompareTool.CompareSingleComment(commentExpected, commentActual);
@@ -555,7 +548,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifyCommentCorrect_02()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var commentExpected = MaximumInformationTestCase.CreateComments().ToList()[1];
             var commentActual = TestUtilities.GetCommentFromXml(markupXml.Descendants("Comment").Where(curr => curr.Parent.Name.LocalName != "Comment").ToList()[1]);
             TopicsCompareTool.CompareSingleComment(commentExpected, commentActual);
@@ -564,7 +557,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifyCommentCorrect_03()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var commentExpected = MaximumInformationTestCase.CreateComments().ToList()[2];
             var commentActual = TestUtilities.GetCommentFromXml(markupXml.Descendants("Comment").Where(curr => curr.Parent.Name.LocalName != "Comment").ToList()[2]);
             TopicsCompareTool.CompareSingleComment(commentExpected, commentActual);
@@ -573,7 +566,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifyCommentCorrect_04()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var commentExpected = MaximumInformationTestCase.CreateComments().ToList()[3];
             var commentActual = TestUtilities.GetCommentFromXml(markupXml.Descendants("Comment").Where(curr => curr.Parent.Name.LocalName != "Comment").ToList()[3]);
             TopicsCompareTool.CompareSingleComment(commentExpected, commentActual);
@@ -582,7 +575,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifySnippetPresent()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var snippetXml = markupXml.Descendants("BimSnippet").FirstOrDefault();
             Assert.NotNull(snippetXml);
         }
@@ -590,7 +583,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifySnippetDataPresent()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var snippetXml = markupXml.Descendants("BimSnippet").FirstOrDefault();
 
             Assert.NotNull(snippetXml.Descendants("Reference"));
@@ -617,7 +610,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void VerifySnippetDataCorrect()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
             var snippetXml = markupXml.Descendants("BimSnippet").FirstOrDefault();
 
             var snippetExpected = MaximumInformationTestCase.CreateTopic().Markup.Topic.BimSnippet;
@@ -629,7 +622,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         [Fact]
         public void CheckIfFileInHeaderSetCorrectly()
         {
-            var markupXml = XmlUtilities.GetElementFromZipFile(CreatedArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
+            var markupXml = XmlUtilities.GetElementFromZipFile(_createdArchive, BcFv2TestCaseData.MAXIMUM_INFORMATION_TOPIC_GUID + "/markup.bcf");
 
             // Only one header element
             Assert.True(markupXml.Descendants("Header").Count() == 1);
@@ -675,7 +668,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(memStream);
+                _createdContainer.WriteStream(memStream);
                 memStream.Position = 0;
 
                 var readContainer = BCFv2Container.ReadStream(memStream);
@@ -684,7 +677,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
                 readContainer.WriteStream(readMemStream);
                 var writtenZipArchive = new ZipArchive(readMemStream);
 
-                CompareTool.CompareContainers(CreatedContainer, readContainer, CreatedArchive, writtenZipArchive);
+                CompareTool.CompareContainers(_createdContainer, readContainer, _createdArchive, writtenZipArchive);
             }
         }
 
@@ -693,7 +686,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
         {
             using (var memStream = new MemoryStream())
             {
-                CreatedContainer.WriteStream(memStream);
+                _createdContainer.WriteStream(memStream);
                 CompareTool.CheckBrandingCommentPresenceInEveryFile(memStream.ToArray());
             }
         }
