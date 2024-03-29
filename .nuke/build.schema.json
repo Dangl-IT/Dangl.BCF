@@ -18,6 +18,12 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
+        "FeedzApiKey": {
+          "type": "string"
+        },
+        "FeedzPackageSource": {
+          "type": "string"
+        },
         "GitHubAuthenticationToken": {
           "type": "string"
         },
@@ -84,7 +90,7 @@
               "PublishGitHubRelease",
               "Push",
               "Restore",
-              "Test"
+              "Tests"
             ]
           }
         },
@@ -104,7 +110,7 @@
               "PublishGitHubRelease",
               "Push",
               "Restore",
-              "Test"
+              "Tests"
             ]
           }
         },

@@ -8,6 +8,7 @@ jobs:
     runs-on: windows-latest
     env:
         GitHubAuthenticationToken: ${{ secrets.GITHUB_TOKEN }}
+        FeedzApiKey: ${{ secrets.FEEDZPUSHAPIKEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1

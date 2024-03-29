@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Nuke.Common;
@@ -18,7 +18,6 @@ using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.IO.TextTasks;
 using System.IO;
-using JetBrains.Annotations;
 using Nuke.Common.Tools.Coverlet;
 
 class Build : NukeBuild
@@ -37,6 +36,8 @@ class Build : NukeBuild
 
     [Parameter] readonly string GitHubAuthenticationToken;
     [Parameter] readonly string NuGetApiKey;
+    [Parameter] readonly string FeedzPackageSource = "https://packages.dangl.dev/dangl/nuget/index.json";
+    [Parameter] readonly string FeedzApiKey;
 
     Target Clean => _ => _
         .Executes(() =>
@@ -138,6 +139,8 @@ namespace Dangl.BCF
 
     Target Push => _ => _
         .DependsOn(Pack)
+        .Requires(() => FeedzPackageSource)
+        .Requires(() => FeedzApiKey)
         .Requires(() => NuGetApiKey)
         .Executes(() =>
         {
@@ -150,13 +153,11 @@ namespace Dangl.BCF
 
             nuGetPackages.ForEach(x =>
                 {
-                    throw new Exception("Not implemeneted yet.");
-                    /*
                     DotNetNuGetPush(s => s
                         .SetTargetPath(x)
                         .SetSkipDuplicate(true)
-                        .SetSource(IabiGitHubPackageSource)
-                        .SetApiKey(IabiGitHubPackageApiKey));
+                        .SetSource(FeedzPackageSource)
+                        .SetApiKey(FeedzApiKey));
 
                     if (GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
                     {
@@ -166,7 +167,6 @@ namespace Dangl.BCF
                            .SetSkipDuplicate(true)
                            .SetApiKey(NuGetApiKey));
                     }
-                    */
                 });
         });
 
