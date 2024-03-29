@@ -7,16 +7,13 @@
     <RootNamespace></RootNamespace>
     <IsPackable>False</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
+    <NukeTelemetryVersion>1</NukeTelemetryVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dangl.Nuke.CoberturaConverter" Version="2.0.0" />
-    <PackageReference Include="Nuke.GitHub" Version="2.0.0" />
-    <PackageDownload Include="GitVersion.Tool" Version="[5.5.1]" />
+    <PackageReference Include="Nuke.GitHub" Version="5.0.1" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
     <PackageReference Include="Nuke.Common" Version="8.0.0" />
-    <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2020.3.2">
-      <ExcludeAssets>All</ExcludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

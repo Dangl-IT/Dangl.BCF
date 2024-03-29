@@ -18,9 +18,8 @@ using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.IO.TextTasks;
 using System.IO;
-using Nuke.CoberturaConverter;
-using static Nuke.CoberturaConverter.CoberturaConverterTasks;
 using JetBrains.Annotations;
+using Nuke.Common.Tools.Coverlet;
 
 class Build : NukeBuild
 {
@@ -39,14 +38,12 @@ class Build : NukeBuild
     [Parameter] readonly string GitHubAuthenticationToken;
     [Parameter] readonly string NuGetApiKey;
 
-    [PackageExecutable("JetBrains.dotCover.CommandLineTools", "tools/dotCover.exe")] Tool DotCover;
-
     Target Clean => _ => _
         .Executes(() =>
         {
-            GlobDirectories(RootDirectory / "src", "**/bin", "**/obj").ForEach(DeleteDirectory);
-            GlobDirectories(RootDirectory / "test", "**/bin", "**/obj").ForEach(DeleteDirectory);
-            EnsureCleanDirectory(OutputDirectory);
+            (RootDirectory / "src").GlobDirectories("**/bin", "**/obj").ForEach(d => d.DeleteDirectory());
+            (RootDirectory / "test").GlobDirectories("**/bin", "**/obj").ForEach(d => d.DeleteDirectory());
+            OutputDirectory.CreateOrCleanDirectory();
         });
 
     Target Restore => _ => _
@@ -93,7 +90,7 @@ namespace Dangl.BCF
 }}
 ";
 
-        WriteAllText(fileVersionPath, fileVersionCode);
+        fileVersionPath.WriteAllText(fileVersionCode);
     }
 
     Target Pack => _ => _
@@ -113,43 +110,30 @@ namespace Dangl.BCF
                 .EnableNoBuild());
         });
 
-    Target Coverage => _ => _
+    Target Test => _ => _
         .DependsOn(Compile)
-        .Executes(async () =>
+        .Executes(() =>
         {
             var testProjects = new[]
             {
                 RootDirectory / "test" / "Dangl.BCF.Tests"
             };
-            var dotnetPath = ToolPathResolver.GetPathExecutable("dotnet");
 
-            for (var i = 0; i < testProjects.Length; i++)
-            {
-                var testProject = testProjects[i];
-
-                /* DotCover */
-                var projectName = Path.GetFileName(testProject);
-                var snapshotIndex = i;
-
-                DotCover($"cover /TargetExecutable=\"{dotnetPath}\" /TargetWorkingDir=\"{testProject}\" " +
-                    $"/TargetArguments=\"test --no-build --test-adapter-path:. \\\"--logger:xunit;LogFilePath={OutputDirectory / projectName}_testresults.xml\\\"\" " +
-                    "/Filters=\"+:Dangl.BCF*;-:*Tests*\" " +
-                    "/AttributeFilters=\"System.CodeDom.Compiler.GeneratedCodeAttribute\" " +
-                    $"/Output=\"{OutputDirectory / $"coverage{snapshotIndex:00}.snapshot"}\"");
-            }
-
-            var snapshots = testProjects.Select((t, i) => OutputDirectory / $"coverage{i:00}.snapshot")
-                .Select(p => p.ToString())
-                .Aggregate((c, n) => c + ";" + n);
-
-            DotCover($"merge /Source=\"{snapshots}\" /Output=\"{OutputDirectory / "coverage.snapshot"}\"");
-
-            DotCover($"report /Source=\"{OutputDirectory / "coverage.snapshot"}\" /Output=\"{OutputDirectory / "coverage.xml"}\" /ReportType=\"DetailedXML\"");
-
-            await DotCoverToCobertura(s => s
-                    .SetInputFile(OutputDirectory / "coverage.xml")
-                    .SetOutputFile(OutputDirectory / "cobertura_coverage.xml"))
-                .ConfigureAwait(false);
+            DotNetTest(c => c
+                .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
+                .EnableNoBuild()
+                .SetTestAdapterPath(".")
+                .CombineWith(cc => testProjects
+                    .Select(testProject =>
+                    {
+                        var projectDirectory = Path.GetDirectoryName(testProject);
+                        var projectName = Path.GetFileNameWithoutExtension(testProject);
+                        return cc
+                         .SetProjectFile(testProject)
+                         .SetLoggers($"xunit;LogFilePath={OutputDirectory / projectName}_testresults.xml");
+                    })),
+                        degreeOfParallelism: Environment.ProcessorCount,
+                        completeOnFailure: true);
         });
 
     Target Push => _ => _
@@ -157,9 +141,14 @@ namespace Dangl.BCF
         .Requires(() => NuGetApiKey)
         .Executes(() =>
         {
-            GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
+            var nuGetPackages = OutputDirectory
+            .GlobFiles("*.nupkg")
+                .Select(p => p.ToString())
                 .Where(x => !x.EndsWith("symbols.nupkg"))
-                .ForEach(x =>
+                .ToList();
+            Assert.NotEmpty(nuGetPackages);
+
+            nuGetPackages.ForEach(x =>
                 {
                     throw new Exception("Not implemeneted yet.");
                     /*
@@ -195,7 +184,8 @@ namespace Dangl.BCF
             var completeChangeLog = $"## {releaseTag}" + Environment.NewLine + latestChangeLog;
 
             var repositoryInfo = GetGitHubRepositoryInfo(GitRepository);
-            var nuGetPackages = GlobFiles(OutputDirectory, "*.nupkg").NotEmpty().ToArray();
+            var nuGetPackages = OutputDirectory.GlobFiles("*.nupkg").Select(p => p.ToString()).ToArray();
+            Assert.NotEmpty(nuGetPackages);
 
             await PublishRelease(x => x
                 .SetArtifactPaths(nuGetPackages)
