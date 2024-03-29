@@ -86,6 +86,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "GenerateBcfXmlCodeFromXsd",
               "Pack",
               "PublishGitHubRelease",
               "Push",
@@ -106,6 +107,7 @@
             "enum": [
               "Clean",
               "Compile",
+              "GenerateBcfXmlCodeFromXsd",
               "Pack",
               "PublishGitHubRelease",
               "Push",

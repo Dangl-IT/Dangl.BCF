@@ -19,6 +19,7 @@ using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.IO.TextTasks;
 using System.IO;
 using Nuke.Common.Tools.Coverlet;
+using System.Text.RegularExpressions;
 
 class Build : NukeBuild
 {
@@ -195,5 +196,48 @@ namespace Dangl.BCF
                 .SetRepositoryOwner(repositoryInfo.gitHubOwner)
                 .SetTag(releaseTag)
                 .SetToken(GitHubAuthenticationToken));
+        });
+
+    Target GenerateBcfXmlCodeFromXsd => _ => _
+        .Executes(() =>
+        {
+            var pathToXsd2CodeExecutable = @"C:\Program Files (x86)\Xsd2Code\Xsd2Code.exe";
+
+            var xsdInstructions = new[]
+                {
+                    new [] { "BCFv3/Schemas", "documents.xsd", "documents.Generated.cs", "Dangl.BCF.BCFv3.Schemas", "" },
+                    new [] { "BCFv3/Schemas", "extensions.xsd", "extensions.Generated.cs", "Dangl.BCF.BCFv3.Schemas", "" },
+                    new [] { "BCFv3/Schemas", "markup.xsd", "markup.Generated.cs", "Dangl.BCF.BCFv3.Schemas", "" },
+                    new [] { "BCFv3/Schemas", "project.xsd", "project.Generated.cs", "Dangl.BCF.BCFv3.Schemas", "" },
+                    new [] { "BCFv3/Schemas", "version.xsd", "version.Generated.cs", "Dangl.BCF.BCFv3.Schemas", "" },
+                    new [] { "BCFv3/Schemas", "visinfo.xsd", "visinfo.Generated.cs", "Dangl.BCF.BCFv3.Schemas", "" },
+                };
+
+            var bcfSchemasRootPath = RootDirectory / "src" / "Dangl.BCF";
+            foreach (var xsdInstruction in xsdInstructions)
+            {
+                var arguments = $"\"{bcfSchemasRootPath / xsdInstruction[0] / xsdInstruction[1]}\" /o \"{xsdInstruction[2]}\" /n {xsdInstruction[3]}" +
+                " /p Net45 /dbg /rt /rtrange /rtregex /rtstlength /lazy /clean /s /xml /ssp /sc /in /gpsd";
+
+                ProcessTasks.StartProcess(pathToXsd2CodeExecutable, arguments)
+                    .AssertZeroExitCode();
+
+                var createdCode = File.ReadAllText(bcfSchemasRootPath / xsdInstruction[0] / xsdInstruction[2]);
+
+                createdCode = Regex.Replace(createdCode,
+                    @"new XmlSerializerFactory\(\)\.CreateSerializer\(typeof\(([a-zA-Z0-9]+)\)\)",
+                    "new XmlSerializer(typeof($1))");
+                createdCode = Regex.Replace(createdCode,
+                    @"\s*(\r\n?|\n)\s*\[System.ComponentModel.DesignerCategoryAttribute\(""code""\)\]",
+                    string.Empty);
+                createdCode = Regex.Replace(createdCode,
+                    @"\s*(\r\n?|\n)\s*\[Serializable\]",
+                    string.Empty);
+                createdCode = Regex.Replace(createdCode,
+                    @"\s*(\r\n?|\n)\s*xmlWriterSettings\.IndentChars = ""  "";",
+                    string.Empty);
+
+                File.WriteAllText(bcfSchemasRootPath / xsdInstruction[0] / xsdInstruction[2], createdCode);
+            }
         });
 }
