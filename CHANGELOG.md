@@ -1,6 +1,7 @@
 # Changelog
 
-All notable changes to **iabi.MVD** are documented here.
+All notable changes to **Dangl.BCF** are documented here.
 
-## v1.3.0
-- Internal refactoring
+## v2.0.0
+
+- Initial release, support for BCF v3.0

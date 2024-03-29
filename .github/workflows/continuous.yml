@@ -7,9 +7,7 @@ jobs:
     name: windows-latest
     runs-on: windows-latest
     env:
-        IabiGitHubPackageApiKey: ${{ secrets.GITHUB_TOKEN }}
         GitHubAuthenticationToken: ${{ secrets.GITHUB_TOKEN }}
-        NuGetApiKey: ${{ secrets.NUGETAPIKEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1

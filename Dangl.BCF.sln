@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "build\.build.csproj", "{A018A3B6-D586-418F-9EB1-D58A513CE9F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3D16CD1A-0E43-4600-B5F6-FCC2E2D87D71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{591193A1-C40A-4386-B4BA-3B8AEBA0B75B}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		.github\workflows\continuous.yml = .github\workflows\continuous.yml
+		GitVersion.yml = GitVersion.yml
+		LICENCE.md = LICENCE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1AC47211-5FEC-42C8-AE84-ABD40C4304BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dangl.BCF", "src\Dangl.BCF\Dangl.BCF.csproj", "{DCA85189-B152-45F3-9364-69E802BEC5BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dangl.BCF.Tests", "test\Dangl.BCF.Tests\Dangl.BCF.Tests.csproj", "{AFC20431-C895-4737-A7F3-9872642E34C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A018A3B6-D586-418F-9EB1-D58A513CE9F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A018A3B6-D586-418F-9EB1-D58A513CE9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA85189-B152-45F3-9364-69E802BEC5BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA85189-B152-45F3-9364-69E802BEC5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA85189-B152-45F3-9364-69E802BEC5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA85189-B152-45F3-9364-69E802BEC5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFC20431-C895-4737-A7F3-9872642E34C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFC20431-C895-4737-A7F3-9872642E34C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFC20431-C895-4737-A7F3-9872642E34C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFC20431-C895-4737-A7F3-9872642E34C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DCA85189-B152-45F3-9364-69E802BEC5BA} = {3D16CD1A-0E43-4600-B5F6-FCC2E2D87D71}
+		{AFC20431-C895-4737-A7F3-9872642E34C2} = {1AC47211-5FEC-42C8-AE84-ABD40C4304BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F6222C0-8C2D-4971-9387-AA9F437B5ED1}
+	EndGlobalSection
+EndGlobal
