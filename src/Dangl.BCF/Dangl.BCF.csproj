@@ -36,4 +36,8 @@
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\gd_icon_256.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
 </Project>
