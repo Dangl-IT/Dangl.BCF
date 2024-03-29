@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
     <IsPackable>False</IsPackable>
@@ -13,7 +13,7 @@
     <PackageReference Include="Dangl.Nuke.CoberturaConverter" Version="2.0.0" />
     <PackageReference Include="Nuke.GitHub" Version="2.0.0" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.5.1]" />
-    <PackageReference Include="Nuke.Common" Version="5.0.2" />
+    <PackageReference Include="Nuke.Common" Version="8.0.0" />
     <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2020.3.2">
       <ExcludeAssets>All</ExcludeAssets>
     </PackageReference>
@@ -21,6 +21,5 @@
 
   <ItemGroup>
     <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
-    <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
   </ItemGroup>
 </Project>
