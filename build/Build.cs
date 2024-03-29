@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Nuke.Common;
@@ -28,7 +28,7 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [GitVersion(Framework = "netcoreapp3.1")] readonly GitVersion GitVersion;
+    [GitVersion(Framework = "net8.0", NoFetch = true)] GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
 
     [Solution] readonly Solution Solution;

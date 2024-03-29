@@ -1,8 +1,9 @@
 assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-scheme: MajorMinorPatch
+mode: Mainline
 
 branches:
-  master:
+  main:
     regex: (origin/)?master
   develop:
     increment: Patch
