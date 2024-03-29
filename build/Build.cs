@@ -110,7 +110,7 @@ namespace Dangl.BCF
                 .EnableNoBuild());
         });
 
-    Target Test => _ => _
+    Target Tests => _ => _
         .DependsOn(Compile)
         .Executes(() =>
         {
