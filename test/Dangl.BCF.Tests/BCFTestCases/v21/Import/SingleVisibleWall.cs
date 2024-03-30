@@ -23,6 +23,14 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
         }
 
         [Fact]
+        public void CanConverterToBcfV3Container()
+        {
+            var converter = new Dangl.BCF.Converter.V21ToV3(ReadContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ReadSuccessfullyNotNull()
         {
             Assert.NotNull(ReadContainer);

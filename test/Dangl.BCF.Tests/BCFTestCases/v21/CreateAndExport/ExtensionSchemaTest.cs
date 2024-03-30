@@ -36,6 +36,14 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.CreateAndExport
         }
 
         [Fact]
+        public void CanConverterToBcfV3Container()
+        {
+            var converter = new Dangl.BCF.Converter.V21ToV3(CreatedContainer);
+            var upgradedContainer = converter.Convert();
+            Assert.NotNull(upgradedContainer);
+        }
+
+        [Fact]
         public void ContainerPresent()
         {
             Assert.NotNull(CreatedContainer);

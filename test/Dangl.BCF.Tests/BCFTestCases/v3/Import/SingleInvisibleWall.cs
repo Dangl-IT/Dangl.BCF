@@ -15,7 +15,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v3.Import
         }
 
         [Fact]
-        public void CanConverterToBcfV2Container()
+        public void CanConverterToBcfV21Container()
         {
             var converter = new Dangl.BCF.Converter.V3ToV21(ReadContainer);
             var downgradedContainer = converter.Convert();
