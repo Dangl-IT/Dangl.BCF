@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Dangl.BCF.Tests.Converter
 {
-    public class PhysicalFromAPI
+    public static class PhysicalFromAPI
     {
         public class SnapshotConversion
         {

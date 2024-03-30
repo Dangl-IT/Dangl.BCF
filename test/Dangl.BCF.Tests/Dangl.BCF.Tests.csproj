@@ -9,6 +9,12 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <!-- RCS1155: Warning about using ToUpper instead of invariant comparison -->
+    <!-- RCS1138: Summary comment for XML docs -->
+    <NoWarn>$(NoWarn);RCS1155;RCS1138</NoWarn>
+  </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\**/*" />

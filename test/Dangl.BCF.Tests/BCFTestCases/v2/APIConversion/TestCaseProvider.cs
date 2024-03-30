@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Dangl.BCF.BCFv2;
 using Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory;
-using Dangl.BCF.Tests.BCFTestCases.v2.Import;
 
 namespace Dangl.BCF.Tests.BCFTestCases.v2.APIConversion
 {

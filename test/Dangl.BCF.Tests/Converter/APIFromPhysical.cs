@@ -4,14 +4,13 @@ using Dangl.BCF.APIObjects.V10.Extensions;
 using Dangl.BCF.BCFv2;
 using Dangl.BCF.BCFv2.Schemas;
 using Dangl.BCF.Converter;
-using Dangl.BCF.Tests.BCFTestCases;
 using Dangl.BCF.Tests.BCFTestCases.v2;
 using Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory;
 using Xunit;
 
 namespace Dangl.BCF.Tests.Converter
 {
-    public class APIFromPhysical
+    public static class APIFromPhysical
     {
         public class TestCaxeMaximumInformation
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
+﻿namespace Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport
 {
     public class BcFv2TestCaseData
     {
