@@ -14,7 +14,6 @@ namespace Dangl.BCF.Converter
             _source = source;
         }
 
-        // TODO ADD ROUNDTRIP TESTS TO INTEGRATION TESTS
         public BCFv21Container Convert()
         {
             if (_destination != null)

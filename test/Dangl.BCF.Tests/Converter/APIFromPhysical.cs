@@ -9,8 +9,6 @@ using Dangl.BCF.Tests.BCFTestCases.v2;
 using Dangl.BCF.Tests.BCFTestCases.v2.CreateAndExport.Factory;
 using Xunit;
 
-// TODO MAKE CONVERTER ALSO FOR 2.1 AND 2.0
-
 namespace Dangl.BCF.Tests.Converter
 {
     public class APIFromPhysical
