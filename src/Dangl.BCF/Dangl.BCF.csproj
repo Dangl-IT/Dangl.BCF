@@ -10,6 +10,7 @@
     <PackageIcon>gd_icon_256.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <RepositoryUrl>https://github.com/Dangl-IT/Dangl.BCF</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

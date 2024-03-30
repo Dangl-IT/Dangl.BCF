@@ -1,23 +1,23 @@
 using Xunit;
-using Dangl.BCF.BCFv21;
+using Dangl.BCF.BCFv3;
 using System.Linq;
 using System.IO;
 
-namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
+namespace Dangl.BCF.Tests.BCFTestCases.v3.Import
 {
-    public class AllComponentsAndSpacesVisible
+    public class SingleInvisibleWall
     {
-        public BCFv21Container ReadContainer;
+        public BCFv3Container ReadContainer;
 
-        public AllComponentsAndSpacesVisible()
+        public SingleInvisibleWall()
         {
-            ReadContainer = TestCaseResourceFactory.GetImportTestCaseContainerV21(BCFv21ImportTestCases.AllComponentsAndSpacesVisible);
+            ReadContainer = TestCaseResourceFactory.GetImportTestCaseContainerV3(BCFv3ImportTestCases.SingleInvisibleWall);
         }
 
         [Fact]
         public void CanConverterToBcfV2Container()
         {
-            var converter = new Dangl.BCF.Converter.V21ToV2(ReadContainer);
+            var converter = new Dangl.BCF.Converter.V3ToV21(ReadContainer);
             var downgradedContainer = converter.Convert();
             Assert.NotNull(downgradedContainer);
         }
@@ -39,7 +39,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
         [Fact]
         public void CheckTopicGuid_01()
         {
-            var expected = "2c02d25f-6cb7-4c14-8737-9c340699d351";
+            var expected = "d5121f1c-11e0-4f25-9d23-7ace76853a8f";
             var actual = ReadContainer.Topics.Any(curr => curr.Markup.Topic.Guid == expected);
             Assert.True(actual);
         }
@@ -48,7 +48,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
         public void HasNoDuplicatedGuid_ViewpointAndComment()
         {
             var topicGuids = ReadContainer.Topics.Select(curr => curr.Markup.Topic.Guid);
-            var commentGuids = ReadContainer.Topics.SelectMany(curr => curr.Markup.Comment).Select(curr => curr.Guid);
+            var commentGuids = ReadContainer.Topics.SelectMany(curr => curr.Markup.Topic.Comments).Select(curr => curr.Guid);
             var viewpointGuids = ReadContainer.Topics.SelectMany(curr => curr.Viewpoints).Select(curr => curr.Guid);
             var allGuids = commentGuids.Concat(viewpointGuids).Concat(topicGuids);
             Assert.Equal(allGuids.Count(), allGuids.Distinct().Count());
@@ -71,26 +71,20 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
             var memStream = new MemoryStream();
             ReadContainer.WriteStream(memStream);
             var data = memStream.ToArray();
-            CompareTool.CompareFiles(TestCaseResourceFactory.GetImportTestCaseV21(BCFv21ImportTestCases.AllComponentsAndSpacesVisible), data);
+            CompareTool.CompareFiles(TestCaseResourceFactory.GetImportTestCaseV3(BCFv3ImportTestCases.SingleInvisibleWall), data);
         }
 
 
         public class Topic01
         {
-            public static BCFv21Container ReadContainer;
+            public static BCFv3Container ReadContainer;
 
             public static BCFTopic ReadTopic;
 
             public Topic01()
             {
-                if (ReadContainer == null)
-                {
-                    ReadContainer = TestCaseResourceFactory.GetImportTestCaseContainerV21(BCFv21ImportTestCases.AllComponentsAndSpacesVisible);
-                }
-                if (ReadTopic == null)
-                {
-                    ReadTopic = ReadContainer.Topics.FirstOrDefault(curr => curr.Markup.Topic.Guid == "2c02d25f-6cb7-4c14-8737-9c340699d351");
-                }
+                ReadContainer = TestCaseResourceFactory.GetImportTestCaseContainerV3(BCFv3ImportTestCases.SingleInvisibleWall);
+                ReadTopic = ReadContainer.Topics.FirstOrDefault(curr => curr.Markup.Topic.Guid == "d5121f1c-11e0-4f25-9d23-7ace76853a8f");
             }
 
             [Fact]
@@ -102,50 +96,36 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
             [Fact]
             public void CheckCommentCount()
             {
-                var expected = 2;
-                var actual = ReadTopic.Markup.Comment.Count;
+                var expected = 1;
+                var actual = ReadTopic.Markup.Topic.Comments.Count;
                 Assert.Equal(expected, actual);
             }
 
             [Fact]
             public void CheckCommentGuid_01()
             {
-                var expected = "82575370-2b8a-4731-a9d9-960b6da7e5fd";
-                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
-            }
-
-            [Fact]
-            public void CheckCommentGuid_02()
-            {
-                var expected = "d05376b9-5ad4-488e-b839-4c4d63408c27";
-                Assert.Contains(ReadTopic.Markup.Comment, curr => curr.Guid == expected);
+                var expected = "5d1463e3-c6b1-4867-9b32-046461e81bb5";
+                Assert.Contains(ReadTopic.Markup.Topic.Comments, curr => curr.Guid == expected);
             }
 
             [Fact]
             public void Comment_01_ReferencesNoViewpoint()
             {
-                var comment = ReadTopic.Markup.Comment.First(c => c.Guid == "82575370-2b8a-4731-a9d9-960b6da7e5fd");
-                Assert.False(comment.ShouldSerializeViewpoint());
+                var comment = ReadTopic.Markup.Topic.Comments.First(c => c.Guid == "5d1463e3-c6b1-4867-9b32-046461e81bb5");
+                Assert.True(comment.ShouldSerializeViewpoint());
             }
 
             [Fact]
-            public void Comment_02_ReferencesViewpoint()
+            public void Markup_HeaderSectionPresent()
             {
-                var comment = ReadTopic.Markup.Comment.First(c => c.Guid == "d05376b9-5ad4-488e-b839-4c4d63408c27");
-                Assert.True(comment.ShouldSerializeViewpoint());
-                Assert.Equal("20d8e1e0-7987-4baf-aaa1-e79246f4ca0b", comment.Viewpoint.Guid);
-            }
-            [Fact]
-            public void Markup_NoHeaderSectionPresent()
-            {
-                Assert.False(ReadTopic.Markup.ShouldSerializeHeader());
+                Assert.True(ReadTopic.Markup.ShouldSerializeHeader());
             }
 
             [Fact]
             public void CheckViewpointGuid_InMarkup()
             {
-                var expected = "20d8e1e0-7987-4baf-aaa1-e79246f4ca0b";
-                var actual = ReadTopic.Markup.Viewpoints.First().Guid;
+                var expected = "194f2ccb-9526-4f41-bfe0-635397a79873";
+                var actual = ReadTopic.Markup.Topic.Viewpoints.First().Guid;
                 Assert.Equal(expected, actual);
             }
 
@@ -153,7 +133,7 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
             public void CheckViewpointCount_InMarkup()
             {
                 var expected = 1;
-                var actual = ReadTopic.Markup.Viewpoints.Count;
+                var actual = ReadTopic.Markup.Topic.Viewpoints.Count;
                 Assert.Equal(expected, actual);
             }
 
@@ -168,8 +148,8 @@ namespace Dangl.BCF.Tests.BCFTestCases.v21.Import
             [Fact]
             public void Viewpoint_CompareSnapshotBinary_01()
             {
-                var expected = TestCaseResourceFactory.GetImportTestCaseV21(BCFv21ImportTestCases.AllComponentsAndSpacesVisible).GetBinaryData("2c02d25f-6cb7-4c14-8737-9c340699d351/snapshot.png");
-                var actual = ReadTopic.ViewpointSnapshots["20d8e1e0-7987-4baf-aaa1-e79246f4ca0b"];
+                var expected = TestCaseResourceFactory.GetImportTestCaseV3(BCFv3ImportTestCases.SingleInvisibleWall).GetBinaryData("d5121f1c-11e0-4f25-9d23-7ace76853a8f/Snapshot_194f2ccb-9526-4f41-bfe0-635397a79873.png");
+                var actual = ReadTopic.ViewpointSnapshots["194f2ccb-9526-4f41-bfe0-635397a79873"];
                 Assert.True(expected.SequenceEqual(actual));
             }
         }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Dangl.BCF.BCFv2;
 using Dangl.BCF.BCFv21;
+using Dangl.BCF.BCFv3;
 
 namespace Dangl.BCF.Tests
 {
@@ -110,9 +111,23 @@ namespace Dangl.BCF.Tests
             }
         }
 
+        public static byte[] GetImportTestCaseV3(BCFv3ImportTestCases testCase)
+        {
+            var resourcePath = $"{RESOURCE_NAMESPACE}.ImportTestCases.v3.{testCase}.bcf";
+            using (var resourceStream = GetResourceStreamFromResourcePath(resourcePath))
+            {
+                return ConvertFromStream(resourceStream);
+            }
+        }
+
         public static BCFv21Container GetImportTestCaseContainerV21(BCFv21ImportTestCases testCase)
         {
             return BCFv21Container.ReadStream(new MemoryStream(GetImportTestCaseV21(testCase)));
+        }
+
+        public static BCFv3Container GetImportTestCaseContainerV3(BCFv3ImportTestCases testCase)
+        {
+            return BCFv3Container.ReadStream(new MemoryStream(GetImportTestCaseV3(testCase)));
         }
 
         public static BCFv21Container GetCustomTestContainerV21(CustomTestFilesv21 testFile)
@@ -233,6 +248,16 @@ namespace Dangl.BCF.Tests
         AllComponentsAndSpacesVisible,
         RelatedTopicsWithBothTopicsInSameFile,
         RelatedTopicsWithOtherTopicMissing,
+        SingleInvisibleWall,
+        SingleVisibleSpace,
+        SingleVisibleWall,
+        UserAssignment
+    }
+
+    public enum BCFv3ImportTestCases
+    {
+        AllComponentsAndSpacesVisible,
+        RelatedTopicsWithBothTopicsInSameFile,
         SingleInvisibleWall,
         SingleVisibleSpace,
         SingleVisibleWall,

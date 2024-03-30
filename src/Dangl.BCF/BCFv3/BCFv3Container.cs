@@ -123,7 +123,11 @@ namespace Dangl.BCF.BCFv3
                     var projectEntry = bcfZip.CreateEntry("project.bcfp");
                     using (var projectInfoWriter = new StreamWriter(projectEntry.Open()))
                     {
-                        var serializedProjectInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(BcfProject.Serialize());
+                        var projectInfo = new ProjectInfo
+                        {
+                            Project = BcfProject
+                        };
+                        var serializedProjectInfo = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(projectInfo.Serialize());
                         projectInfoWriter.Write(serializedProjectInfo);
                     }
                 }
@@ -248,10 +252,10 @@ namespace Dangl.BCF.BCFv3
             // Get project info if present
             if (bcfZipArchive.Entries.Any(e => e.FullName == "project.bcfp"))
             {
-                var deserializedProject = Project.Deserialize(bcfZipArchive.Entries.First(Entry => Entry.FullName == "project.bcfp").Open());
-                if (!(string.IsNullOrWhiteSpace(deserializedProject.Name) && string.IsNullOrWhiteSpace(deserializedProject.ProjectId)))
+                var deserializedProject = ProjectInfo.Deserialize(bcfZipArchive.Entries.First(Entry => Entry.FullName == "project.bcfp").Open());
+                if (!(string.IsNullOrWhiteSpace(deserializedProject.Project.Name) && string.IsNullOrWhiteSpace(deserializedProject.Project.ProjectId)))
                 {
-                    container.BcfProject = deserializedProject;
+                    container.BcfProject = deserializedProject.Project;
                 }
             }
             // Get extensions if present
