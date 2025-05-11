@@ -139,6 +139,7 @@ namespace Dangl.BCF
         .Requires(() => FeedzPackageSource)
         .Requires(() => FeedzApiKey)
         .Requires(() => NuGetApiKey)
+        .OnlyWhenDynamic(() => IsOnBranch("master") || IsOnBranch("dev"))
         .Executes(() =>
         {
             var nuGetPackages = OutputDirectory
@@ -236,4 +237,8 @@ namespace Dangl.BCF
                 File.WriteAllText(bcfSchemasRootPath / xsdInstruction[0] / xsdInstruction[2], createdCode);
             }
         });
+    private bool IsOnBranch(string branchName)
+    {
+        return GitVersion.BranchName.Equals(branchName) || GitVersion.BranchName.Equals($"origin/{branchName}");
+    }
 }
