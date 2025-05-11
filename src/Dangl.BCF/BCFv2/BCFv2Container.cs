@@ -121,6 +121,16 @@ namespace Dangl.BCF.BCFv2
         /// <param name="streamToWrite"></param>
         public void WriteStream(Stream streamToWrite)
         {
+            WriteStream(streamToWrite, null);
+        }
+
+        /// <summary>
+        /// Creates a BCFv2 zip archive
+        /// </summary>
+        /// <param name="streamToWrite"></param>
+        public void WriteStream(Stream streamToWrite,
+            Action<BCFTopic, XDocument> bcfTopicSerializationCallback)
+        {
             using (var bcfZip = new ZipArchive(streamToWrite, ZipArchiveMode.Create, true))
             {
                 // Write the version information
@@ -205,6 +215,15 @@ namespace Dangl.BCF.BCFv2
                     using (var topicWriter = new StreamWriter(topicEntry.Open()))
                     {
                         var serializedTopic = BrandingCommentFactory.AppendBrandingCommentToTopLevelXml(topic.Markup.Serialize());
+
+                        var callback = bcfTopicSerializationCallback;
+                        if (callback != null)
+                        {
+                            var bcfTopicXDocument = XDocument.Parse(serializedTopic);
+                            callback(topic, bcfTopicXDocument);
+                            serializedTopic = bcfTopicXDocument.ToString();
+                        }
+
                         topicWriter.Write(serializedTopic);
                     }
                     // Write viewpoints if present
