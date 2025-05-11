@@ -5,13 +5,14 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Dangl.BCF.BCFv2.Schemas;
 using Version = Dangl.BCF.BCFv2.Schemas.Version;
 
 namespace Dangl.BCF.BCFv2
 {
     /// <summary>
-    ///     Container class for a BCFv2 physical file
+    /// Container class for a BCFv2 physical file
     /// </summary>
     public class BCFv2Container : BindableBase
     {
@@ -22,7 +23,7 @@ namespace Dangl.BCF.BCFv2
         private ObservableCollection<BCFTopic> _topics;
 
         /// <summary>
-        ///     Version information for the BCFv2. Read-Only
+        /// Version information for the BCFv2. Read-Only
         /// </summary>
         public Version BcfVersionInfo => _bcfVersionInfo ?? (_bcfVersionInfo = new Version
         {
@@ -32,7 +33,7 @@ namespace Dangl.BCF.BCFv2
         });
 
         /// <summary>
-        ///     BCF Project and project extensions information
+        /// BCF Project and project extensions information
         /// </summary>
         public ProjectExtension BcfProject
         {
@@ -71,7 +72,7 @@ namespace Dangl.BCF.BCFv2
         }
 
         /// <summary>
-        ///     Contains the BCFv2's single topics
+        /// Contains the BCFv2's single topics
         /// </summary>
         public ObservableCollection<BCFTopic> Topics
         {
@@ -115,7 +116,7 @@ namespace Dangl.BCF.BCFv2
         }
 
         /// <summary>
-        ///     Creates a BCFv2 zip archive
+        /// Creates a BCFv2 zip archive
         /// </summary>
         /// <param name="streamToWrite"></param>
         public void WriteStream(Stream streamToWrite)
@@ -254,11 +255,21 @@ namespace Dangl.BCF.BCFv2
         }
 
         /// <summary>
-        ///     Reads a BCFv2 zip archive
+        /// Reads a BCFv2 zip archive
+        /// </summary>
+        /// <param name="zipFileStream"></param>
+        /// <returns></returns>
+        public static BCFv2Container ReadStream(Stream zipFileStream)
+        {
+            return ReadStream(zipFileStream, null);
+        }
+
+        /// <summary>
+        /// Reads a BCFv2 zip archive
         /// </summary>
         /// <param name="zipFileStream">The zip archive of the physical file</param>
         /// <returns></returns>
-        public static BCFv2Container ReadStream(Stream zipFileStream)
+        public static BCFv2Container ReadStream(Stream zipFileStream, Action<BCFTopic, XDocument> topicReadCallback)
         {
             var container = new BCFv2Container();
             var bcfZipArchive = new ZipArchive(zipFileStream, ZipArchiveMode.Read);
@@ -301,7 +312,7 @@ namespace Dangl.BCF.BCFv2
                 {
                     if (!topicIds.Contains(Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value))
                     {
-                        container.Topics.Add(ReadSingleTopic(bcfZipArchive, Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value, container));
+                        container.Topics.Add(ReadSingleTopic(bcfZipArchive, Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value, container, topicReadCallback));
                     }
                     topicIds.Add(Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value);
                 }
@@ -315,8 +326,8 @@ namespace Dangl.BCF.BCFv2
         }
 
         /// <summary>
-        ///     Will take the current location within a <see cref="ZipArchive" /> and a relative location to that to output
-        ///     the absolute location for the ZipArchive Entry.
+        /// Will take the current location within a <see cref="ZipArchive"/> and a relative location
+        /// to that to output the absolute location for the ZipArchive Entry.
         /// </summary>
         /// <param name="currentPath">Position within the archive from which to start.</param>
         /// <param name="relativeReference">Relative to the given position.</param>
@@ -362,7 +373,7 @@ namespace Dangl.BCF.BCFv2
         }
 
         /// <summary>
-        ///     Transforms an absolute path to a relative path from a given location
+        /// Transforms an absolute path to a relative path from a given location
         /// </summary>
         /// <param name="absolutePath"></param>
         /// <param name="currentLocation">The location from which to make the relative path</param>
@@ -405,11 +416,15 @@ namespace Dangl.BCF.BCFv2
             return result.TrimEnd('/');
         }
 
-        private static BCFTopic ReadSingleTopic(ZipArchive archive, string topicId, BCFv2Container container)
+        private static BCFTopic ReadSingleTopic(ZipArchive archive,
+            string topicId,
+            BCFv2Container container,
+            Action<BCFTopic, XDocument> topicReadCallback)
         {
             var topic = new BCFTopic();
             // Get the markup
-            topic.Markup = Markup.Deserialize(archive.Entries.First(e => e.FullName == topicId + "/" + "markup.bcf").Open());
+            var topicEntry = archive.Entries.First(e => e.FullName == topicId + "/" + "markup.bcf");
+            topic.Markup = Markup.Deserialize(topicEntry.Open());
             // Check if any comments have a Viewpoint object without any value, then set it to null
             foreach (var comment in topic.Markup.Comment.Where(c => c.ShouldSerializeViewpoint() && string.IsNullOrWhiteSpace(c.Viewpoint.Guid)))
             {
@@ -486,7 +501,8 @@ namespace Dangl.BCF.BCFv2
                             var bitmapFileEntry = archive.Entries.FirstOrDefault(e => e.FullName == bitmapPathInArchive);
                             if (bitmapFileEntry == null)
                             {
-                                // File entry was not found, possible because it was referenced with an absolute path
+                                // File entry was not found, possible because it was referenced with
+                                // an absolute path
                                 bitmapPathInArchive = GetAbsolutePath(topicId, TransformToRelativePath(viewpointBitmap.Reference, topicId));
                                 bitmapFileEntry = archive.Entries.FirstOrDefault(e => e.FullName == bitmapPathInArchive);
                                 if (bitmapFileEntry != null)
@@ -516,6 +532,14 @@ namespace Dangl.BCF.BCFv2
                     }
                 }
             }
+
+            var callback = topicReadCallback;
+            if (callback != null)
+            {
+                var topicDocument = XDocument.Load(topicEntry.Open());
+                callback(topic, topicDocument);
+            }
+
             return topic;
         }
     }

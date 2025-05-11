@@ -237,6 +237,16 @@ namespace Dangl.BCF.BCFv3
         /// <returns></returns>
         public static BCFv3Container ReadStream(Stream zipFileStream)
         {
+            return ReadStream(zipFileStream, null);
+        }
+
+        /// <summary>
+        ///     Reads a BCFv2 zip archive
+        /// </summary>
+        /// <param name="zipFileStream">The zip archive of the physical file</param>
+        /// <returns></returns>
+        public static BCFv3Container ReadStream(Stream zipFileStream, Action<BCFTopic, System.Xml.Linq.XDocument> topicReadCallback)
+        {
             var container = new BCFv3Container();
             var bcfZipArchive = new ZipArchive(zipFileStream, ZipArchiveMode.Read);
             // Check if version info is compliant with this implementation (2.1)
@@ -273,7 +283,7 @@ namespace Dangl.BCF.BCFv3
                 {
                     if (!topicIds.Contains(Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value))
                     {
-                        container.Topics.Add(ReadSingleTopic(bcfZipArchive, Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value, container));
+                        container.Topics.Add(ReadSingleTopic(bcfZipArchive, Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value, container, topicReadCallback));
                     }
                     topicIds.Add(Regex.Match(topicId, @"^\b[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}\b").Value);
                 }
@@ -373,11 +383,15 @@ namespace Dangl.BCF.BCFv3
             return result.TrimEnd('/');
         }
 
-        private static BCFTopic ReadSingleTopic(ZipArchive archive, string topicId, BCFv3Container container)
+        private static BCFTopic ReadSingleTopic(ZipArchive archive,
+            string topicId,
+            BCFv3Container container,
+            Action<BCFTopic, System.Xml.Linq.XDocument> topicReadCallback)
         {
             var topic = new BCFTopic();
             // Get the markup
-            topic.Markup = Markup.Deserialize(archive.Entries.First(e => e.FullName == topicId + "/" + "markup.bcf").Open());
+            var topicEntry = archive.Entries.First(e => e.FullName == topicId + "/" + "markup.bcf");
+            topic.Markup = Markup.Deserialize(topicEntry.Open());
             // Check if any comments have a Viewpoint object without any value, then set it to null
             foreach (var comment in topic.Markup.Topic.Comments.Where(c => c.ShouldSerializeViewpoint() && string.IsNullOrWhiteSpace(c.Viewpoint.Guid)))
             {
@@ -488,6 +502,14 @@ namespace Dangl.BCF.BCFv3
                     }
                 }
             }
+
+            var callback = topicReadCallback;
+            if (callback != null)
+            {
+                var topicDocument = System.Xml.Linq.XDocument.Load(topicEntry.Open());
+                callback(topic, topicDocument);
+            }
+
             return topic;
         }
     }
