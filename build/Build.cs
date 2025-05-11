@@ -1,25 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Nuke.Common;
+﻿using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
+using System;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.ChangeLogExtensions;
 using static Nuke.GitHub.GitHubTasks;
-using static Nuke.Common.ChangeLog.ChangelogTasks;
-using static Nuke.Common.IO.TextTasks;
-using System.IO;
-using Nuke.Common.Tools.Coverlet;
-using System.Text.RegularExpressions;
 
 class Build : NukeBuild
 {
@@ -71,7 +67,7 @@ class Build : NukeBuild
                .EnableNoRestore());
         });
 
-    void WriteFileVersionProvider()
+    private void WriteFileVersionProvider()
     {
         var fileVersionPath = RootDirectory / "src" / "Dangl.BCF" / "FileVersionProvider.cs";
         var date = System.DateTime.UtcNow;
